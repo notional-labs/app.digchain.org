@@ -82,7 +82,7 @@ export const ethChain = {
           coinDecimals: 6,
           coinGeckoId: "dig",
         },
-        coinType: 118,
+        coinType: 60,
         gasPriceStep: {
           low: 0.01,
           average: 0.025,

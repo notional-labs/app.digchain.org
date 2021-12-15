@@ -1,12 +1,17 @@
+import "@fontsource/merriweather"
 
 const style = {
     button: {
         width: '30rem',
         height: '6rem',
         borderRadius: '50px',
+        backgroundColor: '#f4ea57',
+        border: 'solid 1px black'
     },
     buttonText: {
-        fontSize: '2rem'
+        fontSize: '2rem',
+        color: '#545454',
+        fontFamily: 'Merriweather'
     }
 }
 

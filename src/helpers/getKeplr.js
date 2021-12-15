@@ -1,4 +1,4 @@
-import { SigningCosmosClient, } from "@cosmjs/launchpad";
+import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
 import { digChain, ethChain } from '../chainObj';
 
 export const getKeplr = async (chain_id = "dig-1") => {
@@ -7,13 +7,13 @@ export const getKeplr = async (chain_id = "dig-1") => {
         return undefined
     } else {
         if (chain_id === 'dig-1'){
-            window.keplr.experimentalSuggestChain(digChain)
+            await window.keplr.experimentalSuggestChain(digChain)
         }
         else {
-            window.keplr.experimentalSuggestChain(ethChain)
+            await window.keplr.experimentalSuggestChain(ethChain)
         }
-        await window.keplr.enable(chain_id)
-        const offlineSigner = window.keplr.getOfflineSigner(chain_id);
+        await window.keplr.enable('dig-1')
+        const offlineSigner = window.keplr.getOfflineSigner('dig-1');
         const accounts = await offlineSigner.getAccounts();
         console.log(accounts)
         return {
@@ -32,4 +32,14 @@ export const getCosmosClient = (accounts, offlineSigner) => {
     );
     return cosmJS;
   }
-  
+
+
+export const getBalance = async (address) => {
+    const apiUrl = "http://65.21.202.37:8001"
+    const client = LcdClient.withExtensions(
+        apiUrl,
+        setupBankExtension,
+    )
+    const balance = await client.bank.balances(address);
+    return balance
+}

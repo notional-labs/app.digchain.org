@@ -2,14 +2,27 @@ import './App.css';
 import { Modal, Button } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
+import { getKeplr, } from './helpers/getKeplr';
+import { getBalance } from './helpers/getBalances';
+import Profile from './components/Profile';
 
 const style = {
   button: {
     marginTop: '25rem',
+  },
+  divButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 }
 
 const App = () => {
+  const [account, setAccount] = useState({
+    address: '',
+    amount: '',
+  })
+  const [pubKey, setPubKey] = useState([])
   const [show, setShow] = useState(false)
   const [chain, setChain] = useState('')
 
@@ -21,9 +34,17 @@ const App = () => {
     setShow(false)
   }
 
-  const setChainValue = (val) => {
+  const connect = async (val) => {
+    const { accounts, offlineSigner } = await getKeplr(val)
+    const balance = await getBalance(accounts[0].address)
+    setAccount({
+      address: accounts[0].address,
+      amount: balance[0][0].amount
+    })
     setChain(val)
   }
+
+
 
   return (
     <div className="App">
@@ -34,24 +55,45 @@ const App = () => {
           </div>
         )
       }
+      {
+        chain !== '' && (
+          <div>
+            <Profile account={account}/>
+          </div>
+        )
+      }
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Pick chain</Modal.Title>
+            <Modal.Title>Pick a chain</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Button onClick={() => { 
-              setChainValue('Dig')
-              setShow(false)
-              }}>
-              Dig
-            </Button>
-            <Button onClick={() => {
-              setChainValue('Dig')
-              setShow(false)
-              }}>
-              Ethereum
-            </Button>
+            <div style={style.divButton}>
+              <Button style={{
+                width: '40%',
+                height: '50%',
+                backgroundColor: '#fff1b3',
+                color: '#383838'
+              }}
+                onClick={() => {
+                  connect('dig-1')
+                  setShow(false)
+                }}>
+                Dig
+              </Button>
+              <Button style={{
+                width: '40%',
+                height: '50%',
+                backgroundColor: '#fff1b3',
+                color: '#383838'
+              }}
+                onClick={() => {
+                  connect('eth')
+                  setShow(false)
+                }}>
+                Ethereum
+              </Button>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
