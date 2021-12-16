@@ -24,7 +24,7 @@ const style = {
         fontSize: '15px',
         color: '#fff',
         textTransform: 'uppercase',
-        fontFamily: 'sans-serif',
+        fontFamily: 'Ubuntu',
     },
     td: {
         padding: '15px',
@@ -33,7 +33,7 @@ const style = {
         fontWeight: '600',
         fontSize: '17px',
         color: '#fff',
-        fontFamily: 'sans-serif',
+        fontFamily: 'Ubuntu',
         borderBottom: 'black'
     }
 }
@@ -53,8 +53,8 @@ const ValidatorsList = ({ account }) => {
     return (
         !loading ? (
             <div style={{ padding: 80, paddingLeft: 150, paddingRight: 150, }}>
-                <div>
-                    validators
+                <div style={{marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600}}>
+                    Validators
                 </div>
                 <table cellpadding="10" cellspacing="0" border="0" style={style.table}>
                     <thead style={style.tblHeader}>
@@ -71,7 +71,7 @@ const ValidatorsList = ({ account }) => {
                             <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', }}>
                                 <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                 <td style={style.td}>
-                                    <div style={{ color: '#2d61b5', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
+                                    <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
                                     <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website}</div>
                                 </td>
                                 <td style={{ ...style.td, textAlign: 'right', color: '#ededed' }}>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</td>

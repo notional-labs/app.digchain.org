@@ -30,7 +30,7 @@ const style = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20
+    padding: 20,
   },
   tabButton: {
     display: 'flex',
@@ -50,7 +50,7 @@ const App = () => {
   const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
 
   const wrapSetShow = useCallback(async (val) => {
-    if (chain == '') {
+    if (chain === '') {
       setShow(val)
     }
     else {
@@ -165,7 +165,7 @@ const App = () => {
         </div>
         <Routes>
           <Route exact path="/" element={Main}/>
-          <Route exact path="/stake" element={<ValidatorsList account={account}/>}/>
+          <Route exact path="/stake" element={account.address !== '' ? <ValidatorsList account={account}/> : Main}/>
           <Route exact path="/convert" element={Main}/>
         </Routes>
       </Router>
