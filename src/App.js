@@ -102,7 +102,7 @@ const App = () => {
   )
 
   return (
-    <div className="App">
+    <div className="App" style={{ minWidth: window.screen.width, minHeight: window.screen.height, height: 'auto'}}>
       <Router>
         <div style={style.navbar}>
           <div style={{ marginLeft: '3rem' }}>
@@ -132,7 +132,7 @@ const App = () => {
               <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
                 <Link to='/stake'>
                   <button style={{
-                    marginRight: '7rem',
+                    marginRight: '4rem',
                     fontSize: '1.2rem',
                     backgroundColor: '#7c5e93',
                     color: '#2C223E',
@@ -165,7 +165,7 @@ const App = () => {
         </div>
         <Routes>
           <Route exact path="/" element={Main}/>
-          <Route exact path="/stake" element={<ValidatorsList/>}/>
+          <Route exact path="/stake" element={<ValidatorsList account={account}/>}/>
           <Route exact path="/convert" element={Main}/>
         </Routes>
       </Router>
