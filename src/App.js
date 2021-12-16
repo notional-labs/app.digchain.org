@@ -5,12 +5,17 @@ import ConnectButton from './components/ConnectButton';
 import { getKeplr, } from './helpers/getKeplr';
 import { getBalance } from './helpers/getBalances';
 import Profile from './components/Profile';
+import ValidatorsList from './pages/ValidatorsList';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link,
 } from "react-router-dom";
+import logo from './assets/img/DIG.png';
+import { Image, } from 'antd';
+import "@fontsource/merriweather"
+
 
 const style = {
   button: {
@@ -24,13 +29,14 @@ const style = {
   navbar: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     padding: 20
   },
   tabButton: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: '1rem'
   }
 }
 
@@ -41,10 +47,15 @@ const App = () => {
   })
   const [pubKey, setPubKey] = useState([])
   const [show, setShow] = useState(false)
-  const [chain, setChain] = useState('')
+  const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
 
-  const wrapSetShow = useCallback((val) => {
-    setShow(val)
+  const wrapSetShow = useCallback(async (val) => {
+    if (chain == '') {
+      setShow(val)
+    }
+    else {
+      await connect(chain)
+    }
   }, [setShow])
 
   const handleClose = () => {
@@ -58,42 +69,106 @@ const App = () => {
       address: accounts[0].address,
       amount: balance[0][0].amount
     })
-    setChain(val)
+    if (chain === '') {
+      setChain(val)
+      localStorage.setItem('CHAIN_ID', val)
+    }
+  }
+
+  const handleClick = () => {
+    setAccount({
+      address: '',
+      amount: '',
+    })
+  }
+
+  const handleOver = (e) => {
+    e.target.style.border = 'solid 1px black'
+  }
+
+  const handleLeave = (e) => {
+    e.target.style.border = 0
   }
 
 
+  let Main = account.address === '' ? (
+    <div style={style.button}>
+      <ConnectButton wrapSetShow={wrapSetShow} />
+    </div>
+  ) : (
+    <div>
+      <Profile account={account} />
+    </div>
+  )
 
   return (
     <div className="App">
-      <div style={style.navbar}>
-        <div>
-          logo
-        </div>
-        <div>
-          <ul style={{...style.tabButton, listStyleType: 'none'}}>
-            <li>
-              Convert
-            </li>
-            <li>
-              Stake
-            </li>
-          </ul>
-        </div>
-      </div>
-      {
-        chain === '' && (
-          <div style={style.button}>
-            <ConnectButton wrapSetShow={wrapSetShow} />
+      <Router>
+        <div style={style.navbar}>
+          <div style={{ marginLeft: '3rem' }}>
+            <Image width={100}
+              src={logo}
+              preview={false} />
           </div>
-        )
-      }
-      {
-        chain !== '' && (
-          <div>
-            <Profile account={account}/>
+          <div style={{ marginRight: '2rem' }}>
+            <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
+              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
+                <Link to='/convert'>
+                  <button style={{
+                    marginRight: '1rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#7c5e93',
+                    color: '#2C223E',
+                    padding: 10,
+                    width: '8rem',
+                    borderRadius: '50px',
+                    border: 0,
+                    fontFamily: 'MerriWeather',
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
+                    Convert 
+                  </button>
+                </Link>
+              </li>
+              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
+                <Link to='/stake'>
+                  <button style={{
+                    marginRight: '7rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#7c5e93',
+                    color: '#2C223E',
+                    padding: 10,
+                    width: '8rem',
+                    borderRadius: '50px',
+                    border: 0,
+                    fontFamily: 'MerriWeather',
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
+                    Stake
+                  </button>
+                </Link>
+              </li>
+              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
+                <button style={{
+                  fontSize: '1.2rem',
+                  backgroundColor: '#f27c7c',
+                  color: '#2C223E',
+                  padding: 5,
+                  width: '10rem',
+                  borderRadius: '50px',
+                  border: 'solid 1px black',
+                  fontFamily: 'MerriWeather'
+                }} onClick={handleClick}>
+                  Logout
+                </button>
+              </li>
+            </ul>
           </div>
-        )
-      }
+        </div>
+        <Routes>
+          <Route exact path="/" element={Main}/>
+          <Route exact path="/stake" element={<ValidatorsList/>}/>
+          <Route exact path="/convert" element={Main}/>
+        </Routes>
+      </Router>
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>

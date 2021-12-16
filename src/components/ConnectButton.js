@@ -6,7 +6,8 @@ const style = {
         height: '6rem',
         borderRadius: '50px',
         backgroundColor: '#f4ea57',
-        border: 'solid 1px black'
+        border: 'solid 1px black',
+        boxShadow: '6px 6px #2C223E'
     },
     buttonText: {
         fontSize: '2rem',
@@ -30,8 +31,8 @@ const ConnectButton = ({ wrapSetShow }) => {
             <button onMouseEnter={handleOver}
                 onMouseLeave={handleLeave}
                 style={style.button}
-                onClick={() => {
-                    wrapSetShow(true)
+                onClick= { async() => {
+                    await wrapSetShow(true)
                 }}>
                 <div style={style.buttonText}>
                     Connect

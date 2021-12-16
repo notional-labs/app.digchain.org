@@ -18,10 +18,10 @@ const style = {
         justifyContent: 'space-between',
     },
     outline: {
-        marginTop: '12em',
+        marginTop: '7em',
         padding: 10,
         border: 'solid 10px #f4ea57',
-        borderRadius: '80px'
+        borderRadius: '80px',
     },
     div: {
         display: 'flex',
