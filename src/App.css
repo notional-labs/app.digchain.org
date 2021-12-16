@@ -3,10 +3,6 @@
   width: 120rem;
   height: 59.25rem;
   background-color: #7c5e93;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-direction: row;
 }
 
 .App-logo {

@@ -5,12 +5,29 @@ import ConnectButton from './components/ConnectButton';
 import { getKeplr, } from './helpers/getKeplr';
 import { getBalance } from './helpers/getBalances';
 import Profile from './components/Profile';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 
 const style = {
   button: {
     marginTop: '25rem',
   },
   divButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  navbar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    padding: 20
+  },
+  tabButton: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -48,6 +65,21 @@ const App = () => {
 
   return (
     <div className="App">
+      <div style={style.navbar}>
+        <div>
+          logo
+        </div>
+        <div>
+          <ul style={{...style.tabButton, listStyleType: 'none'}}>
+            <li>
+              Convert
+            </li>
+            <li>
+              Stake
+            </li>
+          </ul>
+        </div>
+      </div>
       {
         chain === '' && (
           <div style={style.button}>
