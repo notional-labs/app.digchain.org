@@ -33,13 +33,3 @@ export const getCosmosClient = (accounts, offlineSigner) => {
     return cosmJS;
   }
 
-
-export const getBalance = async (address) => {
-    const apiUrl = "http://65.21.202.37:8001"
-    const client = LcdClient.withExtensions(
-        apiUrl,
-        setupBankExtension,
-    )
-    const balance = await client.bank.balances(address);
-    return balance
-}

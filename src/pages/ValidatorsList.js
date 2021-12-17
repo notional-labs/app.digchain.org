@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
-import { getValidators } from '../helpers/getValidators';
+import { useEffect, useState, useCallback } from 'react';
+import { Image } from 'antd';
+import { getValidators, getLogo } from '../helpers/getValidators';
+import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
 import PacmanLoader from "react-spinners/PacmanLoader";
+import notFound from '../assets/img/no-profile.png'
+import { Modal, Button } from 'react-bootstrap';
 
 const style = {
     table: {
@@ -41,22 +45,43 @@ const style = {
 const ValidatorsList = ({ account }) => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             let vals = await getValidators()
+            const totalSupply = getTotal(vals)
             vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+            vals.map((val) => {
+                val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+            })
             setValidators([...vals])
+            setTimeout(() => {
+                setLoading(false)
+            }, 4000)
         })()
     }, [])
 
+    const wrapSetShow = useCallback((val) => {
+        setShow(val)
+    }, [setShow])
+
+    const handleClick = () => {
+        setShow(true)
+    }
+
+    const handleClose = () => {
+        setShow(false)
+    }
+
     return (
         !loading ? (
-            <div style={{ padding: 80, paddingLeft: 150, paddingRight: 150, }}>
-                <div style={{marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600}}>
+            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 200, }}>
+                <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
-                <table cellpadding="10" cellspacing="0" border="0" style={style.table}>
+                <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                     <thead style={style.tblHeader}>
                         <tr>
                             <th style={{ ...style.th, width: '5rem', borderRadius: '20px 0 0 0' }}>#</th>
@@ -67,35 +92,61 @@ const ValidatorsList = ({ account }) => {
                         </tr>
                     </thead>
                     <tbody style={style.tblContent}>
-                        {validators.map((val, index) => (
-                            <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', }}>
-                                <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
-                                <td style={style.td}>
-                                    <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
-                                    <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website}</div>
-                                </td>
-                                <td style={{ ...style.td, textAlign: 'right', color: '#ededed' }}>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</td>
-                                <td style={{ ...style.td, textAlign: 'right', color: '#e3e3e3' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0' }}>
-                                    <button style={{
-                                        backgroundColor: '#AC99CF',
-                                        border: 'solid 1px #121016',
-                                        borderRadius: '10px',
-                                        width: '70%',
-                                        padding: 8,
-                                        fontSize: '15px',
-                                        fontWeight: 600
-                                    }}>
-                                        Delegate
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        {validators.map((val, index) => {
+                            return (
+                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', }}>
+                                    <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
+                                    <td style={style.td}>
+                                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+
+                                            <Image
+                                                width={40}
+                                                src={val.logo || notFound}
+                                                style={{ borderRadius: '100%', marginTop: '7px' }}
+                                                preview={true}
+                                            />
+
+                                            <div style={{ marginLeft: '1rem' }} >
+                                                <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style={{ ...style.td, textAlign: 'right', color: '#ededed' }}>
+                                        <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
+                                        <div style={{ fontSize: '14px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
+                                    </td>
+                                    <td style={{ ...style.td, textAlign: 'right', color: '#e3e3e3' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
+                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0' }}>
+                                        <button style={{
+                                            backgroundColor: '#AC99CF',
+                                            border: 'solid 1px #121016',
+                                            borderRadius: '10px',
+                                            width: '70%',
+                                            padding: 8,
+                                            fontSize: '15px',
+                                            fontWeight: 600
+                                        }} onClick={handleClick}>
+                                            Delegate
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
+                <>
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Body>
+
+                        </Modal.Body>
+                    </Modal>
+                </>
             </div>
         ) : (
-            <PacmanLoader color={'#473E56'} loading={loading} size={150} />
+            <div style={{ marginRight: '10rem', paddingTop: '10rem' }}>
+                <PacmanLoader color={'#473E56'} loading={loading} size={100} />
+            </div>
         )
     )
 }

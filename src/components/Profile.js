@@ -32,7 +32,6 @@ const style = {
 }
 
 const Profile = ({ account }) => {
-    console.log(account)
     return (
         <div style={style.div}>
             <div style={style.outline}>

@@ -9,3 +9,12 @@ export const getBalance = async (address) => {
     }
     return balances
 }
+
+export const getTotal = (balances) => {
+    let sum = 0
+    for (let i of balances){
+        sum += parseInt(i.delegator_shares)
+    }
+    return sum
+}
+

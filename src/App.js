@@ -102,7 +102,7 @@ const App = () => {
   )
 
   return (
-    <div className="App" style={{ minWidth: window.screen.width, minHeight: window.screen.height, height: 'auto'}}>
+    <div className="App container-fluid" style={{ width: window.screen.width, minHeight: window.screen.availHeight, height: 'auto'}}>
       <Router>
         <div style={style.navbar}>
           <div style={{ marginLeft: '3rem' }}>
@@ -110,7 +110,7 @@ const App = () => {
               src={logo}
               preview={false} />
           </div>
-          <div style={{ marginRight: '2rem' }}>
+          <div style={{ marginRight: '5rem' }}>
             <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
               <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
                 <Link to='/convert'>
