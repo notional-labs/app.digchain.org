@@ -24,7 +24,7 @@ export const getKeplr = async (chain_id = "dig-1") => {
 }
 
 export const getCosmosClient = (accounts, offlineSigner) => {
-    const URL = "http://65.21.202.37:8001"
+    const URL = "http://65.21.202.37:2221"
     const cosmJS = new SigningCosmosClient(
       URL,
       accounts[0].address,

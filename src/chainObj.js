@@ -1,8 +1,8 @@
 export const digChain = {
     chainId: "dig-1",
     chainName: "DIG",
-    rpc: "http://65.21.202.37:8001",
-    rest: "http://65.21.202.37:8003",
+    rpc: "http://65.21.202.37:2221",
+    rest: "http://65.21.202.37:2223",
     bip44: {
         coinType: 118,
     },
@@ -47,8 +47,8 @@ export const digChain = {
 export const ethChain = {
     chainId: "dig-1",
         chainName: "DIG",
-        rpc: "http://65.21.202.37:8001",
-        rest: "http://65.21.202.37:8003",
+        rpc: "http://65.21.202.37:2221",
+        rest: "http://65.21.202.37:2223",
         bip44: {
           coinType: 60,
         },

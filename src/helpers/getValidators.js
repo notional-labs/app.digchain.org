@@ -1,10 +1,15 @@
 import axios from 'axios' 
 
 export const getValidators = async() => {
-    const res = await axios.get('http://65.21.202.37:8003/staking/validators')
+    const res = await axios.get('http://65.21.202.37:2223/staking/validators')
     if (res.status === 200) {
         let validators = res.data.result
-        validators.map(async (val) => val.logo = await getLogo(val.description.identity))
+        let promises = []
+        validators.forEach(val => {
+            promises.push(getLogo(val.description.identity))
+        })
+        const logos = await Promise.all(promises)
+        validators.map((val, index) => val.logo = logos[index])
         return validators
     }
     return []

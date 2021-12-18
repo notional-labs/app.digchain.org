@@ -5,7 +5,8 @@ import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
 import PacmanLoader from "react-spinners/PacmanLoader";
 import notFound from '../assets/img/no-profile.png'
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, } from 'react-bootstrap';
+import DelegateModal from '../components/DelegateModal';
 
 const style = {
     table: {
@@ -38,29 +39,32 @@ const style = {
         fontSize: '17px',
         color: '#fff',
         fontFamily: 'Ubuntu',
-        borderBottom: 'black'
     }
 }
 
 const ValidatorsList = ({ account }) => {
-    const [validators, setValidators] = useState([])
+    const [validators, setValidators] = useState(JSON.parse(localStorage.getItem('validators-dig')) || [])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
 
     useEffect(() => {
-        (async () => {
-            setLoading(true)
-            let vals = await getValidators()
-            const totalSupply = getTotal(vals)
-            vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
-            vals.map((val) => {
-                val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
-            })
-            setValidators([...vals])
-            setTimeout(() => {
+        setLoading(true)
+        if(!localStorage.getItem('validators-dig')){
+            (async () => {
+                let vals = await getValidators()
+                const totalSupply = getTotal(vals)
+                vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+                vals.map((val) => {
+                    val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+                })
+                setValidators([...vals])
+                localStorage.setItem('validators-dig', JSON.stringify(vals))
                 setLoading(false)
-            }, 4000)
-        })()
+            })()
+        }
+        else{
+            setLoading(false)
+        }
     }, [])
 
     const wrapSetShow = useCallback((val) => {
@@ -94,7 +98,7 @@ const ValidatorsList = ({ account }) => {
                     <tbody style={style.tblContent}>
                         {validators.map((val, index) => {
                             return (
-                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', }}>
+                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white'}}>
                                     <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                     <td style={style.td}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -117,7 +121,7 @@ const ValidatorsList = ({ account }) => {
                                         <div style={{ fontSize: '14px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right', color: '#e3e3e3' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0' }}>
+                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0', }}>
                                         <button style={{
                                             backgroundColor: '#AC99CF',
                                             border: 'solid 1px #121016',
@@ -137,8 +141,8 @@ const ValidatorsList = ({ account }) => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose}>
-                        <Modal.Body>
-
+                        <Modal.Body style={{backgroundColor: '#CAB8E7'}}>
+                            <DelegateModal account={account} wrapSetter={wrapSetShow}/>
                         </Modal.Body>
                     </Modal>
                 </>

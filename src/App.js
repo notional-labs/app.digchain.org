@@ -71,6 +71,7 @@ const App = () => {
     })
     if (chain === '') {
       setChain(val)
+      console.log(account)
       localStorage.setItem('CHAIN_ID', val)
     }
   }
