@@ -72,8 +72,17 @@ const App = () => {
     })
     if (chain === '') {
       setChain(val)
-      console.log(account)
       localStorage.setItem('CHAIN_ID', val)
+    }
+    if (!localStorage.getItem('accounts')) {
+      localStorage.setItem('accounts', JSON.stringify([accounts[0]]))
+    }
+    else if (localStorage.getItem('accounts')) {
+      let accountsList = JSON.parse(localStorage.getItem('accounts'))
+      if (accountsList.filter(acc => acc.address === accounts[0].address).length === 0) {
+        accountsList.push(accounts[0])
+        localStorage.setItem('accounts', JSON.stringify(accountsList))
+      }
     }
   }
 
@@ -104,7 +113,7 @@ const App = () => {
   )
 
   return (
-    <div className="App container-fluid" style={{ width: window.screen.width, minHeight: window.screen.availHeight, height: 'auto'}}>
+    <div className="App container-fluid" style={{ width: window.screen.width, minHeight: window.screen.availHeight, height: 'auto' }}>
       <Router>
         <div style={style.navbar}>
           <div style={{ marginLeft: '3rem' }}>
@@ -114,7 +123,24 @@ const App = () => {
           </div>
           <div style={{ marginRight: '5rem' }}>
             <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
-              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
+              <li>
+                <Link to='/account'>
+                  <button style={{
+                    marginRight: '1rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#7c5e93',
+                    color: '#2C223E',
+                    padding: 10,
+                    width: '8rem',
+                    borderRadius: '50px',
+                    border: 0,
+                    fontFamily: 'MerriWeather',
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
+                    Accounts
+                  </button>
+                </Link>
+              </li>
+              <li>
                 <Link to='/convert'>
                   <button style={{
                     marginRight: '1rem',
@@ -127,12 +153,12 @@ const App = () => {
                     border: 0,
                     fontFamily: 'MerriWeather',
                   }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
-                    Convert 
+                    Convert
                   </button>
                 </Link>
               </li>
-              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
-                <Link to='/stake'>
+              <li>
+                <Link to='/staking'>
                   <button style={{
                     marginRight: '4rem',
                     fontSize: '1.2rem',
@@ -166,9 +192,9 @@ const App = () => {
           </div>
         </div>
         <Routes>
-          <Route exact path="/" element={Main}/>
-          <Route exact path="/stake" element={account.address !== '' ? <ValidatorsList account={account}/> : Main}/>
-          <Route exact path="/convert" element={Main}/>
+          <Route exact path="/" element={Main} />
+          <Route exact path="/staking" element={<ValidatorsList />} />
+          <Route exact path="/convert" element={Main} />
         </Routes>
       </Router>
       <>

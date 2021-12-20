@@ -7,6 +7,7 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 import notFound from '../assets/img/no-profile.png'
 import { Modal, } from 'react-bootstrap';
 import DelegateModal from '../components/DelegateModal';
+import { getKeplr } from '../helpers/getKeplr';
 
 const style = {
     table: {
@@ -46,26 +47,34 @@ const ValidatorsList = ({ account }) => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
+    const [defaultVal, setDefaultVal] = useState(0)
 
     useEffect(() => {
-            (async () => {
-                setLoading(true)
-                let vals = await getValidators()
-                const totalSupply = getTotal(vals)
-                vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
-                vals.map((val) => {
-                    val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
-                })
-                setValidators([...vals])
-                setLoading(false)
-            })()
+        (async () => {
+            setLoading(true)
+            let vals = await getValidators()
+            const totalSupply = getTotal(vals)
+            vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+            vals.map((val) => {
+                val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+            })
+            setValidators([...vals])
+            setLoading(false)
+            console.log(vals)
+        })()
     }, [])
 
     const wrapSetShow = useCallback((val) => {
         setShow(val)
     }, [setShow])
 
-    const handleClick = () => {
+    const handleClick = async (index) => {
+        if (!localStorage.getItem('accounts')) {
+            const chain_id = localStorage.getItem('CHAIN_ID') || 'dig-1'
+            const { accounts } = await getKeplr('dig-1')
+            localStorage.setItem('accounts', JSON.stringify([accounts[0]]))
+        }
+        setDefaultVal(index)
         setShow(true)
     }
 
@@ -92,7 +101,7 @@ const ValidatorsList = ({ account }) => {
                     <tbody style={style.tblContent}>
                         {validators.map((val, index) => {
                             return (
-                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white'}}>
+                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white' }}>
                                     <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                     <td style={style.td}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -124,7 +133,7 @@ const ValidatorsList = ({ account }) => {
                                             padding: 8,
                                             fontSize: '15px',
                                             fontWeight: 600
-                                        }} onClick={handleClick}>
+                                        }} onClick={async() => await handleClick(index)}>
                                             Delegate
                                         </button>
                                     </td>
@@ -135,8 +144,8 @@ const ValidatorsList = ({ account }) => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose}>
-                        <Modal.Body style={{backgroundColor: '#CAB8E7'}}>
-                            <DelegateModal account={account} wrapSetter={wrapSetShow}/>
+                        <Modal.Body >
+                            <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal}/>
                         </Modal.Body>
                     </Modal>
                 </>
