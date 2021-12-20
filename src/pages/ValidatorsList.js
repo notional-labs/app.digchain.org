@@ -43,14 +43,13 @@ const style = {
 }
 
 const ValidatorsList = ({ account }) => {
-    const [validators, setValidators] = useState(JSON.parse(localStorage.getItem('validators-dig')) || [])
+    const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        if(!localStorage.getItem('validators-dig')){
             (async () => {
+                setLoading(true)
                 let vals = await getValidators()
                 const totalSupply = getTotal(vals)
                 vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
@@ -58,13 +57,8 @@ const ValidatorsList = ({ account }) => {
                     val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
                 })
                 setValidators([...vals])
-                localStorage.setItem('validators-dig', JSON.stringify(vals))
                 setLoading(false)
             })()
-        }
-        else{
-            setLoading(false)
-        }
     }, [])
 
     const wrapSetShow = useCallback((val) => {

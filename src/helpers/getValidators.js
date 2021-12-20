@@ -17,7 +17,7 @@ export const getValidators = async() => {
 
 export const getLogo = async (identity) => {
     const res = await axios.get(`https://keybase.io/_/api/1.0/user/lookup.json?key_suffix=${identity}&fields=pictures`)
-    if( res.status === 200 && res.data.status.code === 0){
+    if( res.status === 200 && res.data.status.code === 0 && res.data.them[0] && res.data.them[0].pictures){
         return res.data.them[0].pictures.primary.url
     }
     return null

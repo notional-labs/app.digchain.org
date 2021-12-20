@@ -65,9 +65,10 @@ const App = () => {
   const connect = async (val) => {
     const { accounts, offlineSigner } = await getKeplr(val)
     const balance = await getBalance(accounts[0].address)
+    const amount = balance.length > 0 ? balance[0][0].amount : 0
     setAccount({
       address: accounts[0].address,
-      amount: balance[0][0].amount
+      amount: amount
     })
     if (chain === '') {
       setChain(val)
@@ -143,7 +144,7 @@ const App = () => {
                     border: 0,
                     fontFamily: 'MerriWeather',
                   }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
-                    Stake
+                    Staking
                   </button>
                 </Link>
               </li>
