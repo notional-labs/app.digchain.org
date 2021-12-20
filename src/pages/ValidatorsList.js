@@ -11,7 +11,7 @@ import { getKeplr } from '../helpers/getKeplr';
 
 const style = {
     table: {
-        width: '100%',
+        width: '90%',
         tableLayout: 'fixed',
     },
     tblHeader: {
@@ -84,7 +84,7 @@ const ValidatorsList = ({ account }) => {
 
     return (
         !loading ? (
-            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 200, }}>
+            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 200,}}>
                 <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>

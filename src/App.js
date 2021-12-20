@@ -113,7 +113,7 @@ const App = () => {
   )
 
   return (
-    <div className="App container-fluid" style={{ width: window.screen.width, minHeight: window.screen.availHeight, height: 'auto' }}>
+    <div className="App container-fluid" style={{ width: window.innerWidth, minHeight: window.screen.availHeight, height: 'auto' }}>
       <Router>
         <div style={style.navbar}>
           <div style={{ marginLeft: '3rem' }}>

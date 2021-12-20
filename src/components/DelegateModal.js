@@ -68,13 +68,12 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
         return false
     }
 
-    const handleChangeSelect = (value) => {
-        console.log(value)
-        setSelectDel(value)
+    const handleChangeSelect = (e) => {
+        setSelectDel(e.target.value)
     }
 
-    const handleChangeSelectVal = (value) => {
-        setSelectVal(value)
+    const handleChangeSelectVal = (e) => {
+        setSelectVal(e.target.value)
     }
 
     const handleClick = async () => {
