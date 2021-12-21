@@ -1,12 +1,18 @@
 import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
 import { digChain, ethChain } from '../chainObj';
+import {
+    assertIsBroadcastTxSuccess,
+    SigningStargateClient,
+    StargateClient,
+} from "@cosmjs/stargate";
+import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
 export const getKeplr = async (chain_id = "dig-1") => {
     if (!window.getOfflineSigner || !window.keplr) {
         alert("Keplr Wallet not detected, please install extension");
         return undefined
     } else {
-        if (chain_id === 'dig-1'){
+        if (chain_id === 'dig-1') {
             await window.keplr.experimentalSuggestChain(digChain)
         }
         else {
@@ -26,10 +32,15 @@ export const getKeplr = async (chain_id = "dig-1") => {
 export const getCosmosClient = (address, offlineSigner) => {
     const URL = "http://65.21.202.37:2223"
     const cosmJS = new SigningCosmosClient(
-      URL,
-      address,
-      offlineSigner,
+        URL,
+        address,
+        offlineSigner,
     );
     return cosmJS;
-  }
+}
 
+export const getStargateClient = async (signer) => {
+    const rpcEndpoint = "http://65.21.202.37:2221";
+    const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
+    return client
+} 

@@ -2,8 +2,7 @@ import { InputNumber, message, Select } from "antd"
 import { transaction, delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
-import { getBalance } from "../helpers/getBalances";
-import { getKeplr, getCosmosClient } from "../helpers/getKeplr";
+import { getKeplr, getCosmosClient, getStargateClient } from "../helpers/getKeplr";
 
 const style = {
     transfer: {
@@ -34,8 +33,6 @@ const style = {
         marginBottom: '2rem'
     }
 }
-
-const defaultAddress = 'osmo1vxgcyq7nc8d8gykhwf35e4z0l04xhn4fq456uj'
 
 const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
     const [value, setValue] = useState('')
@@ -79,10 +76,11 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
     const handleClick = async () => {
         const { offlineSigner } = await getKeplr();
         const cosmJS = getCosmosClient(delegators[selectDel].address, offlineSigner);
+        const stargate = await getStargateClient(offlineSigner)
         if (cosmJS != null) {
             const amount = value*1000000
             const recipient = validators[selectVal].operator_address
-            delegate(cosmJS, amount ,recipient).then(data => {
+            delegate(stargate, delegators[selectDel].address, amount ,recipient).then(data => {
                 success()
                 wrapSetter(false)
             }).catch((e) => {

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@cosmjs/launchpad": "^0.26.5",
+    "@cosmjs/stargate": "^0.26.5",
     "@fontsource/merriweather": "^4.5.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -33,7 +34,7 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -57,6 +58,9 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-react-hooks": "^4.2.1-rc.0-next-ceee524a8-20211217",
     "source-map-loader": "^3.0.0"
   }
 }

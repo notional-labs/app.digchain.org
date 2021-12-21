@@ -7,7 +7,7 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 import notFound from '../assets/img/no-profile.png'
 import { Modal, } from 'react-bootstrap';
 import DelegateModal from '../components/DelegateModal';
-import { getKeplr } from '../helpers/getKeplr';
+import { getKeplr, } from '../helpers/getKeplr';
 
 const style = {
     table: {
@@ -84,7 +84,7 @@ const ValidatorsList = ({ account }) => {
 
     return (
         !loading ? (
-            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 200,}}>
+            <div style={{ padding: 60, paddingLeft: 150, paddingRight: 100,}}>
                 <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
