@@ -70,8 +70,8 @@ const App = () => {
       }
       else if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        if (accountsList.filter(acc => acc.address === accounts[0].address).length === 0) {
-          accountsList.push(accounts[0])
+        if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
+          accountsList.push({account: accounts[0], type: 'keplr'})
           localStorage.setItem('accounts', JSON.stringify(accountsList))
         }
       }

@@ -1,8 +1,8 @@
-import { InputNumber, message, Select } from "antd"
-import { transaction, delegate } from "../helpers/transaction"
+import { InputNumber, message, } from "antd"
+import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
-import { getKeplr, getCosmosClient, getStargateClient } from "../helpers/getKeplr";
+import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 
 const style = {
     transfer: {
@@ -65,7 +65,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     };
 
     const error = () => {
-        message.error('Deposit failed', 1);
+        message.error('Deposit failed maybe your account does not have dig yet', 2);
     };
 
     const handleChange = (value) => {
@@ -88,20 +88,22 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }
 
     const handleClick = async () => {
-        const { offlineSigner } = await getKeplr();
+        if (delegators[selectDel].type === 'keplr') {
+            const { offlineSigner } = await getKeplr();
 
-        const stargate = await getStargateClient(offlineSigner)
-        if (stargate != null) {
-            const amount = value * 1000000
-            const recipient = validators[selectVal].operator_address
-            delegate(stargate, delegators[selectDel].address, amount, recipient).then(data => {
-                success()
-                wrapSetter(false)
-            }).catch((e) => {
-                error()
-                wrapSetter(false)
-                console.log(e)
-            })
+            const stargate = await getStargateClient(offlineSigner)
+            if (stargate != null) {
+                const amount = value * 1000000
+                const recipient = validators[selectVal].operator_address
+                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(data => {
+                    success()
+                    wrapSetter(false)
+                }).catch((e) => {
+                    error()
+                    wrapSetter(false)
+                    console.log(e)
+                })
+            }
         }
     }
 
@@ -113,7 +115,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.address}</option>
+                                <option value={index}>{delegator.account.address}</option>
                             ))
                         }
                     </Form.Select>
@@ -147,7 +149,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 </>
             </div>
             <div style={style.button}>
-                <button disabled={checkDisable()} onClick={() => wrapSetter(false)} style={{border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button disabled={checkDisable()} onClick={() => wrapSetter(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
                 <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>

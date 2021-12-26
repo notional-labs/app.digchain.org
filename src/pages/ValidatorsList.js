@@ -41,7 +41,7 @@ const style = {
     }
 }
 
-const ValidatorsList = ({ account }) => {
+const ValidatorsList = () => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
@@ -68,9 +68,8 @@ const ValidatorsList = ({ account }) => {
 
     const handleClick = async (index) => {
         if (!localStorage.getItem('accounts')) {
-            const chain_id = localStorage.getItem('CHAIN_ID') || 'dig-1'
             const { accounts } = await getKeplr('dig-1')
-            localStorage.setItem('accounts', JSON.stringify([accounts[0]]))
+            localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
         }
         setDefaultVal(index)
         setShow(true)
@@ -141,7 +140,7 @@ const ValidatorsList = ({ account }) => {
                     </tbody>
                 </table>
                 <>
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show} onHide={handleClose} backdrop="static" >
                         <Modal.Header style={{backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600}}>
                             <div>
                                 Delegate Token
