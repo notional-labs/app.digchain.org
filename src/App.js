@@ -50,12 +50,8 @@ const style = {
 }
 
 const App = () => {
-  const [account, setAccount] = useState({
-    address: '',
-    amount: '',
-  })
+  const [accounts, setAccounts] = useState(JSON.parse(localStorage.getItem('accounts')) || [])
   const [show, setShow] = useState(false)
-  const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
 
   const wrapSetShow = useCallback(async (val) => {
     setShow(val)
@@ -67,30 +63,22 @@ const App = () => {
   }
 
   const connect = async (val) => {
-    const { accounts } = await getKeplr(val)
-    const balance = await getBalance(accounts[0].address)
-    const amount = balance.length > 0 ? balance[0][0].amount : 0
-    setAccount({
-      address: accounts[0].address,
-      amount: amount
-    })
-    if (!localStorage.getItem('accounts')) {
-      localStorage.setItem('accounts', JSON.stringify([accounts[0]]))
-    }
-    else if (localStorage.getItem('accounts')) {
-      let accountsList = JSON.parse(localStorage.getItem('accounts'))
-      if (accountsList.filter(acc => acc.address === accounts[0].address).length === 0) {
-        accountsList.push(accounts[0])
-        localStorage.setItem('accounts', JSON.stringify(accountsList))
+    if (val === 'keplr') {
+      const { accounts } = await getKeplr(val)
+      if (!localStorage.getItem('accounts')) {
+        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
+      }
+      else if (localStorage.getItem('accounts')) {
+        let accountsList = JSON.parse(localStorage.getItem('accounts'))
+        if (accountsList.filter(acc => acc.address === accounts[0].address).length === 0) {
+          accountsList.push(accounts[0])
+          localStorage.setItem('accounts', JSON.stringify(accountsList))
+        }
       }
     }
-  }
-
-  const handleClick = () => {
-    setAccount({
-      address: '',
-      amount: '',
-    })
+    else {
+      //metamask logic
+    }
   }
 
   const handleOver = (e) => {
@@ -102,15 +90,10 @@ const App = () => {
   }
 
 
-  let Main = account.address === '' ? (
-    <div style={style.button}>
-      <ConnectButton wrapSetShow={wrapSetShow} />
-    </div>
-  ) : (
-    <div>
-      <Profile account={account} />
-    </div>
-  )
+  let Main = (<div style={style.button}>
+    <ConnectButton wrapSetShow={wrapSetShow} />
+  </div>)
+
 
   return (
     <div className="App" style={{ width: 'auto', minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
@@ -124,7 +107,7 @@ const App = () => {
           <div style={{ marginRight: '5rem' }}>
             <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
               <li>
-                <Link to='/account'>
+                <Link to='/accounts'>
                   <button style={{
                     marginRight: '0.5rem',
                     fontSize: '1rem',
@@ -157,45 +140,32 @@ const App = () => {
                   </button>
                 </Link>
               </li>
-              <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
-                <button style={{
-                  fontSize: '1rem',
-                  backgroundColor: '#f27c7c',
-                  color: '#2C223E',
-                  padding: 5,
-                  width: '10rem',
-                  borderRadius: '50px',
-                  border: 'solid 1px black',
-                  fontFamily: 'MerriWeather'
-                }} onClick={handleClick}>
-                  Logout
-                </button>
-              </li>
             </ul>
           </div>
         </div>
         <Routes>
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/convert" element={Main} />
           <Route exact path="/accounts" element={Main} />
         </Routes>
       </Router>
       <>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} centered={true}>
           <Modal.Header style={{
             backgroundColor: '#3c314f',
             color: '#F6F3FB',
             fontFamily: 'ubuntu',
             fontSize: '1.2rem',
             border: 0,
-            paddingTop: '20px'
+            paddingTop: '20px',
+            paddingLeft: '1.8rem',
+            paddingBottom: 10
           }}
             closeButton
             closeVariant='white'>
             <Modal.Title>Connect Wallet</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#3c314f', paddingBottom: '20px'}}>
+          <Modal.Body style={{ backgroundColor: '#3c314f', paddingBottom: '20px' }}>
             <div style={style.divButton}>
               <button style={{
                 borderRadius: '20px',
@@ -205,7 +175,7 @@ const App = () => {
                 border: 0
               }}
                 onClick={() => {
-                  connect('dig-1')
+                  connect('keplr')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
@@ -214,7 +184,7 @@ const App = () => {
                       src={keplrLogo}
                       preview={false} />
                   </div>
-                  <div style={{ marginLeft: '10px', fontSize: '1.5rem',}}>
+                  <div style={{ marginLeft: '10px', fontSize: '1.5rem', }}>
                     <p style={{ margin: 0, textAlign: 'left', color: '#F6F3FB' }}>Keplr</p>
                     <p style={{ fontSize: '0.75rem', color: '#c9c9c9' }}>
                       Keplr browser extension
@@ -230,7 +200,7 @@ const App = () => {
                 border: 0
               }}
                 onClick={() => {
-                  connect('eth')
+                  connect('metamask')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>

@@ -1,11 +1,9 @@
 import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
 import { digChain, ethChain } from '../chainObj';
 import {
-    assertIsBroadcastTxSuccess,
     SigningStargateClient,
     StargateClient,
 } from "@cosmjs/stargate";
-import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
 export const getKeplr = async (chain_id = "dig-1") => {
     if (!window.getOfflineSigner || !window.keplr) {
@@ -14,9 +12,6 @@ export const getKeplr = async (chain_id = "dig-1") => {
     } else {
         if (chain_id === 'dig-1') {
             await window.keplr.experimentalSuggestChain(digChain)
-        }
-        else {
-            await window.keplr.experimentalSuggestChain(ethChain)
         }
         await window.keplr.enable('dig-1')
         const offlineSigner = window.keplr.getOfflineSigner('dig-1');
@@ -30,7 +25,7 @@ export const getKeplr = async (chain_id = "dig-1") => {
 }
 
 export const getCosmosClient = (address, offlineSigner) => {
-    const URL = "http://65.21.202.37:2223"
+    const URL = "https://api-1-dig.notional.ventures"
     const cosmJS = new SigningCosmosClient(
         URL,
         address,
@@ -40,7 +35,7 @@ export const getCosmosClient = (address, offlineSigner) => {
 }
 
 export const getStargateClient = async (signer) => {
-    const rpcEndpoint = "http://65.21.202.37:2221";
+    const rpcEndpoint = "https://rpc-1-dig.notional.ventures";
     const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
     return client
 } 
