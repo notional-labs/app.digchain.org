@@ -5,7 +5,7 @@ import {
     SigningStargateClient,
     StargateClient,
 } from "@cosmjs/stargate";
-import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
+// import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
 export const getKeplr = async (chain_id = "dig-1") => {
     if (!window.getOfflineSigner || !window.keplr) {
