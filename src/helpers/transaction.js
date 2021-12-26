@@ -2,9 +2,8 @@ import { coins,} from "@cosmjs/launchpad";
 import {
   coin
 } from "@cosmjs/stargate";
-import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
-export const transaction = async (cosmJS, amount = 1000000, recipient = 'osmo1vxgcyq7nc8d8gykhwf35e4z0l04xhn4fq456uj') => {
+export const transaction = async (cosmJS, amount = 1000000, recipient) => {
   // define memo (not required)
   const memo = "Deposit";
   // sign and broadcast Tx
@@ -14,7 +13,6 @@ export const transaction = async (cosmJS, amount = 1000000, recipient = 'osmo1vx
 }
 
 export const delegate = async (client, address, amount, recipient) => {
-  console.log(MsgDelegate)
   // const msg = MsgDelegate.encode({
   //   delegatorAddress: address,
   //   validatorAddress: recipient,
@@ -26,7 +24,7 @@ export const delegate = async (client, address, amount, recipient) => {
   // };
   const fee = {
     amount: [coin(0, "udig")],
-    gas: "80000",
+    gas: "200000",
   };
 
   const result = await client.delegateTokens(

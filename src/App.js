@@ -13,6 +13,8 @@ import {
   Link,
 } from "react-router-dom";
 import logo from './assets/img/DIG.png';
+import keplrLogo from './assets/img/keplr.png'
+import metaMaskLogo from './assets/img/metamask.png'
 import { Image, } from 'antd';
 import "@fontsource/merriweather"
 
@@ -23,7 +25,7 @@ const style = {
   },
   divButton: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between'
   },
   navbar: {
@@ -37,6 +39,14 @@ const style = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: '1rem'
+  },
+  buttonContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'start',
+    padding: 10,
+    paddingLeft: 20,
+    color: 'white'
   }
 }
 
@@ -50,12 +60,8 @@ const App = () => {
   const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
 
   const wrapSetShow = useCallback(async (val) => {
-    if (chain === '') {
-      setShow(val)
-    }
-    else {
-      await connect(chain)
-    }
+    setShow(val)
+    // await connect(chain)
   }, [setShow])
 
   const handleClose = () => {
@@ -63,17 +69,13 @@ const App = () => {
   }
 
   const connect = async (val) => {
-    const { accounts, offlineSigner } = await getKeplr(val)
+    const { accounts } = await getKeplr(val)
     const balance = await getBalance(accounts[0].address)
     const amount = balance.length > 0 ? balance[0][0].amount : 0
     setAccount({
       address: accounts[0].address,
       amount: amount
     })
-    if (chain === '') {
-      setChain(val)
-      localStorage.setItem('CHAIN_ID', val)
-    }
     if (!localStorage.getItem('accounts')) {
       localStorage.setItem('accounts', JSON.stringify([accounts[0]]))
     }
@@ -113,7 +115,7 @@ const App = () => {
   )
 
   return (
-    <div className="App container-fluid" style={{ width: window.innerWidth, minHeight: window.screen.availHeight, height: 'auto' }}>
+    <div className="App" style={{ width: window.innerWidth, minHeight: window.screen.availHeight, height: 'auto' }}>
       <Router>
         <div style={style.navbar}>
           <div style={{ marginLeft: '3rem' }}>
@@ -126,8 +128,8 @@ const App = () => {
               <li>
                 <Link to='/account'>
                   <button style={{
-                    marginRight: '1rem',
-                    fontSize: '1.2rem',
+                    marginRight: '0.5rem',
+                    fontSize: '1rem',
                     backgroundColor: '#7c5e93',
                     color: '#2C223E',
                     padding: 10,
@@ -141,27 +143,10 @@ const App = () => {
                 </Link>
               </li>
               <li>
-                <Link to='/convert'>
-                  <button style={{
-                    marginRight: '1rem',
-                    fontSize: '1.2rem',
-                    backgroundColor: '#7c5e93',
-                    color: '#2C223E',
-                    padding: 10,
-                    width: '8rem',
-                    borderRadius: '50px',
-                    border: 0,
-                    fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
-                    Convert
-                  </button>
-                </Link>
-              </li>
-              <li>
                 <Link to='/staking'>
                   <button style={{
-                    marginRight: '4rem',
-                    fontSize: '1.2rem',
+                    marginRight: '3rem',
+                    fontSize: '1rem',
                     backgroundColor: '#7c5e93',
                     color: '#2C223E',
                     padding: 10,
@@ -176,7 +161,7 @@ const App = () => {
               </li>
               <li style={{ visibility: account.address !== '' ? 'visible' : 'hidden' }}>
                 <button style={{
-                  fontSize: '1.2rem',
+                  fontSize: '1rem',
                   backgroundColor: '#f27c7c',
                   color: '#2C223E',
                   padding: 5,
@@ -195,46 +180,65 @@ const App = () => {
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/convert" element={Main} />
+          <Route exact path="/accounts" element={Main} />
         </Routes>
       </Router>
       <>
         <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Pick a chain</Modal.Title>
+          <Modal.Header style={{
+            backgroundColor: '#3c314f',
+            color: '#F6F3FB',
+            fontFamily: 'ubuntu',
+            fontSize: '1.2rem',
+            border: 0
+          }}
+            closeButton>
+            <Modal.Title>Connect Wallet</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ backgroundColor: '#3c314f', }}>
             <div style={style.divButton}>
-              <Button style={{
-                width: '40%',
-                height: '50%',
-                backgroundColor: '#fff1b3',
-                color: '#383838'
+              <button style={{
+                borderRadius: '20px',
+                backgroundColor: '#201A2B',
+                color: '#383838',
+                margin: 10,
+                border: 0
               }}
                 onClick={() => {
                   connect('dig-1')
                   setShow(false)
                 }}>
-                Dig
-              </Button>
-              <Button style={{
-                width: '40%',
-                height: '50%',
-                backgroundColor: '#fff1b3',
-                color: '#383838'
+                <div style={style.buttonContent}>
+                  <Image width={50}
+                    src={keplrLogo}
+                    preview={false} />
+                  <div style={{marginLeft: '10px', fontSize: '1.5rem'}}>
+                    Keplr
+                  </div>
+                </div>
+              </button>
+              <button style={{
+                borderRadius: '20px',
+                backgroundColor: '#201A2B',
+                color: '#383838',
+                margin: 10,
+                border: 0
               }}
                 onClick={() => {
                   connect('eth')
                   setShow(false)
                 }}>
-                Ethereum
-              </Button>
+                <div style={style.buttonContent}>
+                  <Image width={50}
+                    src={metaMaskLogo}
+                    preview={false} />
+                  <div style={{marginLeft: '10px', fontSize: '1.5rem'}}>
+                    Metamask
+                  </div>
+                </div>
+              </button>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
         </Modal>
       </>
     </div>

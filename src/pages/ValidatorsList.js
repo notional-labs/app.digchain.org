@@ -84,7 +84,7 @@ const ValidatorsList = ({ account }) => {
 
     return (
         !loading ? (
-            <div style={{ padding: 60, paddingLeft: 150, paddingRight: 100,}}>
+            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 150, }}>
                 <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
@@ -129,11 +129,11 @@ const ValidatorsList = ({ account }) => {
                                             backgroundColor: '#AC99CF',
                                             border: 'solid 1px #121016',
                                             borderRadius: '10px',
-                                            width: '70%',
+                                            width: '80%',
                                             padding: 8,
                                             fontSize: '15px',
                                             fontWeight: 600
-                                        }} onClick={async() => await handleClick(index)}>
+                                        }} onClick={async () => await handleClick(index)}>
                                             Delegate
                                         </button>
                                     </td>
@@ -144,8 +144,13 @@ const ValidatorsList = ({ account }) => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose}>
-                        <Modal.Body >
-                            <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal}/>
+                        <Modal.Header style={{backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem'}}>
+                            <div>
+                                Delegate Token
+                            </div>
+                        </Modal.Header>
+                        <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                            <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal} />
                         </Modal.Body>
                     </Modal>
                 </>

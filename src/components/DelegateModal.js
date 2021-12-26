@@ -8,7 +8,11 @@ const style = {
     transfer: {
         marginBottom: '2rem',
         width: '100%',
-        marginTop: '1rem'
+        marginTop: '1rem',
+        padding: 20,
+        backgroundColor: '#604F80',
+        borderRadius: '20px',
+        border: 'solid 1px #bdbdbd'
     },
     transferInfo: {
         padding: '50px',
@@ -27,14 +31,24 @@ const style = {
     },
     button: {
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'end',
         marginTop: '2rem',
-        marginBottom: '2rem'
+        marginBottom: '1rem'
+    },
+    formInput: {
+        backgroundColor: '#403455',
+        color: '#bdbdbd',
+        borderRadius: '10px',
+    },
+    formTitle: {
+        fontFamily: 'ubuntu',
+        color: '#bdbdbd',
+        fontWeight: 500
     }
 }
 
-const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
+const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     const [value, setValue] = useState('')
     const [delegators, setDelegators] = useState([])
     const [selectVal, setSelectVal] = useState(defaultVal)
@@ -75,12 +89,12 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
 
     const handleClick = async () => {
         const { offlineSigner } = await getKeplr();
-        const cosmJS = getCosmosClient(delegators[selectDel].address, offlineSigner);
+
         const stargate = await getStargateClient(offlineSigner)
-        if (cosmJS != null) {
-            const amount = value*1000000
+        if (stargate != null) {
+            const amount = value * 1000000
             const recipient = validators[selectVal].operator_address
-            delegate(stargate, delegators[selectDel].address, amount ,recipient).then(data => {
+            delegate(stargate, delegators[selectDel].address, amount, recipient).then(data => {
                 success()
                 wrapSetter(false)
             }).catch((e) => {
@@ -94,9 +108,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
     return (
         <div>
             <div style={style.transfer}>
-                <p>Delegator</p>
+                <p style={style.formTitle}>Delegator</p>
                 <>
-                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel}>
+                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
                                 <option value={index}>{delegator.address}</option>
@@ -106,8 +120,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
                 </>
             </div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>Valadator</p>
                 <>
-                    <Form.Select onChange={handleChangeSelectVal} defaultValue={selectVal}>
+                    <Form.Select onChange={handleChangeSelectVal} defaultValue={selectVal} style={style.formInput}>
                         {
                             validators.map((val, index) => (
                                 <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
@@ -116,8 +131,8 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
                     </Form.Select>
                 </>
             </div>
-            <div>
-                <div style={{ marginBottom: '1rem' }}>Amount To Stake</div>
+            <div style={style.transfer}>
+                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
                 <>
                     <InputNumber style={{
                         width: '100%',
@@ -125,13 +140,18 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal}) => {
                         borderRadius: '10px',
                         border: `2px solid #c4c4c4`,
                         fontSize: '1rem',
-                        paddingTop: '0.2rem'
+                        paddingTop: '0.2rem',
+                        backgroundColor: '#403455',
+                        color: '#F6F3FB'
                     }} min={0} step={0.01} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>
-                <button disabled={checkDisable()} onClick={handleClick} style={{ borderRadius: '10px', height: '4rem', fontSize: '1.5rem', backgroundColor: '#9b8da6', color: '#ffffff' }}>
-                    Delegate
+                <button disabled={checkDisable()} onClick={() => wrapSetter(false)} style={{border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                    Cancel
+                </button>
+                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                    Send
                 </button>
             </div>
         </div>
