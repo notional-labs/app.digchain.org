@@ -6,6 +6,8 @@ import { getKeplr, } from './helpers/getKeplr';
 import { getBalance } from './helpers/getBalances';
 import Profile from './components/Profile';
 import ValidatorsList from './pages/ValidatorsList';
+import useMetamask from './hooks/metamask';
+import { injected } from './components/connector';
 import {
   BrowserRouter as Router,
   Routes,
@@ -45,6 +47,7 @@ const App = () => {
     address: '',
     amount: '',
   })
+  const { connectMetamask, disconnectMetamask, isActiveMetamask, accountMetamask } = useMetaMask()
   const [pubKey, setPubKey] = useState([])
   const [show, setShow] = useState(false)
   const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
@@ -105,6 +108,8 @@ const App = () => {
   let Main = account.address === '' ? (
     <div style={style.button}>
       <ConnectButton wrapSetShow={wrapSetShow} />
+      <Button onClick={connectMetamask} variant="secondary"> Connect With MetaMask</Button>
+        { isActiveMetamask ? <span>Connected with {accountMetamask}</span> : <span>Not Connected</span> }
     </div>
   ) : (
     <div>

@@ -5,10 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
+import { Web3ReactProvider } from '@web3-react/core'
+import Web3 from 'web3'
+import { MetamaskProvider } from './hooks/metamask'
+
+function getLibrary(provider, connector) {
+  return new Web3(provider)
+}
 
 ReactDOM.render(
+  
   <React.StrictMode>
-    <App />
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <MetamaskProvider>
+        <App />
+      </MetamaskProvider>
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
