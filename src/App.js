@@ -44,9 +44,8 @@ const style = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'start',
-    padding: 10,
+    paddingTop: 20,
     paddingLeft: 20,
-    color: 'white'
   }
 }
 
@@ -55,7 +54,6 @@ const App = () => {
     address: '',
     amount: '',
   })
-  const [pubKey, setPubKey] = useState([])
   const [show, setShow] = useState(false)
   const [chain, setChain] = useState(localStorage.getItem('CHAIN_ID') || '')
 
@@ -115,10 +113,10 @@ const App = () => {
   )
 
   return (
-    <div className="App" style={{ width: window.innerWidth, minHeight: window.screen.availHeight, height: 'auto' }}>
+    <div className="App" style={{ width: 'auto', minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
       <Router>
         <div style={style.navbar}>
-          <div style={{ marginLeft: '3rem' }}>
+          <div style={{ paddingLeft: '3rem' }}>
             <Image width={100}
               src={logo}
               preview={false} />
@@ -190,12 +188,14 @@ const App = () => {
             color: '#F6F3FB',
             fontFamily: 'ubuntu',
             fontSize: '1.2rem',
-            border: 0
+            border: 0,
+            paddingTop: '20px'
           }}
-            closeButton>
+            closeButton
+            closeVariant='white'>
             <Modal.Title>Connect Wallet</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#3c314f', }}>
+          <Modal.Body style={{ backgroundColor: '#3c314f', paddingBottom: '20px'}}>
             <div style={style.divButton}>
               <button style={{
                 borderRadius: '20px',
@@ -209,11 +209,16 @@ const App = () => {
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
-                  <Image width={50}
-                    src={keplrLogo}
-                    preview={false} />
-                  <div style={{marginLeft: '10px', fontSize: '1.5rem'}}>
-                    Keplr
+                  <div>
+                    <Image width={50}
+                      src={keplrLogo}
+                      preview={false} />
+                  </div>
+                  <div style={{ marginLeft: '10px', fontSize: '1.5rem',}}>
+                    <p style={{ margin: 0, textAlign: 'left', color: '#F6F3FB' }}>Keplr</p>
+                    <p style={{ fontSize: '0.75rem', color: '#c9c9c9' }}>
+                      Keplr browser extension
+                    </p>
                   </div>
                 </div>
               </button>
@@ -229,11 +234,16 @@ const App = () => {
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
-                  <Image width={50}
-                    src={metaMaskLogo}
-                    preview={false} />
-                  <div style={{marginLeft: '10px', fontSize: '1.5rem'}}>
-                    Metamask
+                  <div>
+                    <Image width={50}
+                      src={metaMaskLogo}
+                      preview={false} />
+                  </div>
+                  <div style={{ marginLeft: '10px', fontSize: '1.5rem' }}>
+                    <p style={{ margin: 0, textAlign: 'left', color: '#F6F3FB' }}>Metamask</p>
+                    <p style={{ fontSize: '0.75rem', color: '#c9c9c9' }}>
+                      Metamask browser extension
+                    </p>
                   </div>
                 </div>
               </button>

@@ -12,14 +12,12 @@ import { getKeplr, } from '../helpers/getKeplr';
 const style = {
     table: {
         width: '90%',
-        tableLayout: 'fixed',
     },
     tblHeader: {
         backgroundColor: '#3B2D52',
     },
     tblContent: {
         height: '300px',
-        overflowX: 'auto',
         marginTop: '0px',
         borderRadius: '50px'
     },
@@ -84,7 +82,7 @@ const ValidatorsList = ({ account }) => {
 
     return (
         !loading ? (
-            <div style={{ padding: 60, paddingLeft: 200, paddingRight: 150, }}>
+            <div style={{ padding: 60, paddingLeft: 250, paddingRight: 150, }}>
                 <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
@@ -144,7 +142,7 @@ const ValidatorsList = ({ account }) => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose}>
-                        <Modal.Header style={{backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem'}}>
+                        <Modal.Header style={{backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600}}>
                             <div>
                                 Delegate Token
                             </div>
