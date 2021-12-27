@@ -2,7 +2,7 @@ import "@fontsource/merriweather"
 
 const style = {
     button: {
-        width: '30rem',
+        width: '50%',
         height: '6rem',
         borderRadius: '50px',
         backgroundColor: '#f4ea57',

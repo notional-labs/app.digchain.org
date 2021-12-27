@@ -11,17 +11,11 @@ const style = {
         padding: 24,
         borderRadius: '10px',
         border: 'solid 1px black',
-        width: '25%',
+        width: '50%',
         height: '40%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-    },
-    outline: {
-        marginTop: '7em',
-        padding: 10,
-        border: 'solid 10px #f4ea57',
-        borderRadius: '80px',
     },
     div: {
         display: 'flex',

@@ -116,7 +116,7 @@ const WithDrawModel = ({ validators, wrapSetter, defaultVal }) => {
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
-            const address = delegators[selectDel].account.address
+            const address = delegators[selectDel].account
             const gasLimit = 200000
 
 
@@ -124,7 +124,7 @@ const WithDrawModel = ({ validators, wrapSetter, defaultVal }) => {
             const amount = value * 1000000
 
             const msgWithDraw = makeWithDrawMsg(address, recipient, amount, denom) 
-            const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(delegators[selectDel].account.address, recipient, amount, denom) 
+            const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(delegators[selectDel].account, recipient, amount, denom) 
             
             broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3 )
         }

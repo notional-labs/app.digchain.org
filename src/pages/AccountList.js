@@ -6,14 +6,15 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingLeft: '40rem'
     },
     card: {
         margin: 10,
     },
     button: {
         marginTop: '3rem',
-        textAlign: 'left'
+        textAlign: 'left',
     },
 }
 
