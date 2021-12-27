@@ -1,10 +1,8 @@
 import './App.css';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
 import { getKeplr, } from './helpers/getKeplr';
-import { getBalance } from './helpers/getBalances';
-import Profile from './components/Profile';
 import ValidatorsList from './pages/ValidatorsList';
 import {
   BrowserRouter as Router,
