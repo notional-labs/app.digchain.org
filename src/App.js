@@ -1,10 +1,8 @@
 import './App.css';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
 import { getKeplr, } from './helpers/getKeplr';
-import { getBalance } from './helpers/getBalances';
-import Profile from './components/Profile';
 import ValidatorsList from './pages/ValidatorsList';
 import {
   BrowserRouter as Router,
@@ -67,7 +65,6 @@ const App = () => {
   const connect = async (val) => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr(val)
-      console.log(accounts)
       if (!localStorage.getItem('accounts')) {
         localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
         setAccounts([...{ account: accounts[0], type: 'keplr' }])
@@ -86,11 +83,11 @@ const App = () => {
       const accounts = (await web3.eth.getAccounts());
       
       if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
+        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'metamask'}]))
       }
       if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
+        if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
           accountsList.push({account: accounts[0], type: 'metamask'})
           localStorage.setItem('accounts', JSON.stringify(accountsList))
         }
@@ -114,7 +111,7 @@ const App = () => {
 
 
   return (
-    <div className="App" style={{ width: 'auto', minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
+    <div className="App" style={{minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
       <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem' }}>

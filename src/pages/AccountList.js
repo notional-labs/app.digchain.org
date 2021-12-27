@@ -5,14 +5,15 @@ const style = {
     container: {
         display: 'flex',
         flexDirection: 'column',
-        alignSelf: 'center',
-        marginLeft: '20rem'
+        justifyContent: 'center',
+        textAlign: 'center'
     },
     card: {
-        margin: 10
+        margin: 10,
     },
     button: {
-        marginTop: '5rem',
+        marginTop: '3rem',
+        textAlign: 'left'
     },
 }
 
@@ -20,7 +21,7 @@ const AccountList = ({ accounts, wrapSetShow }) => {
     console.log(accounts)
     return (
         <div style={style.container}>
-            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
+            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
                 Accounts
             </div>
             {accounts.map(account => (
