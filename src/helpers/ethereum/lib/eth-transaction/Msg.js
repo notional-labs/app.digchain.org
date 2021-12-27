@@ -15,21 +15,21 @@ export function makeSendMsg (fromAddress, toAddress, amount, denom) {
 
 export function makeDelegateMsg(delegator_address, validator_address, amount, denom){
 
-    const msg = {
+    const msgDelegate = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,    
         amount: coins(amount, denom)
     }
     const msg = {
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-        value: msgSend,
+        value: msgDelegate,
     };
     return msg
 }
 
 export function makeWithDrawMsg(delegator_address, validator_address, amount, denom){
 
-    const msg = {
+    const msgWithDraw = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,  
 
@@ -37,27 +37,27 @@ export function makeWithDrawMsg(delegator_address, validator_address, amount, de
     }
     const msg = {
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
-        value: msgSend,
+        value: msgWithDraw,
     };
     return msg
 }
 
 export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, denom){
 
-    const msg = {
+    const msgUndelegate = {
         delegatorAddress: delegatorAddress,
         validatorAddress: validatorAddress,    
         amount: coins(amount, denom)
     }
     const msg = {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: msgSend,
+        value: msgUndelegate,
     };
     return msg
 }
 
 export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom){
-    const msg = {
+    const msgRedelegate = {
         delegatorAddress:       delegatorAddress,
         validatorSrcAddress:    validatorSrcAddress, 
         validatorDstAddress:    validatorDstAddress,
@@ -65,7 +65,7 @@ export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, va
     }
     const msg = {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
-        value: msgSend,
+        value: msgRedelegate,
     };
     return msg
 }
@@ -137,6 +137,6 @@ export function makeSignDocRedelegateMsg (delegator_address, validator_src_addre
             }
           }
         }
-      ],
+      ]
     return msgRedelegate
 }

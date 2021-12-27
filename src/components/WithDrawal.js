@@ -3,7 +3,7 @@ import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeSignDocWithDrawelMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 
 const style = {
@@ -50,7 +50,7 @@ const style = {
     }
 }
 
-const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
+const WithDrawModel = ({ validators, wrapSetter, defaultVal }) => {
     const [value, setValue] = useState('')
     const [delegators, setDelegators] = useState([])
     const [selectVal, setSelectVal] = useState(defaultVal)
@@ -97,7 +97,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = validators[selectVal].operator_address
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(data => {
+                withDrawal(stargate, delegators[selectDel].account.address, amount, recipient).then(data => {
                     success()
                     wrapSetter(false)
                 }).catch((e) => {
@@ -108,7 +108,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             }
         }
         else{
-            //makeSignDocDelegateMsg, makeDelegateMsg
+            //makeSignDocDelegateMsg, makeDelegateMsgmakeDelegateMsg
             // please set enviroment variable: DENOM, etc
             //import web3
             let web3 = await getWeb3Instance();
@@ -123,10 +123,10 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const recipient = validators[selectVal].operator_address
             const amount = value * 1000000
 
-            const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
-            const signDocDelegate = makeSignDocDelegateMsg(delegators[selectDel].account.address, recipient, amount, denom) 
+            const msgWithDraw = makeWithDrawMsg(address, recipient, amount, denom) 
+            const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(delegators[selectDel].account.address, recipient, amount, denom) 
             
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+            broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3 )
         }
     }
 

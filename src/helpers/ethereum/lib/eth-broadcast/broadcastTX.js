@@ -3,7 +3,7 @@ import { makeSignDocJsonString } from "../eth-transaction/Sign"
 import { makeAuthInfoBytes, makeEthPubkeyFromByte, makePubKey} from "../eth-transaction/Auth";
 import { makeRawTxBytes} from "../eth-transaction/Tx"
 import { getUint8ArrayPubKey } from '../metamaskHelpers'
-
+import { fetchAccount} from './fetch'
 
 import { Registry } from "@cosmjs/proto-signing"
 import { recoverPersonalSignature } from '@metamask/eth-sig-util'
@@ -42,7 +42,7 @@ export function broadcastTransaction(address, msg, signDocMsg, chainId, memo, ga
         gasLimit: gasLimit.toString(),
     }
 
-    accountOnChain = fechAccoutOnChain(address)
+    accountOnChain = fetchAccount(address)
 
     const signDocJsonString = makeSignDocJsonString(signDocMsg, stdFeeToPutIntoSignDoc, chainId, memo, accountOnChain.accountNumber, accountOnChain.sequence) 
     pubKeyBytes = getUint8ArrayPubKey({
