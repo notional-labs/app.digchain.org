@@ -1,12 +1,29 @@
-import { makeAuthInfoBytes } from "../eth-transaction/Auth"
 import { makeSignDocJsonString } from "../eth-transaction/Sign"
-import { makeAuthInfoBytes, makeEthPubkeyFromByte, makePubKey} from "../eth-transaction/Auth";
+import { makeAuthInfoBytes, makeEthPubkeyFromByte} from "../eth-transaction/Auth";
 import { makeRawTxBytes} from "../eth-transaction/Tx"
-import { getUint8ArrayPubKey } from '../metamaskHelpers'
 import { fetchAccount} from './fetch'
 
 import { Registry } from "@cosmjs/proto-signing"
 import { recoverPersonalSignature } from '@metamask/eth-sig-util'
+
+function makePubKey (pubkeyBytes) {
+  const pubkey = encodePubkey({
+      type: "tendermint/PubKeySecp256k1",
+      value: toBase64(pubkeyBytes),
+  });
+  return pubkey
+}
+
+function getUint8ArrayPubKey(data){
+  const pubKey = extractPublicKey({
+      data: data.data,
+      signature: data.signature
+  });
+  
+  const compressedPubKeyHex = compress(pubKey.slice(2));
+  return hexToUnit8Array(compressedPubKeyHex)
+}
+
 
 
 function fromHexString (hexString){

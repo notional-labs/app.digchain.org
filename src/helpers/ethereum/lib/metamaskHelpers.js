@@ -34,6 +34,8 @@ export function removeLeading0x(str) {
 }
 
 export function addLeading0x(str) {
+
+    
     if (!str.startsWith('0x'))
         return '0x' + str;
     else return str;

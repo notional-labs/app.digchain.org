@@ -3,7 +3,7 @@ import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeSignDocWithDrawelMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeSignDocWithDrawMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 
 const style = {
