@@ -14,6 +14,8 @@ import logo from './assets/img/DIG.png';
 import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
 import { Image, } from 'antd';
+import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
+
 import "@fontsource/merriweather"
 import AccountList from './pages/AccountList';
 
@@ -63,6 +65,7 @@ const App = () => {
   const connect = async (val) => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr(val)
+      console.log(accounts)
       if (!localStorage.getItem('accounts')) {
         localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
         setAccounts([...{ account: accounts[0], type: 'keplr' }])
@@ -77,19 +80,22 @@ const App = () => {
       }
     }
     else {
-      //metamask logic
-        if (typeof web3 !== 'undefined') {
-          console.log('web3 is enabled')
-          if (web3.currentProvider.isMetaMask === true) {
-            console.log('MetaMask is active')
-          } else {
-            console.log('MetaMask is not available')
-          }
-        } else {
-          console.log('web3 is not found')
-        }
+      let web3 = await getWeb3Instance();
+      const accounts = (await web3.eth.getAccounts());
+      
+      if (!localStorage.getItem('accounts')) {
+        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
       }
+      if (localStorage.getItem('accounts')) {
+        let accountsList = JSON.parse(localStorage.getItem('accounts'))
+        if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
+          accountsList.push({account: accounts[0], type: 'metamask'})
+          localStorage.setItem('accounts', JSON.stringify(accountsList))
+        }
+      }    
+      //metamask logic
   }
+}
 
   const handleOver = (e) => {
     e.target.style.border = 'solid 1px black'
