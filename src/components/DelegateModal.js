@@ -3,6 +3,7 @@ import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
+import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 
 const style = {
     transfer: {
@@ -104,6 +105,26 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     console.log(e)
                 })
             }
+        }
+        //makeSignDocDelegateMsg, makeDelegateMsg
+        // please set enviroment variable: DENOM, etc
+        else{
+            //import web3
+            let web3 = await getWeb3Instance();
+            const denom = "stake"
+            const chainId = "test-1"
+            const memo = "Love From Dev Team"
+            const address = delegators[selectDel].account.address
+            const gasLimit = 200000
+
+
+            const recipient = validators[selectVal].operator_address
+            const amount = value * 1000000
+
+            const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
+            const signDocDelegate = makeSignDocDelegateMsg(delegators[selectDel].account.address, recipient, amount, denom) 
+            
+            broadcastTransaction(address, msgDelegate.amount, signDocDelegate, chainId, memo, gasLimit, web3 )
         }
     }
 

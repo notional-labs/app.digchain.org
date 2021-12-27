@@ -42,7 +42,7 @@ export function makeWithDrawMsg(delegator_address, validator_address, amount, de
     return msg
 }
 
-export function makeMsgFromUndelegate(delegatorAddress, validatorAddress, amount, denom){
+export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, denom){
 
     const msg = {
         delegatorAddress: delegatorAddress,
@@ -56,7 +56,7 @@ export function makeMsgFromUndelegate(delegatorAddress, validatorAddress, amount
     return msg
 }
 
-export function makeMsgBeginRedelegate(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom){
+export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom){
     const msg = {
         delegatorAddress:       delegatorAddress,
         validatorSrcAddress:    validatorSrcAddress, 

@@ -7,7 +7,7 @@ import { toHexString, fromHexString} from './util'
  * 
  * @returns {Web3} web3 instance
  */
-async function getWeb3Instance(){
+ export async function getWeb3Instance(){
     // Empty web3 instance
     if (typeof window.ethereum === 'undefined') {
         window.alert("Meta mask is not present");
@@ -62,5 +62,3 @@ export function getUint8ArrayPubKeyFromSignatureData(data){
     const compressedPubKeyHex = compress(pubKey.slice(2));
     return fromHexString(compressedPubKeyHex)
 }
-
-export { getWeb3Instance, getUint8ArrayPubKeyFromSignatureData };
