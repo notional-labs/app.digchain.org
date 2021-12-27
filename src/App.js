@@ -19,11 +19,12 @@ import { Image, } from 'antd';
 import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
 
 import "@fontsource/merriweather"
+import AccountList from './pages/AccountList';
 
 
 const style = {
   button: {
-    marginTop: '25rem',
+    marginTop: '5rem',
   },
   divButton: {
     display: 'flex',
@@ -57,7 +58,6 @@ const App = () => {
 
   const wrapSetShow = useCallback(async (val) => {
     setShow(val)
-    // await connect(chain)
   }, [setShow])
 
   const handleClose = () => {
@@ -69,20 +69,22 @@ const App = () => {
       const { accounts } = await getKeplr(val)
       console.log(accounts)
       if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
+        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
+        setAccounts([...{ account: accounts[0], type: 'keplr' }])
       }
       else if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
         if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
-          accountsList.push({account: accounts[0], type: 'keplr'})
+          accountsList.push({ account: accounts[0], type: 'keplr' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
+          setAccounts([...accountsList])
         }
       }
     }
     else {
       let web3 = await getWeb3Instance();
       const accounts = (await web3.eth.getAccounts());
-
+      
       if (!localStorage.getItem('accounts')) {
         localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
       }
@@ -93,6 +95,7 @@ const App = () => {
           localStorage.setItem('accounts', JSON.stringify(accountsList))
         }
       }    
+      //metamask logic
   }
 }
 
@@ -161,7 +164,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={Main} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow}/>} />
         </Routes>
       </Router>
       <>
@@ -189,8 +192,8 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={() => {
-                  connect('keplr')
+                onClick={async() => {
+                  await connect('keplr')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
@@ -214,8 +217,8 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={() => {
-                  connect('metamask')
+                onClick={async() => {
+                  await connect('metamask')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>

@@ -106,9 +106,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 })
             }
         }
-        //makeSignDocDelegateMsg, makeDelegateMsg
-        // please set enviroment variable: DENOM, etc
         else{
+            //makeSignDocDelegateMsg, makeDelegateMsg
+            // please set enviroment variable: DENOM, etc
             //import web3
             let web3 = await getWeb3Instance();
             const denom = "stake"
@@ -166,7 +166,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#403455',
                         color: '#F6F3FB'
-                    }} min={0} step={0.01} onChange={handleChange} />
+                    }} min={0} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>
