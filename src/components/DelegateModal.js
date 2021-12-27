@@ -105,6 +105,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 })
             }
         }
+        else {
+            //metamask delegate logic
+        }
     }
 
     return (
@@ -145,7 +148,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#403455',
                         color: '#F6F3FB'
-                    }} min={0} step={0.01} onChange={handleChange} />
+                    }} min={0} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>

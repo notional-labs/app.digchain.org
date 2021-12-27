@@ -17,11 +17,12 @@ import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
 import { Image, } from 'antd';
 import "@fontsource/merriweather"
+import AccountList from './pages/AccountList';
 
 
 const style = {
   button: {
-    marginTop: '25rem',
+    marginTop: '5rem',
   },
   divButton: {
     display: 'flex',
@@ -55,7 +56,6 @@ const App = () => {
 
   const wrapSetShow = useCallback(async (val) => {
     setShow(val)
-    // await connect(chain)
   }, [setShow])
 
   const handleClose = () => {
@@ -66,19 +66,31 @@ const App = () => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr(val)
       if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
+        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
+        setAccounts([...{ account: accounts[0], type: 'keplr' }])
       }
       else if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
         if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
-          accountsList.push({account: accounts[0], type: 'keplr'})
+          accountsList.push({ account: accounts[0], type: 'keplr' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
+          setAccounts([...accountsList])
         }
       }
     }
     else {
       //metamask logic
-    }
+        if (typeof web3 !== 'undefined') {
+          console.log('web3 is enabled')
+          if (web3.currentProvider.isMetaMask === true) {
+            console.log('MetaMask is active')
+          } else {
+            console.log('MetaMask is not available')
+          }
+        } else {
+          console.log('web3 is not found')
+        }
+      }
   }
 
   const handleOver = (e) => {
@@ -146,7 +158,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={Main} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow}/>} />
         </Routes>
       </Router>
       <>
@@ -174,8 +186,8 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={() => {
-                  connect('keplr')
+                onClick={async() => {
+                  await connect('keplr')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
@@ -199,8 +211,8 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={() => {
-                  connect('metamask')
+                onClick={async() => {
+                  await connect('metamask')
                   setShow(false)
                 }}>
                 <div style={style.buttonContent}>
