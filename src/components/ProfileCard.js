@@ -58,6 +58,12 @@ const ProfileCard = ({ account }) => {
 
                 setAmount(balanceAmount)
             }
+            else {
+                const balance = await getBalance(account.account)
+                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+
+                setAmount(balanceAmount)
+            }
         })()
     }, [account])
 
@@ -72,7 +78,7 @@ const ProfileCard = ({ account }) => {
                     padding: 20,
                     borderRadius: '20px'
                 }}>
-                {account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `}
+                {account.type === 'keplr' ? ( account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : ( account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
             </Paragraph>
             <Paragraph style={{
                 color: '#2a3158',
