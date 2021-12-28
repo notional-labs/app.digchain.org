@@ -2,6 +2,7 @@ import './App.css';
 import { Modal, } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
+import AccountDetail from './pages/AccountDetail';
 import { getKeplr, } from './helpers/getKeplr';
 import ValidatorsList from './pages/ValidatorsList';
 import {
@@ -13,7 +14,7 @@ import {
 import logo from './assets/img/DIG.png';
 import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
-import { Image, } from 'antd';
+import { Image, message } from 'antd';
 import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
 
 import "@fontsource/merriweather"
@@ -62,6 +63,10 @@ const App = () => {
     setShow(false)
   }
 
+  const warning = (val) => {
+    message.warning(val, 1)
+  }
+
   const connect = async (val) => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr(val)
@@ -75,6 +80,9 @@ const App = () => {
           accountsList.push({ account: accounts[0], type: 'keplr' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
           setAccounts([...accountsList])
+        }
+        else {
+          warning('this wallet account already exist')
         }
       }
     }
@@ -90,6 +98,9 @@ const App = () => {
         if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
           accountsList.push({ account: accounts[0], type: 'metamask' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
+        }
+        else {
+          warning('this wallet account already exist')
         }
       }
       //metamask logic
@@ -115,7 +126,7 @@ const App = () => {
       <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem' }}>
-            <Image width={100}
+            <Image width={70}
               src={logo}
               preview={false} />
           </div>
@@ -162,6 +173,7 @@ const App = () => {
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow} />} />
+          <Route path="/accounts/:id" element={<AccountDetail accounts={accounts}/>} />
         </Routes>
       </Router>
       <>

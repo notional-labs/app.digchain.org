@@ -4,7 +4,7 @@ const style = {
     button: {
         width: '50%',
         height: '6rem',
-        borderRadius: '50px',
+        borderRadius: '20px',
         backgroundColor: '#f4ea57',
         border: 'solid 1px black',
         boxShadow: '6px 6px #2C223E'

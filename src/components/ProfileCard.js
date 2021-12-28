@@ -2,6 +2,10 @@ import { Typography, } from 'antd';
 import "@fontsource/merriweather"
 import { getBalance } from '../helpers/getBalances';
 import { useEffect, useState } from 'react';
+import {
+    Link,
+} from "react-router-dom";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -77,7 +81,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
                     padding: 20,
                     borderRadius: '20px'
                 }}>
-                {account.type === 'keplr' ? ( account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : ( account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
+                {account.type === 'keplr' ? (account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : (account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
             </Paragraph>
             <Paragraph style={{
                 color: '#2a3158',
@@ -90,12 +94,14 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
                 {parseInt(amount) / 1000000} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB' }} onClick={handleClick}>
                     transfer
                 </button>
-                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}}>
-                    Detail
-                </button>
+                <Link style={{width: '30%'}} to={account.type === 'keplr' ? account.account.address : account.account}>
+                    <button style={{ ...style.button, width: '100%', backgroundColor: '#AC99CF', color: '#F6F3FB' }}>
+                        Detail
+                    </button>
+                </Link>
             </div>
         </div>
     )
