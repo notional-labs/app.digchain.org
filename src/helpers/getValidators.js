@@ -1,7 +1,11 @@
 import axios from 'axios' 
 
 export const getValidators = async() => {
-    const res = await axios.get('https://api-1-dig.notional.ventures/staking/validators')
+    axios.defaults.baseURL = 'http://0.0.0.0:1317';
+    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+  
+    const res = await axios.get('http://0.0.0.0:1317/staking/validators')
     if (res.status === 200) {
         let validators = res.data.result
         let promises = []

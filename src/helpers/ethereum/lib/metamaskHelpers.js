@@ -1,13 +1,12 @@
 import Web3 from 'web3';
 import { publicKeyConvert } from 'secp256k1';
 import { extractPublicKey } from '@metamask/eth-sig-util'
-import { toHexString, fromHexString} from './util'
 
 /**
  * 
  * @returns {Web3} web3 instance
  */
- export async function getWeb3Instance(){
+async function getWeb3Instance(){
     // Empty web3 instance
     if (typeof window.ethereum === 'undefined') {
         window.alert("Meta mask is not present");
@@ -34,12 +33,19 @@ export function removeLeading0x(str) {
 }
 
 export function addLeading0x(str) {
-
-    
     if (!str.startsWith('0x'))
         return '0x' + str;
     else return str;
 }
+
+export function uint8ArrayToHex(arr) {
+    return Buffer.from(arr).toString('hex');
+}
+
+export function hexToUnit8Array(str) {
+    return new Uint8Array(Buffer.from(str, 'hex'));
+}
+
 
 export function compress(startsWith04) {
 
@@ -48,19 +54,21 @@ export function compress(startsWith04) {
     if (testBuffer.length === 64) startsWith04 = '04' + startsWith04;
 
 
-    return toHexString(publicKeyConvert(
-        fromHexString(startsWith04),
+    return uint8ArrayToHex(publicKeyConvert(
+        hexToUnit8Array(startsWith04),
         true
     ));
 }
 
 
-export function getUint8ArrayPubKeyFromSignatureData(data){
+function getUint8ArrayPubKey(data){
     const pubKey = extractPublicKey({
         data: data.data,
         signature: data.signature
     });
     
     const compressedPubKeyHex = compress(pubKey.slice(2));
-    return fromHexString(compressedPubKeyHex)
+    return hexToUnit8Array(compressedPubKeyHex)
 }
+
+export { getWeb3Instance, getUint8ArrayPubKey };

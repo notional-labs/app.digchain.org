@@ -3,8 +3,10 @@ import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSendMsg, makeSignDocSendMsg, makeSendMsgcTemp} from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
+import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+
 
 const style = {
     transfer: {
@@ -80,7 +82,6 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
         }
         return false
     }
-
     const handleChangeSelect = (e) => {
         setSelectDel(e.target.value)
     }
@@ -116,7 +117,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
-            const address = delegators[selectDel].account.address
+            const address = delegators[selectDel].account
             const gasLimit = 200000
 
 
@@ -124,9 +125,11 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const amount = value * 1000000
 
             const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
-            const signDocDelegate = makeSignDocDelegateMsg(delegators[selectDel].account.address, recipient, amount, denom) 
-            
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+            const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom) 
+
+            console.log("address", address)
+            const b = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+
         }
     }
 
@@ -138,7 +141,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.account.address}</option>
+                                <option value={index}>{delegator.account.address?delegator.account.address:delegator.account }</option>
                             ))
                         }
                     </Form.Select>

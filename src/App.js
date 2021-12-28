@@ -81,15 +81,19 @@ const App = () => {
     else {
       let web3 = await getWeb3Instance();
       const accounts = (await web3.eth.getAccounts());
-      
+      console.log(localStorage.getItem('accounts'))
       if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'metamask'}]))
+        for (var i = 0; i < accounts.length; i++){
+          localStorage.setItem('accounts', JSON.stringify([{account: accounts[i], type: 'metamask'}]))
+        }
       }
       if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
-          accountsList.push({account: accounts[0], type: 'metamask'})
-          localStorage.setItem('accounts', JSON.stringify(accountsList))
+        for (var i = 0; i < accounts.length; i++){
+          if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[i]).length === 0) {
+            accountsList.push({account: accounts[i], type: 'metamask'})
+            localStorage.setItem('accounts', JSON.stringify(accountsList))
+          }
         }
       }    
       //metamask logic

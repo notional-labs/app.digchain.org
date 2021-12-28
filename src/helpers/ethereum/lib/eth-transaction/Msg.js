@@ -1,8 +1,9 @@
-import { coins } from "@cosmjs/launchpad";
+import { coins, coin } from "@cosmjs/launchpad";
+
 
 export function makeSendMsg (fromAddress, toAddress, amount, denom) {
     const msgSend = {
-         fromAddress: fromAddress,
+        fromAddress: fromAddress,
         toAddress: toAddress,
         amount: coins(amount, denom),
     };
@@ -18,7 +19,7 @@ export function makeDelegateMsg(delegator_address, validator_address, amount, de
     const msgDelegate = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,    
-        amount: coins(amount, denom)
+        amount: coin(amount, denom)
     }
     const msg = {
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
@@ -32,8 +33,6 @@ export function makeWithDrawMsg(delegator_address, validator_address, amount, de
     const msgWithDraw = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,  
-
-        amount: coins(amount, denom)
     }
     const msg = {
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
@@ -74,14 +73,10 @@ export function makeSignDocSendMsg (fromAddress, toAddress, amount, denom) {
     const signDocMsg = {
         type:"cosmos-sdk/MsgSend",
         value:{
-            amount:[
-                {
-                    amount:amount.toString(),
-                    denom:denom
-                }
-            ],
-            from_address:fromAddress,
-            to_address:toAddress
+            amount: coins(amount, denom),            amount: coins(amount, denom), 
+
+            from_address: fromAddress,
+            to_address: toAddress
         }
     }
     return signDocMsg
@@ -91,15 +86,9 @@ export function makeSignDocDelegateMsg (delegator_address, validator_address, am
     const signDocDelegate = {
         type:"cosmos-sdk/MsgDelegate",
         value:{
-            amount:[
-                {
-                    amount:amount.toString(),
-                    denom:denom
-                }
-            ],
+            amount: coin(amount, denom),
             delegator_address: delegator_address,
             validator_address: validator_address,    
-     
         }
     }
     return signDocDelegate
@@ -109,21 +98,14 @@ export function makeSignDocWithDrawMsg (delegator_address, validator_address, am
     const signDocDelegate = {
         type:"cosmos-sdk/MsgWithdrawDelegationReward",
         value:{
-            amount:[
-                {
-                    amount:amount.toString(),
-                    denom:denom
-                }
-            ],
             delegator_address: delegator_address,
             validator_address: validator_address,    
-     
         }
     }
     return signDocDelegate
 }
 
-export function makeSignDocRedelegateMsg (delegator_address, validator_src_address, validator_dst_address, amount, denom) {
+export function makeSignDocBeginRedelegateMsg (delegator_address, validator_src_address, validator_dst_address, amount, denom) {
     const msgRedelegate =[
         {
           "type": "cosmos-sdk/MsgBeginRedelegate",
@@ -131,12 +113,22 @@ export function makeSignDocRedelegateMsg (delegator_address, validator_src_addre
             delegator_address: delegator_address,
             validator_src_address: validator_src_address,
             validator_dst_address: validator_dst_address,
-            amount: {
-               denom: denom,
-              amount: amount.toString(),
-            }
+            amount:coin(amount, denom)
           }
         }
       ]
     return msgRedelegate
+}
+
+
+export function makeSignDocUnDelegateMsg (delegator_address, validator_address, amount, denom) {
+    const signDocDelegate = {
+        type:"cosmos-sdk/MsgUndelegate",
+        value:{
+            amount: coin(amount, denom),
+            delegator_address: delegator_address,
+            validator_address: validator_address,    
+        }
+    }
+    return signDocDelegate
 }

@@ -1,5 +1,7 @@
+import { Registry } from "@cosmjs/proto-signing";
 import { TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import Long from "long";
+import { defaultRegistryTypes } from "@cosmjs/stargate";
 
 
 
@@ -23,17 +25,19 @@ export function makeRawTxBytes(authInfoBytes, bodyBytes, signatures) {
     return TxRaw.encode(txRaw).finish()
 }
 
-export function makeTxBodyBytes(msg, memo, registry) {
-    let txBodyFields = {
-      typeUrl: "/cosmos.tx.v1beta1.TxBody",
-      value: {
-        messages: [
-          msg
-        ],
-        memo: memo,
-      },
-    };
-    const txBodyBytes = registry.encode(txBodyFields);
-    return txBodyBytes
+export function makeTxBodyBytes(msg, memo) {
+  const registry = new Registry(defaultRegistryTypes)
 
-  }
+  let txBodyFields = {
+    typeUrl: "/cosmos.tx.v1beta1.TxBody",
+    value: {
+      messages: [
+        msg
+      ],
+      memo: memo,
+    },
+  };
+  const txBodyBytes = registry.encode(txBodyFields);
+  return txBodyBytes
+
+}
