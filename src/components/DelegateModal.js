@@ -67,7 +67,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     };
 
     const error = () => {
-        message.error('Deposit failed maybe your account does not have dig yet', 2);
+        message.error('Deposit failed check if you are using the right account on keplr or it have any dig yet', 3);
     };
 
     const handleChange = (value) => {
@@ -97,7 +97,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = validators[selectVal].operator_address
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(data => {
+                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(() => {
                     success()
                     wrapSetter(false)
                 }).catch((e) => {
@@ -116,7 +116,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
-            const address = delegators[selectDel].account.address
+            const address = delegators[selectDel].account
             const gasLimit = 200000
 
 
@@ -124,7 +124,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const amount = value * 1000000
 
             const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
-            const signDocDelegate = makeSignDocDelegateMsg(delegators[selectDel].account.address, recipient, amount, denom) 
+            const signDocDelegate = makeSignDocDelegateMsg(delegators[selectDel].account, recipient, amount, denom) 
             
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
         }
@@ -138,7 +138,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.account.address}</option>
+                                <option value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
                             ))
                         }
                     </Form.Select>

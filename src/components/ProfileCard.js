@@ -41,7 +41,7 @@ const style = {
     }
 }
 
-const ProfileCard = ({ account }) => {
+const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
     const [amount, setAmount] = useState('')
 
     useEffect(() => {
@@ -60,6 +60,11 @@ const ProfileCard = ({ account }) => {
             }
         })()
     }, [account])
+
+    const handleClick = () => {
+        wrapSetSelect(index)
+        wrapSetShow(true)
+    }
 
     return (
         <div style={style.container}>
@@ -85,7 +90,7 @@ const ProfileCard = ({ account }) => {
                 {parseInt(amount) / 1000000} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}}>
+                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}} onClick={handleClick}>
                     transfer
                 </button>
                 <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}}>

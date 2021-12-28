@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Image } from 'antd';
-import { getValidators, getLogo } from '../helpers/getValidators';
+import { getValidators, } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
 import PacmanLoader from "react-spinners/PacmanLoader";

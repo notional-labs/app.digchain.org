@@ -1,7 +1,7 @@
-import { InputNumber, message, } from "antd"
-import { delegate } from "../helpers/transaction"
+import { Input, InputNumber, message, } from "antd"
+import { transfer } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
-import { Form } from "react-bootstrap";
+import { getBalance } from "../helpers/getBalances";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 
 const style = {
@@ -48,59 +48,65 @@ const style = {
     }
 }
 
-const TransferModal = ({ validators, wrapSetter, defaultVal }) => {
+const TransferModal = ({ account, wrapSetShow }) => {
     const [value, setValue] = useState('')
-    const [delegators, setDelegators] = useState([])
-    const [selectVal, setSelectVal] = useState(defaultVal)
-    const [selectDel, setSelectDel] = useState(0)
+    const [address, setAddress] = useState('')
+    const [amount, setAmount] = useState('')
 
     useEffect(() => {
         (async () => {
-            setDelegators([...JSON.parse(localStorage.getItem('accounts'))])
+            if (account.type === 'keplr') {
+                const balance = await getBalance(account.account.address)
+                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+
+                setAmount(balanceAmount)
+            }
+            else {
+                const balance = await getBalance(account.account)
+                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+
+                setAmount(balanceAmount)
+            }
         })()
-    }, [])
+    }, [account])
 
     const success = () => {
         message.success('Deposit success', 1);
     };
 
     const error = () => {
-        message.error('Deposit failed maybe your account does not have dig yet', 2);
+        message.error('Deposit failed', 2);
     };
 
     const handleChange = (value) => {
         setValue(value)
     }
 
+    const handleChangeAddress = (e) => {
+        setAddress(e.target.value)
+    }
+
     const checkDisable = () => {
-        if (value === 0) {
+        if (value === 0 || address === '') {
             return true
         }
         return false
     }
 
-    const handleChangeSelect = (e) => {
-        setSelectDel(e.target.value)
-    }
-
-    const handleChangeSelectVal = (e) => {
-        setSelectVal(e.target.value)
-    }
-
     const handleClick = async () => {
-        if (delegators[selectDel].type === 'keplr') {
+        if (account.type === 'keplr') {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
             if (stargate != null) {
                 const amount = value * 1000000
-                const recipient = validators[selectVal].operator_address
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(data => {
+                const recipient = address
+                transfer(stargate, account.account.address, amount, recipient).then(() => {
                     success()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                 }).catch((e) => {
                     error()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                     console.log(e)
                 })
             }
@@ -113,15 +119,35 @@ const TransferModal = ({ validators, wrapSetter, defaultVal }) => {
     return (
         <div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>From</p>
+                <div style={{
+                    marginBottom: '20px',
+                    width: '100%',
+                    height: '40px',
+                    borderRadius: '10px',
+                    border: `2px solid #c4c4c4`,
+                    fontSize: '1rem',
+                    padding: '0.2rem',
+                    paddingLeft: '0.5rem',
+                    backgroundColor: '#403455',
+                    color: '#F6F3FB'
+                }}>
+                    {account.type === 'keplr' ? account.account.address : account.account}
+                </div>
                 <p style={style.formTitle}>To</p>
                 <>
-                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
-                        {
-                            delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.account.address}</option>
-                            ))
-                        }
-                    </Form.Select>
+                    <Input style={{
+                        width: '100%',
+                        height: '40px',
+                        borderRadius: '10px',
+                        border: `2px solid #c4c4c4`,
+                        fontSize: '1rem',
+                        paddingTop: '0.2rem',
+                        backgroundColor: '#403455',
+                        color: '#F6F3FB'
+                    }}
+                        placeholder="Recipient address"
+                        onChange={handleChangeAddress} />
                 </>
             </div>
             <div style={style.transfer}>
@@ -136,11 +162,11 @@ const TransferModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#403455',
                         color: '#F6F3FB'
-                    }} min={0} step={0.000001} onChange={handleChange} />
+                    }} min={0} max={parseInt(amount) / 1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>
-                <button disabled={checkDisable()} onClick={() => wrapSetter(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
                 <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>

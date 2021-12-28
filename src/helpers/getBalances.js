@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const getBalance = async (address) => {
-    const URL = `http://65.21.202.37:2223/bank/balances/${address}`
+    const URL = `https://api-1-dig.notional.ventures/bank/balances/${address}`
     let balances = []
     const res= await axios.get(URL)
     if(res.data.result && res.data.result.length > 0){

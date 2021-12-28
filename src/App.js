@@ -81,20 +81,20 @@ const App = () => {
     else {
       let web3 = await getWeb3Instance();
       const accounts = (await web3.eth.getAccounts());
-      
+
       if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'metamask'}]))
+        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
       }
       if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
         if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
-          accountsList.push({account: accounts[0], type: 'metamask'})
+          accountsList.push({ account: accounts[0], type: 'metamask' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
         }
-      }    
+      }
       //metamask logic
+    }
   }
-}
 
   const handleOver = (e) => {
     e.target.style.border = 'solid 1px black'
@@ -111,7 +111,7 @@ const App = () => {
 
 
   return (
-    <div className="App" style={{minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
+    <div className="App container-fluid" style={{ minWidth: screen.width, height: 'auto', minHeight: '100%' }}>
       <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem' }}>
@@ -161,7 +161,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={Main} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow}/>} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow} />} />
         </Routes>
       </Router>
       <>
@@ -189,7 +189,7 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={async() => {
+                onClick={async () => {
                   await connect('keplr')
                   setShow(false)
                 }}>
@@ -214,7 +214,7 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={async() => {
+                onClick={async () => {
                   await connect('metamask')
                   setShow(false)
                 }}>
