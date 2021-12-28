@@ -7,15 +7,15 @@ import {
 import { useEffect, useState, useCallback } from 'react';
 import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
-import { getStargateClient, getKeplr } from '../helpers/getKeplr';
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
-import { getDelegation, getBalance, getReward, getUnbond } from '../helpers/getBalances';
+import { getAsset, getTotalDelegate, getTotalUnbonding } from '../helpers/getBalances';
 
 const { Title, Paragraph } = Typography;
 
 const style = {
     container: {
-        padding: 50
+        padding: 50,
+        paddingTop: 20
     },
     assetBlock: {
         display: 'flex',
@@ -38,7 +38,16 @@ const style = {
         marginBottom: '20px',
         color: '#bdbdbd',
         fontFamily: 'Ubuntu',
-        marginTop: '2rem'
+        marginTop: '4rem'
+    },
+    delegation:{
+        backgroundColor: '#50426B',
+        borderRadius: '20px',
+        marginBottom: '20px',
+        color: '#bdbdbd',
+        fontFamily: 'Ubuntu',
+        marginTop: '4rem',
+        padding: 20
     },
     button: {
         border: 0,
@@ -74,12 +83,15 @@ const AccountDetail = ({ accounts }) => {
     const [show, setShow] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
     const [asset, setAsset] = useState({
-        balance: '132323',
-        delegation: '3423422565',
-        reward: '1',
-        unbonding: '1'
+        balance: '',
+        delegation: '',
+        reward: '',
+        unbonding: ''
     })
+    const [reward, setReward] = useState([])
+    const [delegation, setDelegation] = useState([])
     let { id } = useParams();
+
 
     const wrapSetShowTransferModal = useCallback((val) => {
         setShow(val)
@@ -97,7 +109,7 @@ const AccountDetail = ({ accounts }) => {
         (async () => {
             accounts.map((account, index) => {
                 if (account.type === 'keplr') {
-                    if (account.account.address !== id) {
+                    if (account.account.address === id) {
                         setSelectAcc(index)
                     }
                 }
@@ -107,17 +119,15 @@ const AccountDetail = ({ accounts }) => {
                     }
                 }
             })
-            const delegate = await getDelegation(id)
-            const balance = await getBalance(id)
-            const reward = await getReward(id)
-            const unbonding = await getUnbond(id)
-            // const { offlineSigner } = await getKeplr();
-
-            // const client = await getStargateClient(offlineSigner)
-
-            // const balance = await client.getDelegation(id)
-
-            // console.log(balance)
+            const asset = await getAsset(id)
+            setAsset({
+                balance: asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : 0,
+                delegation: asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : 0,
+                reward: asset[2].total.length > 0 ? asset[2].total[0].amount : 0,
+                unbonding: asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : 0
+            })
+            setDelegation([...asset[1].delegation_responses])
+            setReward([...asset[2].rewards])
         })()
     }, [id])
 
@@ -139,7 +149,7 @@ const AccountDetail = ({ accounts }) => {
                         fontSize: '1.2rem'
                     }}>
                     <p style={{ fontSize: '1.2rem', padding: 0 }}>
-                        Address
+                        Address:
                     </p>
                     {id}
                 </Paragraph>
@@ -161,11 +171,12 @@ const AccountDetail = ({ accounts }) => {
                             animate={true}
                             radius={PieChart.defaultProps.radius - 7}
                             data={[
-                                { title: 'One', value: 10, color: '#E38627' },
-                                { title: 'Two', value: 15, color: '#C13C37' },
-                                { title: 'Three', value: 20, color: '#6A2135' },
+                                { title: 'Balance', value: parseFloat(asset.balance), color: '#b8ffcf' },
+                                { title: 'Delegation', value: parseFloat(asset.delegation), color: '#a2adfa' },
+                                { title: 'Reward', value: parseFloat(asset.reward), color: '#ffcc91' },
+                                { title: 'Undonding', value: parseFloat(asset.unbonding), color: '#ffa1a1' }
                             ]}
-                            style={{ marginLeft: '50px' }}
+                            style={{ marginLeft: '50px', }}
                         />
                     </div>
                     <hr style={{
@@ -178,62 +189,62 @@ const AccountDetail = ({ accounts }) => {
                     <ul style={{ margin: 'auto', padding: 0, marginLeft: '10rem', listStyleType: 'none', textAlign: 'left', fontSize: '1.25rem', paddingBottom: '10rem' }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#b8ffcf', opacity: 0.6, borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ padding: 5, backgroundColor: '#b8ffcf', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
                                     <BsWallet style={{ ...style.icon, color: '#2adb71' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Balance
                                 </p>
                             </div>
-                            <div>
-                                {asset.balance} DIG
+                            <div style={{ fontWeight: 600 }}>
+                                {parseInt(asset.balance)/1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#a2adfa', opacity: 0.6, borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ padding: 5, backgroundColor: '#a2adfa', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
                                     <BsLock style={{ ...style.icon, color: '#2b32ff' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Delegation
                                 </p>
                             </div>
-                            <div>
-                                {asset.delegation} DIG
+                            <div style={{ fontWeight: 600 }}>
+                                {parseInt(asset.delegation)/1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#ffcc91', opacity: 0.6, borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ padding: 5, backgroundColor: '#ffcc91', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
                                     <BsGraphUp style={{ ...style.icon, color: '#fc9619' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     reward
                                 </p>
                             </div>
-                            <div>
-                                {asset.reward} DIG
+                            <div style={{ fontWeight: 600 }}>
+                                {parseInt(asset.reward)/1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#ffa1a1', opacity: 0.6, borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ padding: 5, backgroundColor: '#ffa1a1', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
                                     <BsGraphDown style={{ ...style.icon, color: '#ff3636' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Unbonding
                                 </p>
                             </div>
-                            <div>
-                                {asset.unbonding} DIG
+                            <div style={{ fontWeight: 600 }}>
+                                {parseInt(asset.unbonding)/1000000} DIG
                             </div>
                         </li>
                     </ul>
-                    <hr/>
+                    <hr />
                 </div>
             </div>
-            <div>
-                <DelegationList />
+            <div style={{...style.delegation, marginTop: 0}}>
+                <DelegationList delegations={delegation} rewards={reward}/>
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
