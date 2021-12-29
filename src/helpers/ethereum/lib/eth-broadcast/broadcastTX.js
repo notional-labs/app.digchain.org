@@ -36,6 +36,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
 
   var pubKeyBytes = null;
   var signature_metamask = null;
+  var ans = null
 
   web3.currentProvider.send(
     {
@@ -66,17 +67,21 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
       signature[64] = 0 
       console.log("signature", signature )
       const txRawBytes = makeRawTxBytes(authInfoBytes, bodyBytes, [signature])
-
       //TODO : pls change node = env var
       const node = "127.0.0.1:26657"
       StargateClient.connect(node).then(
         (broadcaster) => {
-          const ans = broadcaster.broadcastTx(
+          broadcaster.broadcastTx(
             Uint8Array.from(txRawBytes)
+          ).then(
+            (data)=>{
+              ans = data
+              console.log("abcxyz", ans)
+            }
           );
-          console.log(ans)
         }
       );        
     })
+  return ans
   
 }

@@ -1,16 +1,9 @@
 import axios from 'axios'
 
-<<<<<<< HEAD
-export const getValidators = async() => {
-    axios.defaults.baseURL = 'http://0.0.0.0:1317';
-    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-  
-    const res = await axios.get('http://0.0.0.0:1317/staking/validators')
-=======
 export const getValidators = async (logoDisableFlag) => {
-    const res = await axios.get('https://api-1-dig.notional.ventures/staking/validators')
->>>>>>> origin/son-branch
+    const res = await axios.get('http://0.0.0.0:1317/staking/validators')
+
+    // const res = await axios.get('https://api-1-dig.notional.ventures/staking/validators')
     if (res.status === 200) {
         let validators = res.data.result
         if (!logoDisableFlag) {

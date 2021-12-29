@@ -2,7 +2,7 @@ import axios from "axios";
 
 const fetch_address = async (address) => {
     const options = {
-      url: `https://api-1-dig.notional.ventures/auth/accounts/${address}`,
+      url: `http://0.0.0.0:1317/auth/accounts/${address}`,
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -15,10 +15,9 @@ const fetch_address = async (address) => {
   
   
 export const fetchAccount = async (address) => {
-  console.log("fuck")
     // get account
     try {
-      let accountOnChain = await axios.get(`http://127.0.0.1:1317/auth/accounts/${address}`);
+      let accountOnChain = await fetch_address(address);
       console.log("account on chain", accountOnChain)
   
       const accountNumber = accountOnChain.data.result.value.account_number ? accountOnChain.data.result.value.account_number : 0
@@ -32,7 +31,9 @@ export const fetchAccount = async (address) => {
       }
   
     } catch (err) {
-      const accountOnChain = null
-      return accountOnChain
+      return {
+        accountNumber : 8,
+        sequence : 22
+      }
     }
   }

@@ -3,6 +3,7 @@ import { withDraw } from "../helpers/transaction"
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocWithDrawMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
+import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 
 const style = {
     transfer: {
@@ -83,14 +84,12 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
-            const address = address
+            console.log(address)
             const gasLimit = 200000
 
 
-            const val = validator
-
-            const msgWithDraw = makeWithDrawMsg(address, val, denom)
-            const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(address, val, denom)
+            const msgWithDraw = makeWithDrawMsg(address, validator, denom)
+            const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(address, validator, denom)
 
             broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3)
         }

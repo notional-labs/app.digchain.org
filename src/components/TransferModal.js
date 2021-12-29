@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react'
 import { getBalance } from "../helpers/getBalances";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 
+import { makeSendMsg, makeSignDocSendMsg, } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
+import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+
 const style = {
     transfer: {
         marginBottom: '2rem',
@@ -112,7 +116,23 @@ const TransferModal = ({ account, wrapSetShow }) => {
             }
         }
         else {
-            //metamask delegate logic
+            let web3 = await getWeb3Instance();
+            const denom = "stake"
+            const chainId = "test-1"
+            const memo = "Love From Dev Team"
+
+            const gasLimit = 200000
+
+            const amount = value * 1000000
+
+            const msgDelegate = makeSendMsg(account.account, address, amount, denom) 
+            const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom) 
+
+            console.log("address", address)
+            console.log("address abc", account.account)
+
+            const result = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+            console.log("fuck shiut", result)
         }
     }
 
