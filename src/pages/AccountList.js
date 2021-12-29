@@ -22,7 +22,7 @@ const style = {
     },
 }
 
-const AccountList = ({ accounts, wrapSetShow }) => {
+const AccountList = ({ accounts }) => {
     const [show, setShow] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
 
@@ -47,9 +47,6 @@ const AccountList = ({ accounts, wrapSetShow }) => {
                     <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} />
                 </div>
             ))}
-            <div style={style.button}>
-                <ConnectButton wrapSetShow={wrapSetShow} />
-            </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
                     <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>

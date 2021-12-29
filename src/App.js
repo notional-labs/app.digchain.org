@@ -115,17 +115,11 @@ const App = () => {
     e.target.style.border = 0
   }
 
-
-  let Main = (<div style={style.button}>
-    <ConnectButton wrapSetShow={wrapSetShow} />
-  </div>)
-
-
   return (
     <div className="App container-fluid" style={{ minWidth: screen.width, height: 'auto', minHeight: '100%' }}>
       <Router>
         <div style={style.navbar}>
-          <div style={{ paddingLeft: '3rem' }}>
+          <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
             <Image width={70}
               src={logo}
               preview={false} />
@@ -135,12 +129,14 @@ const App = () => {
               <li>
                 <Link to='/accounts'>
                   <button style={{
-                    marginRight: '0.5rem',
-                    fontSize: '1rem',
-                    backgroundColor: '#7c5e93',
-                    color: '#2C223E',
+                    marginRight: '1rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#5a4d6e',
+                    color: '#F6F3FB',
                     padding: 10,
-                    width: '8rem',
+                    paddingTop: 5,
+                    paddingBottom: 5,
+                    width: '10rem',
                     borderRadius: '50px',
                     border: 0,
                     fontFamily: 'MerriWeather',
@@ -153,27 +149,32 @@ const App = () => {
                 <Link to='/staking'>
                   <button style={{
                     marginRight: '3rem',
-                    fontSize: '1rem',
-                    backgroundColor: '#7c5e93',
-                    color: '#2C223E',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#5a4d6e',
+                    color: '#F6F3FB',
                     padding: 10,
-                    width: '8rem',
+                    width: '10rem',
                     borderRadius: '50px',
                     border: 0,
+                    paddingTop: 5,
+                    paddingBottom: 5,
                     fontFamily: 'MerriWeather',
                   }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
                     Staking
                   </button>
                 </Link>
               </li>
+              <li>
+                <ConnectButton wrapSetShow={wrapSetShow} />
+              </li>
             </ul>
           </div>
         </div>
         <Routes>
-          <Route exact path="/" element={Main} />
+          <Route exact path="/" element={<div></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow} />} />
-          <Route path="/accounts/:id" element={<AccountDetail accounts={accounts}/>} />
+          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
         </Routes>
       </Router>
       <>

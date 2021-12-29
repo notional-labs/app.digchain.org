@@ -2,15 +2,14 @@ import "@fontsource/merriweather"
 
 const style = {
     button: {
-        width: '50%',
-        height: '6rem',
-        borderRadius: '20px',
+        width: '100%',
+        height: '2.5rem',
+        borderRadius: '50px',
         backgroundColor: '#f4ea57',
         border: 'solid 1px black',
-        boxShadow: '6px 6px #2C223E'
     },
     buttonText: {
-        fontSize: '2rem',
+        fontSize: '1.2rem',
         color: '#545454',
         fontFamily: 'Merriweather'
     }
@@ -27,7 +26,7 @@ const ConnectButton = ({ wrapSetShow }) => {
     }
 
     return (
-        <div>
+        <div style={{width: '10rem'}}>
             <button onMouseEnter={handleOver}
                 onMouseLeave={handleLeave}
                 style={style.button}

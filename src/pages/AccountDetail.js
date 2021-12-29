@@ -34,7 +34,7 @@ const style = {
     },
     asset: {
         backgroundColor: '#50426B',
-        borderRadius: '20px',
+        borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
         fontFamily: 'Ubuntu',
@@ -42,11 +42,11 @@ const style = {
     },
     delegation:{
         backgroundColor: '#50426B',
-        borderRadius: '20px',
+        borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
         fontFamily: 'Ubuntu',
-        marginTop: '4rem',
+        marginTop: '5rem',
         padding: 20
     },
     button: {
@@ -145,7 +145,7 @@ const AccountDetail = ({ accounts }) => {
                         backgroundColor: '#50426B',
                         color: '#bdbdbd',
                         padding: 20,
-                        borderRadius: '20px',
+                        borderRadius: '10px',
                         fontSize: '1.2rem'
                     }}>
                     <p style={{ fontSize: '1.2rem', padding: 0 }}>
@@ -171,10 +171,10 @@ const AccountDetail = ({ accounts }) => {
                             animate={true}
                             radius={PieChart.defaultProps.radius - 7}
                             data={[
-                                { title: 'Balance', value: parseFloat(asset.balance), color: '#b8ffcf' },
-                                { title: 'Delegation', value: parseFloat(asset.delegation), color: '#a2adfa' },
-                                { title: 'Reward', value: parseFloat(asset.reward), color: '#ffcc91' },
-                                { title: 'Undonding', value: parseFloat(asset.unbonding), color: '#ffa1a1' }
+                                { title: 'Balance', value: parseInt(asset.balance)/1000000, color: '#b8ffcf' },
+                                { title: 'Delegation', value: parseInt(asset.delegation)/1000000, color: '#a2adfa' },
+                                { title: 'Reward', value: parseInt(asset.reward)/1000000, color: '#ffcc91' },
+                                { title: 'Undonding', value: parseInt(asset.unbonding)/1000000, color: '#ffa1a1' }
                             ]}
                             style={{ marginLeft: '50px', }}
                         />

@@ -48,7 +48,6 @@ export const getAsset = async (address) => {
     promises.push(getUnbond(address))
 
     const asset = await Promise.all(promises)
-    console.log(asset)
     return asset
 }
 

@@ -3,6 +3,9 @@ import { Typography, } from 'antd';
 import DelegateModal from './DelegateModal';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getValidators } from '../helpers/getValidators';
+import { getTotal } from '../helpers/getBalances';
 
 const { Title, Paragraph } = Typography;
 
@@ -12,7 +15,8 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        paddingTop: 0
+        paddingTop: 0,
+        paddingBottom: 20
     },
     button: {
         border: 0,
@@ -27,11 +31,64 @@ const style = {
         backgroundColor: '#AC99CF',
         color: '#F6F3FB'
     },
+    actionButton: {
+        border: 'solid 2px #3B2D52',
+        backgroundColor: '#50426B',
+        padding: 5,
+        fontFamily: 'Ubuntu',
+        fontSize: '1rem'
+    },
+    table: {
+        width: '100%',
+    },
+    tdlHeader: {
+        backgroundColor: '#3B2D52',
+    },
+    tdlContent: {
+        marginTop: '0px',
+        borderRadius: '50px',
+        paddingTop: 0
+    },
+    th: {
+        padding: '15px 15px',
+        textAlign: 'left',
+        fontWeight: '700',
+        fontSize: '15px',
+        color: '#fff',
+        textTransform: 'uppercase',
+        fontFamily: 'Ubuntu',
+    },
+    td: {
+        padding: '15px',
+        textAlign: 'left',
+        verticalAlign: 'middle',
+        fontWeight: '600',
+        fontSize: '17px',
+        color: '#fff',
+        fontFamily: 'Ubuntu',
+        width: '20%'
+    }
 }
 
 const DelegationList = ({ delegations, rewards }) => {
+    const [validators, setValidators] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true)
+            let vals = await getValidators(true)
+            const totalSupply = getTotal(vals)
+            vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+            vals.map((val) => {
+                val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+            })
+            setValidators([...vals])
+            setLoading(false)
+        })()
+    }, [])
     return (
-        <div>
+        <div style={{ padding: 20 }}>
             <div style={style.container}>
                 <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
                     Delegation
@@ -44,45 +101,46 @@ const DelegationList = ({ delegations, rewards }) => {
                     </Link>
                 </div>
             </div>
-            <div>
-                <table cellPadding="0" cellSpacing="0" border="0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Validator</th>
-                            <th>Token</th>
-                            <th>Reward</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rewards.map((reward, index) => (
+            {!loading && (
+                <div>
+                    <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
+                        <thead style={style.tdlHeader}>
                             <tr>
-                                <tb>
-                                    {index + 1}
-                                </tb>
-                                <tb>
-                                    {reward.validator_address.substring(0, 10)} |
-                                </tb>
-                                <tb>
-                                    {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares)/1000000} |
-                                </tb>
-                                <tb>
-                                    {parseInt(reward.reward[0].amount) / 1000000} |
-                                </tb>
-                                <tb>
-                                    <button>
-                                        Redelegate
-                                    </button>
-                                    <button>
-                                        Unbonding
-                                    </button>
-                                </tb>
+                                <th style={{ ...style.th, width: '20%'}}>Validator</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Token</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Reward</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'center' }}>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody style={style.tdlContent}>
+                            {rewards.map((reward, index) => (
+                                <tr style={{ backgroundColor: index % 2 !== 0 && '#9D91B5', borderBottom: 'solid 1px #bdbdbd' }}>
+                                    <td style={style.td}>
+                                        {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
+                                    </td>
+                                    <td style={{...style.td, textAlign: 'right'}}>
+                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000} DIG
+                                    </td>
+                                    <td style={{...style.td, textAlign: 'right'}}>
+                                        {parseInt(reward.reward[0].amount) / 1000000} DIG
+                                    </td>
+                                    <td style={{...style.td, textAlign: 'right'}}>
+                                        <button style={{...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px'}}>
+                                            Withdraw Reward
+                                        </button>
+                                        <button style={style.actionButton}>
+                                            Redelegate
+                                        </button>
+                                        <button style={{...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0'}}>
+                                            Unbonding
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     )
 }
