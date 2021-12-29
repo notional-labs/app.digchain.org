@@ -28,7 +28,7 @@ export function makeDelegateMsg(delegator_address, validator_address, amount, de
     return msg
 }
 
-export function makeWithDrawMsg(delegator_address, validator_address, amount, denom){
+export function makeWithDrawMsg(delegator_address, validator_address){
 
     const msgWithDraw = {
         delegatorAddress: delegator_address,
