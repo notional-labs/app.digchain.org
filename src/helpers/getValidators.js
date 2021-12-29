@@ -12,7 +12,6 @@ export const getValidators = async (logoDisableFlag) => {
             const logos = await Promise.all(promises)
             validators.map((val, index) => val.logo = logos[index])
         }
-        console.log(validators)
         return validators
     }
     return []

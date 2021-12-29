@@ -58,7 +58,6 @@ const ValidatorsList = () => {
             })
             setValidators([...vals])
             setLoading(false)
-            console.log(vals)
         })()
     }, [])
 
