@@ -56,7 +56,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
     };
 
     const error = () => {
-        message.error('Withdraw failed try set gas higher', 2);
+        message.error('Withdraw failed', 1);
     };
 
     const handleClick = async () => {
