@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Image } from 'antd';
-import { getValidators, getLogo } from '../helpers/getValidators';
+import { getValidators, } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -11,7 +11,7 @@ import { getKeplr, } from '../helpers/getKeplr';
 
 const style = {
     table: {
-        width: '90%',
+        width: '100%',
     },
     tblHeader: {
         backgroundColor: '#3B2D52',
@@ -50,7 +50,7 @@ const ValidatorsList = () => {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            let vals = await getValidators()
+            let vals = await getValidators(false)
             const totalSupply = getTotal(vals)
             vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
             vals.map((val) => {
@@ -69,7 +69,7 @@ const ValidatorsList = () => {
     const handleClick = async (index) => {
         if (!localStorage.getItem('accounts')) {
             const { accounts } = await getKeplr('dig-1')
-            localStorage.setItem('accounts', JSON.stringify([{account: accounts[0], type: 'keplr'}]))
+            localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
         }
         setDefaultVal(index)
         setShow(true)
@@ -81,7 +81,7 @@ const ValidatorsList = () => {
 
     return (
         !loading ? (
-            <div style={{ padding: 60, paddingLeft: 250, paddingRight: 150, }}>
+            <div style={{ padding: 60 }}>
                 <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
@@ -112,7 +112,7 @@ const ValidatorsList = () => {
 
                                             <div style={{ marginLeft: '1rem' }} >
                                                 <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
-                                                <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -141,7 +141,7 @@ const ValidatorsList = () => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose} backdrop="static" >
-                        <Modal.Header style={{backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600}}>
+                        <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                             <div>
                                 Delegate Token
                             </div>

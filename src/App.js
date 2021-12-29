@@ -2,6 +2,7 @@ import './App.css';
 import { Modal, } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
+import AccountDetail from './pages/AccountDetail';
 import { getKeplr, } from './helpers/getKeplr';
 import ValidatorsList from './pages/ValidatorsList';
 import {
@@ -13,7 +14,7 @@ import {
 import logo from './assets/img/DIG.png';
 import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
-import { Image, } from 'antd';
+import { Image, message } from 'antd';
 import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
 
 import "@fontsource/merriweather"
@@ -62,6 +63,10 @@ const App = () => {
     setShow(false)
   }
 
+  const warning = (val) => {
+    message.warning(val, 1)
+  }
+
   const connect = async (val) => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr(val)
@@ -76,29 +81,31 @@ const App = () => {
           localStorage.setItem('accounts', JSON.stringify(accountsList))
           setAccounts([...accountsList])
         }
+        else {
+          warning('this wallet account already exist')
+        }
       }
     }
     else {
       let web3 = await getWeb3Instance();
       const accounts = (await web3.eth.getAccounts());
-      console.log(localStorage.getItem('accounts'))
+
       if (!localStorage.getItem('accounts')) {
-        for (var i = 0; i < accounts.length; i++){
-          localStorage.setItem('accounts', JSON.stringify([{account: accounts[i], type: 'metamask'}]))
-        }
+        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
       }
       if (localStorage.getItem('accounts')) {
         let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        for (var i = 0; i < accounts.length; i++){
-          if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[i]).length === 0) {
-            accountsList.push({account: accounts[i], type: 'metamask'})
-            localStorage.setItem('accounts', JSON.stringify(accountsList))
-          }
+        if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
+          accountsList.push({ account: accounts[0], type: 'metamask' })
+          localStorage.setItem('accounts', JSON.stringify(accountsList))
         }
-      }    
+        else {
+          warning('this wallet account already exist')
+        }
+      }
       //metamask logic
+    }
   }
-}
 
   const handleOver = (e) => {
     e.target.style.border = 'solid 1px black'
@@ -108,18 +115,12 @@ const App = () => {
     e.target.style.border = 0
   }
 
-
-  let Main = (<div style={style.button}>
-    <ConnectButton wrapSetShow={wrapSetShow} />
-  </div>)
-
-
   return (
-    <div className="App" style={{minWidth: window.screen.availWidth, height: 'auto', minHeight: '100%' }}>
+    <div className="App container-fluid" style={{ minWidth: screen.width, height: 'auto', minHeight: '100%' }}>
       <Router>
         <div style={style.navbar}>
-          <div style={{ paddingLeft: '3rem' }}>
-            <Image width={100}
+          <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
+            <Image width={70}
               src={logo}
               preview={false} />
           </div>
@@ -128,12 +129,14 @@ const App = () => {
               <li>
                 <Link to='/accounts'>
                   <button style={{
-                    marginRight: '0.5rem',
-                    fontSize: '1rem',
-                    backgroundColor: '#7c5e93',
-                    color: '#2C223E',
+                    marginRight: '1rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#5a4d6e',
+                    color: '#F6F3FB',
                     padding: 10,
-                    width: '8rem',
+                    paddingTop: 5,
+                    paddingBottom: 5,
+                    width: '10rem',
                     borderRadius: '50px',
                     border: 0,
                     fontFamily: 'MerriWeather',
@@ -146,26 +149,32 @@ const App = () => {
                 <Link to='/staking'>
                   <button style={{
                     marginRight: '3rem',
-                    fontSize: '1rem',
-                    backgroundColor: '#7c5e93',
-                    color: '#2C223E',
+                    fontSize: '1.2rem',
+                    backgroundColor: '#5a4d6e',
+                    color: '#F6F3FB',
                     padding: 10,
-                    width: '8rem',
+                    width: '10rem',
                     borderRadius: '50px',
                     border: 0,
+                    paddingTop: 5,
+                    paddingBottom: 5,
                     fontFamily: 'MerriWeather',
                   }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
                     Staking
                   </button>
                 </Link>
               </li>
+              <li>
+                <ConnectButton wrapSetShow={wrapSetShow} />
+              </li>
             </ul>
           </div>
         </div>
         <Routes>
-          <Route exact path="/" element={Main} />
+          <Route exact path="/" element={<div></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow}/>} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow} />} />
+          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
         </Routes>
       </Router>
       <>
@@ -193,7 +202,7 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={async() => {
+                onClick={async () => {
                   await connect('keplr')
                   setShow(false)
                 }}>
@@ -218,7 +227,7 @@ const App = () => {
                 margin: 10,
                 border: 0
               }}
-                onClick={async() => {
+                onClick={async () => {
                   await connect('metamask')
                   setShow(false)
                 }}>

@@ -2,6 +2,10 @@ import { Typography, } from 'antd';
 import "@fontsource/merriweather"
 import { getBalance } from '../helpers/getBalances';
 import { useEffect, useState } from 'react';
+import {
+    Link,
+} from "react-router-dom";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -11,17 +15,11 @@ const style = {
         padding: 24,
         borderRadius: '10px',
         border: 'solid 1px black',
-        width: '25%',
+        width: '50%',
         height: '40%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-    },
-    outline: {
-        marginTop: '7em',
-        padding: 10,
-        border: 'solid 10px #f4ea57',
-        borderRadius: '80px',
     },
     div: {
         display: 'flex',
@@ -47,7 +45,7 @@ const style = {
     }
 }
 
-const ProfileCard = ({ account }) => {
+const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
     const [amount, setAmount] = useState('')
 
     useEffect(() => {
@@ -67,6 +65,11 @@ const ProfileCard = ({ account }) => {
         })()
     }, [account])
 
+    const handleClick = () => {
+        wrapSetSelect(index)
+        wrapSetShow(true)
+    }
+
     return (
         <div style={style.container}>
             <Paragraph copyable={{ text: account.account.address }}
@@ -78,7 +81,7 @@ const ProfileCard = ({ account }) => {
                     padding: 20,
                     borderRadius: '20px'
                 }}>
-                {account.type === 'keplr' ? ( account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : ( account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
+                {account.type === 'keplr' ? (account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : (account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
             </Paragraph>
             <Paragraph style={{
                 color: '#2a3158',
@@ -91,12 +94,14 @@ const ProfileCard = ({ account }) => {
                 {parseInt(amount) / 1000000} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}}>
+                <button style={{ ...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB' }} onClick={handleClick}>
                     transfer
                 </button>
-                <button style={{...style.button, backgroundColor: '#AC99CF', color: '#F6F3FB'}}>
-                    Detail
-                </button>
+                <Link style={{width: '30%'}} to={account.type === 'keplr' ? account.account.address : account.account}>
+                    <button style={{ ...style.button, width: '100%', backgroundColor: '#AC99CF', color: '#F6F3FB' }}>
+                        Detail
+                    </button>
+                </Link>
             </div>
         </div>
     )
