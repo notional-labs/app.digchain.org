@@ -48,7 +48,7 @@ const style = {
     }
 }
 
-const WithDrawModal = ({ address, validator }) => {
+const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
 
     const success = () => {
         message.success('Transaction sent', 1);
@@ -59,17 +59,17 @@ const WithDrawModal = ({ address, validator }) => {
     };
 
     const handleClick = async () => {
-        if (delegators[selectDel].type === 'keplr') {
+        if (type === 'keplr') {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
             if (stargate != null) {
                 withDraw(stargate, address, validator).then(() => {
                     success()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                 }).catch((e) => {
                     error()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                     console.log(e)
                 })
             }
@@ -112,11 +112,11 @@ const WithDrawModal = ({ address, validator }) => {
                     backgroundColor: '#403455',
                     color: '#F6F3FB'
                 }}>
-                    {account.type === 'keplr' ? account.account.address : account.account}
+                    {address}
                 </div>
             </div>
             <div style={style.button}>
-                <button onClick={() => wrapSetter(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
                 <button onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>

@@ -3,9 +3,10 @@ import { Typography, } from 'antd';
 import DelegateModal from './DelegateModal';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getValidators } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
+import WithDrawModal from './WithDrawModal';
 
 const { Title, Paragraph } = Typography;
 
@@ -70,9 +71,15 @@ const style = {
     }
 }
 
-const DelegationList = ({ delegations, rewards }) => {
+const DelegationList = ({ address, type, delegations, rewards }) => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
+    const [selectVal, setSelectVal] = useState(0)
+    const [showWithdraw, setShowWithdraw] = useState(false)
+
+    const wrapSetShowWithdrawModal = useCallback((val) => {
+        setShowWithdraw(val)
+    }, [setShowWithdraw])
 
     useEffect(() => {
         (async () => {
@@ -87,6 +94,16 @@ const DelegationList = ({ delegations, rewards }) => {
             setLoading(false)
         })()
     }, [])
+
+    const handleClickWithdraw = (val) => {
+        setShowWithdraw(true)
+        setSelectVal(val)
+    }
+
+    const handleClose = () => {
+        setShow(false)
+    }
+
     return (
         <div style={{ padding: 20 }}>
             <div style={style.container}>
@@ -125,7 +142,7 @@ const DelegationList = ({ delegations, rewards }) => {
                                         {parseInt(reward.reward[0].amount) / 1000000} DIG
                                     </td>
                                     <td style={{...style.td, textAlign: 'right'}}>
-                                        <button style={{...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px'}}>
+                                        <button onClick={() => handleClickWithdraw(index)} style={{...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px'}}>
                                             Withdraw Reward
                                         </button>
                                         <button style={style.actionButton}>
@@ -141,6 +158,18 @@ const DelegationList = ({ delegations, rewards }) => {
                     </table>
                 </div>
             )}
+            <>
+                <Modal show={showWithdraw} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <div>
+                            Withdraw Rewards
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                        <WithDrawModal address={address} type={type} validator={rewards[selectVal] && rewards[selectVal].validator_address} wrapSetShow={wrapSetShowWithdrawModal} />
+                    </Modal.Body>
+                </Modal>
+            </>
         </div>
     )
 }

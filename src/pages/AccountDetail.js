@@ -244,7 +244,7 @@ const AccountDetail = ({ accounts }) => {
                 </div>
             </div>
             <div style={{...style.delegation, marginTop: 0}}>
-                <DelegationList delegations={delegation} rewards={reward}/>
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward}/>
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
