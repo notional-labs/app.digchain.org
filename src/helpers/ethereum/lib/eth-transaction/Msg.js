@@ -46,7 +46,7 @@ export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, de
     const msgUndelegate = {
         delegatorAddress: delegatorAddress,
         validatorAddress: validatorAddress,    
-        amount: coins(amount, denom)
+        amount: coin(amount, denom)
     }
     const msg = {
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",

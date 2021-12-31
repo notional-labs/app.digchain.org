@@ -117,7 +117,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
         }
         else {
             let web3 = await getWeb3Instance();
-            const denom = "stake"
+            const denom = process.env.REACT_APP_DENOM
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
@@ -128,11 +128,19 @@ const TransferModal = ({ account, wrapSetShow }) => {
             const msgDelegate = makeSendMsg(account.account, address, amount, denom) 
             const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom) 
 
-            console.log("address", address)
-            console.log("address abc", account.account)
 
-            const result = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
-            console.log("fuck shiut", result)
+            var err = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
+                (err) => {
+                    if (err == null){
+                        window.alert("Success create transaction, please sign it by metamask", err)
+                    }else{
+                        window.alert("Please check your balances")
+                    }
+        
+                }
+            )
+
+
         }
     }
 

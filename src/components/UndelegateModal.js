@@ -3,8 +3,9 @@ import { unbonding } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeUndelegateMsg, makeSignDocUnDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
+import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 
 const style = {
     transfer: {
@@ -95,7 +96,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             // please set enviroment variable: DENOM, etc
             //import web3
             let web3 = await getWeb3Instance();
-            const denom = "stake"
+            const denom = process.env.REACT_APP_DENOM
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
@@ -105,10 +106,22 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             const val = delegation.delegation.validator_address
             const amount = value * 1000000
 
-            const msgDelegate = makeDelegateMsg(address, val, amount, denom)
-            const signDocDelegate = makeSignDocDelegateMsg(address, val, amount, denom)
+            const msgDelegate = makeUndelegateMsg(address, val, amount, denom)
+            const signDocDelegate = makeSignDocUnDelegateMsg(address, val, amount, denom)
 
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
+            var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
+           
+           broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
+                (err) => {
+                    if (err == null){
+                        window.alert("Success create transaction, please sign it by metamask", err)
+                    }else{
+                        window.alert("Please check your balances")
+                    }
+        
+                }
+            )
+
         }
     }
 

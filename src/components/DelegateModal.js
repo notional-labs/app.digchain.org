@@ -113,7 +113,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             // please set enviroment variable: DENOM, etc
             //import web3
             let web3 = await getWeb3Instance();
-            const denom = "stake"
+            const denom = process.env.REACT_APP_DENOM
             const chainId = "test-1"
             const memo = "Love From Dev Team"
 
@@ -124,11 +124,26 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const recipient = validators[selectVal].operator_address
             const amount = value * 1000000
 
+            if (amount == 0) {
+                window.alert("Plese check your amount")
+                return
+            }
             const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
             const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom) 
 
             console.log("address", address)
-            const b = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
+                (err) => {
+                    if (err == null){
+                        window.alert("Success create transaction, please sign it by metamask", err)
+                    }else{
+                        window.alert("Please check your balances")
+                    }
+        
+                }
+            )
+            console.log("err", err)
 
         }
     }

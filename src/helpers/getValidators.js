@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export const getValidators = async (logoDisableFlag) => {
-    const res = await axios.get('http://0.0.0.0:1317/staking/validators')
+    const api = process.env.REACT_APP_API
+    const res = await axios.get(`${api}/staking/validators`)
 
     // const res = await axios.get('https://api-1-dig.notional.ventures/staking/validators')
     if (res.status === 200) {

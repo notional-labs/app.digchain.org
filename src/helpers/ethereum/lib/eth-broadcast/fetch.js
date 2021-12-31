@@ -1,16 +1,17 @@
 import axios from "axios";
 
 const fetch_address = async (address) => {
-    const options = {
-      url: `http://0.0.0.0:1317/auth/accounts/${address}`,
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-    };
+  const api = process.env.REACT_APP_API
+  const options = {
+    url: `${api}/auth/accounts/${address}`,
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
+  };
   
-    return axios(options)
+  return axios(options)
   };
   
   

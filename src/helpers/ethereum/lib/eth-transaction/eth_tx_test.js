@@ -40,7 +40,7 @@ export function test(){
       const fromAddress = "0x5050A4F4b3f9338C3472dcC01A87C76A144b3c9c"
       const toAddress = "0x5050A4F4b3f9338C3472dcC01A87C76A144b3c9c"
       const amount = 1
-      const denom = "stake"
+      const denom = REACT_APP_DENOM = process.env
 
       // auth info params, accNum and sequence will also be put into signdoc
       const mode = 191

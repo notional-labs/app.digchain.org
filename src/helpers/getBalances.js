@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { delegate } from './transaction'
 
-const api = "http://0.0.0.0:1317"
+const api = process.env.REACT_APP_API
+// const api = "http://0.0.0.0:1317"
 // const api = "https://api-1-dig.notional.ventures"
 
 export const getBalance = async (address) => {
