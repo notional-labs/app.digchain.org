@@ -32,9 +32,6 @@ export const fetchAccount = async (address) => {
       }
   
     } catch (err) {
-      return {
-        accountNumber : 8,
-        sequence : 22
-      }
+      return err
     }
   }
