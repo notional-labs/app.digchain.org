@@ -6,6 +6,7 @@ import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocBeginRedelegateMsg, makeBeginRedelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+//TODO: add logic to web, and right variale
 
 const style = {
     transfer: {
@@ -107,9 +108,10 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
 
 
             const validator_src_address  = delegation.delegation.validator_address
+            //TODO: add choice form to validator_dst_address
             const validator_dst_address = delegation.delegation.validator_address
             const amount = value * 1000000
-
+        
             const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
             const signDocDelegate = makeSignDocBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
