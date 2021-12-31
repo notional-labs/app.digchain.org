@@ -91,16 +91,13 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
             const msgWithDraw = makeWithDrawMsg(address, validator, denom)
             const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(address, validator, denom)
 
-            broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3).then(
-                (err) => {
-                    if (err == null){
-                        window.alert("Success create transaction, please sign it by metamask", err)
-                    }else{
-                        window.alert("Please check your balances")
-                    }
-        
-                }
-            )
+            var err = await broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3)
+            console.log("err", err)
+            if (err == null){
+                window.alert("Success create transaction, sign it by metamask", err)
+            }else{
+                window.alert("Please check your balances")
+            }
             
 
         }

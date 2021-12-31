@@ -3,7 +3,7 @@ import { unbonding } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeUndelegateMsg, makeSignDocUnDelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeSignDocBeginRedelegateMsg, makeBeginRedelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 
@@ -106,22 +106,21 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
             const gasLimit = 200000
 
 
-            const val = delegation.delegation.validator_address
+            const validator_src_address  = delegation.delegation.validator_address
+            const validator_dst_address = delegation.delegation.validator_address
             const amount = value * 1000000
 
-            const msgDelegate = makeUndelegateMsg(address, val, amount, denom)
-            const signDocDelegate = makeSignDocUnDelegateMsg(address, val, amount, denom)
+            const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
+            const signDocDelegate = makeSignDocBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(
-                (err) => {
-                    if (err == null){
-                        window.alert("Success sent transaction", err)
-                    }else{
-                        window.alert("Please check your balances")
-                    }
-        
-                }
-            )
+            var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
+            console.log("err", err)
+
+            if (err == null){
+                window.alert("Success create transaction, sign it by metamask", err)
+            }else{
+                window.alert("Please check your balances")
+            }
         }
     }
 

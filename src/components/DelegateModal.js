@@ -133,17 +133,13 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
             console.log("address", address)
 
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
-                (err) => {
-                    if (err == null){
-                        window.alert("Success create transaction, please sign it by metamask", err)
-                    }else{
-                        window.alert("Please check your balances")
-                    }
-        
-                }
-            )
+            var err = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then()
             console.log("err", err)
+            if (err == null){
+                window.alert("Success create transaction, sign it by metamask", err)
+            }else{
+                window.alert("Please check your balances")
+            }
 
         }
     }

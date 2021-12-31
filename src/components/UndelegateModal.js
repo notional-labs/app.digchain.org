@@ -111,16 +111,16 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
 
             var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
            
-           broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
-                (err) => {
-                    if (err == null){
-                        window.alert("Success create transaction, please sign it by metamask", err)
-                    }else{
-                        window.alert("Please check your balances")
-                    }
+            var err = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
+
+            if (err != null){
+                window.alert("Success create transaction, please sign it by metamask", err)
+            }else{
+                window.alert("Please check your balances")
+            }
+
         
-                }
-            )
+            
 
         }
     }
