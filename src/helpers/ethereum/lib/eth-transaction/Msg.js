@@ -60,10 +60,10 @@ export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, va
         delegatorAddress:       delegatorAddress,
         validatorSrcAddress:    validatorSrcAddress, 
         validatorDstAddress:    validatorDstAddress,
-        amount: coins(amount, denom)
+        amount: coin(amount, denom)
     }
     const msg = {
-        typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
+        typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
         value: msgRedelegate,
     };
     return msg
@@ -73,8 +73,7 @@ export function makeSignDocSendMsg (fromAddress, toAddress, amount, denom) {
     const signDocMsg = {
         type:"cosmos-sdk/MsgSend",
         value:{
-            amount: coins(amount, denom),            amount: coins(amount, denom), 
-
+            amount: coins(amount, denom),          
             from_address: fromAddress,
             to_address: toAddress
         }
@@ -106,7 +105,7 @@ export function makeSignDocWithDrawMsg (delegator_address, validator_address, am
 }
 
 export function makeSignDocBeginRedelegateMsg (delegator_address, validator_src_address, validator_dst_address, amount, denom) {
-    const msgRedelegate =[
+    const msgRedelegate =
         {
           "type": "cosmos-sdk/MsgBeginRedelegate",
           "value": {
@@ -116,7 +115,7 @@ export function makeSignDocBeginRedelegateMsg (delegator_address, validator_src_
             amount:coin(amount, denom)
           }
         }
-      ]
+
     return msgRedelegate
 }
 
