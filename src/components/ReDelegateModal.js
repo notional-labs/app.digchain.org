@@ -52,18 +52,16 @@ const style = {
     }
 }
 
-const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal }) => {
+const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators }) => {
     const [value, setValue] = useState('')
-    const [delegators, setDelegators] = useState([])
-    const [selectVal, setSelectVal] = useState(defaultVal)
-    const [selectDel, setSelectDel] = useState(0)
+    const [selectVal, setSelectVal] = useState(0)
 
     const success = () => {
         message.success('Transaction sent', 1);
     };
 
     const error = () => {
-        message.error('Undelegate failed', 1);
+        message.error('Redeleagate failed', 1);
     };
 
     const handleChange = (value) => {
@@ -75,6 +73,10 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
             return true
         }
         return false
+    }
+
+    const handleChangeSelectVal = (e) => {
+        setSelectVal(e.target.value)
     }
 
     const handleClick = async () => {
@@ -161,6 +163,18 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
                 </div>
             </div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>To</p>
+                <>
+                    <Form.Select onChange={handleChangeSelectVal} style={style.formInput}>
+                        {
+                            validators.map((val, index) => (
+                                <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
+                            ))
+                        }
+                    </Form.Select>
+                </>
+            </div>
+            <div style={style.transfer}>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
                 <>
                     <InputNumber style={{
@@ -172,7 +186,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
                         paddingTop: '0.2rem',
                         backgroundColor: '#403455',
                         color: '#F6F3FB'
-                    }} min={0} max={parseInt(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
+                    }} min={0} max={parseFloat(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>
@@ -187,4 +201,4 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
     )
 }
 
-export default UndelegateModal
+export default ReDelegateModal

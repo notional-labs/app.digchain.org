@@ -1,6 +1,5 @@
 
 import { Typography, } from 'antd';
-import DelegateModal from './DelegateModal';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
@@ -8,6 +7,7 @@ import { getValidators } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import WithDrawModal from './WithDrawModal';
 import UndelegateModal from './UndelegateModal';
+import ReDelegateModal from './ReDelegateModal';
 
 const { Title, Paragraph } = Typography;
 
@@ -78,6 +78,7 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
     const [selectVal, setSelectVal] = useState(0)
     const [showWithdraw, setShowWithdraw] = useState(false)
     const [showUnbonding, setShowUnbonding] = useState(false)
+    const [showRedelegate, setShowRedelegate] = useState(false)
 
     const wrapSetShowWithdrawModal = useCallback((val) => {
         setShowWithdraw(val)
@@ -86,6 +87,10 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
     const wrapSetShowUnbondModal = useCallback((val) => {
         setShowUnbonding(val)
     }, [setShowUnbonding])
+
+    const wrapSetShowRedelegate = useCallback((val) => {
+        setShowRedelegate(val)
+    }, [setShowRedelegate])
 
     useEffect(() => {
         (async () => {
@@ -111,7 +116,16 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
         setSelectVal(val)
     }
 
+    const handleClickRedelegate = (val) => {
+        setShowRedelegate(true)
+        setSelectVal(val)
+    }
+
     const handleCloseWithdraw = () => {
+        setShowWithdraw(false)
+    }
+
+    const handleCloseRedelegate = () => {
         setShowWithdraw(false)
     }
 
@@ -138,7 +152,7 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
-                                <th style={{ ...style.th, width: '20%'}}>Validator</th>
+                                <th style={{ ...style.th, width: '20%' }}>Validator</th>
                                 <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Token</th>
                                 <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Reward</th>
                                 <th style={{ ...style.th, width: '10rem', textAlign: 'center' }}>Action</th>
@@ -150,20 +164,20 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
-                                    <td style={{...style.td, textAlign: 'right'}}>
+                                    <td style={{ ...style.td, textAlign: 'right' }}>
                                         {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000} DIG
                                     </td>
-                                    <td style={{...style.td, textAlign: 'right'}}>
+                                    <td style={{ ...style.td, textAlign: 'right' }}>
                                         {parseInt(reward.reward[0].amount) / 1000000} DIG
                                     </td>
-                                    <td style={{...style.td, textAlign: 'right'}}>
-                                        <button onClick={() => handleClickWithdraw(index)} style={{...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px'}}>
+                                    <td style={{ ...style.td, textAlign: 'right' }}>
+                                        <button onClick={() => handleClickWithdraw(index)} style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px' }}>
                                             Withdraw Reward
                                         </button>
-                                        <button style={style.actionButton}>
+                                        <button onClick={() => handleClickRedelegate(index)} style={style.actionButton}>
                                             Redelegate
                                         </button>
-                                        <button onClick={() => handleClickUnbonding(index)} style={{...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0'}}>
+                                        <button onClick={() => handleClickUnbonding(index)} style={{ ...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0' }}>
                                             Unbonding
                                         </button>
                                     </td>
@@ -181,7 +195,26 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#604F80', }}>
-                        <WithDrawModal address={address} type={type} validator={rewards[selectVal] && rewards[selectVal].validator_address} wrapSetShow={wrapSetShowWithdrawModal} />
+                        <WithDrawModal address={address}
+                            type={type}
+                            validator={rewards[selectVal] && rewards[selectVal].validator_address}
+                            wrapSetShow={wrapSetShowWithdrawModal} />
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
+                <Modal show={showRedelegate} onHide={handleCloseRedelegate} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <div>
+                            Redelegate Token
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                        <ReDelegateModal address={address}
+                            type={type}
+                            delegation={delegations[selectVal]}
+                            wrapSetShow={wrapSetShowRedelegate}
+                            validators={validators} />
                     </Modal.Body>
                 </Modal>
             </>
@@ -193,7 +226,10 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#604F80', }}>
-                        <UndelegateModal address={address} type={type} delegation={delegations[selectVal]} wrapSetShow={wrapSetShowUnbondModal} />
+                        <UndelegateModal address={address}
+                            type={type}
+                            delegation={delegations[selectVal]}
+                            wrapSetShow={wrapSetShowUnbondModal} />
                     </Modal.Body>
                 </Modal>
             </>
