@@ -113,18 +113,20 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             //TODO: add choice form to validator_dst_address
             const validator_dst_address = delegation.delegation.validator_address
             const amount = value * 1000000
-        
+
+            console.log("address")
+            console.log(validator_src_address)
+            console.log(validator_dst_address)
+
             const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
             const signDocDelegate = makeSignDocBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
-            var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
-            console.log("err", err)
+            console.log(msgDelegate)
+            console.log(signDocDelegate)
 
-            if (err == null){
-                window.alert("Success create transaction, sign it by metamask", err)
-            }else{
-                window.alert("Please check your balances")
-            }
+            var err = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
+
+           
         }
     }
 
