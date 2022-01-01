@@ -118,10 +118,6 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             }else{
                 window.alert("Please check your balances")
             }
-
-        
-            
-
         }
     }
 

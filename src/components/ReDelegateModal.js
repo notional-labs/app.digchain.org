@@ -6,6 +6,7 @@ import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocBeginRedelegateMsg, makeBeginRedelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+//TODO: add logic to web, and right variale
 
 const style = {
     transfer: {
@@ -51,18 +52,16 @@ const style = {
     }
 }
 
-const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal }) => {
+const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators }) => {
     const [value, setValue] = useState('')
-    const [delegators, setDelegators] = useState([])
-    const [selectVal, setSelectVal] = useState(defaultVal)
-    const [selectDel, setSelectDel] = useState(0)
+    const [selectVal, setSelectVal] = useState(0)
 
     const success = () => {
         message.success('Transaction sent', 1);
     };
 
     const error = () => {
-        message.error('Undelegate failed', 1);
+        message.error('Redeleagate failed', 1);
     };
 
     const handleChange = (value) => {
@@ -74,6 +73,10 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
             return true
         }
         return false
+    }
+
+    const handleChangeSelectVal = (e) => {
+        setSelectVal(e.target.value)
     }
 
     const handleClick = async () => {
@@ -107,20 +110,23 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
 
 
             const validator_src_address  = delegation.delegation.validator_address
+            //TODO: add choice form to validator_dst_address
             const validator_dst_address = delegation.delegation.validator_address
             const amount = value * 1000000
+
+            console.log("address")
+            console.log(validator_src_address)
+            console.log(validator_dst_address)
 
             const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
             const signDocDelegate = makeSignDocBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
-            var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
-            console.log("err", err)
+            console.log(msgDelegate)
+            console.log(signDocDelegate)
 
-            if (err == null){
-                window.alert("Success create transaction, sign it by metamask", err)
-            }else{
-                window.alert("Please check your balances")
-            }
+            var err = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
+
+           
         }
     }
 
@@ -159,6 +165,18 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
                 </div>
             </div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>To</p>
+                <>
+                    <Form.Select onChange={handleChangeSelectVal} style={style.formInput}>
+                        {
+                            validators.map((val, index) => (
+                                <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
+                            ))
+                        }
+                    </Form.Select>
+                </>
+            </div>
+            <div style={style.transfer}>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
                 <>
                     <InputNumber style={{
@@ -170,7 +188,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
                         paddingTop: '0.2rem',
                         backgroundColor: '#403455',
                         color: '#F6F3FB'
-                    }} min={0} max={parseInt(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
+                    }} min={0} max={parseFloat(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div style={style.button}>
@@ -185,4 +203,4 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow, defaultVal })
     )
 }
 
-export default UndelegateModal
+export default ReDelegateModal

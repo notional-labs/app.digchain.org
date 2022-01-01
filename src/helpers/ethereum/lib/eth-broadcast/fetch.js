@@ -23,15 +23,13 @@ export const fetchAccount = async (address) => {
   
       const accountNumber = accountOnChain.data.result.value.account_number ? accountOnChain.data.result.value.account_number : 0
       const sequence = accountOnChain.data.result.value.sequence ? accountOnChain.data.result.value.sequence : 0
-      console.log(accountNumber)
-      console.log(sequence)
 
       return {
-        accountNumber : accountOnChain.data.result.value.account_number,
-        sequence : accountOnChain.data.result.value.sequence
+        accountNumber : accountNumber,
+        sequence : sequence
       }
-  
     } catch (err) {
+      console.log(err)
       return err
     }
   }

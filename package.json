@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "immer": ">=9.0.6",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-react-hooks": "^4.2.1-rc.0-next-ceee524a8-20211217"
