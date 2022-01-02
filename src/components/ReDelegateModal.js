@@ -5,7 +5,11 @@ import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocBeginRedelegateMsg, makeBeginRedelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
-import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers"
+import { defaultRegistryTypes, StargateClient } from "@cosmjs/stargate";
+import { Registry } from "@cosmjs/proto-signing"
+
+
 //TODO: add logic to web, and right variale
 
 const style = {
@@ -87,14 +91,22 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             if (stargate != null) {
                 const amount = value * 1000000
                 const val = delegation.delegation.validator_address
-                unbonding(stargate, address, amount, val).then(() => {
-                    success()
-                    wrapSetShow(false)
-                }).catch((e) => {
-                    error()
-                    wrapSetShow(false)
-                    console.log(e)
-                })
+                const validator_src_address  = delegation.delegation.validator_address
+                //TODO: add choice form to validator_dst_address
+                const validator_dst_address = delegation.delegation.validator_address
+                
+                let stdFee = {
+                    amount: [],
+                    gas: gasLimit.toString(),
+                }
+
+                console.log("address")
+                console.log(validator_src_address)
+                console.log(validator_dst_address)
+
+                const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
+
+                startgate.signAndBroadcast(address, msgDelegatel, stdFee)              
             }
         }
         else {
@@ -104,7 +116,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             let web3 = await getWeb3Instance();
             const denom = process.env.REACT_APP_DENOM
             const chainId = "test-1"
-            const memo = "Love From Dev Team"
+            const memo = "Love From Notional's Dev Team"
 
             const gasLimit = 200000
 
