@@ -94,6 +94,10 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const validator_src_address  = delegation.delegation.validator_address
                 //TODO: add choice form to validator_dst_address
                 const validator_dst_address = delegation.delegation.validator_address
+
+                const gasLimit = 200000
+
+                const denom = 'udig'
                 
                 let stdFee = {
                     amount: [],
