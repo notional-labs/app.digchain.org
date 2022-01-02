@@ -72,7 +72,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
 
     return (
         <div style={style.container}>
-            <Paragraph copyable={{ text: account.account.address }}
+            <Paragraph copyable={{ text: account.account.address && account.account.address.trim() }}
                 style={{
                     color: '#2a3158',
                     fontFamily: 'Merriweather',
