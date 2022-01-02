@@ -1,4 +1,4 @@
-import { InputNumber, message, } from "antd"
+import { InputNumber, message, notification} from "antd"
 import { unbonding } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
@@ -61,11 +61,17 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
     const [selectVal, setSelectVal] = useState(0)
 
     const success = () => {
-        message.success('Transaction sent', 1);
+        notification.success({
+            message: 'Transaction sent',
+            duration: 1
+        })
     };
 
-    const error = () => {
-        message.error('Redeleagate failed', 1);
+    const error = (message) => {
+        notification.error({
+            message: 'Redelegate failed',
+            description: message
+        })
     };
 
     const handleChange = (value) => {
@@ -104,16 +110,16 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 console.log(validator_src_address)
                 console.log(validator_dst_address)
                 const denom = process.env.REACT_APP_DENOM
-                const msgRelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
-
-                stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(() => {
-                    success()
+                try{
+                    const msgRelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
+                    await stargate.signAndBroadcast(address, [msgRelegate], stdFee) 
                     wrapSetShow(false)
-                }).catch((e) => {
-                    error()
+                    success()  
+                }  
+                catch(e) {
                     wrapSetShow(false)
-                    console.log(e)
-                })            
+                    error(e.message)
+                }         
             }
         }
         else {
@@ -143,8 +149,13 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             console.log(msgDelegate)
             console.log(signDocDelegate)
 
-            var err = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
-
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
+                wrapSetShow(false)
+                success()
+            }).catch((e) => {
+                wrapSetShow(false)
+                error(e.message)
+            })
            
         }
     }

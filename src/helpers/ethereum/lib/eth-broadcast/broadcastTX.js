@@ -73,8 +73,8 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
         console.log("signature", signature )
         const txRawBytes = makeRawTxBytes(authInfoBytes, bodyBytes, [signature])
         //TODO : pls change node = env var
-        const node = "127.0.0.1:26657"
-          StargateClient.connect(node).then(
+        // const node = "127.0.0.1:26657"
+          StargateClient.connect(process.env.REACT_APP_RPC).then(
             (broadcaster) => {
               broadcaster.broadcastTx(
                 Uint8Array.from(txRawBytes)

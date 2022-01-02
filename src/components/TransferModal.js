@@ -1,4 +1,4 @@
-import { Input, InputNumber, message, } from "antd"
+import { Input, InputNumber, message, notification } from "antd"
 import { transfer } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { getBalance } from "../helpers/getBalances";
@@ -75,11 +75,17 @@ const TransferModal = ({ account, wrapSetShow }) => {
     }, [account])
 
     const success = () => {
-        message.success('Deposit success', 1);
+        notification.success({
+            message: 'Transaction sent',
+            duration: 1
+        })
     };
 
-    const error = () => {
-        message.error('Deposit failed', 2);
+    const error = (message) => {
+        notification.error({
+            message: 'Transfer failed',
+            description: message
+        })
     };
 
     const handleChange = (value) => {
@@ -109,7 +115,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                     success()
                     wrapSetShow(false)
                 }).catch((e) => {
-                    error()
+                    error(e.message)
                     wrapSetShow(false)
                     console.log(e)
                 })
@@ -125,21 +131,17 @@ const TransferModal = ({ account, wrapSetShow }) => {
 
             const amount = value * 1000000
 
-            const msgDelegate = makeSendMsg(account.account, address, amount, denom) 
-            const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom) 
+            const msgDelegate = makeSendMsg(account.account, address, amount, denom)
+            const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom)
 
 
-            var err = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(
-                (err) => {
-                    if (err == null){
-                        window.alert("Success create transaction, please sign it by metamask", err)
-                    }else{
-                        window.alert("Please check your balances")
-                    }
-        
-                }
-            )
-
+            broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
+                wrapSetShow(false)
+                success()
+            }).catch((e) => {
+                wrapSetShow(false)
+                error(e.message)
+            })
 
         }
     }

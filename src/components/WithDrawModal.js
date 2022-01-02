@@ -1,4 +1,4 @@
-import { message, } from "antd"
+import { message, notification} from "antd"
 import { withDraw } from "../helpers/transaction"
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocWithDrawMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
@@ -52,11 +52,17 @@ const style = {
 const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
 
     const success = () => {
-        message.success('Transaction sent', 1);
+        notification.success({
+            message: 'Transaction sent',
+            duration: 1
+        })
     };
 
-    const error = () => {
-        message.error('Withdraw failed', 1);
+    const error = (message) => {
+        notification.error({
+            message: 'Withdraw failed',
+            description: message
+        })
     };
 
     const handleClick = async () => {
@@ -69,7 +75,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                     success()
                     wrapSetShow(false)
                 }).catch((e) => {
-                    error()
+                    error(e.message)
                     wrapSetShow(false)
                     console.log(e)
                 })
@@ -91,14 +97,13 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
             const msgWithDraw = makeWithDrawMsg(address, validator, denom)
             const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(address, validator, denom)
 
-            var err = await broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3)
-            console.log("err", err)
-            if (err == null){
-                window.alert("Success create transaction, sign it by metamask", err)
-            }else{
-                window.alert("Please check your balances")
-            }
-            
+            broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3).then(() => {
+                wrapSetShow(false)
+                success()
+            }).catch((e) => {
+                wrapSetShow(false)
+                error(e.message)
+            })
 
         }
     }
