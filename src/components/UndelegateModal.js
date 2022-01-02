@@ -1,4 +1,4 @@
-import { InputNumber, message, } from "antd"
+import { InputNumber, message, notification} from "antd"
 import { unbonding } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
@@ -55,11 +55,17 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
     const [value, setValue] = useState('')
 
     const success = () => {
-        message.success('Transaction sent', 1);
+        notification.success({
+            message: 'Transaction sent',
+            duration: 1
+        })
     };
 
-    const error = () => {
-        message.error('Undelegate failed', 1);
+    const error = (message) => {
+        notification.error({
+            message: 'Undelegate failed',
+            description: message
+        })
     };
 
     const handleChange = (value) => {
@@ -85,7 +91,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
                     success()
                     wrapSetShow(false)
                 }).catch((e) => {
-                    error()
+                    error(e.message)
                     wrapSetShow(false)
                     console.log(e)
                 })
@@ -111,13 +117,13 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
 
             var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
            
-            var err = await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 )
-
-            if (err != null){
-                window.alert("Success create transaction, please sign it by metamask", err)
-            }else{
-                window.alert("Please check your balances")
-            }
+            broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
+                wrapSetShow(false)
+                success()
+            }).catch((e) => {
+                wrapSetShow(false)
+                error(e.message)
+            })
         }
     }
 
