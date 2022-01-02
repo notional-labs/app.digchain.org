@@ -106,7 +106,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
 
                 const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
-                startgate.signAndBroadcast(address, msgDelegatel, stdFee)              
+                stargate.signAndBroadcast(address, msgDelegate, stdFee)              
             }
         }
         else {
