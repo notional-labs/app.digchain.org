@@ -31,9 +31,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
   console.log(address)
   const accountOnChain = await fetchAccount(address)
   
-  if (accountOnChain == null){
-    return err
-  }
+
   const signDocJsonString = makeSignDocJsonString(signDocMsg, stdFeeToPutIntoSignDoc, chainId, memo, accountOnChain.accountNumber, accountOnChain.sequence) 
   console.log(signDocJsonString)
   const params = [address, signDocJsonString];
@@ -41,57 +39,50 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
 
   var pubKeyBytes = null;
   var signature_metamask = null;
-  var ans = null
-  try{
-    web3.currentProvider.send(
-      {
-        method,
-        params,
-        address,
-      },
-      function(err, result){
-          if (result.error) {
-            alert(result.error.message);
-          }
-          if (result.error) return console.error('ERROR', result);
 
-          // get pubKey bytes
-          pubKeyBytes = getUint8ArrayPubKey({
-            data: signDocJsonString,
-            signature: result.result
-          })
-          signature_metamask = result.result
+  web3.currentProvider.sendAsync(
+    {
+      method,
+      params,
+      address,
+    },
+    function(err, result){
+        if (result.error) {
+          alert(result.error.message);
         }
-      ).then(() => {
-        const ethPubKey = makeEthPubkeyFromByte(pubKeyBytes)
-        const bodyBytes = makeTxBodyBytes(msg, memo)
-        console.log("ethPubByte", ethPubKey)
+        if (result.error) return console.error('ERROR', result);
 
-        const authInfoBytes = makeAuthInfoBytes(fee, ethPubKey, 191, accountOnChain.sequence)
-        const signature = fromHexString(signature_metamask)
-        signature[64] = 0 
-        console.log("signature", signature )
-        const txRawBytes = makeRawTxBytes(authInfoBytes, bodyBytes, [signature])
-        //TODO : pls change node = env var
-        // const node = "127.0.0.1:26657"
-          StargateClient.connect(process.env.REACT_APP_RPC).then(
-            (broadcaster) => {
-              broadcaster.broadcastTx(
-                Uint8Array.from(txRawBytes)
-              ).then(
-                (data)=>{
-                  console.log(data.transactionHash)
-                  message.success("Success send transaction .Tx Hash :" +  data.transactionHash.toString())
-                  return data
-                }
-              );
-            }
-          );
-      })
-  }catch(err){
-    window.alert("Please check your account")
-    return null
-  }
+        // get pubKey bytes
+        pubKeyBytes = getUint8ArrayPubKey({
+          data: signDocJsonString,
+          signature: result.result
+        })
+        signature_metamask = result.result
+      }
+    ).then(() => {
+      const ethPubKey = makeEthPubkeyFromByte(pubKeyBytes)
+      const bodyBytes = makeTxBodyBytes(msg, memo)
+      console.log("ethPubByte", ethPubKey)
+
+      const authInfoBytes = makeAuthInfoBytes(fee, ethPubKey, 191, accountOnChain.sequence)
+      const signature = fromHexString(signature_metamask)
+      signature[64] = 0 
+      console.log("signature", signature )
+      const txRawBytes = makeRawTxBytes(authInfoBytes, bodyBytes, [signature])
+        StargateClient.connect(process.env.REACT_APP_RPC).then(
+          (broadcaster) => {
+            broadcaster.broadcastTx(
+              Uint8Array.from(txRawBytes)
+            ).then(
+              (data)=>{
+                console.log(data.transactionHash)
+                message.success("Success send transaction .Tx Hash :" +  data.transactionHash.toString())
+              }
+            );
+          }
+        );
+    })
+
   
 
   
