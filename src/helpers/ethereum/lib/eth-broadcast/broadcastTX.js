@@ -73,19 +73,24 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
           const txRawBytes = makeRawTxBytes(authInfoBytes, bodyBytes, [signature])
           //TODO : pls change node = env var
           const node = "127.0.0.1:26657"
-          StargateClient.connect(node).then(
-            (broadcaster) => {
-              broadcaster.broadcastTx(
-                Uint8Array.from(txRawBytes)
-              ).then(
-                (data)=>{
-                  console.log(data.transactionHash)
-                  window.alert("Tx Hash :    " +  data.transactionHash.toString())
-                  return data
-                }
-              );
-            }
-          );
+          try {
+            StargateClient.connect(node).then(
+              (broadcaster) => {
+                broadcaster.broadcastTx(
+                  Uint8Array.from(txRawBytes)
+                ).then(
+                  (data)=>{
+                    console.log(data.transactionHash)
+                    window.alert("Tx Hash :    " +  data.transactionHash.toString())
+                    return data
+                  }
+                );
+              }
+            );
+          }catch(err){
+            window.alert("Please check again" +  data.transactionHash.toString())
+            return null
+          }
         })
       return ans
   
