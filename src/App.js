@@ -55,9 +55,14 @@ const App = () => {
   const [accounts, setAccounts] = useState(JSON.parse(localStorage.getItem('accounts')) || [])
   const [show, setShow] = useState(false)
 
-  const wrapSetShow = useCallback(async (val) => {
+  const wrapSetShow = useCallback( (val) => {
     setShow(val)
   }, [setShow])
+
+  const wrapSetAccounts = useCallback( (val) => {
+    setAccounts([...val])
+  }, [setAccounts])
+
 
   const handleClose = () => {
     setShow(false)
@@ -173,7 +178,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<div></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetShow={wrapSetShow} />} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts}/>} />
           <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
         </Routes>
       </Router>
