@@ -94,7 +94,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const validator_src_address  = delegation.delegation.validator_address
                 //TODO: add choice form to validator_dst_address
                 const validator_dst_address = delegation.delegation.validator_address
-                
+                const gasLimit = 2000000
                 let stdFee = {
                     amount: [],
                     gas: gasLimit.toString(),
@@ -103,10 +103,17 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 console.log("address")
                 console.log(validator_src_address)
                 console.log(validator_dst_address)
+                const denom = process.env.REACT_APP_DENOM
+                const msgRelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
 
-                const msgDelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
-
-                stargate.signAndBroadcast(address, msgDelegate, stdFee)              
+                stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(() => {
+                    success()
+                    wrapSetter(false)
+                }).catch((e) => {
+                    error()
+                    wrapSetter(false)
+                    console.log(e)
+                })            
             }
         }
         else {
