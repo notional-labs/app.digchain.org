@@ -108,10 +108,10 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
 
                 stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(() => {
                     success()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                 }).catch((e) => {
                     error()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                     console.log(e)
                 })            
             }
