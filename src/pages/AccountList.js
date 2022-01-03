@@ -22,7 +22,7 @@ const style = {
     },
 }
 
-const AccountList = ({ accounts }) => {
+const AccountList = ({ accounts, wrapSetAccounts }) => {
     const [show, setShow] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
 
@@ -44,7 +44,7 @@ const AccountList = ({ accounts }) => {
             </div>
             {accounts.map((account, index) => (
                 <div style={style.card}>
-                    <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} />
+                    <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
                 </div>
             ))}
             <>

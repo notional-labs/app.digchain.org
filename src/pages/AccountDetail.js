@@ -137,7 +137,7 @@ const AccountDetail = ({ accounts }) => {
                 Account Info
             </div>
             <div>
-                <Paragraph copyable={{ text: id }}
+                <Paragraph copyable={{ text: id && id.trim() }}
                     style={{
                         color: '#2a3158',
                         fontFamily: 'Merriweather',

@@ -45,7 +45,7 @@ const style = {
     }
 }
 
-const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
+const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccounts }) => {
     const [amount, setAmount] = useState('')
 
     useEffect(() => {
@@ -70,9 +70,16 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
         wrapSetShow(true)
     }
 
+    const handleRemove = () => {
+        const accounts = JSON.parse(localStorage.getItem('accounts'))
+        const filterAccouts = accounts.filter(x => x.type === 'keplr' && x.account.address !== account.account.address || x.type === 'metamask' && x.account !== account.account )
+        localStorage.setItem('accounts', JSON.stringify([...filterAccouts]))
+        wrapSetAccounts(filterAccouts)
+    }
+
     return (
         <div style={style.container}>
-            <Paragraph copyable={{ text: account.account.address }}
+            <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim()}}
                 style={{
                     color: '#2a3158',
                     fontFamily: 'Merriweather',
@@ -102,6 +109,9 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow }) => {
                         Detail
                     </button>
                 </Link>
+                <button style={{ ...style.button, backgroundColor: '#ff695e', color: '#F6F3FB', marginLeft: '10px' }} onClick={handleRemove}>
+                    Remove
+                </button>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { InputNumber, message, } from "antd"
+import { InputNumber, message, notification } from "antd"
 import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
@@ -65,11 +65,17 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }, [])
 
     const success = () => {
-        message.success('Deposit success', 1);
+        notification.success({
+            message: 'Transaction sent',
+            duration: 1
+        })
     };
 
-    const error = () => {
-        message.error('Deposit failed check if you are using the right account on keplr or it have any dig yet', 3);
+    const error = (message) => {
+        notification.error({
+            message: 'Delegate failed',
+            description: message
+        })
     };
 
     const handleChange = (value) => {
@@ -132,15 +138,14 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom) 
 
             console.log("address", address)
-
-            var err = await broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then()
-            console.log("err", err)
-            if (err == null){
-                window.alert("Success create transaction, sign it by metamask", err)
-            }else{
-                window.alert("Please check your balances")
-            }
-
+            
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
+                wrapSetter(false)
+                success()
+            }).catch((e) => {
+                wrapSetter(false)
+                error(e.message)
+            })
         }
     }
 

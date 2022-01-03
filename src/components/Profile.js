@@ -40,7 +40,7 @@ const Profile = ({ account }) => {
                     <div style={{ marginBottom: '2rem', border: 'solid 1px black', borderRadius: '20px', padding: '20px', marginTop: '1rem' }}>
                         <Title style={{ color: '#2a3158', marginRight: '21rem', fontFamily: 'Merriweather', marginTop: '1rem' }} level={4}>Address</Title>
                         <div style={{ border: 'solid 1px black', backgroundColor: '#ffffff', padding: 10, borderRadius: '50px', paddingTop: '1.5rem', marginTop: '20px', marginBottom: '20px', }}>
-                        <Paragraph copyable={{ text: account.address }} style={{ color: '#2a3158', fontFamily: 'Merriweather' }}>
+                        <Paragraph copyable={{ text: account.address.trim() }} style={{ color: '#2a3158', fontFamily: 'Merriweather' }}>
                             {account.address.length > 100 ? `${account.address.substring(0, 100)}... ` : `${account.address} `}
                         </Paragraph>
                     </div>

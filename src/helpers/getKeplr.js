@@ -26,7 +26,7 @@ export const getKeplr = async (chain_id = "dig-1") => {
 }
 
 export const getCosmosClient = (address, offlineSigner) => {
-    const URL = "https://api-1-dig.notional.ventures"
+    const URL = process.env.REACT_APP_API
     const cosmJS = new SigningCosmosClient(
         URL,
         address,
@@ -36,7 +36,7 @@ export const getCosmosClient = (address, offlineSigner) => {
 }
 
 export const getStargateClient = async (signer) => {
-    const rpcEndpoint = "https://rpc-1-dig.notional.ventures";
+    const rpcEndpoint = process.env.REACT_APP_RPC;
     const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
     return client
 } 
