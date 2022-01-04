@@ -120,7 +120,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             //import web3
             let web3 = await getWeb3Instance();
             const denom = process.env.REACT_APP_DENOM
-            const chainId = "test-1"
+            const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Dev Team"
 
             const address = delegators[selectDel].account

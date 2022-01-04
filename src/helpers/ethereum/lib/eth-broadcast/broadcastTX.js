@@ -40,7 +40,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
   var pubKeyBytes = null;
   var signature_metamask = null;
 
-  web3.currentProvider.sendAsync(
+  web3.currentProvider.send(
     {
       method,
       params,
@@ -63,7 +63,6 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
       const ethPubKey = makeEthPubkeyFromByte(pubKeyBytes)
       const bodyBytes = makeTxBodyBytes(msg, memo)
       console.log("ethPubByte", ethPubKey)
-
       const authInfoBytes = makeAuthInfoBytes(fee, ethPubKey, 191, accountOnChain.sequence)
       const signature = fromHexString(signature_metamask)
       signature[64] = 0 
@@ -75,12 +74,13 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
               Uint8Array.from(txRawBytes)
             ).then(
               (data)=>{
-                console.log(data.transactionHash)
                 message.success("Success send transaction .Tx Hash :" +  data.transactionHash.toString())
               }
             );
           }
         );
+    }).catch(e =>  {
+      message.error("Transaction Rejected")
     })
 
   

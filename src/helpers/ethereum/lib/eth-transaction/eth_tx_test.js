@@ -34,7 +34,7 @@ export function test(){
 
       // sign doc is a json string that will be processed and then signed by priv keys, this process out put a signature for the tx 
       // chainId to be put into sign doc
-      const chainId = "test-1"
+      const chainId = process.env.REACT_APP_CHAIN_ID
       
       // msg send params
       const fromAddress = "0x5050A4F4b3f9338C3472dcC01A87C76A144b3c9c"
