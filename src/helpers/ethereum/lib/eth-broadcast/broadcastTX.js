@@ -63,7 +63,6 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
       const ethPubKey = makeEthPubkeyFromByte(pubKeyBytes)
       const bodyBytes = makeTxBodyBytes(msg, memo)
       console.log("ethPubByte", ethPubKey)
-
       const authInfoBytes = makeAuthInfoBytes(fee, ethPubKey, 191, accountOnChain.sequence)
       const signature = fromHexString(signature_metamask)
       signature[64] = 0 
@@ -80,6 +79,8 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
             );
           }
         );
+    }).catch(e =>  {
+      message.error("Transaction Rejected")
     })
 
   
