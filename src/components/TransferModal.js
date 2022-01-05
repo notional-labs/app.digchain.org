@@ -14,7 +14,7 @@ const style = {
         width: '100%',
         marginTop: '1rem',
         padding: 20,
-        backgroundColor: '#604F80',
+        backgroundColor: '#1f1f1f',
         borderRadius: '20px',
         border: 'solid 1px #bdbdbd'
     },
@@ -41,13 +41,13 @@ const style = {
         marginBottom: '1rem'
     },
     formInput: {
-        backgroundColor: '#403455',
+        backgroundColor: '#1f1f1f',
         color: '#bdbdbd',
         borderRadius: '10px',
     },
     formTitle: {
         fontFamily: 'ubuntu',
-        color: '#bdbdbd',
+        color: '#ffac38',
         fontWeight: 500
     }
 }
@@ -159,7 +159,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#403455',
+                    backgroundColor: '#1f1f1f',
                     color: '#F6F3FB'
                 }}>
                     {account.type === 'keplr' ? account.account.address : account.account}
@@ -173,7 +173,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                         border: `2px solid #c4c4c4`,
                         fontSize: '1rem',
                         paddingTop: '0.2rem',
-                        backgroundColor: '#403455',
+                        backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
                     }}
                         placeholder="Recipient address"
@@ -190,7 +190,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                         border: `2px solid #c4c4c4`,
                         fontSize: '1rem',
                         paddingTop: '0.2rem',
-                        backgroundColor: '#403455',
+                        backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
                     }} min={0} max={parseInt(amount) / 1000000} step={0.000001} onChange={handleChange} />
                 </>
@@ -199,7 +199,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
-                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
                     Send
                 </button>
             </div>

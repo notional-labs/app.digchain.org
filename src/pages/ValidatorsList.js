@@ -14,7 +14,7 @@ const style = {
         width: '100%',
     },
     tblHeader: {
-        backgroundColor: '#3B2D52',
+        backgroundColor: '#ffa538',
     },
     tblContent: {
         height: '300px',
@@ -36,7 +36,7 @@ const style = {
         verticalAlign: 'middle',
         fontWeight: '600',
         fontSize: '17px',
-        color: '#fff',
+        color: '#696969',
         fontFamily: 'Ubuntu',
     }
 }
@@ -97,7 +97,7 @@ const ValidatorsList = () => {
                     <tbody style={style.tblContent}>
                         {validators.map((val, index) => {
                             return (
-                                <tr style={{ backgroundColor: index % 2 === 0 ? '#9D91B5' : '#867B97', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white' }}>
+                                <tr style={{ backgroundColor: index % 2 === 0 ? '#ffe1bd' : '#ffba61', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white' }}>
                                     <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                     <td style={style.td}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -111,18 +111,18 @@ const ValidatorsList = () => {
 
                                             <div style={{ marginLeft: '1rem' }} >
                                                 <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
-                                                <div style={{ fontSize: '12px', opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>
+                                                <div style={{ fontSize: '12px', opacity: 0.6, color: '#696969' }}>{val.description.website ? val.description.website : val.description.identity}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td style={{ ...style.td, textAlign: 'right', color: '#ededed' }}>
+                                    <td style={{ ...style.td, textAlign: 'right', color: '#696969' }}>
                                         <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
                                         <div style={{ fontSize: '14px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                     </td>
-                                    <td style={{ ...style.td, textAlign: 'right', color: '#e3e3e3' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0', }}>
+                                    <td style={{ ...style.td, textAlign: 'right', color: '#696969' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
+                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0',  color: '#ffffff'}}>
                                         <button style={{
-                                            backgroundColor: '#AC99CF',
+                                            backgroundColor: '#ffac38',
                                             border: 'solid 1px #121016',
                                             borderRadius: '10px',
                                             width: '80%',
@@ -140,12 +140,12 @@ const ValidatorsList = () => {
                 </table>
                 <>
                     <Modal show={show} onHide={handleClose} backdrop="static" >
-                        <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                             <div>
                                 Delegate Token
                             </div>
                         </Modal.Header>
-                        <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                        <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                             <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal} />
                         </Modal.Body>
                     </Modal>
@@ -153,7 +153,7 @@ const ValidatorsList = () => {
             </div>
         ) : (
             <div style={{ marginRight: '10rem', paddingTop: '10rem' }}>
-                <PacmanLoader color={'#473E56'} loading={loading} size={100} />
+                <PacmanLoader color={'#f0a848'} loading={loading} size={100} />
             </div>
         )
     )

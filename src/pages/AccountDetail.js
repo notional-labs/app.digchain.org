@@ -9,6 +9,7 @@ import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
 import { getAsset, getTotalDelegate, getTotalUnbonding } from '../helpers/getBalances';
+import { ChartDonut, ChartThemeColor } from '@patternfly/react-charts';
 
 const { Title, Paragraph } = Typography;
 
@@ -33,15 +34,15 @@ const style = {
         paddingRight: 50,
     },
     asset: {
-        backgroundColor: '#50426B',
+        backgroundColor: '#ffc16b',
         borderRadius: '10px',
         marginBottom: '20px',
-        color: '#bdbdbd',
+        color: '#696969',
         fontFamily: 'Ubuntu',
         marginTop: '4rem'
     },
-    delegation:{
-        backgroundColor: '#50426B',
+    delegation: {
+        backgroundColor: '#ffc16b',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
@@ -59,7 +60,7 @@ const style = {
         marginLeft: 0,
         fontFamily: 'ubuntu',
         fontWeight: 600,
-        backgroundColor: '#AC99CF',
+        backgroundColor: '#ffac38',
         color: '#F6F3FB'
     },
     icon: {
@@ -142,8 +143,8 @@ const AccountDetail = ({ accounts }) => {
                         color: '#2a3158',
                         fontFamily: 'Merriweather',
                         textAlign: 'left',
-                        backgroundColor: '#50426B',
-                        color: '#bdbdbd',
+                        backgroundColor: '#ffc16b',
+                        color: '#696969',
                         padding: 20,
                         borderRadius: '10px',
                         fontSize: '1.2rem'
@@ -166,24 +167,40 @@ const AccountDetail = ({ accounts }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0 }}>
-                        <PieChart
+                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20 }}>
+                        {/* <PieChart
                             animate={true}
                             radius={PieChart.defaultProps.radius - 7}
                             data={[
-                                { title: 'Balance', value: parseInt(asset.balance)/1000000, color: '#b8ffcf' },
-                                { title: 'Delegation', value: parseInt(asset.delegation)/1000000, color: '#a2adfa' },
-                                { title: 'Reward', value: parseInt(asset.reward)/1000000, color: '#ffcc91' },
-                                { title: 'Undonding', value: parseInt(asset.unbonding)/1000000, color: '#ffa1a1' }
+                                { title: 'Balance', value: parseInt(asset.balance) / 1000000, color: '#b8ffcf' },
+                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000, color: '#a2adfa' },
+                                { title: 'Reward', value: parseInt(asset.reward) / 1000000, color: '#ffcc91' },
+                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000, color: '#ffa1a1' }
                             ]}
                             style={{ marginLeft: '50px', }}
+                        /> */}
+                        <ChartDonut
+                            ariaDesc="Average number of pets"
+                            ariaTitle="Donut chart example"
+                            constrainToVisibleArea={true}
+                            data={[
+                                { x: 'Balance', y: parseInt(asset.balance) / 1000000, color: '#b8ffcf' },
+                                { x: 'Delegation', y: parseInt(asset.delegation) / 1000000, color: '#a2adfa' },
+                                { x: 'Reward', y: parseInt(asset.reward) / 1000000, color: '#ffcc91' },
+                                { x: 'Undonding', y: parseInt(asset.unbonding) / 1000000, color: '#ffa1a1' },
+                            ]}
+                            labels={({ datum }) => `${datum.x}: ${datum.y} DIG`}
+                            themeColor={ChartThemeColor.multiOrdered}
+                            innerRadius={70}
+                            radius={100}
+                            startAngle={-270}
                         />
                     </div>
                     <hr style={{
                         border: 'none',
-                        bordeLeft: '1px solid hsla(200, 10%, 50%,100)',
+                        bordeLeft: '1px solid white',
                         height: 'auto',
-                        width: '2px',
+                        width: '4px',
                         marginLeft: '10rem'
                     }} />
                     <ul style={{ margin: 'auto', padding: 0, marginLeft: '10rem', listStyleType: 'none', textAlign: 'left', fontSize: '1.25rem', paddingBottom: '10rem' }}>
@@ -197,7 +214,7 @@ const AccountDetail = ({ accounts }) => {
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.balance)/1000000} DIG
+                                {parseInt(asset.balance) / 1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
@@ -210,7 +227,7 @@ const AccountDetail = ({ accounts }) => {
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.delegation)/1000000} DIG
+                                {parseInt(asset.delegation) / 1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
@@ -223,7 +240,7 @@ const AccountDetail = ({ accounts }) => {
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.reward)/1000000} DIG
+                                {parseInt(asset.reward) / 1000000} DIG
                             </div>
                         </li>
                         <li style={style.li}>
@@ -236,24 +253,24 @@ const AccountDetail = ({ accounts }) => {
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.unbonding)/1000000} DIG
+                                {parseInt(asset.unbonding) / 1000000} DIG
                             </div>
                         </li>
                     </ul>
                     <hr />
                 </div>
             </div>
-            <div style={{...style.delegation, marginTop: 0}}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward}/>
+            <div style={{ ...style.delegation, marginTop: 0 }}>
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
             </div>
             <>
-                <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+            <Modal show={show} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Transfer Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <TransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowTransferModal} />
                     </Modal.Body>
                 </Modal>

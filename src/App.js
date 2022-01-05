@@ -54,6 +54,7 @@ const style = {
 const App = () => {
   const [accounts, setAccounts] = useState(JSON.parse(localStorage.getItem('accounts')) || [])
   const [show, setShow] = useState(false)
+  const [page, setPage] = useState('')
 
   const wrapSetShow = useCallback( (val) => {
     setShow(val)
@@ -113,11 +114,19 @@ const App = () => {
   }
 
   const handleOver = (e) => {
-    e.target.style.border = 'solid 1px black'
+    e.target.style.backgroundColor = '#ffc87a'
   }
 
-  const handleLeave = (e) => {
-    e.target.style.border = 0
+  const handleLeaveAccount = (e) => {
+    if(page !== 'account'){
+      e.target.style.backgroundColor = 'transparent'
+    }
+  }
+
+  const handleLeaveStaking = (e) => {
+    if(page !== 'staking'){
+      e.target.style.backgroundColor = 'transparent'
+    }
   }
 
   return (
@@ -136,7 +145,7 @@ const App = () => {
                   <button style={{
                     marginRight: '1rem',
                     fontSize: '1.2rem',
-                    backgroundColor: '#5a4d6e',
+                    backgroundColor: page === 'account' ? '#ffb957' : 'transparent',
                     color: '#F6F3FB',
                     padding: 10,
                     paddingTop: 5,
@@ -145,7 +154,7 @@ const App = () => {
                     borderRadius: '50px',
                     border: 0,
                     fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveAccount} onClick={() => {setPage('account')}}>
                     Accounts
                   </button>
                 </Link>
@@ -155,7 +164,7 @@ const App = () => {
                   <button style={{
                     marginRight: '3rem',
                     fontSize: '1.2rem',
-                    backgroundColor: '#5a4d6e',
+                    backgroundColor: page === 'staking' ? '#ffb957' : 'transparent',
                     color: '#F6F3FB',
                     padding: 10,
                     width: '10rem',
@@ -164,7 +173,7 @@ const App = () => {
                     paddingTop: 5,
                     paddingBottom: 5,
                     fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeave}>
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveStaking} onClick={() => {setPage('staking')}}>
                     Staking
                   </button>
                 </Link>
@@ -185,7 +194,7 @@ const App = () => {
       <>
         <Modal show={show} onHide={handleClose} centered={true}>
           <Modal.Header style={{
-            backgroundColor: '#3c314f',
+            backgroundColor: '#1f1f1f',
             color: '#F6F3FB',
             fontFamily: 'ubuntu',
             fontSize: '1.2rem',
@@ -198,12 +207,12 @@ const App = () => {
             closeVariant='white'>
             <Modal.Title>Connect Wallet</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#3c314f', paddingBottom: '20px' }}>
+          <Modal.Body style={{ backgroundColor: '#1f1f1f', paddingBottom: '20px' }}>
             <div style={style.divButton}>
               <button style={{
                 borderRadius: '20px',
-                backgroundColor: '#201A2B',
-                color: '#383838',
+                backgroundColor: '#ffa424',
+                color: '#696969',
                 margin: 10,
                 border: 0
               }}
@@ -218,8 +227,8 @@ const App = () => {
                       preview={false} />
                   </div>
                   <div style={{ marginLeft: '10px', fontSize: '1.5rem', }}>
-                    <p style={{ margin: 0, textAlign: 'left', color: '#F6F3FB' }}>Keplr</p>
-                    <p style={{ fontSize: '0.75rem', color: '#c9c9c9' }}>
+                    <p style={{ margin: 0, textAlign: 'left', color: '#3b3b3b' }}>Keplr</p>
+                    <p style={{ fontSize: '0.75rem', color: '#696969' }}>
                       Keplr browser extension
                     </p>
                   </div>
@@ -227,8 +236,8 @@ const App = () => {
               </button>
               <button style={{
                 borderRadius: '20px',
-                backgroundColor: '#201A2B',
-                color: '#383838',
+                backgroundColor: '#ffa424',
+                color: '#696969',
                 margin: 10,
                 border: 0
               }}
@@ -243,8 +252,8 @@ const App = () => {
                       preview={false} />
                   </div>
                   <div style={{ marginLeft: '10px', fontSize: '1.5rem' }}>
-                    <p style={{ margin: 0, textAlign: 'left', color: '#F6F3FB' }}>Metamask</p>
-                    <p style={{ fontSize: '0.75rem', color: '#c9c9c9' }}>
+                    <p style={{ margin: 0, textAlign: 'left', color: '#3b3b3b' }}>Metamask</p>
+                    <p style={{ fontSize: '0.75rem', color: '#696969' }}>
                       Metamask browser extension
                     </p>
                   </div>
