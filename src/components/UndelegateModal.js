@@ -117,7 +117,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
 
             var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
            
-            broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
                 wrapSetShow(false)
                 success()
             }).catch((e) => {

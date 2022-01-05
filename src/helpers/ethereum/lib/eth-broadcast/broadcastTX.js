@@ -74,6 +74,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
               Uint8Array.from(txRawBytes)
             ).then(
               (data)=>{
+                console.log(data)
                 message.success("Success send transaction .Tx Hash :" +  data.transactionHash.toString())
               }
             );
