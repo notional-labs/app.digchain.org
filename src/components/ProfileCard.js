@@ -101,7 +101,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             </Paragraph>
             <div style={style.buttonDiv}>
                 <button style={{ ...style.button, backgroundColor: '#ff9f40', color: '#F6F3FB' }} onClick={handleClick}>
-                    transfer
+                    Transfer
                 </button>
                 <Link style={{width: '30%'}} to={account.type === 'keplr' ? account.account.address : account.account}>
                     <button style={{ ...style.button, width: '100%', backgroundColor: '#ff9f40', color: '#F6F3FB' }}>

@@ -3,11 +3,9 @@ import { makeAuthInfoBytes, makeEthPubkeyFromByte} from "../eth-transaction/Auth
 import { getUint8ArrayPubKey } from "../metamaskHelpers";
 import { makeRawTxBytes, makeTxBodyBytes} from "../eth-transaction/Tx"
 import { fetchAccount} from './fetch'
-import { Registry, encodePubkey} from "@cosmjs/proto-signing"
-import { recoverPersonalSignature} from '@metamask/eth-sig-util'
-import { toBase64 } from "@cosmjs/encoding"
-import { defaultRegistryTypes, StargateClient } from "@cosmjs/stargate";
-import { InputNumber, message, } from "antd"
+
+import { StargateClient } from "@cosmjs/stargate";
+import { notification} from "antd"
 
 
 function fromHexString (hexString){
@@ -75,13 +73,17 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
             ).then(
               (data)=>{
                 console.log(data)
-                message.success("Success send transaction .Tx Hash :" +  data.transactionHash.toString())
+                if (data.code == 0){
+                  notification.success("Success send transaction .Tx hash :" +  data.transactionHash.toString())
+                }else{
+                  notification.error(data.rawLog)
+                }              
               }
             );
           }
         );
     }).catch(e =>  {
-      message.error("Transaction Rejected")
+      notification.error("Transaction Rejected")
     })
 
   

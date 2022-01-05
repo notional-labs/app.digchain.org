@@ -4,7 +4,7 @@ import {
 
 export const transfer = async (client, address, amount, recipient) => {
   const fee = {
-    amount: [coin(0, "udig")],
+    amount: [],
     gas: "200000",
   };
 
@@ -14,13 +14,12 @@ export const transfer = async (client, address, amount, recipient) => {
     [coin(amount, "udig")],
     fee,
   );
-
-  console.log(result)
+  return result
 }
 
 export const delegate = async (client, address, amount, recipient) => {
   const fee = {
-    amount: [coin(0, "udig")],
+    amount: [],
     gas: "200000",
   };
 
@@ -30,13 +29,13 @@ export const delegate = async (client, address, amount, recipient) => {
     coin(amount, "udig"),
     fee,
   );
+  return result
 
-  console.log(result)
 }
 
 export const unbonding = async (client, address, amount, recipient) => {
   const fee = {
-    amount: [coin(0, "udig")],
+    amount: [],
     gas: "200000",
   };
 
@@ -46,13 +45,12 @@ export const unbonding = async (client, address, amount, recipient) => {
     coin(amount, "udig"),
     fee,
   );
-
-  console.log(result)
+  return result
 }
 
 export const withDraw = async (client, address, validatorAddress) => {
   const fee = {
-    amount: [coin(0, "udig")],
+    amount: [],
     gas: "200000",
   };
 
@@ -61,6 +59,5 @@ export const withDraw = async (client, address, validatorAddress) => {
     validatorAddress,
     fee,
   );
-
-  console.log(result)
+  return result
 }
