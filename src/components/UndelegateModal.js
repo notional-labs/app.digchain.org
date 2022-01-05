@@ -87,9 +87,15 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const val = delegation.delegation.validator_address
-                unbonding(stargate, address, amount, val).then(() => {
-                    success()
-                    wrapSetShow(false)
+                unbonding(stargate, address, amount, val).then((result) => {
+                    console.log(result)
+                    if (result.code == 0) {
+                        success()
+                        wrapSetShow(false)
+                    }else{
+                        error(result.rawLog)
+                        wrapSetShow(false)    
+                    }
                 }).catch((e) => {
                     error(e.message)
                     wrapSetShow(false)

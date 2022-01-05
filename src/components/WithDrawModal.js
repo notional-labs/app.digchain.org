@@ -71,13 +71,18 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
 
             const stargate = await getStargateClient(offlineSigner)
             if (stargate != null) {
-                withDraw(stargate, address, validator).then(() => {
-                    success()
-                    wrapSetShow(false)
+                withDraw(stargate, address, validator).then((result) => {
+                    console.log(result)
+                    if (result.code == 0) {
+                        success()
+                        wrapSetShow(false)
+                    }else{
+                        error(result.rawLog)
+                        wrapSetShow(false)    
+                    }
                 }).catch((e) => {
                     error(e.message)
                     wrapSetShow(false)
-                    console.log(e)
                 })
             }
         }

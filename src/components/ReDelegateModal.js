@@ -112,7 +112,15 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const denom = process.env.REACT_APP_DENOM
                 try{
                     const msgRelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
-                    await stargate.signAndBroadcast(address, [msgRelegate], stdFee) 
+                    await stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(result=>{
+                        if (result.code == 0) {
+                            success()
+                            wrapSetShow(false)
+                        }else{
+                            error(result.rawLog)
+                            wrapSetShow(false)    
+                        }
+                    })
                     wrapSetShow(false)
                     success()  
                 }  

@@ -111,9 +111,15 @@ const TransferModal = ({ account, wrapSetShow }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = address
-                transfer(stargate, account.account.address, amount, recipient).then(() => {
-                    success()
-                    wrapSetShow(false)
+                transfer(stargate, account.account.address, amount, recipient).then((result) => {
+                    
+                    if (result.code == 0) {
+                        success()
+                        wrapSetShow(false)
+                    }else{
+                        error(result.rawLog)
+                        wrapSetShow(false)    
+                    }
                 }).catch((e) => {
                     error(e.message)
                     wrapSetShow(false)

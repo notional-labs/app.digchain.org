@@ -70,6 +70,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             duration: 1
         })
     };
+    
 
     const error = (message) => {
         notification.error({
@@ -139,9 +140,14 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
             console.log("address", address)
             
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
-                wrapSetter(false)
-                success()
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then((result) => {
+                if (result.code == 0) {
+                    success()
+                    wrapSetShow(false)
+                }else{
+                    error(result.rawLog)
+                    wrapSetShow(false)    
+                }
             }).catch((e) => {
                 wrapSetter(false)
                 error(e.message)
