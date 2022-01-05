@@ -168,7 +168,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
                 </div>
             </div>
             <div style={style.transfer}>
-                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
+                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Undelegate</div>
                 <>
                     <InputNumber style={{
                         width: '100%',
