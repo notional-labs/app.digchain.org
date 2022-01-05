@@ -30,12 +30,12 @@ const style = {
         marginLeft: 0,
         fontFamily: 'ubuntu',
         fontWeight: 600,
-        backgroundColor: '#AC99CF',
+        backgroundColor: '#ffac38',
         color: '#F6F3FB'
     },
     actionButton: {
         border: 'solid 2px #3B2D52',
-        backgroundColor: '#50426B',
+        backgroundColor: '#ffc16b',
         padding: 5,
         fontFamily: 'Ubuntu',
         fontSize: '1rem'
@@ -44,7 +44,7 @@ const style = {
         width: '100%',
     },
     tdlHeader: {
-        backgroundColor: '#3B2D52',
+        backgroundColor: '#ffa538',
     },
     tdlContent: {
         marginTop: '0px',
@@ -56,7 +56,7 @@ const style = {
         textAlign: 'left',
         fontWeight: '700',
         fontSize: '15px',
-        color: '#fff',
+        color: '#ffffff',
         textTransform: 'uppercase',
         fontFamily: 'Ubuntu',
     },
@@ -66,7 +66,7 @@ const style = {
         verticalAlign: 'middle',
         fontWeight: '600',
         fontSize: '17px',
-        color: '#fff',
+        color: '#696969',
         fontFamily: 'Ubuntu',
         width: '20%'
     }
@@ -160,7 +160,7 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                         </thead>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => (
-                                <tr style={{ backgroundColor: index % 2 !== 0 && '#9D91B5', borderBottom: 'solid 1px #bdbdbd' }}>
+                                <tr style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
@@ -189,12 +189,12 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
             )}
             <>
                 <Modal show={showWithdraw} onHide={handleCloseWithdraw} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Withdraw Rewards
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <WithDrawModal address={address}
                             type={type}
                             validator={rewards[selectVal] && rewards[selectVal].validator_address}
@@ -204,12 +204,12 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
             </>
             <>
                 <Modal show={showRedelegate} onHide={handleCloseRedelegate} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Redelegate Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <ReDelegateModal address={address}
                             type={type}
                             delegation={delegations[selectVal]}
@@ -220,12 +220,12 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
             </>
             <>
                 <Modal show={showUnbonding} onHide={handleCloseUnbond} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Unbond Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <UndelegateModal address={address}
                             type={type}
                             delegation={delegations[selectVal]}

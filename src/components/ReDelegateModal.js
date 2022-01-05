@@ -18,7 +18,7 @@ const style = {
         width: '100%',
         marginTop: '1rem',
         padding: 20,
-        backgroundColor: '#604F80',
+        backgroundColor: '#1f1f1f',
         borderRadius: '20px',
         border: 'solid 1px #bdbdbd'
     },
@@ -45,7 +45,7 @@ const style = {
         marginBottom: '1rem'
     },
     formInput: {
-        backgroundColor: '#403455',
+        backgroundColor: '#1f1f1f',
         color: '#bdbdbd',
         borderRadius: '10px',
     },
@@ -173,7 +173,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#403455',
+                    backgroundColor: '#1f1f1f',
                     color: '#F6F3FB'
                 }}>
                     {address}
@@ -188,7 +188,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#403455',
+                    backgroundColor: '#1f1f1f',
                     color: '#F6F3FB'
                 }}>
                     {delegation.delegation.validator_address}
@@ -216,7 +216,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                         border: `2px solid #c4c4c4`,
                         fontSize: '1rem',
                         paddingTop: '0.2rem',
-                        backgroundColor: '#403455',
+                        backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
                     }} min={0} max={parseFloat(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
                 </>
@@ -225,7 +225,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
-                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
                     Send
                 </button>
             </div>

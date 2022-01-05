@@ -49,12 +49,12 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
             ))}
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#201A2B', color: '#F6F3FB', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Transfer Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#604F80', }}>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <TransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowTransferModal} />
                     </Modal.Body>
                 </Modal>
