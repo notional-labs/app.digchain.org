@@ -1,32 +1,37 @@
 import {
-  coin
+  coin,
+  StdFee
 } from "@cosmjs/stargate";
+import {makeDelegateMsg, makeSendMsg, makeUndelegateMsg, makeWithDrawMsg} from "../helpers/ethereum/lib/eth-transaction/Msg"
 
 export const transfer = async (client, address, amount, recipient) => {
-  const fee = {
+  let fee = {
     amount: [],
     gas: "200000",
   };
+  const denom = process.env.REACT_APP_DENOM
+  const msg = makeSendMsg(address, recipient, amount, denom)
 
-  const result = await client.sendTokens(
+  const result = await client.signAndBroadcast(
     address,
-    recipient,
-    [coin(amount, "udig")],
+    [msg],
     fee,
   );
   return result
 }
 
 export const delegate = async (client, address, amount, recipient) => {
-  const fee = {
+  let fee = {
     amount: [],
     gas: "200000",
   };
 
-  const result = await client.delegateTokens(
+  const denom = process.env.REACT_APP_DENOM
+  const msg = makeDelegateMsg(address, recipient, amount, denom)
+
+  const result = await client.signAndBroadcast(
     address,
-    recipient,
-    coin(amount, "udig"),
+    [msg],
     fee,
   );
   return result
@@ -34,29 +39,31 @@ export const delegate = async (client, address, amount, recipient) => {
 }
 
 export const unbonding = async (client, address, amount, recipient) => {
-  const fee = {
+  let fee = {
     amount: [],
     gas: "200000",
   };
+  const denom = process.env.REACT_APP_DENOM
+  const msg = makeUndelegateMsg(address, recipient, amount, denom)
 
-  const result = await client.undelegateTokens(
+  const result = await client.signAndBroadcast(
     address,
-    recipient,
-    coin(amount, "udig"),
+    [msg],
     fee,
   );
   return result
 }
 
 export const withDraw = async (client, address, validatorAddress) => {
-  const fee = {
+  let fee = {
     amount: [],
     gas: "200000",
   };
+  const msg = makeWithDrawMsg(address, validatorAddress)
 
-  const result = await client.withdrawRewards(
+  const result = await client.signAndBroadcast(
     address,
-    validatorAddress,
+    [msg],
     fee,
   );
   return result
