@@ -98,8 +98,8 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const amount = value * 1000000
                 const val = delegation.delegation.validator_address
                 const validator_src_address  = delegation.delegation.validator_address
-                //TODO: add choice form to validator_dst_address
-                const validator_dst_address = delegation.delegation.validator_address
+                //TODO: add choice form to validator_dst_address - done
+                const validator_dst_address = validators[selectVal].operator_address
                 const gasLimit = 2000000
                 let stdFee = {
                     amount: [],
@@ -144,7 +144,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
 
             const validator_src_address  = delegation.delegation.validator_address
             //TODO: add choice form to validator_dst_address
-            const validator_dst_address = delegation.delegation.validator_address
+            const validator_dst_address = validators[selectVal].operator_address
             const amount = value * 1000000
 
             console.log("address")

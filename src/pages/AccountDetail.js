@@ -30,8 +30,7 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         padding: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
+        width: '100%'
     },
     asset: {
         backgroundColor: '#ffc16b',
@@ -167,7 +166,7 @@ const AccountDetail = ({ accounts }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20 }}>
+                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, width: '300rem'}}>
                         {/* <PieChart
                             animate={true}
                             radius={PieChart.defaultProps.radius - 7}
@@ -182,7 +181,7 @@ const AccountDetail = ({ accounts }) => {
                         <ChartDonut
                             ariaDesc="Average number of pets"
                             ariaTitle="Donut chart example"
-                            constrainToVisibleArea={true}
+                            constrainToVisibleArea={false}
                             data={[
                                 { x: 'Balance', y: parseInt(asset.balance) / 1000000, color: '#b8ffcf' },
                                 { x: 'Delegation', y: parseInt(asset.delegation) / 1000000, color: '#a2adfa' },
@@ -192,8 +191,8 @@ const AccountDetail = ({ accounts }) => {
                             labels={({ datum }) => `${datum.x}: ${datum.y} DIG`}
                             themeColor={ChartThemeColor.multiOrdered}
                             innerRadius={70}
-                            radius={100}
-                            startAngle={-270}
+                            radius={110}
+                            startAngle={0}
                         />
                     </div>
                     <hr style={{
