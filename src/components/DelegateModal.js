@@ -143,10 +143,10 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then((result) => {
                 if (result.code == 0) {
                     success()
-                    wrapSetShow(false)
+                    wrapSetter(false)
                 }else{
                     error(result.rawLog)
-                    wrapSetShow(false)    
+                    wrapSetter(false)    
                 }
             }).catch((e) => {
                 wrapSetter(false)
