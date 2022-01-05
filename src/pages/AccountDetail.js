@@ -70,7 +70,7 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '65rem'
+        width: '100%'
     },
     iconDiv: {
         display: 'flex',
@@ -166,7 +166,7 @@ const AccountDetail = ({ accounts }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, width: '300rem'}}>
+                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '10rem' }}>
                         {/* <PieChart
                             animate={true}
                             radius={PieChart.defaultProps.radius - 7}
@@ -200,13 +200,23 @@ const AccountDetail = ({ accounts }) => {
                         bordeLeft: '1px solid white',
                         height: 'auto',
                         width: '4px',
-                        marginLeft: '10rem'
                     }} />
-                    <ul style={{ margin: 'auto', padding: 0, marginLeft: '10rem', listStyleType: 'none', textAlign: 'left', fontSize: '1.25rem', paddingBottom: '10rem' }}>
+                    <ul style={{
+                        textAlign: 'left',
+                        margin: 'auto',
+                        padding: 0,
+                        marginLeft: '10rem',
+                        listStyleType: 'none',
+                        textAlign: 'left',
+                        fontSize: '1.25rem',
+                        paddingBottom: '10rem',
+                        width: '100%',
+                        paddingRight: '2em'
+                    }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#b8ffcf', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsWallet style={{ ...style.icon, color: '#2adb71' }} />
+                                <div style={{ padding: 5, backgroundColor: '#0066cc', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsWallet style={{ ...style.icon, color: '#002b57' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Balance
@@ -218,8 +228,8 @@ const AccountDetail = ({ accounts }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#a2adfa', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsLock style={{ ...style.icon, color: '#2b32ff' }} />
+                                <div style={{ padding: 5, backgroundColor: '#4cb140', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsLock style={{ ...style.icon, color: '#2e6e26' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Delegation
@@ -231,8 +241,8 @@ const AccountDetail = ({ accounts }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#ffcc91', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsGraphUp style={{ ...style.icon, color: '#fc9619' }} />
+                                <div style={{ padding: 5, backgroundColor: '#009596', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsGraphUp style={{ ...style.icon, color: '#005454' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     reward
@@ -244,8 +254,8 @@ const AccountDetail = ({ accounts }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#ffa1a1', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsGraphDown style={{ ...style.icon, color: '#ff3636' }} />
+                                <div style={{ padding: 5, backgroundColor: '#f4c145', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsGraphDown style={{ ...style.icon, color: '#9e7309' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Unbonding
@@ -263,7 +273,7 @@ const AccountDetail = ({ accounts }) => {
                 <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
             </div>
             <>
-            <Modal show={show} onHide={handleClose} backdrop="static" >
+                <Modal show={show} onHide={handleClose} backdrop="static" >
                     <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             Transfer Token
