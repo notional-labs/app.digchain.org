@@ -6,16 +6,16 @@ import {
 } from "@cosmjs/stargate";
 // import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
-export const getKeplr = async (chain_id = "dig-1") => {
+export const getKeplr = async (chain_id = process.env.REACT_APP_CHAIN_ID) => {
     if (!window.getOfflineSigner || !window.keplr) {
         alert("Keplr Wallet not detected, please install extension");
         return undefined
     } else {
-        if (chain_id === 'dig-1') {
+        if (chain_id === process.env.REACT_APP_CHAIN_ID) {
             await window.keplr.experimentalSuggestChain(digChain)
         }
-        await window.keplr.enable('dig-1')
-        const offlineSigner = window.keplr.getOfflineSigner('dig-1');
+        await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
+        const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
         const accounts = await offlineSigner.getAccounts();
         accounts.chain = chain_id
         return {
