@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Image } from 'antd';
-import { getValidators, } from '../helpers/getValidators';
+import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
 import PacmanLoader from "react-spinners/PacmanLoader";
@@ -46,15 +46,25 @@ const ValidatorsList = () => {
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
     const [defaultVal, setDefaultVal] = useState(0)
+    const [setLogo, setSetLogo] = useState(false)
 
     useEffect(() => {
         (async () => {
             setLoading(true)
-            let vals = await getValidators(false)
+            setSetLogo(false)
+            let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
             vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+            })
+            let promises = []
+            vals.forEach(val => {
+                promises.push(getLogo(val.description.identity))
+            })
+            Promise.all(promises).then((logos) => {
+                vals.map((val, index) => val.logo = logos[index])
+                setSetLogo(true)
             })
             setValidators([...vals])
             setLoading(false)
@@ -101,13 +111,24 @@ const ValidatorsList = () => {
                                     <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                     <td style={style.td}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                            {
+                                                setLogo ? (
+                                                    <Image
+                                                        width={40}
+                                                        src={val.logo || notFound}
+                                                        style={{ borderRadius: '100%', marginTop: '7px' }}
+                                                        preview={true}
+                                                    />
 
-                                            <Image
-                                                width={40}
-                                                src={val.logo || notFound}
-                                                style={{ borderRadius: '100%', marginTop: '7px' }}
-                                                preview={true}
-                                            />
+                                                ) : (
+                                                    <Image
+                                                        width={40}
+                                                        src={notFound}
+                                                        style={{ borderRadius: '100%', marginTop: '7px' }}
+                                                        preview={true}
+                                                    />
+                                                )
+                                            }
 
                                             <div style={{ marginLeft: '1rem' }} >
                                                 <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
@@ -120,7 +141,7 @@ const ValidatorsList = () => {
                                         <div style={{ fontSize: '14px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right', color: '#696969' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0',  color: '#ffffff'}}>
+                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: index === validators.length - 1 && '0 0 20px 0', color: '#ffffff' }}>
                                         <button style={{
                                             backgroundColor: '#ffac38',
                                             border: 'solid 1px #121016',
