@@ -11,7 +11,7 @@ const style = {
         width: '100%',
         marginTop: '1rem',
         padding: 20,
-        backgroundColor: '#604F80',
+        backgroundColor: '#1f1f1f',
         borderRadius: '20px',
         border: 'solid 1px #bdbdbd'
     },
@@ -38,7 +38,7 @@ const style = {
         marginBottom: '1rem'
     },
     formInput: {
-        backgroundColor: '#403455',
+        backgroundColor: '#1f1f1f',
         color: '#bdbdbd',
         borderRadius: '10px',
     },
@@ -121,7 +121,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#403455',
+                    backgroundColor: '#1f1f1f',
                     color: '#F6F3FB'
                 }}>
                     {address}
@@ -131,7 +131,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                 <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
-                <button onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#AC99CF', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                <button onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
                     Withdraw
                 </button>
             </div>

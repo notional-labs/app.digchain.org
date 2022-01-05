@@ -5,7 +5,7 @@ const style = {
         width: '100%',
         height: '2.5rem',
         borderRadius: '50px',
-        backgroundColor: '#f4ea57',
+        backgroundImage: 'linear-gradient(180deg, #f4ea57, #ffa82e)',
         border: 'solid 1px black',
     },
     buttonText: {
@@ -18,11 +18,11 @@ const style = {
 const ConnectButton = ({ wrapSetShow }) => {
 
     const handleOver = (e) => {
-        e.target.style.transform = 'scale(1.01)'
+        e.target.style.transform = 'translate(0, -5px)'
     }
 
     const handleLeave = (e) => {
-        e.target.style.transform = 'scale(1)'
+        e.target.style.transform = 'translate(0, 0)'
     }
 
     return (

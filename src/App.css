@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-color: #7c5e93;
+  background-color: #2e2c27;
+  background-image: linear-gradient(180deg, #1c1c1c, #2e2c27, #383838, #474747);
 }
 
 .App-logo {
