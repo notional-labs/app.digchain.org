@@ -60,7 +60,7 @@ const style = {
         marginLeft: 0,
         fontFamily: 'ubuntu',
         fontWeight: 600,
-        backgroundColor: '#ffac38',
+        backgroundColor: '#2e2c27',
         color: '#F6F3FB'
     },
     icon: {

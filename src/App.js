@@ -130,7 +130,7 @@ const App = () => {
   }
 
   return (
-    <div className="App container-fluid" style={{ minWidth: screen.width, height: 'auto', minHeight: '100%' }}>
+    <div className="App container-fluid" style={{}}>
       <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
