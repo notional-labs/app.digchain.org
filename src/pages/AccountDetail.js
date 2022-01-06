@@ -167,18 +167,26 @@ const AccountDetail = ({ accounts }) => {
                 </div>
                 <div style={style.assetChart}>
                     <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '10rem' }}>
-                        {/* <PieChart
+                        <PieChart
                             animate={true}
-                            radius={PieChart.defaultProps.radius - 7}
+                            radius={50}
                             data={[
-                                { title: 'Balance', value: parseInt(asset.balance) / 1000000, color: '#b8ffcf' },
-                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000, color: '#a2adfa' },
-                                { title: 'Reward', value: parseInt(asset.reward) / 1000000, color: '#ffcc91' },
-                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000, color: '#ffa1a1' }
+                                { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#6ab1f7' },
+                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#7dff95' },
+                                { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#ff8e80' },
+                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#e491ff' }
                             ]}
                             style={{ marginLeft: '50px', }}
-                        /> */}
-                        <ChartDonut
+                        >
+                            <PieChart
+                            radius={40}
+                            data={[
+                                { title: 'asset', value: 1, color: '#ffc16b' },
+                            ]}
+                            style={{ marginLeft: '50px', }}
+                        />
+                        </PieChart>
+                        {/* <ChartDonut
                             ariaDesc="Average number of pets"
                             ariaTitle="Donut chart example"
                             constrainToVisibleArea={false}
@@ -193,7 +201,7 @@ const AccountDetail = ({ accounts }) => {
                             innerRadius={70}
                             radius={110}
                             startAngle={0}
-                        />
+                        /> */}
                     </div>
                     <hr style={{
                         border: 'none',
@@ -215,54 +223,54 @@ const AccountDetail = ({ accounts }) => {
                     }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#0066cc', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsWallet style={{ ...style.icon, color: '#002b57' }} />
+                                <div style={{ padding: 5, backgroundColor: '#6ab1f7', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsWallet style={{ ...style.icon, color: '#0b5fb3' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Balance
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.balance) / 1000000} DIG
+                                {parseInt(asset.balance) / 1000000 || 0} DIG 
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#4cb140', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsLock style={{ ...style.icon, color: '#2e6e26' }} />
+                                <div style={{ padding: 5, backgroundColor: '#7dff95', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsLock style={{ ...style.icon, color: '#0da128' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Delegation
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.delegation) / 1000000} DIG
+                                {parseInt(asset.delegation) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#009596', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsGraphUp style={{ ...style.icon, color: '#005454' }} />
+                                <div style={{ padding: 5, backgroundColor: '#ff8e80', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     reward
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.reward) / 1000000} DIG
+                                {parseInt(asset.reward) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#f4c145', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
-                                    <BsGraphDown style={{ ...style.icon, color: '#9e7309' }} />
+                                <div style={{ padding: 5, backgroundColor: '#e491ff', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                    <BsGraphDown style={{ ...style.icon, color: '#a020c9' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
                                     Unbonding
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.unbonding) / 1000000} DIG
+                                {parseInt(asset.unbonding) / 1000000 || 0} DIG
                             </div>
                         </li>
                     </ul>
