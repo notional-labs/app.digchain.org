@@ -80,7 +80,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
                 })
                 }else{
                   notification.error({
-                    message: "Transaction Failed " + data.rawLog,
+                    message: "Transaction Failed ",
                     description: data.rawLog
                 })
 
