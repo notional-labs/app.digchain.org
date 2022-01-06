@@ -15,7 +15,7 @@ function fromHexString (hexString){
   return Uint8Array.from(Buffer.from(hexString, 'hex'));
 }
 
-export const broadcastTransaction = async (address, msg, signDocMsg, chainId, memo, gasLimit, web3) => {
+export const broadcastTransaction = async (address, msg, signDocMsg, chainId, memo, gasLimit, web3, UIProcessing = null) => {
     
   let stdFeeToPutIntoSignDoc = {
     amount: [],
@@ -72,19 +72,22 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
               Uint8Array.from(txRawBytes)
             ).then(
               (data)=>{
+                //UIProcessing();
                 console.log(data)
                 if (data.code == 0){
                   notification.success({
                     message: "Success send transaction. Tx hash : " +  data.transactionHash.toString(),
                     duration: 3
                 })
+                return "Success send transaction"
                 }else{
                   notification.error({
                     message: "Transaction Failed ",
                     description: data.rawLog
                 })
+                return "Transaction Failed"
 
-                }              
+                }
               }
             );
           }
@@ -94,6 +97,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
         message: "Transaction Rejected " ,
         description: "Check your walllet"
     })
+    return "Transaction Rejected"
     })
 
   

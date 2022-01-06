@@ -120,10 +120,15 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
             const msgWithDraw = makeWithDrawMsg(address, validator, denom)
             const makeSignDocWithDrawelMsg = makeSignDocWithDrawMsg(address, validator, denom)
 
-            broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3).then(() => {
+            const UIProcessing = function(){
                 setIsDoingTx(false)
                 wrapSetShow(false)
-                success()
+            }
+
+            broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
+                // setIsDoingTx(false)
+                // wrapSetShow(false)
+                // success()
             }).catch((e) => {
                 setIsDoingTx(false)
                 wrapSetShow(false)

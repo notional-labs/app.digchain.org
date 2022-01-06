@@ -157,11 +157,15 @@ const TransferModal = ({ account, wrapSetShow }) => {
             const msgDelegate = makeSendMsg(account.account, address, amount, denom)
             const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom)
 
-
-            broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
+            const UIProcessing = function(){
                 setIsDoingTx(false)
                 wrapSetShow(false)
-                success()
+            }
+
+            await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then((data) => {
+                // setIsDoingTx(false)
+                // wrapSetShow(false)
+                // success()
             }).catch((e) => {
                 setIsDoingTx(false)
                 wrapSetShow(false)

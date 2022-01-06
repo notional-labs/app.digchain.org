@@ -175,14 +175,18 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             console.log(msgDelegate)
             console.log(signDocDelegate)
 
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
-                wrapSetShow(false)
+            const UIProcessing = function(){
                 setIsDoingTx(false)
-                success()
+                wrapSetShow(false)
+            }
+
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
+                // wrapSetShow(false)
+                // setIsDoingTx(false)
+                // success()
             }).catch((e) => {
                 setIsDoingTx(false)
                 wrapSetShow(false)
-                console.log(e.message)
                 error(e.message)
             })
            
