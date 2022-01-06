@@ -120,8 +120,6 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
 
             const msgDelegate = makeUndelegateMsg(address, val, amount, denom)
             const signDocDelegate = makeSignDocUnDelegateMsg(address, val, amount, denom)
-
-            var err = broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3)
            
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
                 wrapSetShow(false)

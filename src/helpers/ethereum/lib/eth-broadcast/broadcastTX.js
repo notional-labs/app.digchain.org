@@ -78,11 +78,10 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
                     message: "Success send transaction. Tx hash : " +  data.transactionHash.toString(),
                     duration: 3
                 })
-        
                 }else{
                   notification.error({
                     message: "Transaction Failed " + data.rawLog,
-                    duration: 3
+                    description: data.rawLog
                 })
 
                 }              
@@ -91,7 +90,10 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
           }
         );
     }).catch(e =>  {
-      notification.error("Transaction Rejected")
+      notification.error({
+        message: "Transaction Rejected " ,
+        description: "Check your walllet"
+    })
     })
 
   
