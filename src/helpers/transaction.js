@@ -4,10 +4,10 @@ import {
 } from "@cosmjs/stargate";
 import {makeDelegateMsg, makeSendMsg, makeUndelegateMsg, makeWithDrawMsg} from "../helpers/ethereum/lib/eth-transaction/Msg"
 
-export const transfer = async (client, address, amount, recipient) => {
+export const transfer = async (client, address, amount, recipient, gas) => {
   let fee = {
     amount: [],
-    gas: "200000",
+    gas: `${gas}`,
   };
   const denom = process.env.REACT_APP_DENOM
   const msg = makeSendMsg(address, recipient, amount, denom)
@@ -20,10 +20,10 @@ export const transfer = async (client, address, amount, recipient) => {
   return result
 }
 
-export const delegate = async (client, address, amount, recipient) => {
+export const delegate = async (client, address, amount, recipient, gas) => {
   let fee = {
     amount: [],
-    gas: "200000",
+    gas: `${gas}`,
   };
 
   const denom = process.env.REACT_APP_DENOM
@@ -38,10 +38,10 @@ export const delegate = async (client, address, amount, recipient) => {
 
 }
 
-export const unbonding = async (client, address, amount, recipient) => {
+export const unbonding = async (client, address, amount, recipient, gas) => {
   let fee = {
     amount: [],
-    gas: "200000",
+    gas: `${gas}`,
   };
   const denom = process.env.REACT_APP_DENOM
   const msg = makeUndelegateMsg(address, recipient, amount, denom)
@@ -54,10 +54,10 @@ export const unbonding = async (client, address, amount, recipient) => {
   return result
 }
 
-export const withDraw = async (client, address, validatorAddress) => {
+export const withDraw = async (client, address, validatorAddress, gas) => {
   let fee = {
     amount: [],
-    gas: "200000",
+    gas: `${gas}`,
   };
   const msg = makeWithDrawMsg(address, validatorAddress)
 

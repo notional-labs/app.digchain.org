@@ -1,12 +1,12 @@
-import { InputNumber, message, notification } from "antd"
+import { InputNumber, message, notification, Checkbox } from "antd"
 import { delegate } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSendMsg, makeSignDocSendMsg, makeSendMsgcTemp} from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSendMsg, makeSignDocSendMsg, makeSendMsgcTemp } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
-
+import ClipLoader from "react-spinners/ClipLoader"
 
 const style = {
     transfer: {
@@ -57,6 +57,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     const [delegators, setDelegators] = useState([])
     const [selectVal, setSelectVal] = useState(defaultVal)
     const [selectDel, setSelectDel] = useState(0)
+    const [showAdvance, setShowAdvance] = useState(false)
+    const [gasAmount, setGasAmount] = useState('200000')
+    const [isDoingTX, setIsDoingTx] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -96,7 +99,16 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
         setSelectVal(e.target.value)
     }
 
+    const check = (e) => {
+        setShowAdvance(e.target.checked)
+    }
+
+    const handleChangeGas = (value) => {
+        setGasAmount(value)
+    }
+
     const handleClick = async () => {
+        setIsDoingTx(true)
         if (delegators[selectDel].type === 'keplr') {
             const { offlineSigner } = await getKeplr();
 
@@ -104,17 +116,20 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = validators[selectVal].operator_address
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient).then(() => {
+                const gas = parseInt(gasAmount)
+                delegate(stargate, delegators[selectDel].account.address, amount, recipient, gas).then(() => {
+                    setIsDoingTx(false)
                     success()
                     wrapSetter(false)
                 }).catch((e) => {
-                    error()
+                    setIsDoingTx(false)
+                    error(e.message)
                     wrapSetter(false)
                     console.log(e)
                 })
             }
         }
-        else{
+        else {
             //makeSignDocDelegateMsg, makeDelegateMsg
             // please set enviroment variable: DENOM, etc
             //import web3
@@ -124,7 +139,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const memo = "Love From Dev Team"
 
             const address = delegators[selectDel].account
-            const gasLimit = 200000
+            const gasLimit = parseInt(gasAmount)
 
 
             const recipient = validators[selectVal].operator_address
@@ -134,16 +149,18 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 window.alert("Plese check your amount")
                 return
             }
-            const msgDelegate = makeDelegateMsg(address, recipient, amount, denom) 
-            const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom) 
+            const msgDelegate = makeDelegateMsg(address, recipient, amount, denom)
+            const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom)
 
             console.log("address", address)
-            
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3 ).then(() => {
+
+            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
                 wrapSetter(false)
+                setIsDoingTx(false)
                 success()
             }).catch((e) => {
                 wrapSetter(false)
+                setIsDoingTx(false)
                 error(e.message)
             })
         }
@@ -187,11 +204,40 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
-                    }} min={0} step={0.000001} onChange={handleChange} />
+                    }} min={0} step={1} onChange={handleChange} />
                 </>
             </div>
+            <div>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+            </div>
+            {
+                showAdvance && (
+                    <div style={style.transfer}>
+                        <div style={{ marginBottom: '1rem', ...style.formTitle }}>Set Gas</div>
+                        <>
+                            <InputNumber style={{
+                                width: '100%',
+                                height: '40px',
+                                borderRadius: '10px',
+                                border: `2px solid #c4c4c4`,
+                                fontSize: '1rem',
+                                paddingTop: '0.2rem',
+                                backgroundColor: '#1f1f1f',
+                                color: '#F6F3FB'
+                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)} />
+                        </>
+                    </div>
+                )
+            }
+            {
+                isDoingTX && (
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem'}}>
+                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX}/>
+                    </div>
+                )
+            }
             <div style={style.button}>
-                <button disabled={checkDisable()} onClick={() => wrapSetter(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button onClick={() => wrapSetter(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
                 </button>
                 <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>

@@ -1,4 +1,4 @@
-import { Input, InputNumber, message, notification } from "antd"
+import { Input, InputNumber, message, notification, Checkbox } from "antd"
 import { transfer } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { getBalance } from "../helpers/getBalances";
@@ -7,6 +7,7 @@ import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSendMsg, makeSignDocSendMsg, } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
+import ClipLoader from "react-spinners/ClipLoader"
 
 const style = {
     transfer: {
@@ -56,6 +57,9 @@ const TransferModal = ({ account, wrapSetShow }) => {
     const [value, setValue] = useState('')
     const [address, setAddress] = useState('')
     const [amount, setAmount] = useState('')
+    const [showAdvance, setShowAdvance] = useState(false)
+    const [gasAmount, setGasAmount] = useState('200000')
+    const [isDoingTX, setIsDoingTx] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -103,7 +107,16 @@ const TransferModal = ({ account, wrapSetShow }) => {
         return false
     }
 
+    const check = (e) => {
+        setShowAdvance(e.target.checked)
+    }
+
+    const handleChangeGas = (value) => {
+        setGasAmount(value)
+    }
+
     const handleClick = async () => {
+        setIsDoingTx(true)
         if (account.type === 'keplr') {
             const { offlineSigner } = await getKeplr();
 
@@ -111,16 +124,20 @@ const TransferModal = ({ account, wrapSetShow }) => {
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = address
-                transfer(stargate, account.account.address, amount, recipient).then((result) => {
+                const gas = parseInt(gasAmount)
+                transfer(stargate, account.account.address, amount, recipient, gas).then((result) => {
                     
                     if (result.code == 0) {
+                        setIsDoingTx(false)
                         success()
                         wrapSetShow(false)
                     }else{
+                        setIsDoingTx(false)
                         error(result.rawLog)
                         wrapSetShow(false)    
                     }
                 }).catch((e) => {
+                    setIsDoingTx(false)
                     error(e.message)
                     wrapSetShow(false)
                     console.log(e)
@@ -133,7 +150,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
             const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Dev Team"
 
-            const gasLimit = 200000
+            const gasLimit = parseInt(gasAmount)
 
             const amount = value * 1000000
 
@@ -142,9 +159,11 @@ const TransferModal = ({ account, wrapSetShow }) => {
 
 
             broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
+                setIsDoingTx(false)
                 wrapSetShow(false)
                 success()
             }).catch((e) => {
+                setIsDoingTx(false)
                 wrapSetShow(false)
                 error(e.message)
             })
@@ -201,6 +220,35 @@ const TransferModal = ({ account, wrapSetShow }) => {
                     }} min={0} max={parseInt(amount) / 1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
+            <div>
+                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+            </div>
+            {
+                showAdvance && (
+                    <div style={style.transfer}>
+                        <div style={{ marginBottom: '1rem', ...style.formTitle }}>Set Gas</div>
+                        <>
+                            <InputNumber style={{
+                                width: '100%',
+                                height: '40px',
+                                borderRadius: '10px',
+                                border: `2px solid #c4c4c4`,
+                                fontSize: '1rem',
+                                paddingTop: '0.2rem',
+                                backgroundColor: '#1f1f1f',
+                                color: '#F6F3FB'
+                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)}/>
+                        </>
+                    </div>
+                )
+            }
+            {
+                isDoingTX && (
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem'}}>
+                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX}/>
+                    </div>
+                )
+            }
             <div style={style.button}>
                 <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
                     Cancel
