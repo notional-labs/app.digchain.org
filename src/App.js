@@ -130,7 +130,7 @@ const App = () => {
   }
 
   return (
-    <div className="App container-fluid" style={{}}>
+    <div className="App container-fluid">
       <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
