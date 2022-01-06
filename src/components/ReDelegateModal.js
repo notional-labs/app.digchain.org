@@ -100,7 +100,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const validator_src_address  = delegation.delegation.validator_address
                 //TODO: add choice form to validator_dst_address - done
                 const validator_dst_address = validators[selectVal].operator_address
-                const gasLimit = 2000000
+                const gasLimit = 200000
                 let stdFee = {
                     amount: [],
                     gas: gasLimit.toString(),
@@ -139,7 +139,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Notional's Dev Team"
 
-            const gasLimit = 200000
+            const gasLimit = 400000
 
 
             const validator_src_address  = delegation.delegation.validator_address
@@ -159,9 +159,11 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
 
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3).then(() => {
                 wrapSetShow(false)
+
                 success()
             }).catch((e) => {
                 wrapSetShow(false)
+                console.log(e.message)
                 error(e.message)
             })
            

@@ -74,9 +74,17 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
               (data)=>{
                 console.log(data)
                 if (data.code == 0){
-                  notification.success("Success send transaction .Tx hash :" +  data.transactionHash.toString())
+                  notification.success({
+                    message: "Success send transaction. Tx hash : " +  data.transactionHash.toString(),
+                    duration: 3
+                })
+        
                 }else{
-                  notification.error(data.rawLog)
+                  notification.error({
+                    message: "Transaction Failed " + data.rawLog,
+                    duration: 3
+                })
+
                 }              
               }
             );
