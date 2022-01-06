@@ -6,8 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
 
-console.log(process.env.REACT_APP_API)
-
+if (process.env.NODE_ENV !== "development")
+    console.log = () => {};
+    
 ReactDOM.render(
   <React.StrictMode>
     <App />
