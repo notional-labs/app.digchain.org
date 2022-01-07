@@ -157,7 +157,6 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const UIProcessing = function(){
                 setIsDoingTx(false)
                 wrapSetter(false)
-                success()
             }
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // wrapSetter(false)

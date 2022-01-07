@@ -3,7 +3,7 @@ import { makeAuthInfoBytes, makeEthPubkeyFromByte} from "../eth-transaction/Auth
 import { getUint8ArrayPubKey } from "../metamaskHelpers";
 import { makeRawTxBytes, makeTxBodyBytes} from "../eth-transaction/Tx"
 import { fetchAccount} from './fetch'
-
+import {coins} from "@cosmjs/stargate"
 import { StargateClient } from "@cosmjs/stargate";
 import { notification} from "antd"
 
@@ -18,12 +18,12 @@ function fromHexString (hexString){
 export const broadcastTransaction = async (address, msg, signDocMsg, chainId, memo, gasLimit, web3, UIProcessing = null) => {
     
   let stdFeeToPutIntoSignDoc = {
-    amount: [],
+    amount: coins(1000, "udig"),
     gas: gasLimit.toString(),
   };
 
   let fee = {
-      amount : [],
+      amount : coins(1000, "udig"),
       gasLimit: gasLimit.toString(),
     }
   console.log(address)

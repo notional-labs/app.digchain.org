@@ -127,7 +127,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
 
             broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // setIsDoingTx(false)
-                wrapSetShow(false)
+                // wrapSetShow(false)
                 // success()
             }).catch((e) => {
                 setIsDoingTx(false)
