@@ -180,7 +180,7 @@ const App = () => {
                     paddingTop: 5,
                     paddingBottom: 5,
                     fontFamily: 'MerriWeather',
-                  }} onClick={() => { setPage('staking') }}>
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveStaking} onClick={() => { setPage('staking') }}>
                     Staking
                   </button>
                 </Link>
