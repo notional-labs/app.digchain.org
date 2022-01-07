@@ -7,6 +7,7 @@ import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSe
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
+import { getBalance } from "../helpers/getBalances";
 
 const style = {
     transfer: {
@@ -60,12 +61,17 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     const [showAdvance, setShowAdvance] = useState(false)
     const [gasAmount, setGasAmount] = useState('200000')
     const [isDoingTX, setIsDoingTx] = useState(false)
+    const [availabeAmount, setAvailableAmount] = useState('')
 
     useEffect(() => {
         (async () => {
             setDelegators([...JSON.parse(localStorage.getItem('accounts'))])
+            const delegatorsList = JSON.parse(localStorage.getItem('accounts'))
+            if(delegatorsList.length > 0) {
+                await getAvailableAmount(delegatorsList)
+            }
         })()
-    }, [])
+    }, [selectDel])
 
     const success = () => {
         notification.success({
@@ -86,7 +92,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }
 
     const checkDisable = () => {
-        if (value === 0) {
+        if (value === 0 || value === '' || delegators.length === 0) {
             return true
         }
         return false
@@ -105,6 +111,13 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
     const handleChangeGas = (value) => {
         setGasAmount(value)
+    }
+
+    const getAvailableAmount = async (delegators) => {
+        const address = delegators[selectDel].type === 'keplr' ? delegators[selectDel].account.address : delegators[selectDel].account
+        const balance = await getBalance(address)
+        const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+        setAvailableAmount(balanceAmount)
     }
 
     const handleClick = async () => {
@@ -154,7 +167,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
             console.log("address", address)
 
-            const UIProcessing = function(){
+            const UIProcessing = function () {
                 setIsDoingTx(false)
                 wrapSetter(false)
             }
@@ -178,25 +191,29 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
+                                <option key={index} value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
                             ))
                         }
                     </Form.Select>
                 </>
             </div>
             <div style={style.transfer}>
-                <p style={style.formTitle}>Valadator</p>
+                <p style={style.formTitle}>Validator</p>
                 <>
                     <Form.Select onChange={handleChangeSelectVal} defaultValue={selectVal} style={style.formInput}>
                         {
                             validators.map((val, index) => (
-                                <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
+                                <option key={index} value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
                             ))
                         }
                     </Form.Select>
                 </>
             </div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>Amount Availabe</p>
+                <p style={{ ...style.formInput, border: 'solid 1px #bdbdbd', padding: 10 }}>
+                    {parseInt(availabeAmount) / 1000000 || 0} DIG
+                </p>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
                 <>
                     <InputNumber style={{
@@ -208,7 +225,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
-                    }} min={0} step={1} onChange={handleChange} />
+                    }} min={0} max={parseInt(availabeAmount)/1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div>
@@ -235,8 +252,8 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             }
             {
                 isDoingTX && (
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem'}}>
-                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX}/>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem' }}>
+                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX} />
                     </div>
                 )
             }

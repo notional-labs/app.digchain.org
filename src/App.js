@@ -16,9 +16,10 @@ import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
 import { Image, message } from 'antd';
 import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
-
+import { GithubFilled } from '@ant-design/icons'
 import "@fontsource/merriweather"
 import AccountList from './pages/AccountList';
+import { FaDiscord } from "react-icons/fa";
 
 
 const style = {
@@ -48,6 +49,11 @@ const style = {
     justifyContent: 'start',
     paddingTop: 20,
     paddingLeft: 20,
+  },
+  contact: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'end',
   }
 }
 
@@ -192,11 +198,43 @@ const App = () => {
           </div>
         </div>
         <Routes>
-          <Route exact path="/" element={<div></div>} />
+          <Route exact path="/" element={<div style={{ height: '77vh' }}></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
           <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage} />} />
         </Routes>
+        <div style={style.contact}>
+          <ul style={{ ...style.tabButton, listStyleType: 'none',}}>
+            <li style={{
+              paddingTop: '1em',
+              fontSize: '1.2rem',
+              color: '#ffc16b',
+              marginRight: '1em'
+            }}>
+              <p>
+                Contact Us |
+              </p>
+            </li>
+            <li style={{
+              fontSize: '2rem',
+              color: '#ffc16b',
+              marginRight: '1em',
+            }}>
+              <a href='https://github.com/notional-labs' target='_blank'>
+                <GithubFilled style={{color: '#ffc16b',}}/>
+              </a>
+            </li>
+            <li style={{
+              fontSize: '2.5rem',
+              color: '#ffc16b',
+              marginRight: '1em',
+            }}>
+              <a href='https://discord.com/invite/W8rVSAYT' target='_blank'>
+                <FaDiscord style={{color: '#ffc16b',}}/>
+              </a>
+            </li>
+          </ul>
+        </div>
       </Router>
       <>
         <Modal show={show} onHide={handleClose} centered={true}>

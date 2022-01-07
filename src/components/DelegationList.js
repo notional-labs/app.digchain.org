@@ -162,15 +162,15 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                         </thead>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => (
-                                <tr style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
+                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
-                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000} DIG
+                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
-                                        {parseInt(reward.reward[0].amount) / 1000000} DIG
+                                        {parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
                                         <button onClick={() => handleClickWithdraw(index)} style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px' }}>
