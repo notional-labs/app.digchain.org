@@ -18,7 +18,7 @@ const fetch_address = async (address) => {
 export const fetchAccount = async (address) => {
     // get account
     try {
-      let accountOnChain = await fetch_address("0x001d079248234e83773a5f955ea9572af3ae809c");
+      let accountOnChain = await fetch_address(address);
       console.log("account on chain", accountOnChain.data.result.value.base_vesting_account)
 
       if (accountOnChain.data.result.value.base_vesting_account != null){
