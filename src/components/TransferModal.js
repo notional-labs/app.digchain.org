@@ -126,15 +126,15 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 const recipient = address
                 const gas = parseInt(gasAmount)
                 transfer(stargate, account.account.address, amount, recipient, gas).then((result) => {
-                    
+
                     if (result.code == 0) {
                         setIsDoingTx(false)
                         success()
                         wrapSetShow(false)
-                    }else{
+                    } else {
                         setIsDoingTx(false)
                         error(result.rawLog)
-                        wrapSetShow(false)    
+                        wrapSetShow(false)
                     }
                 }).catch((e) => {
                     setIsDoingTx(false)
@@ -157,7 +157,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
             const msgDelegate = makeSendMsg(account.account, address, amount, denom)
             const signDocDelegate = makeSignDocSendMsg(account.account, address, amount, denom)
 
-            const UIProcessing = function(){
+            const UIProcessing = function () {
                 setIsDoingTx(false)
                 wrapSetShow(false)
                 success()
@@ -211,6 +211,10 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 </>
             </div>
             <div style={style.transfer}>
+                <p style={style.formTitle}>Amount Availabe</p>
+                <p style={{ ...style.formInput, border: 'solid 1px #bdbdbd', padding: 10 }}>
+                    {parseInt(amount) / 1000000 || 0} DIG
+                </p>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Send</div>
                 <>
                     <InputNumber style={{
@@ -226,7 +230,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 </>
             </div>
             <div>
-                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
@@ -242,15 +246,15 @@ const TransferModal = ({ account, wrapSetShow }) => {
                                 paddingTop: '0.2rem',
                                 backgroundColor: '#1f1f1f',
                                 color: '#F6F3FB'
-                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)}/>
+                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)} />
                         </>
                     </div>
                 )
             }
             {
                 isDoingTX && (
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem'}}>
-                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX}/>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem' }}>
+                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX} />
                     </div>
                 )
             }

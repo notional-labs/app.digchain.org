@@ -173,7 +173,7 @@ const ValidatorsList = () => {
                 </>
             </div>
         ) : (
-            <div style={{ marginRight: '10rem', paddingTop: '10rem' }}>
+            <div style={{ marginRight: '10rem', paddingTop: '10rem', height: '77vh' }}>
                 <PacmanLoader color={'#f0a848'} loading={loading} size={100} />
             </div>
         )

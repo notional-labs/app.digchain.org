@@ -253,7 +253,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                                     <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
-                                    reward
+                                    Reward
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
@@ -277,7 +277,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     <hr />
                 </div>
             </div>
-            <div style={{ ...style.delegation, marginTop: 0 }}>
+            <div style={{ ...style.delegation, marginTop: 0, paddingTop: 0 }}>
                 <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage} />
             </div>
             <>
