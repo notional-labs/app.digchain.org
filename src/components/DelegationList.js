@@ -162,7 +162,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                         </thead>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => (
-                                <tr style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
+                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>

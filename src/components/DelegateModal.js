@@ -92,7 +92,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }
 
     const checkDisable = () => {
-        if (value === 0) {
+        if (value === 0 || value === '' || delegators.length === 0) {
             return true
         }
         return false
@@ -191,7 +191,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
                         {
                             delegators.map((delegator, index) => (
-                                <option value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
+                                <option key={index} value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
                             ))
                         }
                     </Form.Select>
@@ -203,7 +203,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelectVal} defaultValue={selectVal} style={style.formInput}>
                         {
                             validators.map((val, index) => (
-                                <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
+                                <option key={index} value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
                             ))
                         }
                     </Form.Select>
@@ -225,7 +225,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
-                    }} min={0} step={1} onChange={handleChange} />
+                    }} min={0} max={parseInt(availabeAmount)/1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div>

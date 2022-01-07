@@ -233,7 +233,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     <Form.Select onChange={handleChangeSelectVal} style={style.formInput}>
                         {
                             validators.map((val, index) => (
-                                <option value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
+                                <option key={index} value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
                             ))
                         }
                     </Form.Select>
