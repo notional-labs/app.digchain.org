@@ -166,7 +166,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '10rem' }}>
+                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '15rem' }}>
                         <PieChart
                             animate={true}
                             radius={50}
@@ -179,12 +179,12 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                             style={{ marginLeft: '50px', }}
                         >
                             <PieChart
-                            radius={40}
-                            data={[
-                                { title: 'asset', value: 1, color: '#ffc16b' },
-                            ]}
-                            style={{ marginLeft: '50px', }}
-                        />
+                                radius={40}
+                                data={[
+                                    { title: 'asset', value: 1, color: '#ffc16b' },
+                                ]}
+                                style={{ marginLeft: '50px', }}
+                            />
                         </PieChart>
                         {/* <ChartDonut
                             ariaDesc="Average number of pets"
@@ -231,7 +231,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                                 </p>
                             </div>
                             <div style={{ fontWeight: 600 }}>
-                                {parseInt(asset.balance) / 1000000 || 0} DIG 
+                                {parseInt(asset.balance) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
@@ -278,7 +278,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: 0 }}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage}/>
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage} />
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
