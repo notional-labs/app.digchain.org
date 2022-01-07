@@ -57,11 +57,13 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 Accounts
             </div>
             {accounts.length > 0 ?
-                (accounts.map((account, index) => (
-                    <div style={style.card}>
-                        <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
-                    </div>
-                ))) : (
+                <div style={{minHeight: '55vh'}}>
+                    {(accounts.map((account, index) => (
+                        <div style={style.card}>
+                            <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
+                        </div>
+                    )))}
+                </div> : (
                     <div style={{ color: '#ffc16b', height: '55vh', paddingTop: '15em', fontFamily: 'Ubuntu' }}>
                         <ImFloppyDisk style={{ fontSize: '10rem', opacity: 0.2, }} />
                         <p style={{ fontSize: '2rem', opacity: 0.2, paddingTop: '1em', marginBottom: 0 }}>
