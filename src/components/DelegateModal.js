@@ -67,7 +67,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
         (async () => {
             setDelegators([...JSON.parse(localStorage.getItem('accounts'))])
             const delegatorsList = JSON.parse(localStorage.getItem('accounts'))
-            await getAvailableAmount(delegatorsList)
+            if(delegatorsList.length > 0) {
+                await getAvailableAmount(delegatorsList)
+            }
         })()
     }, [selectDel])
 
