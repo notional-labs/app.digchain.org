@@ -160,6 +160,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
             const UIProcessing = function(){
                 setIsDoingTx(false)
                 wrapSetShow(false)
+                success()
             }
 
             await broadcastTransaction(account.account, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then((data) => {
