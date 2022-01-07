@@ -186,29 +186,6 @@ const App = () => {
                 </Link>
               </li>
               <li>
-                <div style={{ width: '10rem', marginRight: '1rem' }}>
-                  <button 
-                    style={{
-                      width: '100%',
-                      height: '2.5rem',
-                      borderRadius: '50px',
-                      backgroundImage: 'linear-gradient(180deg, #41a1f0, #8b0acc)',
-                      border: 'solid 1px black',
-                    }}
-                    onClick={async () => {
-                      await addDig()
-                    }}>
-                    <div style={{
-                      fontSize: '1rem',
-                      color: '#f0f0f0',
-                      fontFamily: 'Merriweather'
-                    }}>
-                      Add DIG to keplr
-                    </div>
-                  </button>
-                </div>
-              </li>
-              <li>
                 <ConnectButton wrapSetShow={wrapSetShow} />
               </li>
             </ul>
