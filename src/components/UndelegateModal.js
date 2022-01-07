@@ -128,7 +128,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             let web3 = await getWeb3Instance();
             const denom = process.env.REACT_APP_DENOM
             const chainId = process.env.REACT_APP_CHAIN_ID
-            const memo = "Love From Dev Team"
+            const memo = "Love From Notional's Dev Team"
 
             const gasLimit = parseInt(gasAmount)
 
@@ -146,7 +146,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
 
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // setIsDoingTx(false)
-                wrapSetShow(false)
+                // wrapSetShow(false)
                 // success()
             }).catch((e) => {
                 setIsDoingTx(false)

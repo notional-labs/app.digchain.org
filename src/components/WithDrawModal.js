@@ -111,7 +111,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
             let web3 = await getWeb3Instance();
             const denom = process.env.REACT_APP_DENOM
             const chainId = process.env.REACT_APP_CHAIN_ID
-            const memo = "Love From Dev Team"
+            const memo = "Love From Notional's Dev Team"
 
             console.log(address)
             const gasLimit = parseInt(gasAmount)
@@ -127,7 +127,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
 
             broadcastTransaction(address, msgWithDraw, makeSignDocWithDrawelMsg, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // setIsDoingTx(false)
-                wrapSetShow(false)
+                // wrapSetShow(false)
                 // success()
             }).catch((e) => {
                 setIsDoingTx(false)
