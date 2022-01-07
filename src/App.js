@@ -109,6 +109,7 @@ const App = () => {
         if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
           accountsList.push({ account: accounts[0], type: 'metamask' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
+          setAccounts([...accountsList])
           warning('Success')
         }
         else {
