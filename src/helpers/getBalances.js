@@ -43,7 +43,7 @@ export const getUnbond = async (address) => {
 export const getTotal = (balances) => {
     let sum = 0
     for (let i of balances){
-        sum += parseInt(i.delegator_shares)
+        sum += parseFloat(i.delegator_shares)
     }
     return sum
 }
@@ -63,7 +63,7 @@ export const getAsset = async (address) => {
 export const getTotalDelegate = (delegations) => {
     let sum = 0
     for (let i of delegations){
-        sum += parseInt(i.delegation.shares)
+        sum += parseFloat(i.delegation.shares)
     }
     return sum
 }
@@ -71,7 +71,7 @@ export const getTotalDelegate = (delegations) => {
 export const getTotalUnbonding = (unbondings) => {
     let sum = 0
     for (let i of unbondings){
-        sum += parseInt(i.entries[0].balance)
+        sum += parseFloat(i.entries[0].balance)
     }
     return sum
 }

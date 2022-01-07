@@ -10,11 +10,14 @@ const style = {
         flexDirection: 'column',
         justifyContent: 'center',
         textAlign: 'center',
-        paddingLeft: '40rem',
-        paddingBottom: '20px'
+        paddingBottom: '20px',
+        padding: 60
     },
     card: {
         margin: 10,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     button: {
         marginTop: '3rem',
@@ -39,14 +42,24 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
     }
     return (
         <div style={style.container}>
-            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
+            <div style={{
+                marginBottom: '0.5rem',
+                fontSize: '3rem',
+                color: '#EFCF20',
+                fontFamily: 'Ubuntu',
+                fontWeight: 600,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingRight: '10em'
+            }}>
                 Accounts
             </div>
-            {accounts.map((account, index) => (
-                <div style={style.card}>
-                    <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
-                </div>
-            ))}
+                {accounts.map((account, index) => (
+                    <div style={style.card}>
+                        <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
+                    </div>
+                ))}
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
                     <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>

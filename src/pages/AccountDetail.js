@@ -79,7 +79,7 @@ const style = {
     }
 }
 
-const AccountDetail = ({ accounts }) => {
+const AccountDetail = ({ accounts, wrapSetPage }) => {
     const [show, setShow] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
     const [asset, setAsset] = useState({
@@ -278,7 +278,7 @@ const AccountDetail = ({ accounts }) => {
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: 0 }}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage}/>
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >

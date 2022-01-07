@@ -201,7 +201,7 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
                         paddingTop: '0.2rem',
                         backgroundColor: '#1f1f1f',
                         color: '#F6F3FB'
-                    }} min={0} max={parseInt(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
+                    }} min={0} max={parseFloat(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
                 </>
             </div>
             <div>

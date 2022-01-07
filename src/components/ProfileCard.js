@@ -97,7 +97,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 padding: 20,
                 borderRadius: '20px'
             }}>
-                {parseInt(amount) / 1000000 || 0} DIG
+                {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
                 <button style={{ ...style.button, backgroundColor: '#ff9f40', color: '#F6F3FB' }} onClick={handleClick}>

@@ -107,7 +107,7 @@ const ValidatorsList = () => {
                     <tbody style={style.tblContent}>
                         {validators.map((val, index) => {
                             return (
-                                <tr style={{ backgroundColor: index % 2 === 0 ? '#ffe1bd' : '#ffba61', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white' }}>
+                                <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#ffe1bd' : '#ffba61', borderBottom: index === validators.length - 1 ? 0 : 'solid 1px white' }}>
                                     <td style={{ ...style.td, borderRadius: index === validators.length - 1 && '0 0 0 20px' }}>{index + 1}</td>
                                     <td style={style.td}>
                                         <div style={{ display: 'flex', flexDirection: 'row' }}>

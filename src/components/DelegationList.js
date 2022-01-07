@@ -72,7 +72,7 @@ const style = {
     }
 }
 
-const DelegationList = ({ address, type, delegations, rewards }) => {
+const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [selectVal, setSelectVal] = useState(0)
@@ -141,7 +141,9 @@ const DelegationList = ({ address, type, delegations, rewards }) => {
                 </Title>
                 <div style={{ width: '10%' }}>
                     <Link to='/staking' style={{ width: '30%' }}>
-                        <button style={style.button}>
+                        <button style={style.button} onClick={() => {
+                            wrapSetPage('staking')
+                        }}>
                             Delegate
                         </button>
                     </Link>

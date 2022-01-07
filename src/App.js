@@ -64,6 +64,10 @@ const App = () => {
     setAccounts([...val])
   }, [setAccounts])
 
+  const wrapSetPage = useCallback( (val) => {
+    setPage(val)
+  }, [setPage])
+
 
   const handleClose = () => {
     setShow(false)
@@ -75,7 +79,7 @@ const App = () => {
 
   const connect = async (val) => {
     if (val === 'keplr') {
-      const { accounts } = await getKeplr(val)
+      const { accounts } = await getKeplr()
       if (!localStorage.getItem('accounts')) {
         localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
         setAccounts([...{ account: accounts[0], type: 'keplr' }])
@@ -188,7 +192,7 @@ const App = () => {
           <Route exact path="/" element={<div></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts}/>} />
-          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
+          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage}/>} />
         </Routes>
       </Router>
       <>
