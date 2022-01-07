@@ -26,16 +26,15 @@ const ConnectButton = ({ wrapSetShow }) => {
     }
     
     return (
-        <div style={{width: '10rem'}}>
+        <div style={{width: '10rem', fontSize: '1.2rem',color: '#545454', fontFamily: 'Merriweather'}}>
             <button onMouseEnter={handleOver}
                 onMouseLeave={handleLeave}
                 style={style.button}
                 onClick= { async() => {
                     await wrapSetShow(true)
                 }}>
-                <div style={style.buttonText}>
-                    Connect
-                </div>
+                Connect
+               
             </button>
         </div>
     )
