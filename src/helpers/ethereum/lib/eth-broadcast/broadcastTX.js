@@ -72,7 +72,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
               Uint8Array.from(txRawBytes)
             ).then(
               (data)=>{
-                //UIProcessing();
+                UIProcessing();
                 console.log(data)
                 if (data.code == 0){
                   notification.success({

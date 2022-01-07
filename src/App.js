@@ -86,6 +86,7 @@ const App = () => {
           accountsList.push({ account: accounts[0], type: 'keplr' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
           setAccounts([...accountsList])
+          warning('Success')
         }
         else {
           warning('this wallet account already exist')
@@ -104,9 +105,10 @@ const App = () => {
         if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
           accountsList.push({ account: accounts[0], type: 'metamask' })
           localStorage.setItem('accounts', JSON.stringify(accountsList))
+          warning('Success')
         }
         else {
-          warning('this wallet account already exist')
+          warning('This wallet account already exist')
         }
       }
       //metamask logic

@@ -141,11 +141,12 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
             const UIProcessing = function(){
                 setIsDoingTx(false)
                 wrapSetShow(false)
+                success()
             }
 
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // setIsDoingTx(false)
-                // wrapSetShow(false)
+                wrapSetShow(false)
                 // success()
             }).catch((e) => {
                 setIsDoingTx(false)
