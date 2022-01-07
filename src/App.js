@@ -3,7 +3,7 @@ import { Modal, } from 'react-bootstrap';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
 import AccountDetail from './pages/AccountDetail';
-import { getKeplr, } from './helpers/getKeplr';
+import { getKeplr, addDig } from './helpers/getKeplr';
 import ValidatorsList from './pages/ValidatorsList';
 import {
   BrowserRouter as Router,
@@ -56,15 +56,15 @@ const App = () => {
   const [show, setShow] = useState(false)
   const [page, setPage] = useState('')
 
-  const wrapSetShow = useCallback( (val) => {
+  const wrapSetShow = useCallback((val) => {
     setShow(val)
   }, [setShow])
 
-  const wrapSetAccounts = useCallback( (val) => {
+  const wrapSetAccounts = useCallback((val) => {
     setAccounts([...val])
   }, [setAccounts])
 
-  const wrapSetPage = useCallback( (val) => {
+  const wrapSetPage = useCallback((val) => {
     setPage(val)
   }, [setPage])
 
@@ -124,13 +124,13 @@ const App = () => {
   }
 
   const handleLeaveAccount = (e) => {
-    if(page !== 'account'){
+    if (page !== 'account') {
       e.target.style.backgroundColor = 'transparent'
     }
   }
 
   const handleLeaveStaking = (e) => {
-    if(page !== 'staking'){
+    if (page !== 'staking') {
       e.target.style.backgroundColor = 'transparent'
     }
   }
@@ -160,7 +160,7 @@ const App = () => {
                     borderRadius: '50px',
                     border: 0,
                     fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveAccount} onClick={() => {setPage('account')}}>
+                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveAccount} onClick={() => { setPage('account') }}>
                     Accounts
                   </button>
                 </Link>
@@ -179,10 +179,33 @@ const App = () => {
                     paddingTop: 5,
                     paddingBottom: 5,
                     fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveStaking} onClick={() => {setPage('staking')}}>
+                  }} onClick={() => { setPage('staking') }}>
                     Staking
                   </button>
                 </Link>
+              </li>
+              <li>
+                <div style={{ width: '10rem', marginRight: '1rem' }}>
+                  <button 
+                    style={{
+                      width: '100%',
+                      height: '2.5rem',
+                      borderRadius: '50px',
+                      backgroundImage: 'linear-gradient(180deg, #41a1f0, #8b0acc)',
+                      border: 'solid 1px black',
+                    }}
+                    onClick={async () => {
+                      addDig()
+                    }}>
+                    <div style={{
+                      fontSize: '1rem',
+                      color: '#f0f0f0',
+                      fontFamily: 'Merriweather'
+                    }}>
+                      Add DIG to keplr
+                    </div>
+                  </button>
+                </div>
               </li>
               <li>
                 <ConnectButton wrapSetShow={wrapSetShow} />
@@ -193,8 +216,8 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<div></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts}/>} />
-          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage}/>} />
+          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
+          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage} />} />
         </Routes>
       </Router>
       <>

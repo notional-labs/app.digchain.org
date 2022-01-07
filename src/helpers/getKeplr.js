@@ -23,6 +23,15 @@ export const getKeplr = async () => {
     }
 }
 
+export const addDig = async () => {
+    if (!window.getOfflineSigner || !window.keplr) {
+        alert("Keplr Wallet not detected, please install extension");
+        return undefined
+    } else {
+        await window.keplr.experimentalSuggestChain(digChain)
+    }
+}
+
 export const getCosmosClient = (address, offlineSigner) => {
     const URL = process.env.REACT_APP_API
     const cosmJS = new SigningCosmosClient(
