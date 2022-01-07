@@ -196,7 +196,7 @@ const App = () => {
                       border: 'solid 1px black',
                     }}
                     onClick={async () => {
-                      addDig()
+                      await addDig()
                     }}>
                     <div style={{
                       fontSize: '1rem',
