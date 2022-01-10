@@ -137,7 +137,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
         <div style={{ padding: 20 }}>
             <div style={style.container}>
                 <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
-                    Delegation
+                    Delegations
                 </Title>
                 <div style={{ width: '10%' }}>
                     <Link to='/staking' style={{ width: '30%' }}>

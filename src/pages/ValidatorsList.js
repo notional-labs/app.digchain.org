@@ -117,20 +117,8 @@ const ValidatorsList = () => {
                 <div style={{ textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
-                <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', marginBottom: '0.5em' }}>
-                    <Breadcrumb.Item href="/">
-                        <span style={{ color: '#1778ff' }}>
-                            Home
-                        </span>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <span style={{ color: 'white' }}>
-                           Validators
-                        </span>
-                    </Breadcrumb.Item>
-                </Breadcrumb>
                 <div style={{
-                    backgroundColor: 'rgb(242, 242, 242, 0.5)',
+                    backgroundColor: 'rgb(255, 255, 255, 0.2)',
                     borderRadius: '20px',
                     padding: 10,
                     paddingLeft: 70,
@@ -166,7 +154,7 @@ const ValidatorsList = () => {
                         <tbody style={style.tblContent}>
                             {validators.map((val, index) => {
                                 return (
-                                    <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#ffe1bd' : '#ffba61', marginBottom: 20 }}>
+                                    <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#fff5e8' : '#fff5e8', marginBottom: 20 }}>
                                         <td style={{ ...style.td, borderRadius: '60px 0 0 60px', }}>
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                                 {

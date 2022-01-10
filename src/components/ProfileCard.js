@@ -14,7 +14,6 @@ const style = {
         backgroundColor: '#f4d257',
         padding: 24,
         borderRadius: '10px',
-        border: 'solid 1px black',
         width: '50%',
         height: '40%',
         display: 'flex',

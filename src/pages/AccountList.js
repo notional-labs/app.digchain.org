@@ -51,28 +51,9 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'center',
-                paddingRight: '13em'
+                paddingRight: '14em'
             }}>
                 Accounts
-            </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                paddingRight: '49em'
-            }}>
-                <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', }}>
-                    <Breadcrumb.Item href="/">
-                        <span style={{ color: '#1778ff' }}>
-                            Home
-                        </span>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <span style={{ color: 'white' }}>
-                            Accounts
-                        </span>
-                    </Breadcrumb.Item>
-                </Breadcrumb>
             </div>
             {accounts.length > 0 ?
                 <div style={{ minHeight: '55vh' }}>

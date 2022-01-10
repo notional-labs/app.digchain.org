@@ -31,15 +31,15 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         padding: 20,
-        width: '100%'
+        width: '100%',
     },
     asset: {
-        backgroundColor: '#ffc16b',
+        backgroundColor: 'rgb(255, 193, 107)',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#696969',
         fontFamily: 'Ubuntu',
-        marginTop: '0rem'
+        marginTop: '0rem',
     },
     delegation: {
         backgroundColor: '#ffc16b',
@@ -71,7 +71,8 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        alignContent: 'center'
+        alignContent: 'center',
+        marginBottom: '0.2em',
     },
     iconDiv: {
         display: 'flex',
@@ -157,23 +158,6 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     {id}
                 </Paragraph>
             </div>
-            <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', marginBottom: '0.5em', }}>
-                <Breadcrumb.Item href="/">
-                    <span style={{ color: '#1778ff' }}>
-                        Home
-                    </span>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="/accounts">
-                    <span style={{ color: '#1778ff' }}>
-                        Accounts
-                    </span>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <span style={{ color: 'white' }}>
-                        Account Details
-                    </span>
-                </Breadcrumb.Item>
-            </Breadcrumb>
             <div style={style.asset}>
                 <div style={style.assetBlock}>
                     <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
@@ -244,54 +228,110 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{}}>
+                                <div style={{ backgroundColor: '#6ab1f7', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsWallet style={{ ...style.icon, color: '#0b5fb3' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
-                                    Balance
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em'
+                                    }}>
+                                        Balance
+                                    </span>
                                 </p>
                             </div>
                             <div style={{ fontWeight: 500 }}>
-                                {parseInt(asset.balance) / 1000000 || 0} DIG
+                                <span style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    lineheight: 'normal',
+                                    marginTop: '0.5em'
+                                }}>
+                                    {parseInt(asset.balance) / 1000000 || 0} DIG
+                                </span>
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ }}>
+                                <div style={{ backgroundColor: '#7dff95', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsLock style={{ ...style.icon, color: '#0da128' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
-                                    Delegation
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em'
+                                    }}>
+                                        Delegation
+                                    </span>
                                 </p>
                             </div>
                             <div style={{ fontWeight: 500 }}>
-                                {parseInt(asset.delegation) / 1000000 || 0} DIG
+                                <span style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    lineheight: 'normal',
+                                    marginTop: '0.5em'
+                                }}>
+                                    {parseInt(asset.delegation) / 1000000 || 0} DIG
+                                </span>
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ }}>
+                                <div style={{ backgroundColor: '#ff8e80', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
-                                    Reward
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em'
+                                    }}>
+                                        Reward
+                                    </span>
                                 </p>
                             </div>
                             <div style={{ fontWeight: 500 }}>
-                                {parseInt(asset.reward) / 1000000 || 0} DIG
+                                <span style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    lineheight: 'normal',
+                                    marginTop: '0.5em'
+                                }}>
+                                    {parseInt(asset.reward) / 1000000 || 0} DIG
+                                </span>
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{}}>
+                                <div style={{ backgroundColor: '#e491ff', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsGraphDown style={{ ...style.icon, color: '#a020c9' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
-                                    Unbonding
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em'
+                                    }}>
+                                        Unbonding
+                                    </span>
                                 </p>
                             </div>
                             <div style={{ fontWeight: 500 }}>
-                                {parseInt(asset.unbonding) / 1000000 || 0} DIG
+                                <span style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    lineheight: 'normal',
+                                    marginTop: '0.5em'
+                                }}>
+                                    {parseInt(asset.unbonding) / 1000000 || 0} DIG
+                                </span>
                             </div>
                         </li>
                     </ul>

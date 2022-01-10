@@ -1,7 +1,7 @@
 .App {
   text-align: center;
-  background-color: #2e2c27;
-  background-image: linear-gradient(180deg, #1c1c1c, #2e2c27, #383838, #474747);
+  background-color: #a55c1b;
+background-image: linear-gradient(180deg,#ed7e1a , #a55c1b 0%, #262626 74%);
   min-height: 100vh;
   min-width: 100vh;
   width: 100%;

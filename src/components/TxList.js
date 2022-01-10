@@ -98,7 +98,7 @@ const TxList = ({ address }) => {
         <div style={{ padding: 20, paddingTop: 0 }}>
             <div style={style.container}>
                 <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
-                    Transaction
+                    Transactions
                 </Title>
             </div>
             {
@@ -117,10 +117,12 @@ const TxList = ({ address }) => {
                                 {txs.map((tx, index) => (
                                     <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
                                         <td style={{ ...style.td, }}>
-                                            {tx.height || ''}
+                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
+                                                {tx.height || ''}
+                                            </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '50%' }}>
-                                            <a style={{color: '#1778ff'}} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'> 
+                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'> 
                                                 {tx.txhash || ''}
                                             </a>
                                         </td>
