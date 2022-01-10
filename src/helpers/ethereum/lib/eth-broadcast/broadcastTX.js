@@ -18,12 +18,12 @@ function fromHexString (hexString){
 export const broadcastTransaction = async (address, msg, signDocMsg, chainId, memo, gasLimit, web3, UIProcessing = null) => {
     
   let stdFeeToPutIntoSignDoc = {
-    amount: coins(1000, "udig"),
+    amount: coins(15000, "udig"),
     gas: gasLimit.toString(),
   };
 
   let fee = {
-      amount : coins(1000, "udig"),
+      amount : coins(15000, "udig"),
       gasLimit: gasLimit.toString(),
     }
   console.log(address)
