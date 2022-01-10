@@ -67,16 +67,17 @@ const style = {
         fontSize: '1.5rem',
     },
     li: {
-        margin: 5,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '100%'
+        width: '100%',
+        alignContent: 'center'
     },
     iconDiv: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'start',
+        alignContent: 'stretch'
     }
 }
 
@@ -187,7 +188,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                 <div style={style.assetChart}>
                     <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '15rem', width: '40%' }}>
                         <PieChart
-                            animate={true}
+                            animationDuration={20000}
+                            startAngle={-90}
                             radius={50}
                             data={[
                                 { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#6ab1f7' },
@@ -242,53 +244,53 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#6ab1f7', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{}}>
                                     <BsWallet style={{ ...style.icon, color: '#0b5fb3' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
                                     Balance
                                 </p>
                             </div>
-                            <div style={{ fontWeight: 600 }}>
+                            <div style={{ fontWeight: 500 }}>
                                 {parseInt(asset.balance) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#7dff95', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ }}>
                                     <BsLock style={{ ...style.icon, color: '#0da128' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
                                     Delegation
                                 </p>
                             </div>
-                            <div style={{ fontWeight: 600 }}>
+                            <div style={{ fontWeight: 500 }}>
                                 {parseInt(asset.delegation) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#ff8e80', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{ }}>
                                     <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
                                     Reward
                                 </p>
                             </div>
-                            <div style={{ fontWeight: 600 }}>
+                            <div style={{ fontWeight: 500 }}>
                                 {parseInt(asset.reward) / 1000000 || 0} DIG
                             </div>
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ padding: 5, backgroundColor: '#e491ff', borderRadius: '10px', paddingLeft: 12, paddingRight: 12 }}>
+                                <div style={{}}>
                                     <BsGraphDown style={{ ...style.icon, color: '#a020c9' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', fontWeight: 600 }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500 }}>
                                     Unbonding
                                 </p>
                             </div>
-                            <div style={{ fontWeight: 600 }}>
+                            <div style={{ fontWeight: 500 }}>
                                 {parseInt(asset.unbonding) / 1000000 || 0} DIG
                             </div>
                         </li>

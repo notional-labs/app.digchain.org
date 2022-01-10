@@ -73,7 +73,7 @@ const TxList = ({ address }) => {
     const [txs, setTxs] = useState([])
     const [params, setParams] = useState({
         page: 1,
-        limit: 5,
+        limit: 10,
     })
     const [total, setTotal] = useState(0)
     const [isLoading, setIsloading] = useState(false)
@@ -120,9 +120,9 @@ const TxList = ({ address }) => {
                                             {tx.height || ''}
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '50%' }}>
-                                            <Paragraph copyable={tx.txhash} style={{color: '#1778ff'}}>
+                                            <a style={{color: '#1778ff'}} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'> 
                                                 {tx.txhash || ''}
-                                            </Paragraph>
+                                            </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '10%' }}>
                                             {getMsgType(tx.tx) || ''}

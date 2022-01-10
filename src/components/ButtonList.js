@@ -5,7 +5,7 @@ const style = {
         marginTop: '1.5em',
         padding: 0,
         width: '20%',
-        backgroundColor: '#e8e8e8',
+        backgroundColor: 'rgb(232, 232, 232, 0.5)',
         borderRadius: '20px'
     },
     button: {

@@ -20,7 +20,6 @@ const style = {
         backgroundColor: 'transparent',
     },
     tblContent: {
-        height: '300px',
         borderRadius: '50px',
     },
     th: {
@@ -33,7 +32,7 @@ const style = {
         fontFamily: 'Ubuntu',
     },
     td: {
-        padding: '0.5em',
+        padding: '1em',
         textAlign: 'left',
         verticalAlign: 'middle',
         fontWeight: '600',
@@ -126,7 +125,7 @@ const ValidatorsList = () => {
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                         <span style={{ color: 'white' }}>
-                            Staking
+                           Validators
                         </span>
                     </Breadcrumb.Item>
                 </Breadcrumb>
@@ -206,7 +205,7 @@ const ValidatorsList = () => {
                                                 border: 'solid 1px #121016',
                                                 borderRadius: '50px',
                                                 width: '80%',
-                                                padding: 8,
+                                                padding: '1em',
                                                 fontSize: '15px',
                                                 fontWeight: 600
                                             }} onClick={async () => await handleClick(index)}>
