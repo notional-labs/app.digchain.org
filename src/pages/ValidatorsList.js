@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Image } from 'antd';
+import { Image, Breadcrumb } from 'antd';
 import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/merriweather"
@@ -91,9 +91,21 @@ const ValidatorsList = () => {
     return (
         !loading ? (
             <div style={{ padding: 60 }}>
-                <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
+                <div style={{ textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
                     Validators
                 </div>
+                <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', marginBottom: '0.5em' }}>
+                    <Breadcrumb.Item href="/">
+                        <span style={{ color: '#1778ff' }}>
+                            Home
+                        </span>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <span style={{ color: 'white' }}>
+                            Staking
+                        </span>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                 <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                     <thead style={style.tblHeader}>
                         <tr>

@@ -1,4 +1,4 @@
-import { Typography, } from 'antd';
+import { Typography, Breadcrumb } from 'antd';
 import { PieChart } from 'react-minimal-pie-chart';
 import DelegationList from '../components/DelegationList';
 import {
@@ -9,7 +9,8 @@ import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
 import { getAsset, getTotalDelegate, getTotalUnbonding } from '../helpers/getBalances';
-import { ChartDonut, ChartThemeColor } from '@patternfly/react-charts';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import TxList from '../components/TxList';
 
 const { Title, Paragraph } = Typography;
 
@@ -38,7 +39,7 @@ const style = {
         marginBottom: '20px',
         color: '#696969',
         fontFamily: 'Ubuntu',
-        marginTop: '4rem'
+        marginTop: '0rem'
     },
     delegation: {
         backgroundColor: '#ffc16b',
@@ -136,7 +137,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
             <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
                 Account Info
             </div>
-            <div>
+            <div >
                 <Paragraph copyable={{ text: id && id.trim() }}
                     style={{
                         color: '#2a3158',
@@ -146,7 +147,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         color: '#696969',
                         padding: 20,
                         borderRadius: '10px',
-                        fontSize: '1.2rem'
+                        fontSize: '1.2rem',
+                        marginBottom: '0.5em'
                     }}>
                     <p style={{ fontSize: '1.2rem', padding: 0 }}>
                         Address:
@@ -154,6 +156,23 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     {id}
                 </Paragraph>
             </div>
+            <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', marginBottom: '0.5em', }}>
+                <Breadcrumb.Item href="/">
+                    <span style={{ color: '#1778ff' }}>
+                        Home
+                    </span>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item href="/accounts">
+                    <span style={{ color: '#1778ff' }}>
+                        Accounts
+                    </span>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    <span style={{ color: 'white' }}>
+                        Account Details
+                    </span>
+                </Breadcrumb.Item>
+            </Breadcrumb>
             <div style={style.asset}>
                 <div style={style.assetBlock}>
                     <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
@@ -166,7 +185,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '15rem' }}>
+                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '15rem', width: '40%' }}>
                         <PieChart
                             animate={true}
                             radius={50}
@@ -179,7 +198,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                             style={{ marginLeft: '50px', }}
                         >
                             <PieChart
-                                radius={40}
+                                radius={30}
                                 data={[
                                     { title: 'asset', value: 1, color: '#ffc16b' },
                                 ]}
@@ -279,6 +298,9 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
             </div>
             <div style={{ ...style.delegation, marginTop: 0, paddingTop: 0 }}>
                 <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage} />
+            </div>
+            <div style={{ ...style.delegation, marginTop: 0, paddingTop: 20 }}>
+                <TxList address={id} />
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >

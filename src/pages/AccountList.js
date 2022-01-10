@@ -1,9 +1,9 @@
 import ProfileCard from "../components/ProfileCard"
-import ConnectButton from "../components/ConnectButton"
 import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
 import { useCallback, useState } from "react"
 import { ImFloppyDisk } from "react-icons/im";
+import { Breadcrumb } from "antd"
 
 const style = {
     container: {
@@ -44,7 +44,6 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
     return (
         <div style={style.container}>
             <div style={{
-                marginBottom: '0.5rem',
                 fontSize: '3rem',
                 color: '#EFCF20',
                 fontFamily: 'Ubuntu',
@@ -56,8 +55,27 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
             }}>
                 Accounts
             </div>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingRight: '49em'
+            }}>
+                <Breadcrumb style={{ textAlign: 'left', margin: 0, fontSize: '1.2rem', color: 'white', }}>
+                    <Breadcrumb.Item href="/">
+                        <span style={{ color: '#1778ff' }}>
+                            Home
+                        </span>
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <span style={{ color: 'white' }}>
+                            Accounts
+                        </span>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
             {accounts.length > 0 ?
-                <div style={{minHeight: '55vh'}}>
+                <div style={{ minHeight: '55vh' }}>
                     {(accounts.map((account, index) => (
                         <div style={style.card}>
                             <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
