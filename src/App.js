@@ -149,14 +149,15 @@ const App = () => {
           <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
             <Image width={70}
               src={logo}
-              preview={false} />
+              preview={false}
+            />
           </div>
           <div style={{ marginRight: '5rem' }}>
             <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
               <li>
                 <Link to='/accounts'>
                   <button style={{
-                    marginRight: '1rem',
+                    marginRight: '0.5rem',
                     fontSize: '1.2rem',
                     backgroundColor: page === 'account' ? '#ffb957' : 'transparent',
                     color: '#F6F3FB',

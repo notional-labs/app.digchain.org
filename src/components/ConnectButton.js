@@ -26,7 +26,7 @@ const ConnectButton = ({ wrapSetShow }) => {
     }
     
     return (
-        <div style={{width: '10rem', fontSize: '1.2rem',color: '#545454', fontFamily: 'Merriweather'}}>
+        <div style={{width: '10rem', fontSize: '1.2rem',color: '#545454', fontFamily: 'Merriweather',borderRadius: '20px' , boxShadow: '1px 3px 30px 5px black'}}>
             <button onMouseEnter={handleOver}
                 onMouseLeave={handleLeave}
                 style={style.button}

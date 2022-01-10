@@ -21,6 +21,14 @@ const style = {
 const ButtonList = ({ total, wrapSetParams, currentPage }) => {
     const [buttons, setButtons] = useState([])
 
+    const handleOver = (e) => {
+        e.target.style.transform = 'translate(0, -5px)'
+    }
+
+    const handleLeave = (e) => {
+        e.target.style.transform = 'translate(0, 0)'
+    }
+
     const handleCLick = (index) => {
         wrapSetParams(index)
     }
@@ -29,7 +37,10 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
         let buttonList = []
         for (let i = 0; i < total; i++) {
             buttonList.push(
-                <button style={{ ...style.button, backgroundColor: currentPage === i + 1 ? '#ffab19' : '#2e2e2e', }} onClick={() => handleCLick(i + 1)}>
+                <button onMouseEnter={handleOver}
+                    onMouseLeave={handleLeave}
+                    style={{ ...style.button, backgroundColor: currentPage === i + 1 ? '#ffab19' : '#2e2e2e', }}
+                    onClick={() => handleCLick(i + 1)}>
                     {i + 1}
                 </button>
             )

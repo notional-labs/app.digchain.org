@@ -73,7 +73,7 @@ const TxList = ({ address }) => {
     const [txs, setTxs] = useState([])
     const [params, setParams] = useState({
         page: 1,
-        limit: 10,
+        limit: 5,
     })
     const [total, setTotal] = useState(0)
     const [isLoading, setIsloading] = useState(false)
