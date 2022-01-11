@@ -227,8 +227,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(106, 177, 247, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsWallet style={{ ...style.icon, color: '#0b5fb3' }} />
+                                <div style={{ backgroundColor: 'rgb(61, 255, 148, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <BsWallet style={{ ...style.icon, color: '#28c76f' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
@@ -254,8 +254,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(125, 255, 149, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsLock style={{ ...style.icon, color: '#0da128' }} />
+                                <div style={{ backgroundColor: 'rgb(140, 129, 252, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <BsLock style={{ ...style.icon, color: '#7367f0' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
@@ -281,8 +281,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(255, 142, 128, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
+                                <div style={{ backgroundColor: 'rgb(255, 174, 97, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <BsGraphUp style={{ ...style.icon, color: '#ff9f43' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
@@ -308,8 +308,8 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(228, 145, 255, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsGraphDown style={{ ...style.icon, color: '#a020c9' }} />
+                                <div style={{ backgroundColor: 'rgb(255, 115, 116, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <BsGraphDown style={{ ...style.icon, color: '#ea5455' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
