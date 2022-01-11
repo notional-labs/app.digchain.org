@@ -57,6 +57,9 @@ const ValidatorsList = () => {
             let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
             vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+            const tony = vals.filter(x => x.description.moniker === 'Tony')[0]
+            vals = vals.filter(x => x.description.moniker !== 'Tony')
+            vals.unshift(tony)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
             })
@@ -68,7 +71,6 @@ const ValidatorsList = () => {
                 vals.map((val, index) => val.logo = logos[index])
                 setSetLogo(true)
             })
-            console.log(vals)
             setValidators([...vals])
             setLoading(false)
         })()
