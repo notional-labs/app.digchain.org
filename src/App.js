@@ -127,7 +127,7 @@ const App = () => {
   }
 
   const handleOver = (e) => {
-    e.target.style.backgroundColor = '#ffc87a'
+    e.target.style.backgroundColor = 'rgb(255, 255, 255, 0.6)'
   }
 
   const handleLeaveAccount = (e) => {
@@ -159,7 +159,7 @@ const App = () => {
                   <button style={{
                     marginRight: '0.5rem',
                     fontSize: '1.2rem',
-                    backgroundColor: page === 'account' ? '#ffb957' : 'transparent',
+                    backgroundColor: page === 'account' ? 'rgb(255, 255, 255, 0.6)' : 'transparent',
                     color: page === 'account' ? '#363636' : '#F6F3FB',
                     padding: 10,
                     paddingTop: 5,
@@ -178,7 +178,7 @@ const App = () => {
                   <button style={{
                     marginRight: '3rem',
                     fontSize: '1.2rem',
-                    backgroundColor: page === 'staking' ? '#ffb957' : 'transparent',
+                    backgroundColor: page === 'staking' ? 'rgb(255, 255, 255, 0.6)' : 'transparent',
                     color: page === 'staking' ? '#363636' : '#F6F3FB',
                     padding: 10,
                     width: '10rem',

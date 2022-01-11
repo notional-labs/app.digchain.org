@@ -1,4 +1,4 @@
-import { Typography, } from 'antd';
+import { Typography, Tooltip } from 'antd';
 import "@fontsource/merriweather"
 import { getBalance } from '../helpers/getBalances';
 import { useEffect, useState } from 'react';
@@ -11,11 +11,11 @@ const { Title, Paragraph } = Typography;
 
 const style = {
     container: {
-        backgroundColor: '#f4d257',
+        backgroundColor: '#f0f0f0',
         padding: 24,
         borderRadius: '10px',
-        width: '50%',
-        height: '40%',
+        width: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -28,13 +28,15 @@ const style = {
     },
     button: {
         border: 0,
-        borderRadius: '10px',
-        width: '30%',
-        height: '40px',
+        borderRadius: '30px',
+        width: '20%',
         marginTop: 10,
         marginBottom: 10,
         fontFamily: 'ubuntu',
-        fontWeight: 600
+        fontWeight: 600,
+        padding: '2em',
+        paddingTop: '1em',
+        paddingBottom: '1em'
     },
     buttonDiv: {
         display: 'flex',
@@ -70,14 +72,28 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
 
     const handleRemove = () => {
         const accounts = JSON.parse(localStorage.getItem('accounts'))
-        const filterAccouts = accounts.filter(x => x.type === 'keplr' && x.account.address !== account.account.address || x.type === 'metamask' && x.account !== account.account )
+        const filterAccouts = accounts.filter(x => x.type === 'keplr' && x.account.address !== account.account.address || x.type === 'metamask' && x.account !== account.account)
         localStorage.setItem('accounts', JSON.stringify([...filterAccouts]))
         wrapSetAccounts(filterAccouts)
     }
 
     return (
         <div style={style.container}>
-            <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim()}}
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
+                <Tooltip placement="top" title='Remove'>
+                    <button style={{
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                        color: '#545454',
+                        backgroundColor: 'transparent',
+                        border: 0
+                    }} onClick={handleRemove}
+                    >
+                        X
+                    </button>
+                </Tooltip>
+            </div>
+            <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim() }}
                 style={{
                     color: '#2a3158',
                     fontFamily: 'Merriweather',
@@ -99,17 +115,14 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#ff9f40', color: '#F6F3FB' }} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#ff9f40', color: '#F6F3FB', border: 'solid 3px black' }} onClick={handleClick}>
                     Transfer
                 </button>
-                <Link style={{width: '30%'}} to={account.type === 'keplr' ? account.account.address : account.account}>
-                    <button style={{ ...style.button, width: '100%', backgroundColor: '#ff9f40', color: '#F6F3FB' }}>
+                <Link style={{ width: '20%' }} to={account.type === 'keplr' ? account.account.address : account.account}>
+                    <button style={{ ...style.button, width: '100%', backgroundColor: '#ff9f40', color: '#F6F3FB', border: 'solid 3px black' }}>
                         Detail
                     </button>
                 </Link>
-                <button style={{ ...style.button, backgroundColor: '#ff4a4a', color: '#F6F3FB'}} onClick={handleRemove}>
-                    Remove
-                </button>
             </div>
         </div>
     )

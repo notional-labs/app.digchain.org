@@ -190,7 +190,7 @@ const ValidatorsList = () => {
                                         <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 60px 60px 0', color: '#ffffff' }}>
                                             <button style={{
                                                 backgroundColor: '#ffac38',
-                                                border: 'solid 1px #121016',
+                                                border: 'solid 2px #121016',
                                                 borderRadius: '50px',
                                                 width: '80%',
                                                 padding: '1em',

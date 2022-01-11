@@ -1,5 +1,5 @@
 
-import { Typography, } from 'antd';
+import { Typography, Tooltip } from 'antd';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
@@ -8,6 +8,10 @@ import { getTotal } from '../helpers/getBalances';
 import WithDrawModal from './WithDrawModal';
 import UndelegateModal from './UndelegateModal';
 import ReDelegateModal from './ReDelegateModal';
+import { RiLogoutBoxRLine, } from "react-icons/ri";
+import { TiArrowRepeat } from "react-icons/ti";
+import { AiOutlineGift } from "react-icons/ai";
+
 
 const { Title, Paragraph } = Typography;
 
@@ -22,20 +26,21 @@ const style = {
     },
     button: {
         border: 0,
-        borderRadius: '10px',
+        borderRadius: '50px',
         width: '100%',
-        height: '40px',
-        margin: 10,
         marginBottom: 0,
         marginLeft: 0,
         fontFamily: 'ubuntu',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
-        color: '#F6F3FB'
+        color: '#F6F3FB',
+        padding: '2em',
+        paddingTop: '1em',
+        paddingBottom: '1em'
     },
     actionButton: {
         border: 'solid 2px #3B2D52',
-        backgroundColor: '#ffc16b',
+        backgroundColor: 'transparent',
         padding: 5,
         fontFamily: 'Ubuntu',
         fontSize: '1rem'
@@ -106,6 +111,14 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
         })()
     }, [])
 
+    const handleOver = (e) => {
+        e.target.style.backgroundColor = 'rgb(255, 255, 255, 0.3)'
+    }
+
+    const handleLeave = (e) => {
+        e.target.style.backgroundColor = 'transparent'
+    }
+
     const handleClickWithdraw = (val) => {
         setShowWithdraw(true)
         setSelectVal(val)
@@ -150,7 +163,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                 </div>
             </div>
             {!loading && (
-                <div>
+                <div style={{backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em'}}>
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
@@ -162,26 +175,41 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                         </thead>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => (
-                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
+                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
                                         {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
                                     </td>
-                                    <td style={{ ...style.td, textAlign: 'right' }}>
+                                    <td style={{ ...style.td, textAlign: 'right', }}>
                                         {parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
                                     </td>
-                                    <td style={{ ...style.td, textAlign: 'right' }}>
-                                        <button onClick={() => handleClickWithdraw(index)} style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px' }}>
-                                            Withdraw Reward
-                                        </button>
-                                        <button onClick={() => handleClickRedelegate(index)} style={style.actionButton}>
-                                            Redelegate
-                                        </button>
-                                        <button onClick={() => handleClickUnbonding(index)} style={{ ...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0' }}>
-                                            Unbonding
-                                        </button>
+                                    <td style={{ ...style.td, textAlign: 'center', width: '20%' }}>
+                                        <Tooltip placement="top" title='Withdraw Reward'>
+                                            <button onClick={() => handleClickWithdraw(index)}
+                                                style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px', width: '20%' }}
+                                                onMouseEnter={handleOver}
+                                                onMouseLeave={handleLeave}>
+                                                <AiOutlineGift style={{ fontSize: '1.2rem' }} />
+                                            </button>
+                                        </Tooltip>
+                                        <Tooltip placement="top" title='Redelegate'>
+                                            <button onClick={() => handleClickRedelegate(index)}
+                                                style={{ ...style.actionButton, width: '20%' }}
+                                                onMouseEnter={handleOver}
+                                                onMouseLeave={handleLeave}>
+                                                <TiArrowRepeat style={{ fontSize: '1.2rem' }} />
+                                            </button>
+                                        </Tooltip>
+                                        <Tooltip placement="top" title='Unbonding'>
+                                            <button onClick={() => handleClickUnbonding(index)}
+                                                style={{ ...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0', width: '20%' }}
+                                                onMouseEnter={handleOver}
+                                                onMouseLeave={handleLeave}>
+                                                <RiLogoutBoxRLine style={{ fontSize: '1.2rem' }} />
+                                            </button>
+                                        </Tooltip>
                                     </td>
                                 </tr>
                             ))}

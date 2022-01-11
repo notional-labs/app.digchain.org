@@ -103,7 +103,7 @@ const TxList = ({ address }) => {
             </div>
             {
                 !isLoading && txs.length > 0 && (
-                    <div>
+                    <div style={{backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em'}}>
                         <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                             <thead style={style.tdlHeader}>
                                 <tr>
@@ -115,7 +115,7 @@ const TxList = ({ address }) => {
                             </thead>
                             <tbody style={style.tdlContent}>
                                 {txs.map((tx, index) => (
-                                    <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #ffffff' }}>
+                                    <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
                                         <td style={{ ...style.td, }}>
                                             <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
                                                 {tx.height || ''}

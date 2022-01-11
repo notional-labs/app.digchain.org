@@ -15,10 +15,10 @@ const style = {
         padding: 60
     },
     card: {
-        margin: 10,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        
     },
     button: {
         marginTop: '3rem',
@@ -50,13 +50,12 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 fontWeight: 600,
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'center',
-                paddingRight: '14em'
+                justifyContent: 'left',
             }}>
                 Accounts
             </div>
             {accounts.length > 0 ?
-                <div style={{ minHeight: '55vh' }}>
+                <div style={{ minHeight: '55vh', display: 'grid', gridTemplateColumns: 'auto auto', gridGap: '20px', padding: '5em', backgroundColor: 'rgb(255, 2555, 255, 0.2)', borderRadius: '20px', paddingBottom: '7em' }}>
                     {(accounts.map((account, index) => (
                         <div style={style.card}>
                             <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />

@@ -30,19 +30,21 @@ const style = {
     assetChart: {
         display: 'flex',
         flexDirection: 'row',
-        padding: 20,
+        justifyContent: 'space-between',
+        padding: '3em',
         width: '100%',
+        paddingTop: 0
     },
     asset: {
-        backgroundColor: 'rgb(255, 193, 107)',
+        backgroundColor: 'rgb(255, 255, 255, 0.4)',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#696969',
         fontFamily: 'Ubuntu',
-        marginTop: '0rem',
+        marginTop: '20px',
     },
     delegation: {
-        backgroundColor: '#ffc16b',
+        backgroundColor: 'rgb(255, 255, 255, 0.4)',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
@@ -52,16 +54,17 @@ const style = {
     },
     button: {
         border: 0,
-        borderRadius: '10px',
+        borderRadius: '30px',
         width: '100%',
-        height: '40px',
-        margin: 10,
         marginBottom: 0,
         marginLeft: 0,
         fontFamily: 'ubuntu',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
-        color: '#F6F3FB'
+        color: '#F6F3FB',
+        padding: '2em',
+        paddingTop: '1em',
+        paddingBottom: '1em'
     },
     icon: {
         fontSize: '1.5rem',
@@ -72,7 +75,7 @@ const style = {
         justifyContent: 'space-between',
         width: '100%',
         alignContent: 'center',
-        marginBottom: '0.2em',
+        marginBottom: '0.5em',
     },
     iconDiv: {
         display: 'flex',
@@ -139,14 +142,13 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
             <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
                 Account Info
             </div>
-            <div >
+            <div>
                 <Paragraph copyable={{ text: id && id.trim() }}
                     style={{
-                        color: '#2a3158',
                         fontFamily: 'Merriweather',
                         textAlign: 'left',
-                        backgroundColor: '#ffc16b',
-                        color: '#696969',
+                        backgroundColor: 'rgb(255, 255, 255, 0.4)',
+                        color: '#1c1c1c',
                         padding: 20,
                         borderRadius: '10px',
                         fontSize: '1.2rem',
@@ -170,23 +172,27 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     </div>
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{ padding: 0, marginLeft: 100, marginBottom: 20, paddingRight: '15rem', width: '40%' }}>
+                    <div style={{
+                        width: '40%', margin: 'auto',
+                        backgroundColor: 'rgb(255, 255, 255, 1)',
+                        borderRadius: '20px',
+                        marginRight: '2em'
+                    }}>
                         <PieChart
                             animationDuration={20000}
                             startAngle={-90}
-                            radius={50}
+                            radius={35}
                             data={[
-                                { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#6ab1f7' },
-                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#7dff95' },
-                                { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#ff8e80' },
-                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#e491ff' }
+                                { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#28c76f' },
+                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#7367f0' },
+                                { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#ff9f43' },
+                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#ea5455' }
                             ]}
-                            style={{ marginLeft: '50px', }}
                         >
                             <PieChart
-                                radius={30}
+                                radius={25}
                                 data={[
-                                    { title: 'asset', value: 1, color: '#ffc16b' },
+                                    { title: 'asset', value: 1, color: 'rgb(255, 255, 255, 1)' },
                                 ]}
                                 style={{ marginLeft: '50px', }}
                             />
@@ -208,27 +214,20 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                             startAngle={0}
                         /> */}
                     </div>
-                    <hr style={{
-                        border: 'none',
-                        bordeLeft: '1px solid white',
-                        height: 'auto',
-                        width: '4px',
-                    }} />
                     <ul style={{
                         textAlign: 'left',
-                        margin: 'auto',
-                        padding: 0,
-                        marginLeft: '10rem',
+                        margin: 0,
+                        padding: '2em',
                         listStyleType: 'none',
                         textAlign: 'left',
                         fontSize: '1.25rem',
-                        paddingBottom: '10rem',
                         width: '100%',
-                        paddingRight: '2em'
+                        backgroundColor: 'rgb(255, 255, 255, 1)',
+                        borderRadius: '20px'
                     }}>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: '#6ab1f7', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                <div style={{ backgroundColor: 'rgb(106, 177, 247, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsWallet style={{ ...style.icon, color: '#0b5fb3' }} />
                                 </div>
                                 <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
@@ -255,10 +254,10 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: '#7dff95', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                <div style={{ backgroundColor: 'rgb(125, 255, 149, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsLock style={{ ...style.icon, color: '#0da128' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
                                         display: 'inline-block',
                                         verticalAlign: 'middle',
@@ -282,10 +281,10 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: '#ff8e80', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                <div style={{ backgroundColor: 'rgb(255, 142, 128, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsGraphUp style={{ ...style.icon, color: '#c9321e' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
                                         display: 'inline-block',
                                         verticalAlign: 'middle',
@@ -309,10 +308,10 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         </li>
                         <li style={style.li}>
                             <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: '#e491ff', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                <div style={{ backgroundColor: 'rgb(228, 145, 255, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                     <BsGraphDown style={{ ...style.icon, color: '#a020c9' }} />
                                 </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0  }}>
+                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
                                     <span style={{
                                         display: 'inline-block',
                                         verticalAlign: 'middle',
@@ -334,8 +333,21 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                                 </span>
                             </div>
                         </li>
+                        <li>
+                            <hr style={{ color: 'black' }} />
+                        </li>
+                        <li style={{...style.li, justifyContent: 'end'}}>
+                            <div style={{ fontWeight: 600, fontSize: '1.5rem' }}>
+                                <span style={{
+                                    display: 'inline-block',
+                                    verticalAlign: 'middle',
+                                    lineheight: 'normal',
+                                }}>
+                                    Total 0$
+                                </span>
+                            </div>
+                        </li>
                     </ul>
-                    <hr />
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: 0, paddingTop: 0 }}>
