@@ -19,7 +19,7 @@ import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
 import { GithubFilled } from '@ant-design/icons'
 import "@fontsource/merriweather"
 import AccountList from './pages/AccountList';
-import { FaDiscord } from "react-icons/fa";
+import { FaDiscord, FaTelegramPlane } from "react-icons/fa";
 
 
 const style = {
@@ -205,7 +205,7 @@ const App = () => {
           <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage} />} />
         </Routes>
         <div style={style.contact}>
-          <ul style={{ ...style.tabButton, listStyleType: 'none',}}>
+          <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
             <li style={{
               paddingTop: '1em',
               fontSize: '1.2rem',
@@ -222,7 +222,7 @@ const App = () => {
               marginRight: '1em',
             }}>
               <a href='https://github.com/notional-labs' target='_blank'>
-                <GithubFilled style={{color: '#ffc16b',}}/>
+                <GithubFilled style={{ color: '#ffc16b', }} />
               </a>
             </li>
             <li style={{
@@ -231,7 +231,25 @@ const App = () => {
               marginRight: '1em',
             }}>
               <a href='https://discord.com/invite/W8rVSAYT' target='_blank'>
-                <FaDiscord style={{color: '#ffc16b',}}/>
+                <FaDiscord style={{ color: '#ffc16b', }} />
+              </a>
+            </li>
+            <li style={{
+              fontSize: '2.5rem',
+              color: '#ffc16b',
+              marginRight: '1em',
+            }}>
+              <a href='https://t.me/digchain_official' target='_blank'>
+                <FaTelegramPlane style={{ color: '#ffc16b', }} /><span style={{color: '#ffc16b', fontSize: '1rem', marginLeft: '0.5em'}}>EN</span>
+              </a>
+            </li>
+            <li style={{
+              fontSize: '2.5rem',
+              color: '#ffc16b',
+              marginRight: '1em',
+            }}>
+              <a href='https://t.me/digchain_vietnam' target='_blank'>
+                <FaTelegramPlane style={{ color: '#ffc16b', }} /><span style={{color: '#ffc16b', fontSize: '1rem', marginLeft: '0.5em'}}>VN</span>
               </a>
             </li>
           </ul>
