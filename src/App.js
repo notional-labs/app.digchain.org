@@ -240,16 +240,7 @@ const App = () => {
               marginRight: '1em',
             }}>
               <a href='https://t.me/digchain_official' target='_blank'>
-                <FaTelegramPlane style={{ color: '#ffc16b', }} /><span style={{color: '#ffc16b', fontSize: '1rem', marginLeft: '0.5em'}}>EN</span>
-              </a>
-            </li>
-            <li style={{
-              fontSize: '2.5rem',
-              color: '#ffc16b',
-              marginRight: '1em',
-            }}>
-              <a href='https://t.me/digchain_vietnam' target='_blank'>
-                <FaTelegramPlane style={{ color: '#ffc16b', }} /><span style={{color: '#ffc16b', fontSize: '1rem', marginLeft: '0.5em'}}>VN</span>
+                <FaTelegramPlane style={{ color: '#ffc16b', }} />
               </a>
             </li>
           </ul>
