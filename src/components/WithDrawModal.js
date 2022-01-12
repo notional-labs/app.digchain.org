@@ -53,7 +53,7 @@ const style = {
 
 const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
     const [showAdvance, setShowAdvance] = useState(false)
-    const [gasAmount, setGasAmount] = useState('200000')
+    const [gasAmount, setGasAmount] = useState('400000')
     const [isDoingTX, setIsDoingTx] = useState(false)
 
     const success = () => {
