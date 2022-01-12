@@ -61,7 +61,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
     const [value, setValue] = useState('')
     const [selectVal, setSelectVal] = useState(0)
     const [showAdvance, setShowAdvance] = useState(false)
-    const [gasAmount, setGasAmount] = useState('200000')
+    const [gasAmount, setGasAmount] = useState('400000')
     const [isDoingTX, setIsDoingTx] = useState(false)
 
     const success = () => {
