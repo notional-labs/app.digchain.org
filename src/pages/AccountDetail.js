@@ -11,6 +11,7 @@ import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
 import { getAsset, getTotalDelegate, getTotalUnbonding } from '../helpers/getBalances';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import TxList from '../components/TxList';
+import IBCTransferModal from '../components/IBCTransfer';
 
 const { Title, Paragraph } = Typography;
 
@@ -42,6 +43,11 @@ const style = {
         color: '#696969',
         fontFamily: 'Ubuntu',
         marginTop: '20px',
+    },
+    assetButtonBlock: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'end',
     },
     delegation: {
         backgroundColor: 'rgb(255, 255, 255, 0.4)',
@@ -87,6 +93,7 @@ const style = {
 
 const AccountDetail = ({ accounts, wrapSetPage }) => {
     const [show, setShow] = useState(false)
+    const [showIbc, setShowIbc] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
     const [asset, setAsset] = useState({
         balance: '',
@@ -103,6 +110,10 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
         setShow(val)
     }, [setShow])
 
+    const wrapSetShowIBCTransferModal = useCallback((val) => {
+        setShowIbc(val)
+    }, [setShowIbc])
+
     const handleClose = () => {
         setShow(false)
     }
@@ -110,6 +121,15 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
     const handleClick = () => {
         setShow(true)
     }
+
+    const handleClickIbc = () => {
+        setShowIbc(true)
+    }
+
+    const handleCloseIbc = () => {
+        setShowIbc(false)
+    }
+
 
     useEffect(() => {
         (async () => {
@@ -165,10 +185,17 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
                         Assets
                     </Title>
-                    <div style={{ width: '10%' }}>
-                        <button style={style.button} onClick={handleClick}>
-                            Transfer
-                        </button>
+                    <div style={{...style.assetButtonBlock, width: '20%', padding: 0}}>
+                        <div style={{ width: '50%', marginRight: '10px' }}>
+                            <button style={style.button} onClick={handleClick}>
+                                Transfer
+                            </button>
+                        </div>
+                        {/* <div style={{ width: '100%' }}>
+                            <button style={{ ...style.button, backgroundColor: '#ff5d54' }} onClick={handleClickIbc}>
+                                IBC Transfer
+                            </button>
+                        </div> */}
                     </div>
                 </div>
                 <div style={style.assetChart}>
@@ -336,7 +363,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                         <li>
                             <hr style={{ color: 'black' }} />
                         </li>
-                        <li style={{...style.li, justifyContent: 'end'}}>
+                        <li style={{ ...style.li, justifyContent: 'end' }}>
                             <div style={{ fontWeight: 600, fontSize: '1.5rem' }}>
                                 <span style={{
                                     display: 'inline-block',
@@ -365,6 +392,18 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
                         <TransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowTransferModal} />
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
+                <Modal show={showIbc} onHide={handleCloseIbc} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <div>
+                            IBC Transfer Token
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                        <IBCTransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowIBCTransferModal} />
                     </Modal.Body>
                 </Modal>
             </>
