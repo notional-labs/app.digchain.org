@@ -234,6 +234,7 @@ const IBCTransferModal = ({ account, wrapSetShow }) => {
                             <p style={style.formTitle}>Destination: {destination}</p>
                             <>
                                 <Form.Select onChange={async(e) => { await handleChangeSelectChannel(e) }} defaultValue={-100} style={{ ...style.formInput, marginBottom: '20px', }}>
+                                    <option>Select a channel</option>
                                     {
                                         channels.map((channel, index) => (
                                             <option key={index} value={index}>Transfer/{channel.channel_id || ''}</option>
