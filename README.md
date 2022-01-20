@@ -1,3 +1,3 @@
-#0x-Supported-DigUI
+# 0x-Supported-DigUI
 
-##An UI to support Ethereum accounts
+## An UI to support Ethereum accounts
