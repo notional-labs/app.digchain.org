@@ -56,7 +56,6 @@ const ValidatorsList = () => {
             setSetLogo(false)
             let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
-            vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
             })
