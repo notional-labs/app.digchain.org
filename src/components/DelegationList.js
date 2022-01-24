@@ -174,10 +174,11 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                             </tr>
                         </thead>
                         <tbody style={style.tdlContent}>
-                            {rewards.map((reward, index) => (
+                            {rewards.map((reward, index) => {
+                                return (
                                 <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
                                     <td style={style.td}>
-                                        {validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
+                                        {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
                                         {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
@@ -212,7 +213,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                                         </Tooltip>
                                     </td>
                                 </tr>
-                            ))}
+                            )})}
                         </tbody>
                     </table>
                 </div>
