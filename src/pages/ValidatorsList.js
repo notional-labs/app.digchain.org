@@ -56,9 +56,6 @@ const ValidatorsList = () => {
             setSetLogo(false)
             let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
-            const tony = vals.filter(x => x.description.moniker === 'Tony')[0]
-            vals = vals.filter(x => x.description.moniker !== 'Tony')
-            vals.unshift(tony)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
             })
