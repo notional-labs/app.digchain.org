@@ -230,7 +230,7 @@ const App = () => {
               color: '#ffc16b',
               marginRight: '1em',
             }}>
-              <a href='https://discord.com/invite/W8rVSAYT' target='_blank'>
+              <a href='https://discord.gg/R44XTwfbmU' target='_blank'>
                 <FaDiscord style={{ color: '#ffc16b', }} />
               </a>
             </li>
