@@ -176,15 +176,16 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => {
                                 return (
-                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
+                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#d4ffc7', borderBottom: 'solid 1px #7d7d7d' }}>
                                     <td style={style.td}>
                                         {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
-                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
+                                        {delegations.filter(x => x.delegation.validator_address === reward.validator_address).length > 0 && 
+                                            parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right', }}>
-                                        {parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
+                                        {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'center', width: '20%' }}>
                                         <Tooltip placement="top" title='Withdraw Reward'>
