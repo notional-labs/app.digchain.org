@@ -181,10 +181,11 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                                         {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right' }}>
-                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
+                                        {delegations.filter(x => x.delegation.validator_address === reward.validator_address).length > 0 && 
+                                            parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right', }}>
-                                        {parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
+                                        {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'center', width: '20%' }}>
                                         <Tooltip placement="top" title='Withdraw Reward'>
