@@ -155,7 +155,7 @@ const ValidatorsList = () => {
                                     <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#fff5e8' : '#fff5e8', marginBottom: 20 }}>
                                         <td style={{ ...style.td, borderRadius: '60px 0 0 60px', }}>
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                {/* {
+                                                {
                                                     setLogo ? (
                                                         <Image
                                                             width={50}
@@ -172,28 +172,28 @@ const ValidatorsList = () => {
                                                             preview={true}
                                                         />
                                                     )
-                                                } */}
-                                                {
-                                                    getLogo(val.description.identity).then(logo => {
-                                                        return (
-                                                            <Image
-                                                                width={50}
-                                                                src={logo || notFound}
-                                                                style={{ borderRadius: '100%', marginTop: '3px' }}
-                                                                preview={true}
-                                                            />
-                                                        )
-                                                    }).catch(() => {
-                                                        return (
-                                                            <Image
-                                                                width={50}
-                                                                src={notFound}
-                                                                style={{ borderRadius: '100%', marginTop: '3px' }}
-                                                                preview={true}
-                                                            />
-                                                        )
-                                                    })
                                                 }
+//                                                 {
+//                                                     getLogo(val.description.identity).then(logo => {
+//                                                         return (
+//                                                             <Image
+//                                                                 width={50}
+//                                                                 src={logo || notFound}
+//                                                                 style={{ borderRadius: '100%', marginTop: '3px' }}
+//                                                                 preview={true}
+//                                                             />
+//                                                         )
+//                                                     }).catch(() => {
+//                                                         return (
+//                                                             <Image
+//                                                                 width={50}
+//                                                                 src={notFound}
+//                                                                 style={{ borderRadius: '100%', marginTop: '3px' }}
+//                                                                 preview={true}
+//                                                             />
+//                                                         )
+//                                                     })
+//                                                 }
 
                                                 <div style={{ marginLeft: '1rem' }} >
                                                     <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 850 }}>{val.description.moniker}</div>
