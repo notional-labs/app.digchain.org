@@ -34,7 +34,7 @@ jobs:
     - name: Build the web
       env:
         NODE_OPTIONS: --openssl-legacy-provider
-	CI: false
+        CI: false
       run: |
         npm i --ignore-scripts
         npm run build
