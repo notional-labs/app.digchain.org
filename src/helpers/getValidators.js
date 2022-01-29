@@ -1,4 +1,7 @@
 import axios from 'axios'
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios, { retries: 3 });
 
 export const getValidators = async (logoDisableFlag) => {
     const api = process.env.REACT_APP_API
@@ -22,6 +25,7 @@ export const getValidators = async (logoDisableFlag) => {
 
 export const getLogo = async (identity) => {
     const res = await axios.get(`https://keybase.io/_/api/1.0/user/lookup.json?key_suffix=${identity}&fields=pictures`)
+    axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay});
     if (res.status === 200 && res.data.status.code === 0 && res.data.them[0] && res.data.them[0].pictures) {
         return res.data.them[0].pictures.primary.url
     }
