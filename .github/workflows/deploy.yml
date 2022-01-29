@@ -4,7 +4,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, stable ]
   pull_request:
     branches: [ master ]
 
@@ -34,6 +34,7 @@ jobs:
     - name: Build the web
       env:
         NODE_OPTIONS: --openssl-legacy-provider
+        CI: false
       run: |
         npm i --ignore-scripts
         npm run build
