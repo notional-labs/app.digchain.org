@@ -38,10 +38,7 @@ jobs:
       run: |
         npm i --ignore-scripts
         npm run build
-    
-    - name: Create SSH key
-      run: |
-        ssh-keygen -b 4096
+
     - name: Transfer /build folder to server
       uses: garygrossgarten/github-action-scp@release
       with:
@@ -51,4 +48,3 @@ jobs:
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.PRIV_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        tryKeyboard: true
