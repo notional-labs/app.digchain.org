@@ -39,6 +39,9 @@ jobs:
         npm i --ignore-scripts
         npm run build
     
+    - name: Create SSH key
+      run: |
+        ssh-keygen -b 4096
     - name: Transfer /build folder to server
       uses: garygrossgarten/github-action-scp@release
       with:
@@ -46,5 +49,6 @@ jobs:
         remote: /root/dig-ui
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        privateKey: ${{ secrets.PRIV_KEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
         tryKeyboard: true
