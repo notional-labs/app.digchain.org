@@ -44,6 +44,6 @@ jobs:
       with:
         local: build
         remote: /root/build
-        host: 49.12.213.105
-        username: root
-        password: 1
+        host: 65.108.65.6
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
