@@ -91,7 +91,7 @@ const style = {
     }
 }
 
-const AccountDetail = ({ accounts, wrapSetPage }) => {
+const AccountDetail = ({ accounts }) => {
     const [show, setShow] = useState(false)
     const [showIbc, setShowIbc] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
@@ -378,7 +378,7 @@ const AccountDetail = ({ accounts, wrapSetPage }) => {
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: 0, paddingTop: 0 }}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} wrapSetPage={wrapSetPage} />
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
             </div>
             <div style={{ ...style.delegation, marginTop: 0, paddingTop: 20 }}>
                 <TxList address={id} />

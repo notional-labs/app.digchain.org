@@ -10,6 +10,8 @@ import {
   Routes,
   Route,
   Link,
+  NavLink,
+  useLocation
 } from "react-router-dom";
 import logo from './assets/img/DIG.png';
 import keplrLogo from './assets/img/keplr.png'
@@ -19,6 +21,7 @@ import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
 import { GithubFilled } from '@ant-design/icons'
 import "@fontsource/merriweather"
 import AccountList from './pages/AccountList';
+import ProposalList from './pages/ProposalList';
 import { FaDiscord, FaTelegramPlane } from "react-icons/fa";
 
 
@@ -60,7 +63,7 @@ const style = {
 const App = () => {
   const [accounts, setAccounts] = useState(JSON.parse(localStorage.getItem('accounts')) || [])
   const [show, setShow] = useState(false)
-  const [page, setPage] = useState('')
+  let location = useLocation();
 
   const wrapSetShow = useCallback((val) => {
     setShow(val)
@@ -69,11 +72,6 @@ const App = () => {
   const wrapSetAccounts = useCallback((val) => {
     setAccounts([...val])
   }, [setAccounts])
-
-  const wrapSetPage = useCallback((val) => {
-    setPage(val)
-  }, [setPage])
-
 
   const handleClose = () => {
     setShow(false)
@@ -126,25 +124,8 @@ const App = () => {
     }
   }
 
-  const handleOver = (e) => {
-    e.target.style.backgroundColor = 'rgb(255, 255, 255, 0.6)'
-  }
-
-  const handleLeaveAccount = (e) => {
-    if (page !== 'account') {
-      e.target.style.backgroundColor = 'transparent'
-    }
-  }
-
-  const handleLeaveStaking = (e) => {
-    if (page !== 'staking') {
-      e.target.style.backgroundColor = 'transparent'
-    }
-  }
-
   return (
     <div className="App container-fluid">
-      <Router>
         <div style={style.navbar}>
           <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
             <Image width={70}
@@ -155,42 +136,61 @@ const App = () => {
           <div style={{ marginRight: '5rem' }}>
             <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
               <li>
-                <Link to='/accounts'>
+                <NavLink to='/accounts'>
                   <button style={{
                     marginRight: '0.5rem',
                     fontSize: '1.2rem',
-                    backgroundColor: page === 'account' ? 'rgb(255, 255, 255, 0.6)' : 'transparent',
-                    color: page === 'account' ? '#363636' : '#F6F3FB',
+                    backgroundColor: 'transparent',
+                    color: location.pathname === '/accounts' ? '#a3a3a3' : '#ffffff',
                     padding: 10,
                     paddingTop: 5,
                     paddingBottom: 5,
                     width: '10rem',
                     borderRadius: '50px',
                     border: 0,
-                    fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveAccount} onClick={() => { setPage('account') }}>
+                    fontFamily: 'Lato',
+                  }}>
                     Accounts
                   </button>
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link to='/staking'>
+                <NavLink to='/staking'>
+                  <button style={{
+                    marginRight: '0.5rem',
+                    fontSize: '1.2rem',
+                    backgroundColor: 'transparent',
+                    color: location.pathname === '/staking' ? '#a3a3a3' : '#ffffff',
+                    padding: 10,
+                    width: '10rem',
+                    borderRadius: '50px',
+                    border: 0,
+                    paddingTop: 5,
+                    paddingBottom: 5,
+                    fontFamily: 'Lato',
+                  }}>
+                    Staking
+                  </button>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to='/proposals'>
                   <button style={{
                     marginRight: '3rem',
                     fontSize: '1.2rem',
-                    backgroundColor: page === 'staking' ? 'rgb(255, 255, 255, 0.6)' : 'transparent',
-                    color: page === 'staking' ? '#363636' : '#F6F3FB',
+                    backgroundColor: 'transparent',
+                    color: location.pathname === '/proposals' ? '#a3a3a3' : '#ffffff',
                     padding: 10,
+                    paddingTop: 5,
+                    paddingBottom: 5,
                     width: '10rem',
                     borderRadius: '50px',
                     border: 0,
-                    paddingTop: 5,
-                    paddingBottom: 5,
-                    fontFamily: 'MerriWeather',
-                  }} onMouseEnter={handleOver} onMouseLeave={handleLeaveStaking} onClick={() => { setPage('staking') }}>
-                    Staking
+                    fontFamily: 'Lato',
+                  }}>
+                    Proposals
                   </button>
-                </Link>
+                </NavLink>
               </li>
               <li>
                 <ConnectButton wrapSetShow={wrapSetShow} />
@@ -202,7 +202,8 @@ const App = () => {
           <Route exact path="/" element={<div style={{ height: '77vh' }}></div>} />
           <Route exact path="/staking" element={<ValidatorsList />} />
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
-          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} wrapSetPage={wrapSetPage} />} />
+          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts}/>} />
+          <Route exact path="/proposals" element={<ProposalList />} />
         </Routes>
         <div style={style.contact}>
           <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
@@ -245,7 +246,6 @@ const App = () => {
             </li>
           </ul>
         </div>
-      </Router>
       <>
         <Modal show={show} onHide={handleClose} centered={true}>
           <Modal.Header style={{
