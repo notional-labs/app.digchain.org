@@ -157,7 +157,7 @@ const App = () => {
               <li>
                 <NavLink to='/staking'>
                   <button style={{
-                    marginRight: '0.5rem',
+                    marginRight: '3rem',
                     fontSize: '1.2rem',
                     backgroundColor: 'transparent',
                     color: location.pathname === '/staking' ? '#a3a3a3' : '#ffffff',
