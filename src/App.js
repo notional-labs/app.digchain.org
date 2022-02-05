@@ -173,7 +173,7 @@ const App = () => {
                   </button>
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to='/proposals'>
                   <button style={{
                     marginRight: '3rem',
@@ -191,7 +191,7 @@ const App = () => {
                     Proposals
                   </button>
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <ConnectButton wrapSetShow={wrapSetShow} />
               </li>
