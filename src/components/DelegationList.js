@@ -77,7 +77,7 @@ const style = {
     }
 }
 
-const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) => {
+const DelegationList = ({ address, type, delegations, rewards, }) => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [selectVal, setSelectVal] = useState(0)
@@ -154,9 +154,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                 </Title>
                 <div style={{ width: '10%' }}>
                     <Link to='/staking' style={{ width: '30%' }}>
-                        <button style={style.button} onClick={() => {
-                            wrapSetPage('staking')
-                        }}>
+                        <button style={style.button}>
                             Delegate
                         </button>
                     </Link>
@@ -184,7 +182,7 @@ const DelegationList = ({ address, type, delegations, rewards, wrapSetPage }) =>
                                         {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'right', }}>
-                                        {parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
+                                        {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
                                     </td>
                                     <td style={{ ...style.td, textAlign: 'center', width: '20%' }}>
                                         <Tooltip placement="top" title='Withdraw Reward'>
