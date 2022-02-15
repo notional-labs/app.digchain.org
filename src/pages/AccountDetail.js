@@ -159,7 +159,7 @@ const AccountDetail = ({ accounts }) => {
 
     return (
         <div style={style.container}>
-            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
+            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, marginBottom: '0.5em' }}>
                 Account Info
             </div>
             <div>

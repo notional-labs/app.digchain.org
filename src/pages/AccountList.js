@@ -5,6 +5,7 @@ import { useCallback, useState } from "react"
 import { ImFloppyDisk } from "react-icons/im";
 import { Breadcrumb } from "antd"
 
+
 const style = {
     container: {
         display: 'flex',
@@ -18,7 +19,7 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        
+
     },
     button: {
         marginTop: '3rem',
@@ -51,15 +52,14 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'left',
+                marginBottom: '0.5em'
             }}>
                 Accounts
             </div>
             {accounts.length > 0 ?
-                <div style={{ minHeight: '55vh', display: 'grid', gridTemplateColumns: 'auto auto', gridGap: '20px', padding: '5em', backgroundColor: 'rgb(255, 2555, 255, 0.2)', borderRadius: '20px', paddingBottom: '7em' }}>
+                <div className="gridBoxAccount">
                     {(accounts.map((account, index) => (
-                        <div style={style.card}>
-                            <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
-                        </div>
+                        <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
                     )))}
                 </div> : (
                     <div style={{ color: '#ffc16b', height: '55vh', paddingTop: '15em', fontFamily: 'Ubuntu' }}>

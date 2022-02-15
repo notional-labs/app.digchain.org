@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #d49217;
-background-image: linear-gradient(45deg,#fa9912 0%, #262626 100%);
+  background-image: linear-gradient(45deg,#fa9912 0%, #262626 100%);
   min-height: 100vh;
   min-width: 100vh;
   width: 100%;
@@ -11,5 +11,64 @@ background-image: linear-gradient(45deg,#fa9912 0%, #262626 100%);
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.gridBox {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  background-color: rgb(255, 2555, 255, 0.2);
+  border-radius: 20px;
+  padding-bottom: 7em;
+}
+
+.gridBoxAccount {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+  padding: 5em;
+  background-color: rgb(255, 2555, 255, 0.2);
+  border-radius: 20px;
+  padding-bottom: 7em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1200px) {
+  .gridBox {
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .gridBox {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  .gridBoxAccount {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .row {
+    flex-direction: column;
+  }
 }
 

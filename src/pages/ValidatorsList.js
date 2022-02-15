@@ -112,7 +112,7 @@ const ValidatorsList = () => {
     return (
         !loading ? (
             <div style={{ padding: 60 }}>
-                <div style={{ textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600 }}>
+                <div style={{ textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, marginBottom: '0.5em' }}>
                     Validators
                 </div>
                 <div style={{

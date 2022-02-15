@@ -23,6 +23,7 @@ import "@fontsource/merriweather"
 import AccountList from './pages/AccountList';
 import ProposalList from './pages/ProposalList';
 import { FaDiscord, FaTelegramPlane } from "react-icons/fa";
+import ProposalDetail from './pages/ProposalDetail';
 
 
 const style = {
@@ -173,7 +174,7 @@ const App = () => {
                   </button>
                 </NavLink>
               </li>
-              {/* <li>
+              <li>
                 <NavLink to='/proposals'>
                   <button style={{
                     marginRight: '3rem',
@@ -191,7 +192,7 @@ const App = () => {
                     Proposals
                   </button>
                 </NavLink>
-              </li> */}
+              </li>
               <li>
                 <ConnectButton wrapSetShow={wrapSetShow} />
               </li>
@@ -204,6 +205,7 @@ const App = () => {
           <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
           <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts}/>} />
           <Route exact path="/proposals" element={<ProposalList />} />
+          <Route exact path="/proposals/:id" element={<ProposalDetail />} />
         </Routes>
         <div style={style.contact}>
           <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
