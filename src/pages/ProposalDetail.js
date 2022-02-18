@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
     useParams
 } from "react-router-dom";
-import { getProposal, getProposer } from "../helpers/getProposal";
+import { getProposal, getProposer, getTally } from "../helpers/getProposal";
 import '../assets/css/ProposalDetail.css'
+import VoterList from "../components/VoterList";
+import { Modal } from "react-bootstrap";
+import VoteModal from "../components/VoteModal";
 
 const style = {
     card: {
@@ -15,6 +18,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        marginBottom: '2em'
     },
     title: {
         textAlign: 'left',
@@ -24,7 +28,15 @@ const style = {
     content: {
         textAlign: 'left',
     },
-
+    voters: {
+        backgroundColor: 'rgb(255, 255, 255, 0.4)',
+        borderRadius: '10px',
+        marginBottom: '20px',
+        color: '#bdbdbd',
+        fontFamily: 'Ubuntu',
+        marginTop: '5rem',
+        padding: 20
+    },
 }
 
 const ProposalDetail = () => {
@@ -34,16 +46,31 @@ const ProposalDetail = () => {
         proposer: ''
     })
     let { id } = useParams();
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         (async () => {
             const res = await getProposal(id)
             const proposalById = res.result
             const proposer = await getProposer(id)
+            if (proposalById.status === 1 || proposalById.status === 2) {
+                const tally = await getTally(proposalById.id)
+                proposalById.tally = tally.result
+            }
             setProposer({ ...proposer.result })
             setProposal([proposalById])
         })()
     }, [id])
+
+    const handleClose = () => {
+        setShow(false)
+    }
+
+    const wrapSetShow = useCallback((val) => {
+        setShow(val)
+    }, [setShow])
+
+    console.log(proposal[0])
 
     const getStatus = () => {
         if (proposal[0].status === 3) {
@@ -107,7 +134,10 @@ const ProposalDetail = () => {
         }
     }
     return (
-        <div>
+        <div style={{
+            padding: 50,
+            paddingTop: 20
+        }}>
             <div style={{
                 fontSize: '3rem',
                 color: '#EFCF20',
@@ -129,76 +159,91 @@ const ProposalDetail = () => {
                     </p>
                 </div>
                 <div style={style.content}>
-                    <div className="row">
-                        <p>
+                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                        <p className="left">
                             Proposal ID
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 && proposal[0].id || 0}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line">
+                        <p className="left">
                             Proposer
                         </p>
-                        <p>
+                        <p className="right">
                             {proposer.proposer}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                        <p className="left">
                             Total Deposit
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 &&
                                 proposal[0].total_deposit.length > 0 &&
                                 parseInt(proposal[0].total_deposit[0].amount) / 1000000}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line">
+                        <p className="left">
                             Submited Time
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 &&
                                 `${proposal[0].submit_time.split('T')[0]} ${proposal[0].submit_time.split('T')[1]}`}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                        <p className="left">
                             Voting Time
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 &&
                                 `${proposal[0].voting_start_time.split('T')[0]} ${proposal[0].voting_start_time.split('T')[1]}-${proposal[0].voting_end_time.split('T')[0]} ${proposal[0].voting_end_time.split('T')[1]}`}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line">
+                        <p className="left">
                             Proposal Type
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 && proposal[0].content.type}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                        <p className="left">
                             Title
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 && proposal[0].content.value.title}
                         </p>
                     </div>
-                    <div className="row">
-                        <p>
+                    <div className="line">
+                        <p className="left">
                             Description
                         </p>
-                        <p>
+                        <p className="right">
                             {proposal.length > 0 && proposal[0].content.value.description}
                         </p>
                     </div>
                 </div>
             </div>
+            <div style={{ ...style.voters, marginTop: '0', paddingTop: '2em'}} >
+                {proposal.length > 0 &&  <VoterList proposal={proposal[0]}/>}
+            </div>
+            <>
+                <Modal show={show} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <div>
+                            Vote
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                        <VoteModal wrapSetShow={wrapSetShow} />
+                    </Modal.Body>
+                </Modal>
+            </>
         </div>
     )
 }

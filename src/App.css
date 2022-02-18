@@ -48,15 +48,34 @@
   padding-bottom: 7em;
 }
 
-.row {
+.line {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-top: solid 1px #8a8a8a
+}
+
+
+.left {
+  width: 10%;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.right {
+  width: 90%;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle
 }
 
 @media screen and (max-width: 1200px) {
   .gridBox {
       grid-template-columns: repeat(2, 1fr);
+  }
+  .gridBoxAccount {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -64,11 +83,31 @@
   .gridBox {
       grid-template-columns: repeat(1, 1fr);
   }
-  .gridBoxAccount {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .row {
+  .line {
     flex-direction: column;
   }
+  .left {
+    width: 100%;
+    text-align: left;
+  }
+  .right {
+    width: 100%;
+    text-align: left;
+  }
 }
+
+.ant-radio-checked .ant-radio-inner{
+  border-color: #ffac38 !important ;
+  background-color: #ffac38 !important ;
+}
+
+.ant-radio-checked .ant-radio-inner:after{
+  background-color: #ffac38;
+}
+
+.ant-radio:hover .ant-radio-inner {
+  border-color: #ffac38 ;
+}
+
+
 

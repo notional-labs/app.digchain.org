@@ -9,7 +9,7 @@
     padding-bottom: 7em;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1200px) {
     .gridBoxAccount {
       grid-template-columns: repeat(1, 1fr);
     }

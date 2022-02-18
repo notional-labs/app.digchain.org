@@ -59,7 +59,8 @@ const style = {
         padding: '1em',
         borderRadius: '50px',
         fontWeight: 'bold',
-        width: '30%'
+        width: '30%',
+        backgroundColor: '#ff9f40'
     },
     time: {
         fontWeight: 'bold',
@@ -80,7 +81,7 @@ const style = {
     }
 }
 
-const ProposalCard = ({ proposal }) => {
+const ProposalCard = ({ proposal, wrapSetShow }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -175,6 +176,10 @@ const ProposalCard = ({ proposal }) => {
         }
     }
 
+    const handleClick = () => {
+        wrapSetShow(true)
+    }
+
     return (
         !loading && (
             <div style={style.card}>
@@ -248,7 +253,7 @@ const ProposalCard = ({ proposal }) => {
                                     ? getPercentage(proposal.tally.abstain) :
                                     getPercentage(proposal.final_tally_result.abstain)
                                     }%`,
-                                backgroundColor: '#28c76f',
+                                backgroundColor: '#cccccc',
                                 minHeight: '100%',
 
                             }}>
@@ -282,7 +287,7 @@ const ProposalCard = ({ proposal }) => {
                             </Link>
                             {
                                 proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD' && (
-                                    <button style={style.extraButton}>
+                                    <button style={style.extraButton} onClick={handleClick}>
                                         Vote
                                     </button>
                                 )

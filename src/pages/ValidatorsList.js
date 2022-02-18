@@ -9,6 +9,7 @@ import { Modal, } from 'react-bootstrap';
 import DelegateModal from '../components/DelegateModal';
 import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
+import VoteModal from '../components/VoteModal';
 
 const style = {
     table: {

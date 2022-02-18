@@ -1,8 +1,8 @@
 import ProposalCard from "../components/ProposalCard"
 import { Modal, } from 'react-bootstrap'
-import TransferModal from "../components/TransferModal"
+import VoteModal from "../components/VoteModal"
 import { useCallback, useEffect, useState } from "react"
-import { getProposals, getTally } from "../helpers/getProposal"
+import { getProposals, } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
 
 const style = {
@@ -33,7 +33,7 @@ const ProposalList = () => {
         })()
     }, [])
 
-    const wrapSetShowTransferModal = useCallback((val) => {
+    const wrapSetShow = useCallback((val) => {
         setShow(val)
     }, [setShow])
 
@@ -58,10 +58,22 @@ const ProposalList = () => {
             {proposals.length > 0 &&
                 <div className="gridBox">
                     {(proposals.map((proposal) => (
-                        <ProposalCard proposal={proposal} />
+                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} />
                     )))}
                 </div>
             }
+            <>
+                <Modal show={show} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <div>
+                            Vote
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                        <VoteModal wrapSetShow={wrapSetShow} />
+                    </Modal.Body>
+                </Modal>
+            </>
         </div>
     )
 }

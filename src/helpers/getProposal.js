@@ -29,3 +29,10 @@ export const getProposer = async (id) => {
     if (res.status !== 200) return
     return res.data
 }
+
+export const getVotes = async (id) => {
+    const URL = `${api}cosmos/gov/v1beta1/proposals/${id}/votes?pagination.key=&pagination.limit=50`
+    const res = await axios.get(URL)
+    if (res.status !== 200) return
+    return res.data
+}
