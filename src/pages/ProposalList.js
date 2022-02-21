@@ -23,6 +23,7 @@ const style = {
 const ProposalList = () => {
     const [show, setShow] = useState(false)
     const [proposals, setProposals] = useState([])
+    const [selectProposal, setSelectProposal] = useState(-1)
 
     useEffect(() => {
         (async () => {
@@ -36,6 +37,10 @@ const ProposalList = () => {
     const wrapSetShow = useCallback((val) => {
         setShow(val)
     }, [setShow])
+
+    const wrapSetSelect = useCallback((val) => {
+        setSelectProposal(val)
+    }, [setSelectProposal])
 
     const handleClose = () => {
         setShow(false)
@@ -57,8 +62,8 @@ const ProposalList = () => {
             </div>
             {proposals.length > 0 &&
                 <div className="gridBox">
-                    {(proposals.map((proposal) => (
-                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} />
+                    {(proposals.map((proposal, index) => (
+                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index}/>
                     )))}
                 </div>
             }
@@ -70,7 +75,7 @@ const ProposalList = () => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
-                        <VoteModal wrapSetShow={wrapSetShow} />
+                        <VoteModal proposal={proposals[selectProposal]} wrapSetShow={wrapSetShow} />
                     </Modal.Body>
                 </Modal>
             </>

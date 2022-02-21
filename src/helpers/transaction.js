@@ -2,7 +2,7 @@ import {
   coin,
   StdFee
 } from "@cosmjs/stargate";
-import {makeDelegateMsg, makeSendMsg, makeUndelegateMsg, makeWithDrawMsg} from "../helpers/ethereum/lib/eth-transaction/Msg"
+import {makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg} from "../helpers/ethereum/lib/eth-transaction/Msg"
 
 export const transfer = async (client, address, amount, recipient, gas) => {
   let fee = {
@@ -66,5 +66,20 @@ export const withDraw = async (client, address, validatorAddress, gas) => {
     [msg],
     fee,
   );
+  return result
+}
+
+export const vote = async (client, option, proposal_id, voter, gas) => {
+  let fee = {
+    amount: [],
+    gas: `${gas}`,
+  }
+  const msg = makeVoteMsg(option, proposal_id, voter)
+
+  const result = await client.signAndBroadcast(
+    voter,
+    [msg],
+    fee,
+  )
   return result
 }

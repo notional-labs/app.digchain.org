@@ -11,8 +11,9 @@ const style = {
         display: 'flex',
         justifyContent: 'center',
         minHeight: '10%',
-        marginBottom: '2em',
-        color: '#ffffff'
+        marginBottom: '1em',
+        color: '#ffffff',
+        padding: '2em'
     },
     voteBar: {
         display: 'flex',
@@ -105,7 +106,7 @@ const VoterList = ({ proposal }) => {
     return (
         <div>
             <div style={style.container}>
-                <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                <Title style={{ color: '#000000', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
                     Voters
                 </Title>
             </div>
@@ -166,7 +167,7 @@ const VoterList = ({ proposal }) => {
                     </div>
                 </div>
             </div>
-            {!loading && (
+            {!loading && proposal.status < 3 && (
                 <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>

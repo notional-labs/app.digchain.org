@@ -1,13 +1,12 @@
-import { InputNumber, message, notification, Checkbox, Radio } from "antd"
-import { delegate } from "../helpers/transaction"
+import { InputNumber, notification, Checkbox, Radio } from "antd"
+import { vote} from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSendMsg, makeSignDocSendMsg, makeSendMsgcTemp } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
-import { getBalance } from "../helpers/getBalances";
 
 const style = {
     transfer: {
@@ -53,14 +52,14 @@ const style = {
     }
 }
 
-const VoteModal = ({ wrapSetShow }) => {
+const VoteModal = ({ proposal, wrapSetShow }) => {
     const [fee, setFee] = useState('5000')
     const [voters, setVoters] = useState([])
     const [selectVoter, setSelectVoter] = useState(0)
     const [showAdvance, setShowAdvance] = useState(false)
     const [gasAmount, setGasAmount] = useState('200000')
     const [isDoingTX, setIsDoingTx] = useState(false)
-    const [choice, setChoice] = useState('')
+    const [choice, setChoice] = useState(0)
 
     useEffect(() => {
         (async () => {
@@ -87,7 +86,7 @@ const VoteModal = ({ wrapSetShow }) => {
     }
 
     const checkDisable = () => {
-        if (fee === 0 || choice === '' || voters.length === 0) {
+        if (fee === 0 || choice === 0 || voters.length === 0) {
             return true
         }
         return false
@@ -97,7 +96,6 @@ const VoteModal = ({ wrapSetShow }) => {
     }
 
     const handleChangeVote = (e) => {
-        console.log(e.target.value)
         setChoice(e.target.value)
     }
 
@@ -111,15 +109,13 @@ const VoteModal = ({ wrapSetShow }) => {
 
     const handleClick = async () => {
         setIsDoingTx(true)
-        if (delegators[selectDel].type === 'keplr') {
+        if (voters[selectVoter].type === 'keplr') {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
             if (stargate != null) {
-                const amount = value * 1000000
-                const recipient = validators[selectVal].operator_address
                 const gas = parseInt(gasAmount)
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient, gas).then(() => {
+                vote(stargate, choice, `${proposal.id}`, voters[selectVoter].account.address, gas).then(() => {
                     setIsDoingTx(false)
                     success()
                     wrapSetShow(false)
@@ -140,19 +136,11 @@ const VoteModal = ({ wrapSetShow }) => {
             const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Dev Team"
 
-            const address = delegators[selectDel].account
+            const address = voters[selectVoter].account
             const gasLimit = parseInt(gasAmount)
 
-
-            const recipient = validators[selectVal].operator_address
-            const amount = value * 1000000
-
-            if (amount == 0) {
-                window.alert("Plese check your amount")
-                return
-            }
-            const msgDelegate = makeDelegateMsg(address, recipient, amount, denom)
-            const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom)
+            const msgVote = makeVoteMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, gas, denom)
+            const signDocVote = makeSignDocDelegateMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, gas, denom)
 
             console.log("address", address)
 
@@ -160,7 +148,7 @@ const VoteModal = ({ wrapSetShow }) => {
                 setIsDoingTx(false)
                 wrapSetShow(false)
             }
-            broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
+            broadcastTransaction(address, msgVote, signDocVote, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // wrapSetShow(false)
                 // setIsDoingTx(false)
                 // success()
@@ -193,13 +181,13 @@ const VoteModal = ({ wrapSetShow }) => {
                     value={choice}
                     style={style.formInput}
                 >
-                    <Radio value={'yes'} style={{color: '#bdbdbd', backgroundColor: '#1f1f1f'}}>Yes</Radio>
-                    <Radio value={'no'} style={{color: '#bdbdbd',}}>No</Radio>
-                    <Radio value={'no_with_veto'} style={{color: '#bdbdbd',}}>No With Veto</Radio>
-                    <Radio value={'abstain'} style={{color: '#bdbdbd',}}>Abstain</Radio>
+                    <Radio value={1} style={{color: '#bdbdbd', backgroundColor: '#1f1f1f'}}>Yes</Radio>
+                    <Radio value={3} style={{color: '#bdbdbd',}}>No</Radio>
+                    <Radio value={4} style={{color: '#bdbdbd',}}>No With Veto</Radio>
+                    <Radio value={2} style={{color: '#bdbdbd',}}>Abstain</Radio>
                 </Radio.Group>
             </div >
-            <div style={style.transfer}>
+            {/* <div style={style.transfer}>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Fee</div>
                 <>
                     <InputNumber style={{
@@ -213,7 +201,7 @@ const VoteModal = ({ wrapSetShow }) => {
                         color: '#F6F3FB'
                     }} min={0} step={1} onChange={handleChangeFee} defaultValue={parseInt(fee)} />
                 </>
-            </div>
+            </div> */}
             <div>
                 <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
             </div>

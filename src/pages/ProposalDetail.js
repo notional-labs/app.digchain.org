@@ -29,7 +29,7 @@ const style = {
         textAlign: 'left',
     },
     voters: {
-        backgroundColor: 'rgb(255, 255, 255, 0.4)',
+        backgroundColor: 'rgb(255, 255, 255)',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
@@ -229,8 +229,8 @@ const ProposalDetail = () => {
                     </div>
                 </div>
             </div>
-            <div style={{ ...style.voters, marginTop: '0', paddingTop: '2em'}} >
-                {proposal.length > 0 &&  <VoterList proposal={proposal[0]}/>}
+            <div style={{ ...style.voters, marginTop: '0', paddingTop: '2em' }} >
+                {proposal.length > 0 && <VoterList proposal={proposal[0]} />}
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
@@ -240,7 +240,7 @@ const ProposalDetail = () => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
-                        <VoteModal wrapSetShow={wrapSetShow} />
+                        {proposal.length > 0 && <VoteModal proposal={proposal[0]} wrapSetShow={wrapSetShow} />}
                     </Modal.Body>
                 </Modal>
             </>

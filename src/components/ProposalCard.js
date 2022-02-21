@@ -81,7 +81,7 @@ const style = {
     }
 }
 
-const ProposalCard = ({ proposal, wrapSetShow }) => {
+const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -178,6 +178,7 @@ const ProposalCard = ({ proposal, wrapSetShow }) => {
 
     const handleClick = () => {
         wrapSetShow(true)
+        wrapSetSelect(index)
     }
 
     return (
