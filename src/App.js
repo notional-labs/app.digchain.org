@@ -18,8 +18,8 @@ import keplrLogo from './assets/img/keplr.png'
 import metaMaskLogo from './assets/img/metamask.png'
 import { Image, message } from 'antd';
 import { getWeb3Instance } from "./helpers/ethereum/lib/metamaskHelpers";
-import { GithubFilled } from '@ant-design/icons'
-import "@fontsource/merriweather"
+import { GithubFilled, } from '@ant-design/icons'
+import "@fontsource/roboto"
 import AccountList from './pages/AccountList';
 import ProposalList from './pages/ProposalList';
 import { FaDiscord, FaTelegramPlane } from "react-icons/fa";
@@ -39,20 +39,25 @@ const style = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 140,
+    paddingTop: 20,
+    paddingBottom: '6em',
+  },
+  navLink: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   tabButton: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '1rem'
+    verticalAlign: 'center'
   },
   buttonContent: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'start',
-    paddingTop: 20,
-    paddingLeft: 20,
   },
   contact: {
     display: 'flex',
@@ -98,28 +103,31 @@ const App = () => {
           warning('Success')
         }
         else {
-          warning('this wallet account already exist')
+          warning('This wallet account already exist')
         }
       }
     }
     else {
       let web3 = await getWeb3Instance();
-      const accounts = (await web3.eth.getAccounts());
-
-      if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
-      }
-      if (localStorage.getItem('accounts')) {
-        let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
-          accountsList.push({ account: accounts[0], type: 'metamask' })
-          localStorage.setItem('accounts', JSON.stringify(accountsList))
-          setAccounts([...accountsList])
-          warning('Success')
+      try {
+        const accounts = (await web3.eth.getAccounts());
+        if (!localStorage.getItem('accounts')) {
+          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
         }
-        else {
-          warning('This wallet account already exist')
+        if (localStorage.getItem('accounts')) {
+          let accountsList = JSON.parse(localStorage.getItem('accounts'))
+          if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
+            accountsList.push({ account: accounts[0], type: 'metamask' })
+            localStorage.setItem('accounts', JSON.stringify(accountsList))
+            setAccounts([...accountsList])
+            warning('Success')
+          }
+          else {
+            warning('This wallet account already exist')
+          }
         }
+      } catch {
+        warning('Check if you have login into Metmask')
       }
       //metamask logic
     }
@@ -127,151 +135,142 @@ const App = () => {
 
   return (
     <div className="App container-fluid">
-        <div style={style.navbar}>
-          <div style={{ paddingLeft: '3rem', paddingTop: '1rem' }}>
-            <Image width={70}
-              src={logo}
-              preview={false}
-            />
-          </div>
-          <div style={{ marginRight: '5rem' }}>
-            <ul style={{ ...style.tabButton, listStyleType: 'none' }}>
-              <li>
-                <NavLink to='/accounts'>
-                  <button style={{
-                    marginRight: '0.5rem',
-                    fontSize: '1.2rem',
-                    backgroundColor: 'transparent',
-                    color: location.pathname.includes('accounts') ? '#a3a3a3' : '#ffffff',
-                    padding: 10,
-                    paddingTop: 5,
-                    paddingBottom: 5,
-                    width: '10rem',
-                    borderRadius: '50px',
-                    border: 0,
-                    fontFamily: 'Lato',
-                  }}>
-                    Accounts
-                  </button>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to='/staking'>
-                  <button style={{
-                    marginRight: '0.5rem',
-                    fontSize: '1.2rem',
-                    backgroundColor: 'transparent',
-                    color: location.pathname === '/staking' ? '#a3a3a3' : '#ffffff',
-                    padding: 10,
-                    width: '10rem',
-                    borderRadius: '50px',
-                    border: 0,
-                    paddingTop: 5,
-                    paddingBottom: 5,
-                    fontFamily: 'Lato',
-                  }}>
-                    Staking
-                  </button>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to='/proposals'>
-                  <button style={{
-                    marginRight: '3rem',
-                    fontSize: '1.2rem',
-                    backgroundColor: 'transparent',
-                    color: location.pathname.includes('proposals') ? '#a3a3a3' : '#ffffff',
-                    padding: 10,
-                    paddingTop: 5,
-                    paddingBottom: 5,
-                    width: '10rem',
-                    borderRadius: '50px',
-                    border: 0,
-                    fontFamily: 'Lato',
-                  }}>
-                    Proposals
-                  </button>
-                </NavLink>
-              </li>
-              <li>
-                <ConnectButton wrapSetShow={wrapSetShow} />
-              </li>
-            </ul>
-          </div>
+      <div style={style.navbar}>
+        <div style={{ paddingTop: '1rem' }}>
+          <Image width={100}
+            src={logo}
+            preview={false}
+          />
         </div>
-        <Routes>
-          <Route exact path="/" element={<div style={{ height: '77vh' }}></div>} />
-          <Route exact path="/staking" element={<ValidatorsList />} />
-          <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
-          <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts}/>} />
-          <Route exact path="/proposals" element={<ProposalList />} />
-          <Route exact path="/proposals/:id" element={<ProposalDetail />} />
-        </Routes>
-        <div style={style.contact}>
-          <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
-            <li style={{
-              paddingTop: '1em',
-              fontSize: '1.2rem',
-              color: '#ffc16b',
-              marginRight: '1em'
-            }}>
-              <p>
-                Contact Us |
-              </p>
+        <div style={style.navLink}>
+          <ul style={{ ...style.tabButton, listStyleType: 'none', paddingTop: '30px' }}>
+            <li>
+              <NavLink to='/accounts'>
+                <button style={{
+                  marginRight: '3.5em',
+                  fontSize: '24px',
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                  padding: 0,
+                  paddingTop: 5,
+                  paddingBottom: 30,
+                  border: 0,
+                  fontFamily: 'Roboto',
+                  borderBottom: location.pathname.includes('/accounts') ? 'solid 2px #EEC13F' : 'none',
+                  lineHeight: '100%',
+                  fontStyle: 'regular',
+                }}>
+                  Accounts
+                </button>
+              </NavLink>
             </li>
-            <li style={{
-              fontSize: '2rem',
-              color: '#ffc16b',
-              marginRight: '1em',
-            }}>
-              <a href='https://github.com/notional-labs' target='_blank'>
-                <GithubFilled style={{ color: '#ffc16b', }} />
-              </a>
+            <li>
+              <NavLink to='/staking'>
+                <button style={{
+                  marginRight: '3.5em',
+                  fontSize: '24px',
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                  padding: 0,
+                  paddingTop: 5,
+                  paddingBottom: 30,
+                  border: 0,
+                  fontFamily: 'Roboto',
+                  borderBottom: location.pathname.includes('/staking') ? 'solid 2px #EEC13F' : 'none',
+                  lineHeight: '100%',
+                  fontStyle: 'regular'
+                }}>
+                  Staking
+                </button>
+              </NavLink>
             </li>
-            <li style={{
-              fontSize: '2.5rem',
-              color: '#ffc16b',
-              marginRight: '1em',
-            }}>
-              <a href='https://discord.gg/R44XTwfbmU' target='_blank'>
-                <FaDiscord style={{ color: '#ffc16b', }} />
-              </a>
+            <li>
+              <NavLink to='/proposals'>
+                <button style={{
+                  marginRight: '3.5em',
+                  fontSize: '24px',
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                  padding: 0,
+                  paddingTop: 5,
+                  paddingBottom: 30,
+                  border: 0,
+                  fontFamily: 'Roboto',
+                  borderBottom: location.pathname.includes('/proposals') ? 'solid 2px #EEC13F' : 'none',
+                  lineHeight: '100%',
+                  fontStyle: 'regular'
+                }}>
+                  Proposals
+                </button>
+              </NavLink>
             </li>
-            <li style={{
-              fontSize: '2.5rem',
-              color: '#ffc16b',
-              marginRight: '1em',
-            }}>
-              <a href='https://t.me/digchain_official' target='_blank'>
-                <FaTelegramPlane style={{ color: '#ffc16b', }} />
-              </a>
+            <li>
+              <ConnectButton wrapSetShow={wrapSetShow} />
             </li>
           </ul>
         </div>
+      </div>
+      <Routes>
+        <Route exact path="/" element={<div style={{ height: '77vh' }}></div>} />
+        <Route exact path="/staking" element={<ValidatorsList />} />
+        <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
+        <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
+        <Route exact path="/proposals" element={<ProposalList />} />
+        <Route exact path="/proposals/:id" element={<ProposalDetail />} />
+      </Routes>
+      <div style={style.contact}>
+        <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
+          <li style={{
+            fontSize: '2rem',
+            color: '#ffffff',
+            marginRight: '1em',
+          }}>
+            <a href='https://github.com/notional-labs' target='_blank'>
+              <GithubFilled style={{ color: '#ffffff', }} />
+            </a>
+          </li>
+          <li style={{
+            fontSize: '2.5rem',
+            color: '#ffffff',
+            marginRight: '1em',
+          }}>
+            <a href='https://discord.gg/R44XTwfbmU' target='_blank'>
+              <FaDiscord style={{ color: '#ffffff', }} />
+            </a>
+          </li>
+          <li style={{
+            fontSize: '2.5rem',
+            color: '#ffffff',
+            marginRight: '1em',
+          }}>
+            <a href='https://t.me/digchain_official' target='_blank'>
+              <FaTelegramPlane style={{ color: '#ffffff', }} />
+            </a>
+          </li>
+        </ul>
+      </div>
       <>
-        <Modal show={show} onHide={handleClose} centered={true}>
+        <Modal className="border-radius-20" show={show} onHide={handleClose} centered={true}>
           <Modal.Header style={{
-            backgroundColor: '#1f1f1f',
-            color: '#F6F3FB',
-            fontFamily: 'ubuntu',
-            fontSize: '1.2rem',
+            backgroundColor: '#4D4D4D',
+            color: '#EEC13F',
+            fontFamily: 'roboto',
+            fontSize: '24px',
             border: 0,
-            paddingTop: '20px',
-            paddingLeft: '1.8rem',
-            paddingBottom: 10
+            padding: '20px',
+            paddingTop: '10px',
+            paddingBottom: '10px'
           }}
-            closeButton
-            closeVariant='white'>
+          >
             <Modal.Title>Connect Wallet</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#1f1f1f', paddingBottom: '20px' }}>
+          <Modal.Body style={{ backgroundColor: '#4D4D4D', padding: '20px', paddingTop: 0 }}>
             <div style={style.divButton}>
               <button style={{
-                borderRadius: '20px',
-                backgroundColor: '#ffa424',
-                color: '#696969',
-                margin: 10,
-                border: 0
+                backgroundColor: 'transparent',
+                color: '#ffffff',
+                border: 0,
+                borderBottom: 'solid 1px #ffffff'
               }}
                 onClick={async () => {
                   await connect('keplr')
@@ -283,19 +282,18 @@ const App = () => {
                       src={keplrLogo}
                       preview={false} />
                   </div>
-                  <div style={{ marginLeft: '10px', fontSize: '1.5rem', }}>
-                    <p style={{ margin: 0, textAlign: 'left', color: '#3b3b3b' }}>Keplr</p>
-                    <p style={{ fontSize: '0.75rem', color: '#696969' }}>
+                  <div style={{ marginLeft: '25px', fontSize: '1.5rem', }}>
+                    <p style={{ margin: 0, textAlign: 'left' }}>Keplr</p>
+                    <p style={{ fontSize: '0.75rem', }}>
                       Keplr browser extension
                     </p>
                   </div>
                 </div>
               </button>
               <button style={{
-                borderRadius: '20px',
-                backgroundColor: '#ffa424',
-                color: '#696969',
-                margin: 10,
+                backgroundColor: 'transparent',
+                color: '#ffffff',
+                marginTop: '1em',
                 border: 0
               }}
                 onClick={async () => {
@@ -308,9 +306,9 @@ const App = () => {
                       src={metaMaskLogo}
                       preview={false} />
                   </div>
-                  <div style={{ marginLeft: '10px', fontSize: '1.5rem' }}>
-                    <p style={{ margin: 0, textAlign: 'left', color: '#3b3b3b' }}>Metamask</p>
-                    <p style={{ fontSize: '0.75rem', color: '#696969' }}>
+                  <div style={{ marginLeft: '25px', fontSize: '1.5rem' }}>
+                    <p style={{ margin: 0, textAlign: 'left', }}>Metamask</p>
+                    <p style={{ fontSize: '0.75rem', }}>
                       Metamask browser extension
                     </p>
                   </div>
