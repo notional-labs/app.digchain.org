@@ -3,7 +3,7 @@ import { vote} from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeVoteMsg ,makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
@@ -139,8 +139,8 @@ const VoteModal = ({ proposal, wrapSetShow }) => {
             const address = voters[selectVoter].account
             const gasLimit = parseInt(gasAmount)
 
-            const msgVote = makeVoteMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, gas, denom)
-            const signDocVote = makeSignDocDelegateMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, gas, denom)
+            const msgVote = makeVoteMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, denom)
+            const signDocVote = makeSignDocVoteMsg(choice, `${proposal.id}`, voters[selectVoter].account.address, denom)
 
             console.log("address", address)
 
