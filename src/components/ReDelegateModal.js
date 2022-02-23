@@ -1,4 +1,4 @@
-import { InputNumber, message, notification, Checkbox} from "antd"
+import { InputNumber, message, notification, Checkbox } from "antd"
 import { unbonding } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
@@ -17,11 +17,6 @@ const style = {
     transfer: {
         marginBottom: '2rem',
         width: '100%',
-        marginTop: '1rem',
-        padding: 20,
-        backgroundColor: '#1f1f1f',
-        borderRadius: '20px',
-        border: 'solid 1px #bdbdbd'
     },
     transferInfo: {
         padding: '50px',
@@ -46,13 +41,13 @@ const style = {
         marginBottom: '1rem'
     },
     formInput: {
-        backgroundColor: '#1f1f1f',
-        color: '#bdbdbd',
+        backgroundColor: '#4D4D4D',
+        color: '#ffffff',
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'ubuntu',
-        color: '#bdbdbd',
+        fontFamily: 'Roboto',
+        color: '#ffffff',
         fontWeight: 500
     }
 }
@@ -111,7 +106,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             if (stargate != null) {
                 const amount = value * 1000000
                 const val = delegation.delegation.validator_address
-                const validator_src_address  = delegation.delegation.validator_address
+                const validator_src_address = delegation.delegation.validator_address
                 //TODO: add choice form to validator_dst_address - done
                 const validator_dst_address = validators[selectVal].operator_address
                 const gasLimit = parseInt(gasAmount)
@@ -124,28 +119,28 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 console.log(validator_src_address)
                 console.log(validator_dst_address)
                 const denom = process.env.REACT_APP_DENOM
-                try{
+                try {
                     const msgRelegate = makeBeginRedelegateMsg(address, validator_src_address, validator_dst_address, amount, denom)
-                    await stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(result=>{
+                    await stargate.signAndBroadcast(address, [msgRelegate], stdFee).then(result => {
                         if (result.code == 0) {
                             setIsDoingTx(false)
                             success()
                             wrapSetShow(false)
-                        }else{
+                        } else {
                             setIsDoingTx(false)
                             error(result.rawLog)
-                            wrapSetShow(false)    
+                            wrapSetShow(false)
                         }
                     })
                     setIsDoingTx(false)
                     wrapSetShow(false)
-                    success()  
-                }  
-                catch(e) {
+                    success()
+                }
+                catch (e) {
                     setIsDoingTx(false)
                     wrapSetShow(false)
                     error(e.message)
-                }         
+                }
             }
         }
         else {
@@ -160,7 +155,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             const gasLimit = parseInt(gasAmount)
 
 
-            const validator_src_address  = delegation.delegation.validator_address
+            const validator_src_address = delegation.delegation.validator_address
             //TODO: add choice form to validator_dst_address
             const validator_dst_address = validators[selectVal].operator_address
             const amount = value * 1000000
@@ -175,7 +170,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             console.log(msgDelegate)
             console.log(signDocDelegate)
 
-            const UIProcessing = function(){
+            const UIProcessing = function () {
                 setIsDoingTx(false)
                 wrapSetShow(false)
             }
@@ -189,7 +184,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 wrapSetShow(false)
                 error(e.message)
             })
-           
+
         }
     }
 
@@ -206,8 +201,8 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#1f1f1f',
-                    color: '#F6F3FB'
+                    backgroundColor: '#C4C4C4',
+                    color: '#9B9B9B'
                 }}>
                     {address}
                 </div>
@@ -221,8 +216,8 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#1f1f1f',
-                    color: '#F6F3FB'
+                    backgroundColor: '#C4C4C4',
+                    color: '#9B9B9B'
                 }}>
                     {delegation.delegation.validator_address}
                 </div>
@@ -241,53 +236,141 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             </div>
             <div style={style.transfer}>
                 <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Stake</div>
-                <>
+                <div style={{
+                    width: '100%',
+                    height: '40px',
+                    borderRadius: '10px',
+                    border: `2px solid #c4c4c4`,
+                    fontSize: '1rem',
+                    padding: 0,
+                    backgroundColor: '#4D4D4D',
+                    color: '#F6F3FB'
+                }}>
                     <InputNumber style={{
-                        width: '100%',
-                        height: '40px',
-                        borderRadius: '10px',
-                        border: `2px solid #c4c4c4`,
+                        width: '80%',
+                        height: '100%',
                         fontSize: '1rem',
                         paddingTop: '0.2rem',
-                        backgroundColor: '#1f1f1f',
-                        color: '#F6F3FB'
-                    }} min={0} max={parseFloat(delegation.delegation.shares)/1000000} step={0.000001} onChange={handleChange} />
-                </>
+                        backgroundColor: '#4D4D4D',
+                        color: '#F6F3FB',
+                        borderRadius: '10px 0 0 10px'
+                    }} min={0}
+                        max={parseFloat(delegation.delegation.shares) / 1000000}
+                        step={0.000001}
+                        onChange={handleChange}
+                        controls={false}
+                        bordered={false}
+                    />
+                    <span style={{
+                        height: '40px',
+                        borderRadius: '10px',
+                        border: `none`,
+                        fontSize: '1.3rem',
+                    }}>
+                        |
+                    </span>
+                    <span style={{
+                        width: '20%',
+                        height: '100%',
+                        borderRadius: '10px',
+                        border: `none`,
+                        fontSize: '1rem',
+                        textAlign: 'center',
+                        marginLeft: '2em'
+                    }}>
+                        DIG
+                    </span>
+                </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
                     <div style={style.transfer}>
                         <div style={{ marginBottom: '1rem', ...style.formTitle }}>Set Gas</div>
-                        <>
+                        <div style={{
+                            width: '100%',
+                            height: '40px',
+                            borderRadius: '10px',
+                            border: `2px solid #c4c4c4`,
+                            fontSize: '1rem',
+                            padding: 0,
+                            backgroundColor: '#4D4D4D',
+                            color: '#F6F3FB'
+                        }}>
                             <InputNumber style={{
-                                width: '100%',
-                                height: '40px',
-                                borderRadius: '10px',
-                                border: `2px solid #c4c4c4`,
+                                width: '80%',
+                                height: '100%',
                                 fontSize: '1rem',
                                 paddingTop: '0.2rem',
-                                backgroundColor: '#1f1f1f',
-                                color: '#F6F3FB'
-                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)}/>
-                        </>
+                                backgroundColor: '#4D4D4D',
+                                color: '#F6F3FB',
+                                borderRadius: '10px 0 0 10px'
+                            }} min={0}
+                                step={1}
+                                onChange={handleChangeGas}
+                                defaultValue={parseInt(gasAmount)}
+                                controls={false}
+                                bordered={false}
+                            />
+                            <span style={{
+                                height: '40px',
+                                borderRadius: '10px',
+                                border: `none`,
+                                fontSize: '1.3rem',
+                            }}>
+                                |
+                            </span>
+                            <span style={{
+                                width: '20%',
+                                height: '100%',
+                                borderRadius: '10px',
+                                border: `none`,
+                                fontSize: '1rem',
+                                textAlign: 'center',
+                                marginLeft: '2em'
+                            }}>
+                                UDIG
+                            </span>
+                        </div>
                     </div>
                 )
             }
             {
                 isDoingTX && (
-                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem'}}>
-                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX}/>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: '1rem' }}>
+                        <ClipLoader style={{ marginTop: '5em' }} color={'#f0a848'} loading={isDoingTX} />
                     </div>
                 )
             }
             <div style={style.button}>
-                <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button onClick={() => wrapSetShow(false)}
+                    style={{
+                        border: 0,
+                        borderRadius: '10px',
+                        width: '20%',
+                        height: '2.5rem',
+                        fontSize: '15px',
+                        backgroundColor: '#C4C4C4',
+                        color: '#ffffff',
+                        fontFamily: 'Roboto',
+                        marginRight: '20px'
+                    }}>
                     Cancel
                 </button>
-                <button disabled={checkDisable()} onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                <button disabled={checkDisable()}
+                    onClick={handleClick}
+                    style={{
+                        border: 0,
+                        borderRadius: '10px',
+                        width: '20%',
+                        height: '2.5rem',
+                        fontSize: '15px',
+                        backgroundColor: '#E4BA40',
+                        color: '#ffffff',
+                        fontFamily: 'Roboto'
+                    }}>
                     Send
                 </button>
             </div>

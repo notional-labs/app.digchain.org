@@ -11,11 +11,7 @@ const style = {
     transfer: {
         marginBottom: '2rem',
         width: '100%',
-        marginTop: '1rem',
-        padding: 20,
-        backgroundColor: '#1f1f1f',
-        borderRadius: '20px',
-        border: 'solid 1px #bdbdbd'
+        backgroundColor: '#4D4D4D',
     },
     transferInfo: {
         padding: '50px',
@@ -40,13 +36,13 @@ const style = {
         marginBottom: '1rem'
     },
     formInput: {
-        backgroundColor: '#1f1f1f',
-        color: '#bdbdbd',
+        backgroundColor: '#4D4D4D',
+        color: '#ffffff',
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'ubuntu',
-        color: '#bdbdbd',
+        fontFamily: 'Roboto',
+        color: '#ffffff',
         fontWeight: 500
     }
 }
@@ -151,31 +147,64 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                     fontSize: '1rem',
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
-                    backgroundColor: '#1f1f1f',
-                    color: '#F6F3FB'
+                    backgroundColor: '#4D4D4D',
+                    color: '#ffffff'
                 }}>
                     {address}
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
                     <div style={style.transfer}>
                         <div style={{ marginBottom: '1rem', ...style.formTitle }}>Set Gas</div>
-                        <>
+                        <div style={{
+                            width: '100%',
+                            height: '40px',
+                            borderRadius: '10px',
+                            border: `2px solid #c4c4c4`,
+                            fontSize: '1rem',
+                            padding: 0,
+                            backgroundColor: '#4D4D4D',
+                            color: '#F6F3FB'
+                        }}>
                             <InputNumber style={{
-                                width: '100%',
-                                height: '40px',
-                                borderRadius: '10px',
-                                border: `2px solid #c4c4c4`,
+                                width: '80%',
+                                height: '100%',
                                 fontSize: '1rem',
                                 paddingTop: '0.2rem',
-                                backgroundColor: '#1f1f1f',
-                                color: '#F6F3FB'
-                            }} min={0} step={1} onChange={handleChangeGas} defaultValue={parseInt(gasAmount)}/>
-                        </>
+                                backgroundColor: '#4D4D4D',
+                                color: '#F6F3FB',
+                                borderRadius: '10px 0 0 10px'
+                            }} min={0}
+                                step={1}
+                                onChange={handleChangeGas}
+                                defaultValue={parseInt(gasAmount)}
+                                controls={false}
+                                bordered={false}
+                            />
+                            <span style={{
+                                height: '40px',
+                                borderRadius: '10px',
+                                border: `none`,
+                                fontSize: '1.3rem',
+                            }}>
+                                |
+                            </span>
+                            <span style={{
+                                width: '20%',
+                                height: '100%',
+                                borderRadius: '10px',
+                                border: `none`,
+                                fontSize: '1rem',
+                                textAlign: 'center',
+                                marginLeft: '2em'
+                            }}>
+                                UDIG
+                            </span>
+                        </div>
                     </div>
                 )
             }
@@ -187,10 +216,32 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                 )
             }
             <div style={style.button}>
-                <button onClick={() => wrapSetShow(false)} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#838089', color: '#F6F3FB', fontFamily: 'ubuntu', marginRight: '20px' }}>
+                <button onClick={() => wrapSetShow(false)}
+                    style={{
+                        border: 0,
+                        borderRadius: '10px',
+                        width: '20%',
+                        height: '2.5rem',
+                        fontSize: '15px',
+                        backgroundColor: '#C4C4C4',
+                        color: '#ffffff',
+                        fontFamily: 'Roboto',
+                        marginRight: '20px'
+                    }}>
                     Cancel
                 </button>
-                <button onClick={handleClick} style={{ border: 0, borderRadius: '10px', width: '20%', height: '2.5rem', fontSize: '1rem', backgroundColor: '#ffac38', color: '#F6F3FB', fontFamily: 'ubuntu' }}>
+                <button
+                    onClick={handleClick}
+                    style={{
+                        border: 0,
+                        borderRadius: '10px',
+                        width: '20%',
+                        height: '2.5rem',
+                        fontSize: '15px',
+                        backgroundColor: '#E4BA40',
+                        color: '#ffffff',
+                        fontFamily: 'Roboto'
+                    }}>
                     Withdraw
                 </button>
             </div>
