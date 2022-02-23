@@ -54,8 +54,17 @@ const FrontPage = () => {
                         fontWeight: 10,
                         margin: 0
                     }}>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        Welcome to the Dig chain website.
                     </p>
+                    <p style={{
+                        color: '#FFFFFF',
+                        fontSize: '24px',
+                        fontWeight: 10,
+                        margin: 0
+                    }}>
+                        Have fun digging around the comunity and the validators.
+                    </p>
+                    
                     <a href="https://digchain.org/" target={'_blank'}>
                         <button style={{
                             border: 0,
