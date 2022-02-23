@@ -141,7 +141,14 @@ const ValidatorsList = () => {
                         Staking
                     </span>
                 </div>
-                <div style={{ textAlign: 'left', fontSize: '48px', color: '#ffffff', fontFamily: 'Roboto', fontWeight: 700, marginBottom: '1.3em' }}>
+                <div style={{
+                    textAlign: 'left',
+                    fontSize: '48px',
+                    color: '#ffffff',
+                    fontFamily: 'Roboto',
+                    fontWeight: 700,
+                    marginBottom: '1.3em'
+                }}>
                     VALIDATOR
                 </div>
                 <div style={{
@@ -185,34 +192,25 @@ const ValidatorsList = () => {
                                         <td style={{ ...style.td, borderRadius: '30px 0 0 30px', }}>
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                                 <div style={{
-                                                    width: '10%',
-                                                    padding: 0
+                                                    borderRadius: '50%',
+                                                    backgroundImage: setLogo ? `url(${val.logo})` || `url(${notFound})` : `url(${notFound})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundRepeat: 'no-repeat',
+                                                    backgroundPosition: 'center',
+                                                    width: '11%',
                                                 }}>
                                                     <Image
-                                                        width={50}
+                                                        width={45}
                                                         src={helmet}
                                                         style={{
                                                             borderRadius: '100%',
                                                             textAlign: 'left',
                                                             position: 'relative',
-                                                            zIndex: 1,
-                                                            marginTop: '-50%',
-                                                            marginLeft: '-10%'
+                                                            marginTop: '-70%',
+                                                            marginLeft: '-30%'
                                                         }}
                                                         preview={false}
                                                     />
-                                                    <div style={{
-                                                        borderRadius: '50%',
-                                                        backgroundImage: setLogo ? `url(${val.logo})` || `url(${notFound})` : `url(${notFound})`,
-                                                        backgroundSize: 'cover',
-                                                        backgroundRepeat: 'no-repeat',
-                                                        backgroundPosition: 'center',
-                                                        minWidth: '100%',
-                                                        minHeight: '100%',
-                                                        position: 'relative',
-                                                        zIndex: 0,
-                                                        marginTop: '-70%'
-                                                    }} />
                                                 </div>
                                                 {/* {
                                                     setLogo ? (
@@ -272,12 +270,19 @@ const ValidatorsList = () => {
                 </div>
                 <>
                     <Modal show={show} onHide={handleClose} backdrop="static" >
-                        <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'Roboto', fontSize: '1.2rem', fontWeight: 600 }}>
+                        <Modal.Header style={{
+                            backgroundColor: '#4D4D4D',
+                            color: '#EEC13F',
+                            fontFamily: 'Roboto',
+                            fontSize: '24px',
+                            fontWeight: 400,
+                            border: 0
+                        }}>
                             <div>
                                 Delegate Token
                             </div>
                         </Modal.Header>
-                        <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                        <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                             <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal} />
                         </Modal.Body>
                     </Modal>

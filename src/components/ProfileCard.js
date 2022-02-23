@@ -1,19 +1,21 @@
 import { Typography, Tooltip } from 'antd';
-import "@fontsource/merriweather"
 import { getBalance } from '../helpers/getBalances';
 import { useEffect, useState } from 'react';
 import {
     Link,
 } from "react-router-dom";
+import { BiX } from "react-icons/bi";
 
 
 const { Title, Paragraph } = Typography;
 
 const style = {
     container: {
-        backgroundColor: '#f0f0f0',
-        padding: 24,
-        borderRadius: '10px',
+        backgroundColor: '#F4F4F4',
+        padding: 50,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: '20px',
         width: '100%',
         height: '100%',
         display: 'flex',
@@ -28,12 +30,12 @@ const style = {
     },
     button: {
         border: 0,
-        borderRadius: '30px',
+        borderRadius: '20px',
         width: '20%',
         marginTop: 10,
         marginBottom: 10,
-        fontFamily: 'ubuntu',
-        fontWeight: 600,
+        fontFamily: 'Roboto',
+        fontWeight: 300,
         padding: '2em',
         paddingTop: '1em',
         paddingBottom: '1em'
@@ -82,44 +84,49 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
                 <Tooltip placement="top" title='Remove'>
                     <button style={{
-                        fontWeight: 600,
-                        fontSize: '1rem',
-                        color: '#545454',
+                        fontWeight: 800,
+                        fontSize: '2rem',
+                        color: '#000000',
                         backgroundColor: 'transparent',
-                        border: 0
+                        border: 0,
+                        position: 'relative',
+                        marginRight: '-7%'
                     }} onClick={handleRemove}
                     >
-                        X
+                        <BiX/>
                     </button>
                 </Tooltip>
             </div>
             <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim() }}
                 style={{
                     color: '#2a3158',
-                    fontFamily: 'Merriweather',
+                    fontFamily: 'Roboto',
                     textAlign: 'left',
                     backgroundColor: 'white',
-                    padding: 20,
-                    borderRadius: '20px'
+                    padding: 25,
+                    marginBottom: '1.5em',
+                    borderRadius: '20px',
+                    boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
                 }}>
                 {account.type === 'keplr' ? (account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : (account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
             </Paragraph>
             <Paragraph style={{
                 color: '#2a3158',
-                fontFamily: 'Merriweather',
+                fontFamily: 'Roboto',
                 textAlign: 'left',
                 backgroundColor: 'white',
-                padding: 20,
-                borderRadius: '20px'
+                padding: 25,
+                borderRadius: '20px',
+                boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
             }}>
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#ff9f40', color: '#F6F3FB', border: 'solid 3px black' }} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF',}} onClick={handleClick}>
                     Transfer
                 </button>
                 <Link style={{ width: '20%' }} to={account.type === 'keplr' ? account.account.address : account.account}>
-                    <button style={{ ...style.button, width: '100%', backgroundColor: '#ff9f40', color: '#F6F3FB', border: 'solid 3px black' }}>
+                    <button style={{ ...style.button, width: '100%', backgroundColor: '#EEC13F', color: '#FFFFFF', }}>
                         Detail
                     </button>
                 </Link>

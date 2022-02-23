@@ -4,6 +4,7 @@ import VoteModal from "../components/VoteModal"
 import { useCallback, useEffect, useState } from "react"
 import { getProposals, } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
+import { Link } from "react-router-dom"
 
 const style = {
     container: {
@@ -12,11 +13,20 @@ const style = {
         justifyContent: 'center',
         textAlign: 'center',
         paddingBottom: '20px',
-        padding: 60
+        padding: 140,
+        paddingTop: 0
     },
     button: {
         marginTop: '3rem',
         textAlign: 'left',
+    },
+    breadcrumb: {
+        textAlign: 'left',
+        fontWeight: 700,
+        fontSize: '24px',
+        color: '#ffffff',
+        fontFamily: 'Roboto',
+        paddingBottom: '0.5em'
     },
 }
 
@@ -48,22 +58,33 @@ const ProposalList = () => {
 
     return (
         <div style={style.container}>
-            <div style={{
-                fontSize: '3rem',
-                color: '#EFCF20',
-                fontFamily: 'Ubuntu',
-                fontWeight: 600,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'left',
-                marginBottom: '0.5em'
-            }}>
-                Proposals
+            <div style={style.breadcrumb}>
+                <span>
+                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Homepage
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ED9D26' }}>
+                    Proposals
+                </span>
             </div>
+            <div style={{
+                    textAlign: 'left',
+                    fontSize: '48px',
+                    color: '#ffffff',
+                    fontFamily: 'Roboto',
+                    fontWeight: 700,
+                    marginBottom: '1.3em'
+                }}>
+                    PROPOSALS
+                </div>
             {proposals.length > 0 &&
                 <div className="gridBox">
                     {(proposals.map((proposal, index) => (
-                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index}/>
+                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
                     )))}
                 </div>
             }
