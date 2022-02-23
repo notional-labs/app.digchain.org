@@ -2,7 +2,8 @@ import { Typography, Breadcrumb } from 'antd';
 import { PieChart } from 'react-minimal-pie-chart';
 import DelegationList from '../components/DelegationList';
 import {
-    useParams
+    useParams,
+    Link
 } from "react-router-dom";
 import { useEffect, useState, useCallback } from 'react';
 import { Modal, } from 'react-bootstrap'
@@ -17,31 +18,28 @@ const { Title, Paragraph } = Typography;
 
 const style = {
     container: {
-        padding: 50,
-        paddingTop: 20
+        padding: 140,
+        paddingTop: 0
     },
     assetBlock: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        paddingLeft: 50,
-        paddingRight: 50
+        paddingLeft: 40,
+        paddingRight: 40,
+        paddingBottom: 0
     },
     assetChart: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         padding: '3em',
-        width: '100%',
         paddingTop: 0
     },
     asset: {
-        backgroundColor: 'rgb(255, 255, 255, 0.4)',
-        borderRadius: '10px',
+        backgroundColor: '#EEC13F',
+        borderRadius: '30px',
         marginBottom: '20px',
         color: '#696969',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
         marginTop: '20px',
     },
     assetButtonBlock: {
@@ -50,11 +48,11 @@ const style = {
         justifyContent: 'end',
     },
     delegation: {
-        backgroundColor: 'rgb(255, 255, 255, 0.4)',
-        borderRadius: '10px',
+        backgroundColor: '#EEC13F',
+        borderRadius: '30px',
         marginBottom: '20px',
         color: '#bdbdbd',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
         marginTop: '5rem',
         padding: 20
     },
@@ -64,7 +62,7 @@ const style = {
         width: '100%',
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'ubuntu',
+        fontFamily: 'Roboto',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
         color: '#F6F3FB',
@@ -88,7 +86,15 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'start',
         alignContent: 'stretch'
-    }
+    },
+    breadcrumb: {
+        textAlign: 'left',
+        fontWeight: 700,
+        fontSize: '24px',
+        color: '#ffffff',
+        fontFamily: 'Roboto',
+        paddingBottom: '0.5em'
+    },
 }
 
 const AccountDetail = ({ accounts }) => {
@@ -159,245 +165,259 @@ const AccountDetail = ({ accounts }) => {
 
     return (
         <div style={style.container}>
-            <div style={{ marginBottom: '0.5rem', textAlign: 'left', fontSize: '3rem', color: '#EFCF20', fontFamily: 'Ubuntu', fontWeight: 600, }}>
-                Account Info
-            </div>
-            <div>
-                <Paragraph copyable={{ text: id && id.trim() }}
-                    style={{
-                        fontFamily: 'Merriweather',
-                        textAlign: 'left',
-                        backgroundColor: 'rgb(255, 255, 255, 0.4)',
-                        color: '#1c1c1c',
-                        padding: 20,
-                        borderRadius: '10px',
-                        fontSize: '1.2rem',
-                        marginBottom: '0.5em'
-                    }}>
-                    <p style={{ fontSize: '1.2rem', padding: 0 }}>
-                        Address:
-                    </p>
+            <div style={style.breadcrumb}>
+                <span>
+                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Homepage
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    <Link to='/accounts' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Accounts
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ED9D26' }}>
                     {id}
-                </Paragraph>
+                </span>
+            </div>
+            <div style={{
+                textAlign: 'left',
+                fontSize: '48px',
+                color: '#ffffff',
+                fontFamily: 'Roboto',
+                fontWeight: 700,
+                marginBottom: '1.3em'
+            }}>
+                Detail
             </div>
             <div style={style.asset}>
                 <div style={style.assetBlock}>
-                    <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                    <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                         Assets
                     </Title>
-                    <div style={{...style.assetButtonBlock, width: '20%', padding: 0}}>
+                    {/* <div style={{ ...style.assetButtonBlock, width: '20%', padding: 0 }}>
                         <div style={{ width: '50%', marginRight: '10px' }}>
                             <button style={style.button} onClick={handleClick}>
                                 Transfer
                             </button>
                         </div>
-                        {/* <div style={{ width: '100%' }}>
+                        <div style={{ width: '100%' }}>
                             <button style={{ ...style.button, backgroundColor: '#ff5d54' }} onClick={handleClickIbc}>
                                 IBC Transfer
                             </button>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
                 </div>
                 <div style={style.assetChart}>
-                    <div style={{
-                        width: '40%', margin: 'auto',
-                        backgroundColor: 'rgb(255, 255, 255, 1)',
-                        borderRadius: '20px',
-                        marginRight: '2em'
-                    }}>
-                        <PieChart
-                            animationDuration={20000}
-                            startAngle={-90}
-                            radius={35}
-                            data={[
-                                { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#28c76f' },
-                                { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#7367f0' },
-                                { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#ff9f43' },
-                                { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#ea5455' }
-                            ]}
+                    <div
+                        className='asset-block'
+                    >
+                        <div
+                            className='chart'
                         >
                             <PieChart
-                                radius={25}
+                                animationDuration={20000}
+                                startAngle={-90}
+                                radius={35}
                                 data={[
-                                    { title: 'asset', value: 1, color: 'rgb(255, 255, 255, 1)' },
+                                    { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#D2DDCF' },
+                                    { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#C0C9D8' },
+                                    { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#F9D38C' },
+                                    { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#FCB3A4' }
                                 ]}
-                                style={{ marginLeft: '50px', }}
-                            />
-                        </PieChart>
-                        {/* <ChartDonut
-                            ariaDesc="Average number of pets"
-                            ariaTitle="Donut chart example"
-                            constrainToVisibleArea={false}
-                            data={[
-                                { x: 'Balance', y: parseInt(asset.balance) / 1000000, color: '#b8ffcf' },
-                                { x: 'Delegation', y: parseInt(asset.delegation) / 1000000, color: '#a2adfa' },
-                                { x: 'Reward', y: parseInt(asset.reward) / 1000000, color: '#ffcc91' },
-                                { x: 'Undonding', y: parseInt(asset.unbonding) / 1000000, color: '#ffa1a1' },
-                            ]}
-                            labels={({ datum }) => `${datum.x}: ${datum.y} DIG`}
-                            themeColor={ChartThemeColor.multiOrdered}
-                            innerRadius={70}
-                            radius={110}
-                            startAngle={0}
-                        /> */}
+                                style={{
+                                    height: '100%',
+                                }}
+                            >
+                                <PieChart
+                                    radius={25}
+                                    data={[
+                                        { title: 'asset', value: 1, color: 'rgb(255, 255, 255, 1)' },
+                                    ]}
+                                    style={{ marginLeft: '50px', }}
+                                />
+                            </PieChart>
+                        </div>
+                        <ul style={{
+                            textAlign: 'left',
+                            margin: 0,
+                            padding: '2em',
+                            listStyleType: 'none',
+                            textAlign: 'left',
+                            fontSize: '1.25rem',
+                            width: '100%',
+                            backgroundColor: 'rgb(255, 255, 255, 1)',
+                            borderRadius: '20px'
+                        }}>
+                            <li style={style.li}>
+                                <div style={style.iconDiv}>
+                                    <div style={{ backgroundColor: 'rgb(61, 255, 148, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                        <BsWallet style={{ ...style.icon, color: '#93A98D' }} />
+                                    </div>
+                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            verticalAlign: 'middle',
+                                            lineheight: 'normal',
+                                            marginTop: '0.5em',
+                                            color: '#000000'
+                                        }}>
+                                            Balance
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style={{ fontWeight: 500 }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em',
+                                        color: '#000000'
+                                    }}>
+                                        {parseInt(asset.balance) / 1000000 || 0} DIG
+                                    </span>
+                                </div>
+                            </li>
+                            <li style={style.li}>
+                                <div style={style.iconDiv}>
+                                    <div style={{ backgroundColor: 'rgb(140, 129, 252, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                        <BsLock style={{ ...style.icon, color: '#0B1321' }} />
+                                    </div>
+                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            verticalAlign: 'middle',
+                                            lineheight: 'normal',
+                                            marginTop: '0.5em',
+                                            color: '#000000'
+                                        }}>
+                                            Delegation
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style={{ fontWeight: 500 }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em',
+                                        color: '#000000'
+                                    }}>
+                                        {parseInt(asset.delegation) / 1000000 || 0} DIG
+                                    </span>
+                                </div>
+                            </li>
+                            <li style={style.li}>
+                                <div style={style.iconDiv}>
+                                    <div style={{ backgroundColor: 'rgb(255, 174, 97, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                        <BsGraphUp style={{ ...style.icon, color: '#AE8D4F' }} />
+                                    </div>
+                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            verticalAlign: 'middle',
+                                            lineheight: 'normal',
+                                            marginTop: '0.5em',
+                                            color: '#000000'
+                                        }}>
+                                            Reward
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style={{ fontWeight: 500 }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em',
+                                        color: '#000000'
+                                    }}>
+                                        {parseInt(asset.reward) / 1000000 || 0} DIG
+                                    </span>
+                                </div>
+                            </li>
+                            <li style={style.li}>
+                                <div style={style.iconDiv}>
+                                    <div style={{ backgroundColor: 'rgb(255, 115, 116, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                        <BsGraphDown style={{ ...style.icon, color: '#BD6B5A' }} />
+                                    </div>
+                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
+                                        <span style={{
+                                            display: 'inline-block',
+                                            verticalAlign: 'middle',
+                                            lineheight: 'normal',
+                                            marginTop: '0.5em',
+                                            color: '#000000'
+                                        }}>
+                                            Unbonding
+                                        </span>
+                                    </p>
+                                </div>
+                                <div style={{ fontWeight: 500 }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        marginTop: '0.5em',
+                                        color: '#000000'
+                                    }}>
+                                        {parseInt(asset.unbonding) / 1000000 || 0} DIG
+                                    </span>
+                                </div>
+                            </li>
+                            <li>
+                                <hr style={{ color: 'black' }} />
+                            </li>
+                            <li style={{ ...style.li, justifyContent: 'end' }}>
+                                <div style={{ fontWeight: 600, fontSize: '1.5rem' }}>
+                                    <span style={{
+                                        display: 'inline-block',
+                                        verticalAlign: 'middle',
+                                        lineheight: 'normal',
+                                        color: '#000000'
+                                    }}>
+                                        Total 0$
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <ul style={{
-                        textAlign: 'left',
-                        margin: 0,
-                        padding: '2em',
-                        listStyleType: 'none',
-                        textAlign: 'left',
-                        fontSize: '1.25rem',
-                        width: '100%',
-                        backgroundColor: 'rgb(255, 255, 255, 1)',
-                        borderRadius: '20px'
-                    }}>
-                        <li style={style.li}>
-                            <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(61, 255, 148, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsWallet style={{ ...style.icon, color: '#28c76f' }} />
-                                </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em'
-                                    }}>
-                                        Balance
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ fontWeight: 500 }}>
-                                <span style={{
-                                    display: 'inline-block',
-                                    verticalAlign: 'middle',
-                                    lineheight: 'normal',
-                                    marginTop: '0.5em'
-                                }}>
-                                    {parseInt(asset.balance) / 1000000 || 0} DIG
-                                </span>
-                            </div>
-                        </li>
-                        <li style={style.li}>
-                            <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(140, 129, 252, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsLock style={{ ...style.icon, color: '#7367f0' }} />
-                                </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em'
-                                    }}>
-                                        Delegation
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ fontWeight: 500 }}>
-                                <span style={{
-                                    display: 'inline-block',
-                                    verticalAlign: 'middle',
-                                    lineheight: 'normal',
-                                    marginTop: '0.5em'
-                                }}>
-                                    {parseInt(asset.delegation) / 1000000 || 0} DIG
-                                </span>
-                            </div>
-                        </li>
-                        <li style={style.li}>
-                            <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(255, 174, 97, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsGraphUp style={{ ...style.icon, color: '#ff9f43' }} />
-                                </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em'
-                                    }}>
-                                        Reward
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ fontWeight: 500 }}>
-                                <span style={{
-                                    display: 'inline-block',
-                                    verticalAlign: 'middle',
-                                    lineheight: 'normal',
-                                    marginTop: '0.5em'
-                                }}>
-                                    {parseInt(asset.reward) / 1000000 || 0} DIG
-                                </span>
-                            </div>
-                        </li>
-                        <li style={style.li}>
-                            <div style={style.iconDiv}>
-                                <div style={{ backgroundColor: 'rgb(255, 115, 116, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                    <BsGraphDown style={{ ...style.icon, color: '#ea5455' }} />
-                                </div>
-                                <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em'
-                                    }}>
-                                        Unbonding
-                                    </span>
-                                </p>
-                            </div>
-                            <div style={{ fontWeight: 500 }}>
-                                <span style={{
-                                    display: 'inline-block',
-                                    verticalAlign: 'middle',
-                                    lineheight: 'normal',
-                                    marginTop: '0.5em'
-                                }}>
-                                    {parseInt(asset.unbonding) / 1000000 || 0} DIG
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <hr style={{ color: 'black' }} />
-                        </li>
-                        <li style={{ ...style.li, justifyContent: 'end' }}>
-                            <div style={{ fontWeight: 600, fontSize: '1.5rem' }}>
-                                <span style={{
-                                    display: 'inline-block',
-                                    verticalAlign: 'middle',
-                                    lineheight: 'normal',
-                                }}>
-                                    Total 0$
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
-            <div style={{ ...style.delegation, marginTop: 0, paddingTop: 0 }}>
+            <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 0 }}>
                 <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
             </div>
-            <div style={{ ...style.delegation, marginTop: 0, paddingTop: 20 }}>
+            <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 20 }}>
                 <TxList address={id} />
             </div>
-            <>
+            {/* <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Transfer Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         <TransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowTransferModal} />
                     </Modal.Body>
                 </Modal>
             </>
             <>
                 <Modal show={showIbc} onHide={handleCloseIbc} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'Roboto', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             IBC Transfer Token
                         </div>
@@ -406,7 +426,7 @@ const AccountDetail = ({ accounts }) => {
                         <IBCTransferModal account={accounts[selectAcc]} wrapSetShow={wrapSetShowIBCTransferModal} />
                     </Modal.Body>
                 </Modal>
-            </>
+            </> */}
         </div>
     )
 }

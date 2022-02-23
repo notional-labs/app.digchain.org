@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react"
 import { getTxs } from "../helpers/getTxs"
-import { Typography, } from 'antd';
+import { Typography, Skeleton } from 'antd';
 import ButtonList from "./ButtonList";
 
 const { Title, Paragraph } = Typography;
@@ -10,9 +10,6 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        paddingTop: 0,
-        paddingBottom: 20
     },
     button: {
         border: 0,
@@ -22,7 +19,7 @@ const style = {
         margin: 10,
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'ubuntu',
+        fontFamily: 'Roboto',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
         color: '#F6F3FB'
@@ -31,7 +28,8 @@ const style = {
         width: '100%',
     },
     tdlHeader: {
-        backgroundColor: '#ffa538',
+        backgroundColor: 'transparent',
+        borderBottom: 'solid 1px black'
     },
     tdlContent: {
         marginTop: '0px',
@@ -43,18 +41,18 @@ const style = {
         textAlign: 'left',
         fontWeight: '700',
         fontSize: '15px',
-        color: '#ffffff',
+        color: '#000000',
         textTransform: 'uppercase',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
     },
     td: {
         padding: '15px',
         textAlign: 'left',
         verticalAlign: 'middle',
-        fontWeight: '500',
+        fontWeight: '300',
         fontSize: '1rem',
-        color: '#696969',
-        fontFamily: 'Ubuntu',
+        color: '#000000',
+        fontFamily: 'Roboto',
     }
 }
 
@@ -95,15 +93,15 @@ const TxList = ({ address }) => {
         })
     }, [setParams])
     return (
-        <div style={{ padding: 20, paddingTop: 0 }}>
+        <div style={{ padding: 20, paddingTop: 0, }}>
             <div style={style.container}>
-                <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Transactions
                 </Title>
             </div>
-            {
-                !isLoading && txs.length > 0 && (
-                    <div style={{backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em'}}>
+            <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
+                {
+                    !isLoading && txs.length > 0 ? (
                         <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                             <thead style={style.tdlHeader}>
                                 <tr>
@@ -115,14 +113,14 @@ const TxList = ({ address }) => {
                             </thead>
                             <tbody style={style.tdlContent}>
                                 {txs.map((tx, index) => (
-                                    <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
+                                    <tr key={index} style={{ backgroundColor: '#ffffff', }}>
                                         <td style={{ ...style.td, }}>
-                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
+                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
                                                 {tx.height || ''}
                                             </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '50%' }}>
-                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'> 
+                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'>
                                                 {tx.txhash || ''}
                                             </a>
                                         </td>
@@ -136,12 +134,14 @@ const TxList = ({ address }) => {
                                 ))}
                             </tbody>
                         </table>
-                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}} >
-                            <ButtonList total={total} wrapSetParams={wrapSetParams} currentPage={params.page}/>
-                        </div>
-                    </div>
-                )
-            }
+                    ) : (
+                        <Skeleton active/>
+                    )
+                }
+                <div style={{ margin: 'auto', marginTop: '2em' }} >
+                    <ButtonList total={total} wrapSetParams={wrapSetParams} currentPage={params.page} />
+                </div>
+            </div>
         </div>
     )
 }

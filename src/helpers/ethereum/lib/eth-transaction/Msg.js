@@ -1,7 +1,7 @@
 import { coins, coin } from "@cosmjs/launchpad";
 
 
-export function makeSendMsg (fromAddress, toAddress, amount, denom) {
+export function makeSendMsg(fromAddress, toAddress, amount, denom) {
     const msgSend = {
         fromAddress: fromAddress,
         toAddress: toAddress,
@@ -14,11 +14,11 @@ export function makeSendMsg (fromAddress, toAddress, amount, denom) {
     return msg
 }
 
-export function makeDelegateMsg(delegator_address, validator_address, amount, denom){
+export function makeDelegateMsg(delegator_address, validator_address, amount, denom) {
 
     const msgDelegate = {
         delegatorAddress: delegator_address,
-        validatorAddress: validator_address,    
+        validatorAddress: validator_address,
         amount: coin(amount, denom)
     }
     const msg = {
@@ -28,11 +28,11 @@ export function makeDelegateMsg(delegator_address, validator_address, amount, de
     return msg
 }
 
-export function makeWithDrawMsg(delegator_address, validator_address){
+export function makeWithDrawMsg(delegator_address, validator_address) {
 
     const msgWithDraw = {
         delegatorAddress: delegator_address,
-        validatorAddress: validator_address,  
+        validatorAddress: validator_address,
     }
     const msg = {
         typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
@@ -41,11 +41,11 @@ export function makeWithDrawMsg(delegator_address, validator_address){
     return msg
 }
 
-export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, denom){
+export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, denom) {
 
     const msgUndelegate = {
         delegatorAddress: delegatorAddress,
-        validatorAddress: validatorAddress,    
+        validatorAddress: validatorAddress,
         amount: coin(amount, denom)
     }
     const msg = {
@@ -55,11 +55,11 @@ export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, de
     return msg
 }
 
-export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom){
+export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, validatorDstAddress, amount, denom) {
     const msgRedelegate = {
-        delegatorAddress:       delegatorAddress,
-        validatorSrcAddress:    validatorSrcAddress, 
-        validatorDstAddress:    validatorDstAddress,
+        delegatorAddress: delegatorAddress,
+        validatorSrcAddress: validatorSrcAddress,
+        validatorDstAddress: validatorDstAddress,
         amount: coin(amount, denom)
     }
     const msg = {
@@ -69,11 +69,25 @@ export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, va
     return msg
 }
 
-export function makeSignDocSendMsg (fromAddress, toAddress, amount, denom) {
+export const makeVoteMsg = (option, proposal_id, voter) => {
+    const msgVote = {
+        option: option,
+        proposal_id: proposal_id,
+        voter: voter
+    }
+
+    const msg = {
+        typeUrl: "/cosmos.gov.v1beta1.MsgVote",
+        value: msgVote,
+    }
+    return msg
+}
+
+export function makeSignDocSendMsg(fromAddress, toAddress, amount, denom) {
     const signDocMsg = {
-        type:"cosmos-sdk/MsgSend",
-        value:{
-            amount: coins(amount, denom),          
+        type: "cosmos-sdk/MsgSend",
+        value: {
+            amount: coins(amount, denom),
             from_address: fromAddress,
             to_address: toAddress
         }
@@ -81,53 +95,65 @@ export function makeSignDocSendMsg (fromAddress, toAddress, amount, denom) {
     return signDocMsg
 }
 
-export function makeSignDocDelegateMsg (delegator_address, validator_address, amount, denom) {
+export function makeSignDocDelegateMsg(delegator_address, validator_address, amount, denom) {
     const signDocDelegate = {
-        type:"cosmos-sdk/MsgDelegate",
-        value:{
+        type: "cosmos-sdk/MsgDelegate",
+        value: {
             amount: coin(amount, denom),
             delegator_address: delegator_address,
-            validator_address: validator_address,    
+            validator_address: validator_address,
         }
     }
     return signDocDelegate
 }
 
-export function makeSignDocWithDrawMsg (delegator_address, validator_address, amount, denom) {
+export function makeSignDocWithDrawMsg(delegator_address, validator_address, amount, denom) {
     const signDocDelegate = {
-        type:"cosmos-sdk/MsgWithdrawDelegationReward",
-        value:{
+        type: "cosmos-sdk/MsgWithdrawDelegationReward",
+        value: {
             delegator_address: delegator_address,
-            validator_address: validator_address,    
+            validator_address: validator_address,
         }
     }
     return signDocDelegate
 }
 
-export function makeSignDocBeginRedelegateMsg (delegator_address, validator_src_address, validator_dst_address, amount, denom) {
+export function makeSignDocBeginRedelegateMsg(delegator_address, validator_src_address, validator_dst_address, amount, denom) {
     const msgRedelegate =
-        {
-          "type": "cosmos-sdk/MsgBeginRedelegate",
-          "value": {
+    {
+        "type": "cosmos-sdk/MsgBeginRedelegate",
+        "value": {
             delegator_address: delegator_address,
             validator_src_address: validator_src_address,
             validator_dst_address: validator_dst_address,
-            amount:coin(amount, denom)
-          }
+            amount: coin(amount, denom)
         }
+    }
 
     return msgRedelegate
 }
 
 
-export function makeSignDocUnDelegateMsg (delegator_address, validator_address, amount, denom) {
+export function makeSignDocUnDelegateMsg(delegator_address, validator_address, amount, denom) {
     const signDocDelegate = {
-        type:"cosmos-sdk/MsgUndelegate",
-        value:{
+        type: "cosmos-sdk/MsgUndelegate",
+        value: {
             amount: coin(amount, denom),
             delegator_address: delegator_address,
-            validator_address: validator_address,    
+            validator_address: validator_address,
         }
     }
     return signDocDelegate
+}
+
+export const makeSignDocVoteMsg = (option, proposal_id, voter) => {
+    const signDocVote = {
+        type: "cosmos-sdk/MsgVote",
+        value: {
+            option: option,
+            proposal_id: proposal_id,
+            voter: voter
+        }
+    }
+    return signDocVote
 }
