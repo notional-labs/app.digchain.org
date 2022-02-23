@@ -24,6 +24,7 @@ import AccountList from './pages/AccountList';
 import ProposalList from './pages/ProposalList';
 import { FaDiscord, FaTelegramPlane } from "react-icons/fa";
 import ProposalDetail from './pages/ProposalDetail';
+import FrontPage from './pages/FrontPage';
 
 
 const style = {
@@ -43,11 +44,6 @@ const style = {
     paddingTop: 20,
     paddingBottom: '6em',
   },
-  navLink: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
   tabButton: {
     display: 'flex',
     flexDirection: 'row',
@@ -63,6 +59,9 @@ const style = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'end',
+    padding: 90,
+    paddingTop: 0,
+    paddingBottom: 0
   }
 }
 
@@ -137,13 +136,17 @@ const App = () => {
     <div className="App container-fluid">
       <div style={style.navbar}>
         <div style={{ paddingTop: '1rem' }}>
-          <Image width={100}
-            src={logo}
-            preview={false}
-          />
+          <Link to='/'>
+            <Image width={100}
+              src={logo}
+              preview={false}
+            />
+          </Link>
         </div>
-        <div style={style.navLink}>
-          <ul style={{ ...style.tabButton, listStyleType: 'none', paddingTop: '30px' }}>
+        <div className='nav-bar'>
+          <ul
+            className='nav-button'
+            style={{ listStyleType: 'none', paddingTop: '30px' }}>
             <li>
               <NavLink to='/accounts'>
                 <button style={{
@@ -211,7 +214,7 @@ const App = () => {
         </div>
       </div>
       <Routes>
-        <Route exact path="/" element={<div style={{ height: '77vh' }}></div>} />
+        <Route exact path="/" element={<FrontPage/>} />
         <Route exact path="/staking" element={<ValidatorsList />} />
         <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
         <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />

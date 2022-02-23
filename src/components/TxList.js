@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react"
 import { getTxs } from "../helpers/getTxs"
-import { Typography, } from 'antd';
+import { Typography, Skeleton } from 'antd';
 import ButtonList from "./ButtonList";
 
 const { Title, Paragraph } = Typography;
@@ -99,9 +99,9 @@ const TxList = ({ address }) => {
                     Transactions
                 </Title>
             </div>
-            {
-                !isLoading && txs.length > 0 && (
-                    <div style={{backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em'}}>
+            <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
+                {
+                    !isLoading && txs.length > 0 ? (
                         <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                             <thead style={style.tdlHeader}>
                                 <tr>
@@ -113,14 +113,14 @@ const TxList = ({ address }) => {
                             </thead>
                             <tbody style={style.tdlContent}>
                                 {txs.map((tx, index) => (
-                                    <tr key={index} style={{ backgroundColor: '#ffffff',}}>
+                                    <tr key={index} style={{ backgroundColor: '#ffffff', }}>
                                         <td style={{ ...style.td, }}>
-                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
+                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
                                                 {tx.height || ''}
                                             </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '50%' }}>
-                                            <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'> 
+                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'>
                                                 {tx.txhash || ''}
                                             </a>
                                         </td>
@@ -134,12 +134,14 @@ const TxList = ({ address }) => {
                                 ))}
                             </tbody>
                         </table>
-                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}} >
-                            <ButtonList total={total} wrapSetParams={wrapSetParams} currentPage={params.page}/>
-                        </div>
-                    </div>
-                )
-            }
+                    ) : (
+                        <Skeleton active/>
+                    )
+                }
+                <div style={{ margin: 'auto', marginTop: '2em' }} >
+                    <ButtonList total={total} wrapSetParams={wrapSetParams} currentPage={params.page} />
+                </div>
+            </div>
         </div>
     )
 }

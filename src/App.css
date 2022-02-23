@@ -86,6 +86,18 @@
   justify-content: center;
 }
 
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  vertical-align: center
+}
 
 @media screen and (max-width: 1300px) {
   .gridBox {
@@ -93,6 +105,9 @@
   }
   .gridBoxAccount {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .nav-button {
+    flex-direction: column;
   }
 }
 

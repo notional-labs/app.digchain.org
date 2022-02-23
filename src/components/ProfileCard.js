@@ -1,4 +1,4 @@
-import { Typography, Tooltip } from 'antd';
+import { Typography, Tooltip, } from 'antd';
 import { getBalance } from '../helpers/getBalances';
 import { useEffect, useState } from 'react';
 import {
@@ -43,7 +43,7 @@ const style = {
     buttonDiv: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'end',
     }
 }
 
@@ -122,7 +122,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF',}} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', marginRight: '1em'}} onClick={handleClick}>
                     Transfer
                 </button>
                 <Link style={{ width: '20%' }} to={account.type === 'keplr' ? account.account.address : account.account}>

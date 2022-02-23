@@ -1,5 +1,5 @@
 
-import { Typography, Tooltip } from 'antd';
+import { Typography, Tooltip, Skeleton } from 'antd';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
@@ -160,7 +160,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                         </button>
                     </Link>
                 </div>
-                {!loading && (
+                {!loading ? (
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
@@ -214,6 +214,8 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                             })}
                         </tbody>
                     </table>
+                ) : (
+                    <Skeleton active/>
                 )}
             </div>
             <>
