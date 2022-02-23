@@ -10,9 +10,6 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        paddingTop: 0,
-        paddingBottom: 20
     },
     button: {
         border: 0,
@@ -22,7 +19,7 @@ const style = {
         margin: 10,
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'ubuntu',
+        fontFamily: 'Roboto',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
         color: '#F6F3FB'
@@ -31,7 +28,8 @@ const style = {
         width: '100%',
     },
     tdlHeader: {
-        backgroundColor: '#ffa538',
+        backgroundColor: 'transparent',
+        borderBottom: 'solid 1px black'
     },
     tdlContent: {
         marginTop: '0px',
@@ -43,18 +41,18 @@ const style = {
         textAlign: 'left',
         fontWeight: '700',
         fontSize: '15px',
-        color: '#ffffff',
+        color: '#000000',
         textTransform: 'uppercase',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
     },
     td: {
         padding: '15px',
         textAlign: 'left',
         verticalAlign: 'middle',
-        fontWeight: '500',
+        fontWeight: '300',
         fontSize: '1rem',
-        color: '#696969',
-        fontFamily: 'Ubuntu',
+        color: '#000000',
+        fontFamily: 'Roboto',
     }
 }
 
@@ -95,9 +93,9 @@ const TxList = ({ address }) => {
         })
     }, [setParams])
     return (
-        <div style={{ padding: 20, paddingTop: 0 }}>
+        <div style={{ padding: 20, paddingTop: 0, }}>
             <div style={style.container}>
-                <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Transactions
                 </Title>
             </div>
@@ -115,7 +113,7 @@ const TxList = ({ address }) => {
                             </thead>
                             <tbody style={style.tdlContent}>
                                 {txs.map((tx, index) => (
-                                    <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
+                                    <tr key={index} style={{ backgroundColor: '#ffffff',}}>
                                         <td style={{ ...style.td, }}>
                                             <a style={{color: '#0043b8'}} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
                                                 {tx.height || ''}

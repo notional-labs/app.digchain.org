@@ -20,9 +20,6 @@ const style = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        paddingTop: 0,
-        paddingBottom: 0
     },
     button: {
         border: 0,

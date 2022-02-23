@@ -26,8 +26,8 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
+        paddingLeft: 40,
+        paddingRight: 40,
         paddingBottom: 0
     },
     assetChart: {
