@@ -22,18 +22,18 @@ const style = {
         justifyContent: 'space-between',
         padding: 20,
         paddingTop: 0,
-        paddingBottom: 20
+        paddingBottom: 0
     },
     button: {
         border: 0,
-        borderRadius: '50px',
+        borderRadius: '10px',
         width: '100%',
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'ubuntu',
-        fontWeight: 600,
-        backgroundColor: '#2e2c27',
-        color: '#F6F3FB',
+        fontFamily: 'Roboto',
+        fontWeight: 300,
+        backgroundColor: '#EEC13F',
+        color: '#FFFFFF',
         padding: '2em',
         paddingTop: '1em',
         paddingBottom: '1em'
@@ -42,14 +42,15 @@ const style = {
         border: 'solid 2px #3B2D52',
         backgroundColor: 'transparent',
         padding: 5,
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
         fontSize: '1rem'
     },
     table: {
         width: '100%',
     },
     tdlHeader: {
-        backgroundColor: '#ffa538',
+        backgroundColor: 'transparent',
+        borderBottom: 'solid 1px black'
     },
     tdlContent: {
         marginTop: '0px',
@@ -61,19 +62,20 @@ const style = {
         textAlign: 'left',
         fontWeight: '700',
         fontSize: '15px',
-        color: '#ffffff',
+        color: '#000000',
         textTransform: 'uppercase',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
     },
     td: {
         padding: '15px',
         textAlign: 'left',
-        verticalAlign: 'middle',
-        fontWeight: '600',
+        verticalAlign: '500',
+        fontWeight: 'lighter',
         fontSize: '17px',
-        color: '#696969',
-        fontFamily: 'Ubuntu',
-        width: '20%'
+        color: '#000000',
+        fontFamily: 'Roboto',
+        width: '20%',
+        lineHeight: '18px'
     }
 }
 
@@ -149,81 +151,89 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     return (
         <div style={{ padding: 20 }}>
             <div style={style.container}>
-                <Title style={{ color: '#F6F3FB', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Delegations
                 </Title>
-                <div style={{ width: '10%' }}>
+            </div>
+            <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em', paddingTop: '1em', paddingBottom: '1em' }}>
+                <div style={{ width: '8%', float: 'right', marginBottom: '1em' }}>
                     <Link to='/staking' style={{ width: '30%' }}>
                         <button style={style.button}>
                             Delegate
                         </button>
                     </Link>
                 </div>
-            </div>
-            {!loading && (
-                <div style={{backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em'}}>
+                {!loading && (
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
                                 <th style={{ ...style.th, width: '20%' }}>Validator</th>
-                                <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Token</th>
-                                <th style={{ ...style.th, width: '10rem', textAlign: 'right' }}>Reward</th>
-                                <th style={{ ...style.th, width: '10rem', textAlign: 'center' }}>Action</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Token</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Reward</th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Action</th>
                             </tr>
                         </thead>
                         <tbody style={style.tdlContent}>
                             {rewards.map((reward, index) => {
                                 return (
-                                <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
-                                    <td style={style.td}>
-                                        {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
-                                    </td>
-                                    <td style={{ ...style.td, textAlign: 'right' }}>
-                                        {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
-                                    </td>
-                                    <td style={{ ...style.td, textAlign: 'right', }}>
-                                        {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
-                                    </td>
-                                    <td style={{ ...style.td, textAlign: 'center', width: '20%' }}>
-                                        <Tooltip placement="top" title='Withdraw Reward'>
-                                            <button onClick={() => handleClickWithdraw(index)}
-                                                style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px', width: '20%' }}
-                                                onMouseEnter={handleOver}
-                                                onMouseLeave={handleLeave}>
-                                                <AiOutlineGift style={{ fontSize: '1.2rem' }} />
-                                            </button>
-                                        </Tooltip>
-                                        <Tooltip placement="top" title='Redelegate'>
-                                            <button onClick={() => handleClickRedelegate(index)}
-                                                style={{ ...style.actionButton, width: '20%' }}
-                                                onMouseEnter={handleOver}
-                                                onMouseLeave={handleLeave}>
-                                                <TiArrowRepeat style={{ fontSize: '1.2rem' }} />
-                                            </button>
-                                        </Tooltip>
-                                        <Tooltip placement="top" title='Unbonding'>
-                                            <button onClick={() => handleClickUnbonding(index)}
-                                                style={{ ...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0', width: '20%' }}
-                                                onMouseEnter={handleOver}
-                                                onMouseLeave={handleLeave}>
-                                                <RiLogoutBoxRLine style={{ fontSize: '1.2rem' }} />
-                                            </button>
-                                        </Tooltip>
-                                    </td>
-                                </tr>
-                            )})}
+                                    <tr key={index} style={{ backgroundColor: '#ffffff', }}>
+                                        <td style={style.td}>
+                                            {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
+                                        </td>
+                                        <td style={{ ...style.td, textAlign: 'left' }}>
+                                            {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
+                                        </td>
+                                        <td style={{ ...style.td, textAlign: 'left', }}>
+                                            {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
+                                        </td>
+                                        <td style={{ ...style.td, textAlign: 'left', width: '20%' }}>
+                                            <Tooltip placement="top" title='Withdraw Reward'>
+                                                <button onClick={() => handleClickWithdraw(index)}
+                                                    style={{ ...style.actionButton, paddingLeft: '10px', borderRadius: '10px 0 0 10px', width: '20%' }}
+                                                    onMouseEnter={handleOver}
+                                                    onMouseLeave={handleLeave}>
+                                                    <AiOutlineGift style={{ fontSize: '1.2rem' }} />
+                                                </button>
+                                            </Tooltip>
+                                            <Tooltip placement="top" title='Redelegate'>
+                                                <button onClick={() => handleClickRedelegate(index)}
+                                                    style={{ ...style.actionButton, width: '20%' }}
+                                                    onMouseEnter={handleOver}
+                                                    onMouseLeave={handleLeave}>
+                                                    <TiArrowRepeat style={{ fontSize: '1.2rem' }} />
+                                                </button>
+                                            </Tooltip>
+                                            <Tooltip placement="top" title='Unbonding'>
+                                                <button onClick={() => handleClickUnbonding(index)}
+                                                    style={{ ...style.actionButton, paddingRight: '10px', borderRadius: '0 10px 10px 0', width: '20%' }}
+                                                    onMouseEnter={handleOver}
+                                                    onMouseLeave={handleLeave}>
+                                                    <RiLogoutBoxRLine style={{ fontSize: '1.2rem' }} />
+                                                </button>
+                                            </Tooltip>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
-                </div>
-            )}
+                )}
+            </div>
             <>
                 <Modal show={showWithdraw} onHide={handleCloseWithdraw} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Withdraw Rewards
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         <WithDrawModal address={address}
                             type={type}
                             validator={rewards[selectVal] && rewards[selectVal].validator_address}
@@ -233,12 +243,19 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             </>
             <>
                 <Modal show={showRedelegate} onHide={handleCloseRedelegate} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Redelegate Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         <ReDelegateModal address={address}
                             type={type}
                             delegation={delegations[selectVal]}
@@ -249,12 +266,19 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             </>
             <>
                 <Modal show={showUnbonding} onHide={handleCloseUnbond} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Unbond Token
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         <UndelegateModal address={address}
                             type={type}
                             delegation={delegations[selectVal]}

@@ -13,7 +13,6 @@ const style = {
     transfer: {
         marginBottom: '2rem',
         width: '100%',
-        marginTop: '1rem',
         backgroundColor: '#4D4D4D',
     },
     transferInfo: {

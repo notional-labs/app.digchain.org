@@ -25,8 +25,7 @@ const ConnectButton = ({ wrapSetShow }) => {
 
     return (
         <div style={style.buttonText}>
-            <button onMouseEnter={handleOver}
-                onMouseLeave={handleLeave}
+            <button 
                 style={style.button}
                 onClick={async () => {
                     await wrapSetShow(true)
