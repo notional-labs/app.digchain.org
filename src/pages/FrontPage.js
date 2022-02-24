@@ -36,7 +36,7 @@ const FrontPage = () => {
                         fontSize: '100px',
                         fontWeight: 700,
                         margin: 0,
-                        height: '10%'
+                        height: '100px'
                     }}>
                         DIG
                     </p>
@@ -72,8 +72,7 @@ const FrontPage = () => {
                             backgroundColor: '#EEC13F',
                             color: '#ffffff',
                             fontSize: '24px',
-                            width: '30%',
-                            padding: 20,
+                            padding: 30,
                             paddingTop: 5,
                             paddingBottom: 5,
                             marginTop: '20px'

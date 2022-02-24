@@ -9,7 +9,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
-import { getAsset, getTotalDelegate, getTotalUnbonding } from '../helpers/getBalances';
+import { getAsset, getTotalDelegate, getTotalUnbonding, getPrice, convertAsset } from '../helpers/getBalances';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import TxList from '../components/TxList';
 import IBCTransferModal from '../components/IBCTransfer';
@@ -109,6 +109,7 @@ const AccountDetail = ({ accounts }) => {
     })
     const [reward, setReward] = useState([])
     const [delegation, setDelegation] = useState([])
+    const [total, setTotal] = useState(0)
     let { id } = useParams();
 
 
@@ -152,12 +153,25 @@ const AccountDetail = ({ accounts }) => {
                 }
             })
             const asset = await getAsset(id)
+
+            const balance = asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : 0
+            const delegation = asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : 0
+            const reward = asset[2].total.length > 0 ? asset[2].total[0].amount : 0
+            const unbonding = asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : 0
+
             setAsset({
-                balance: asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : 0,
-                delegation: asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : 0,
-                reward: asset[2].total.length > 0 ? asset[2].total[0].amount : 0,
-                unbonding: asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : 0
+                balance,
+                delegation,
+                reward,
+                unbonding
             })
+
+            const res = await getPrice()
+            const usd = res['dig-chain'].usd || 0
+            
+            const totalAsset = convertAsset(balance, delegation, reward, unbonding, usd)
+
+            setTotal(totalAsset)
             setDelegation([...asset[1].delegation_responses])
             setReward([...asset[2].rewards])
         })()
@@ -382,7 +396,7 @@ const AccountDetail = ({ accounts }) => {
                                         lineheight: 'normal',
                                         color: '#000000'
                                     }}>
-                                        Total 0$
+                                        Total {total}$
                                     </span>
                                 </div>
                             </li>
