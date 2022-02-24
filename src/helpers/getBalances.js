@@ -1,6 +1,6 @@
 import assert from 'assert'
 import axios from 'axios'
-import { delegate } from './transaction'
+import { delegate, unbonding } from './transaction'
 
 const api = process.env.REACT_APP_API
 // const api = "http://0.0.0.0:1317"
@@ -72,4 +72,21 @@ export const getTotalUnbonding = (unbondings) => {
     }
     return sum
 }
+
+export const getPrice = async () => {
+    const URL = 'https://api.coingecko.com/api/v3/simple/price?ids=dig-chain&vs_currencies=usd'
+    const res = await axios.get(URL)
+    if(res.status !== 200) return
+    return res.data
+}
+
+export const convertAsset = (balance, delegation, reward, unbond, usd) => {
+    const sum = parseInt(balance) / 1000000
+                + parseInt(delegation) / 1000000
+                + parseInt(reward) / 1000000
+                + parseInt(unbond) / 1000000
+
+    return parseInt(sum * usd)
+}
+
 
