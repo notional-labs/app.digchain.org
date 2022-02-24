@@ -197,7 +197,7 @@ const ValidatorsList = () => {
                                                     backgroundSize: 'cover',
                                                     backgroundRepeat: 'no-repeat',
                                                     backgroundPosition: 'center',
-                                                    width: '11%',
+                                                    width: '60px',
                                                 }}>
                                                     <Image
                                                         width={45}
