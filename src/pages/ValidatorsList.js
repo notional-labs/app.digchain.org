@@ -68,6 +68,13 @@ const ValidatorsList = () => {
             setSetLogo(false)
             let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
+            let bogo1 = vals.filter(x => x.operator_address === 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z')[0]
+            let bogo2 = vals.filter(x => x.operator_address === 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629')[0]
+            let bogo3 = vals.filter(x => x.operator_address === 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')[0]
+            vals = vals.filter(x => x.operator_address !== 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z' 
+                                    || x.operator_address === 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629' 
+                                    || x.operator_address === 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')
+            vals.unshift(bogo2, bogo3, bogo1)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
             })
