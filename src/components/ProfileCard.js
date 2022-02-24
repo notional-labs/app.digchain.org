@@ -31,7 +31,7 @@ const style = {
     button: {
         border: 0,
         borderRadius: '20px',
-        width: '20%',
+        width: '120px',
         marginTop: 10,
         marginBottom: 10,
         fontFamily: 'Roboto',
@@ -90,7 +90,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                         backgroundColor: 'transparent',
                         border: 0,
                         position: 'relative',
-                        marginRight: '-7%'
+                        marginRight: '-40px'
                     }} onClick={handleRemove}
                     >
                         <BiX/>
@@ -122,11 +122,11 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', marginRight: '1em'}} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', marginRight: '20px'}} onClick={handleClick}>
                     Transfer
                 </button>
-                <Link style={{ width: '20%' }} to={account.type === 'keplr' ? account.account.address : account.account}>
-                    <button style={{ ...style.button, width: '100%', backgroundColor: '#EEC13F', color: '#FFFFFF', }}>
+                <Link to={account.type === 'keplr' ? account.account.address : account.account}>
+                    <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', }}>
                         Detail
                     </button>
                 </Link>
