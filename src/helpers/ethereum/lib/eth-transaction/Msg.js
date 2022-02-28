@@ -72,7 +72,7 @@ export function makeBeginRedelegateMsg(delegatorAddress, validatorSrcAddress, va
 export const makeVoteMsg = (option, proposal_id, voter) => {
     const msgVote = {
         option: option,
-        proposal_id: proposal_id,
+        proposalId: proposal_id,
         voter: voter
     }
 

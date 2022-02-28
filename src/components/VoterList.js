@@ -10,10 +10,11 @@ const style = {
     voteBarContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minHeight: '10%',
+        minHeight: '14%',
         marginBottom: '1em',
         color: '#ffffff',
-        padding: '2em'
+        padding: 20,
+        paddingTop: 0
     },
     voteBar: {
         display: 'flex',
@@ -28,8 +29,7 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
-        paddingTop: 0,
-        paddingBottom: 20
+        paddingTop: 20,
     },
     table: {
         width: '100%',
@@ -49,7 +49,7 @@ const style = {
         fontSize: '15px',
         color: '#ffffff',
         textTransform: 'uppercase',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
     },
     td: {
         padding: '15px',
@@ -58,7 +58,7 @@ const style = {
         fontWeight: '600',
         fontSize: '17px',
         color: '#696969',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'Roboto',
         width: '20%'
     }
 }
@@ -104,9 +104,9 @@ const VoterList = ({ proposal }) => {
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: '#ffffff', padding: '0.5em', borderRadius: '15px' }}>
             <div style={style.container}>
-                <Title style={{ color: '#000000', fontSize: '2rem', fontWeight: 500, fontFamily: 'Ubuntu' }}>
+                <Title style={{ color: '#000000', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Voters
                 </Title>
             </div>
@@ -117,7 +117,7 @@ const VoterList = ({ proposal }) => {
                             ? getPercentage(proposal.tally.yes) :
                             getPercentage(proposal.final_tally_result.yes)
                             }%`,
-                        backgroundColor: '#28c76f',
+                        backgroundColor: '#2A9D8F',
                         minHeight: '100%',
                     }}>
                         {proposal.tally !== undefined ? getPercentage(proposal.tally.yes) != 0.0
@@ -130,7 +130,7 @@ const VoterList = ({ proposal }) => {
                             ? getPercentage(proposal.tally.no) :
                             getPercentage(proposal.final_tally_result.no)
                             }%`,
-                        backgroundColor: '#ea5455',
+                        backgroundColor: '#E9C46A',
                         minHeight: '100%'
                     }}>
                         {proposal.tally !== undefined ? getPercentage(proposal.tally.no) != 0.0
@@ -143,7 +143,7 @@ const VoterList = ({ proposal }) => {
                             ? getPercentage(proposal.tally.abstain) :
                             getPercentage(proposal.final_tally_result.abstain)
                             }%`,
-                        backgroundColor: '#28c76f',
+                        backgroundColor: '#9CB7D3',
                         minHeight: '100%',
 
                     }}>
@@ -157,7 +157,7 @@ const VoterList = ({ proposal }) => {
                             ? getPercentage(proposal.tally.no_with_veto) :
                             getPercentage(proposal.final_tally_result.no_with_veto)
                             }%`,
-                        backgroundColor: '#ff9f43',
+                        backgroundColor: '#E76F51',
                         minHeight: '100%',
                     }}>
                         {proposal.tally !== undefined ? getPercentage(proposal.tally.no_with_veto) != 0.0
@@ -173,7 +173,7 @@ const VoterList = ({ proposal }) => {
                         <thead style={style.tdlHeader}>
                             <tr>
                                 <th style={{ ...style.th, width: '20%' }}>Voter</th>
-                                <th style={{ ...style.th, width: '10rem'}}>Option</th>
+                                <th style={{ ...style.th, width: '10rem' }}>Option</th>
                             </tr>
                         </thead>
                         <tbody style={style.tdlContent}>

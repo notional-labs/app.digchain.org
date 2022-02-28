@@ -7,17 +7,18 @@
 .left {
   width: 10%;
   text-align: left;
-  border-top: solid 1px #8a8a8a;
   display: inline-block;
   vertical-align: middle;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .right {
   width: 90%;
   text-align: left;
-  border-top: solid 1px #8a8a8a;
   display: inline-block;
   vertical-align: middle;
+  font-size: 15px;
 }
 
 @media screen and (max-width: 950px) {
