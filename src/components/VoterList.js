@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getVotes } from "../helpers/getProposal"
-import { Typography, Tooltip } from 'antd';
+import { Typography, Tooltip, Skeleton } from 'antd';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -35,7 +35,8 @@ const style = {
         width: '100%',
     },
     tdlHeader: {
-        backgroundColor: '#ffa538',
+        backgroundColor: 'transparent',
+        borderBottom: 'solid 1px black'
     },
     tdlContent: {
         marginTop: '0px',
@@ -47,19 +48,20 @@ const style = {
         textAlign: 'left',
         fontWeight: '700',
         fontSize: '15px',
-        color: '#ffffff',
+        color: '#000000',
         textTransform: 'uppercase',
         fontFamily: 'Roboto',
     },
     td: {
         padding: '15px',
         textAlign: 'left',
-        verticalAlign: 'middle',
-        fontWeight: '600',
+        verticalAlign: '500',
+        fontWeight: 'lighter',
         fontSize: '17px',
-        color: '#696969',
+        color: '#000000',
         fontFamily: 'Roboto',
-        width: '20%'
+        width: '20%',
+        lineHeight: '18px'
     }
 }
 
@@ -167,7 +169,7 @@ const VoterList = ({ proposal }) => {
                     </div>
                 </div>
             </div>
-            {!loading && proposal.status < 3 && (
+            {!loading ? proposal.status < 3 && (
                 <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
@@ -179,7 +181,7 @@ const VoterList = ({ proposal }) => {
                         <tbody style={style.tdlContent}>
                             {voters.map((vote, index) => {
                                 return (
-                                    <tr key={index} style={{ backgroundColor: index % 2 !== 0 && '#ffe1bd', borderBottom: 'solid 1px #7d7d7d' }}>
+                                    <tr key={index} style={{ backgroundColor: '#ffffff' }}>
                                         <td style={style.td}>
                                             <Link to={`../accounts/${vote.voter}`}>
                                                 {vote.voter}
@@ -194,6 +196,8 @@ const VoterList = ({ proposal }) => {
                         </tbody>
                     </table>
                 </div>
+            ) : (
+                <Skeleton active/>
             )}
         </div>
     )
