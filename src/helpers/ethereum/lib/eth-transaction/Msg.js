@@ -79,7 +79,7 @@ export const makeVoteMsg = (option, proposal_id, voter) => {
     const msg = {
         typeUrl: "/cosmos.gov.v1beta1.MsgVote",
         value: msgVote,
-    }
+    } 
     return msg
 }
 

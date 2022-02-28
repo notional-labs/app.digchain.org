@@ -13,7 +13,7 @@ import { RiBarChart2Fill } from "react-icons/ri";
 const style = {
     card: {
         backgroundColor: '#EEC13F',
-        padding: '2em',
+        padding: '40px',
         borderRadius: '20px',
         minHeight: '100%',
         fontFamily: 'Lato',
@@ -30,8 +30,9 @@ const style = {
     content: {
         textAlign: 'left',
         backgroundColor: '#ffffff',
-        padding: '30px',
-        borderRadius: '15px'
+        padding: '40px',
+        borderRadius: '15px',
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
     },
     voters: {
         backgroundColor: '#EEC13F',
@@ -39,7 +40,7 @@ const style = {
         marginBottom: '20px',
         color: '#bdbdbd',
         fontFamily: 'Roboto',
-        padding: '30px',
+        padding: '40px',
         marginTop: 0
     },
     breadcrumb: {
@@ -107,6 +108,14 @@ const ProposalDetail = () => {
     const wrapSetShow = useCallback((val) => {
         setShow(val)
     }, [setShow])
+
+    const getTime = (string) => {
+        const date = new Date(string)
+        const hour = date.getHours()
+        const minute = date.getMinutes()
+        const second = date.getSeconds()
+        return `${hour}:${minute}:${second}`
+    }
 
     console.log(proposal[0])
 
@@ -191,7 +200,7 @@ const ProposalDetail = () => {
                     {' / '}
                 </span>
                 <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    <Link to='/accounts' style={{ color: '#ffffff', fontWeight: 500 }}>
+                    <Link to='/proposals' style={{ color: '#ffffff', fontWeight: 500 }}>
                         Proposals
                     </Link>
                 </span>
@@ -202,6 +211,16 @@ const ProposalDetail = () => {
                     {id}
                 </span>
             </div>
+            <div style={{
+                    textAlign: 'left',
+                    fontSize: '48px',
+                    color: '#ffffff',
+                    fontFamily: 'Roboto',
+                    fontWeight: 700,
+                    marginBottom: '1.3em'
+                }}>
+                    DETAILS
+                </div>
             <div style={style.card}>
                 <div style={style.content}>
                     <div style={style.title}>
@@ -245,7 +264,7 @@ const ProposalDetail = () => {
                         </p>
                         <p className="right">
                             {proposal.length > 0 &&
-                                `${proposal[0].submit_time.split('T')[0]} ${proposal[0].submit_time.split('T')[1]}`}
+                                `${proposal[0].submit_time.split('T')[0]} ${getTime(proposal[0].submit_time)}`}
                         </p>
                     </div>
                     <div className="line" >
@@ -254,7 +273,7 @@ const ProposalDetail = () => {
                         </p>
                         <p className="right">
                             {proposal.length > 0 &&
-                                `${proposal[0].voting_start_time.split('T')[0]} ${proposal[0].voting_start_time.split('T')[1]}-${proposal[0].voting_end_time.split('T')[0]} ${proposal[0].voting_end_time.split('T')[1]}`}
+                                `${proposal[0].voting_start_time.split('T')[0]} ${getTime(proposal[0].voting_start_time)}-${proposal[0].voting_end_time.split('T')[0]} ${getTime(proposal[0].voting_end_time)}`}
                         </p>
                     </div>
                     <div className="line">

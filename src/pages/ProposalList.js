@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { getProposals, } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
 import { Link } from "react-router-dom"
+import { Skeleton } from "antd"
 
 const style = {
     container: {
@@ -27,6 +28,15 @@ const style = {
         color: '#ffffff',
         fontFamily: 'Roboto',
         paddingBottom: '0.5em'
+    },
+    card: {
+        backgroundColor: '#EEC13F',
+        borderRadius: '15px',
+        minHeight: 'auto',
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)',
+        padding: '40px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)'
     },
 }
 
@@ -72,21 +82,30 @@ const ProposalList = () => {
                 </span>
             </div>
             <div style={{
-                    textAlign: 'left',
-                    fontSize: '48px',
-                    color: '#ffffff',
-                    fontFamily: 'Roboto',
-                    fontWeight: 700,
-                    marginBottom: '1.3em'
-                }}>
-                    PROPOSALS
-                </div>
-            {proposals.length > 0 &&
+                textAlign: 'left',
+                fontSize: '48px',
+                color: '#ffffff',
+                fontFamily: 'Roboto',
+                fontWeight: 700,
+                marginBottom: '1.3em'
+            }}>
+                PROPOSALS
+            </div>
+            {proposals.length > 0 ? (
                 <div className="gridBox">
                     {(proposals.map((proposal, index) => (
                         <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
                     )))}
                 </div>
+            ) : (
+                <div style={style.card}>
+                    <Skeleton active style={{
+                        backgroundColor: '#ffffff',
+                        padding: '30px',
+                        borderRadius: '15px'
+                    }} />
+                </div>
+            )
             }
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >

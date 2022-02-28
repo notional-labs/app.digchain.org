@@ -106,7 +106,12 @@ const VoterList = ({ proposal }) => {
     }
 
     return (
-        <div style={{ backgroundColor: '#ffffff', padding: '0.5em', borderRadius: '15px' }}>
+        <div style={{ 
+            backgroundColor: '#ffffff', 
+            padding: '0.5em', 
+            borderRadius: '15px',
+            boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)' 
+        }}>
             <div style={style.container}>
                 <Title style={{ color: '#000000', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Voters
@@ -197,7 +202,9 @@ const VoterList = ({ proposal }) => {
                     </table>
                 </div>
             ) : (
-                <Skeleton active/>
+                <div style={{ padding: '30px' }}>
+                    <Skeleton active />
+                </div>
             )}
         </div>
     )
