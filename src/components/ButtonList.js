@@ -24,7 +24,6 @@ const style = {
 
 const ButtonList = ({ total, wrapSetParams, currentPage }) => {
     const [buttons, setButtons] = useState([])
-    console.log(currentPage === 1)
 
     const handleOver = (e, i) => {
         if (currentPage != i + 1) {

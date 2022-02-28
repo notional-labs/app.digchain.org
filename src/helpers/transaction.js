@@ -2,7 +2,9 @@ import {
   coin,
   StdFee
 } from "@cosmjs/stargate";
-import {makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg} from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { MsgVote } from 'cosmjs-types/cosmos/gov/v1beta1/tx'
+
 
 export const transfer = async (client, address, amount, recipient, gas) => {
   let fee = {
@@ -74,7 +76,10 @@ export const vote = async (client, option, proposal_id, voter, gas) => {
     amount: [],
     gas: `${gas}`,
   }
+
   const msg = makeVoteMsg(option, proposal_id, voter)
+
+  console.log(msg)
 
   const result = await client.signAndBroadcast(
     voter,
@@ -83,3 +88,46 @@ export const vote = async (client, option, proposal_id, voter, gas) => {
   )
   return result
 }
+
+export const voteTest = async (client, option, proposal_id, voter, gas, accounts) => {
+  let fee = {
+    amount: [],
+    gas: `${gas}`,
+  }
+
+  client.aminoTypes.register["/cosmos.gov.v1beta1.MsgVote"] = {
+    aminoType: "cosmos-sdk/MsgVote",
+    toAmino: ({ option, proposalId, voter }) => {
+      return {
+        option: option,
+        proposal_id: proposalId,
+        voter: voter,
+      };
+    },
+    fromAmino: ({ option, proposal_id, voter }) => {
+      return {
+        option: option,
+        proposalId: proposal_id,
+        voter: voter,
+      };
+    },
+  }
+
+  client.registry.register('/cosmos.gov.v1beta1.MsgVote', MsgVote)
+
+  const account = await client.getAccount(voter)
+  const accountNumber = account.accountNumber
+  const sequence = account.sequence
+  const chainId = await client.getChainId()
+
+  const signerData = {
+    accountNumber,
+    sequence,
+    chainId,
+  }
+
+  const msg = makeVoteMsg(option, proposal_id, voter)
+
+  const signMsg = await client.signAndBroadcast(voter, [msg], fee, null, signerData)
+
+} 

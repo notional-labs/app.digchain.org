@@ -44,13 +44,16 @@ const ProposalList = () => {
     const [show, setShow] = useState(false)
     const [proposals, setProposals] = useState([])
     const [selectProposal, setSelectProposal] = useState(-1)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const res = await getProposals()
             const proposals = res.proposals
             proposals.sort((x, y) => y.proposal_id - x.proposal_id)
             setProposals([...proposals])
+            setLoading(false)
         })()
     }, [])
 
@@ -91,20 +94,20 @@ const ProposalList = () => {
             }}>
                 PROPOSALS
             </div>
-            {proposals.length > 0 ? (
-                <div className="gridBox">
-                    {(proposals.map((proposal, index) => (
-                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
-                    )))}
-                </div>
-            ) : (
+            {loading && proposals.length === 0 ? (
                 <div style={style.card}>
-                    <Skeleton active style={{
-                        backgroundColor: '#ffffff',
-                        padding: '30px',
-                        borderRadius: '15px'
-                    }} />
-                </div>
+                <Skeleton active style={{
+                    backgroundColor: '#ffffff',
+                    padding: '30px',
+                    borderRadius: '15px'
+                }} />
+            </div>
+            ) : (
+                <div className="gridBox">
+                {(proposals.map((proposal, index) => (
+                    <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
+                )))}
+            </div>
             )
             }
             <>
@@ -115,7 +118,7 @@ const ProposalList = () => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
-                        <VoteModal proposal={proposals[selectProposal]} wrapSetShow={wrapSetShow} />
+                        <VoteModal proposal={proposals[selectProposal]} id={proposals[selectProposal] && proposals[selectProposal].proposal_id} wrapSetShow={wrapSetShow} />
                     </Modal.Body>
                 </Modal>
             </>

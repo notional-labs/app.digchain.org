@@ -1,5 +1,5 @@
 import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
-import { digChain, ethChain } from '../chainObj';
+import { digChain, digTest } from '../chainObj';
 import {
     SigningStargateClient,
     StargateClient,
@@ -11,7 +11,7 @@ export const getKeplr = async () => {
         alert("Keplr Wallet not detected, please install extension");
         return undefined
     } else {
-        await window.keplr.experimentalSuggestChain(digChain)
+        await window.keplr.experimentalSuggestChain(digTest)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
         const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
         const accounts = await offlineSigner.getAccounts();
@@ -47,3 +47,22 @@ export const getStargateClient = async (signer) => {
     const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer);
     return client
 } 
+
+export const getKeplr2 = async () => {
+    if (!window.getOfflineSigner || !window.keplr) {
+        alert("Keplr Wallet not detected, please install extension");
+        return undefined
+    } else {
+        await window.keplr.experimentalSuggestChain(digTest)
+        await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
+        const signer = window.getOfflineSignerOnlyAmino(process.env.REACT_APP_CHAIN_ID);
+        return signer
+    }
+}
+
+export const getClient = async () => {
+    const signer = await getKeplr2()
+    const rpcEndpoint = process.env.REACT_APP_RPC;
+    const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, signer)
+    return client
+}

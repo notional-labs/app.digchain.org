@@ -1,8 +1,8 @@
 import { InputNumber, notification, Checkbox, Radio } from "antd"
-import { vote} from "../helpers/transaction"
+import { voteTest } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
-import { getKeplr, getStargateClient } from "../helpers/getKeplr";
+import { getClient, getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeVoteMsg ,makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
@@ -52,7 +52,7 @@ const style = {
     }
 }
 
-const VoteModal = ({ proposal, wrapSetShow }) => {
+const VoteModal = ({ proposal, id, wrapSetShow }) => {
     const [fee, setFee] = useState('5000')
     const [voters, setVoters] = useState([])
     const [selectVoter, setSelectVoter] = useState(0)
@@ -113,9 +113,11 @@ const VoteModal = ({ proposal, wrapSetShow }) => {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
+            const newStargate = await getClient()
             if (stargate != null) {
                 const gas = parseInt(gasAmount)
-                vote(stargate, choice, `${proposal.id}`, voters[selectVoter].account.address, gas).then(() => {
+                console.log(newStargate)
+                voteTest(newStargate, choice, `${id}`, voters[selectVoter].account.address, gas).then(() => {
                     setIsDoingTx(false)
                     success()
                     wrapSetShow(false)

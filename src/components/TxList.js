@@ -80,7 +80,7 @@ const TxList = ({ address }) => {
         (async () => {
             setIsloading(true)
             const res = await getTxs(address, params)
-            setTxs([...res.txs])
+            res.txs && setTxs([...res.txs])
             setTotal(res.page_total)
             setIsloading(false)
         })()
@@ -101,7 +101,7 @@ const TxList = ({ address }) => {
             </div>
             <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
                 {
-                    !isLoading && txs.length > 0 ? (
+                    !isLoading ? (
                         <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                             <thead style={style.tdlHeader}>
                                 <tr>

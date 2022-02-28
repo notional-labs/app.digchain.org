@@ -328,7 +328,7 @@ const ProposalDetail = () => {
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
-                        {proposal.length > 0 && <VoteModal proposal={proposal[0]} wrapSetShow={wrapSetShow} />}
+                        {proposal.length > 0 && <VoteModal proposal={proposal[0]} id={proposal[0].id} wrapSetShow={wrapSetShow} />}
                     </Modal.Body>
                 </Modal>
             </>
