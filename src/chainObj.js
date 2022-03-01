@@ -44,13 +44,13 @@ export const digChain = {
   },
 }
 
-export const ethChain = {
-  chainId: "dig-1",
+export const digTest = {
+  chainId: "digtest-5",
   chainName: "DIG",
-  rpc: "https://rpc-1-dig.notional.ventures",
-  rest: "https://api-1-dig.notional.ventures",
+  rpc: "http://168.119.91.22:2231/",
+  rest: "http://168.119.91.22:2269/",
   bip44: {
-    coinType: 60,
+    coinType: 118,
   },
   bech32Config: {
     bech32PrefixAccAddr: "dig",
@@ -62,27 +62,24 @@ export const ethChain = {
   },
   currencies: [
     {
-      coinDenom: "DIG",
-      coinMinimalDenom: "udig",
+      coinDenom: "DIX",
+      coinMinimalDenom: "udix",
       coinDecimals: 6,
-      coinGeckoId: "dig",
     },
   ],
   feeCurrencies: [
     {
-      coinDenom: "DIG",
-      coinMinimalDenom: "udig",
+      coinDenom: "DIX",
+      coinMinimalDenom: "udix",
       coinDecimals: 6,
-      coinGeckoId: "dig",
     },
   ],
   stakeCurrency: {
-    coinDenom: "DIG",
-    coinMinimalDenom: "udig",
+    coinDenom: "DIX",
+    coinMinimalDenom: "udix",
     coinDecimals: 6,
-    coinGeckoId: "dig",
   },
-  coinType: 60,
+  coinType: 118,
   gasPriceStep: {
     low: 0.01,
     average: 0.025,

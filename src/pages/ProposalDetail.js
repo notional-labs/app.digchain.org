@@ -1,17 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
 import {
-    useParams
+    useParams,
+    Link
 } from "react-router-dom";
 import { getProposal, getProposer, getTally } from "../helpers/getProposal";
 import '../assets/css/ProposalDetail.css'
 import VoterList from "../components/VoterList";
 import { Modal } from "react-bootstrap";
 import VoteModal from "../components/VoteModal";
+import { RiBarChart2Fill } from "react-icons/ri";
 
 const style = {
     card: {
-        backgroundColor: 'rgb(255, 255, 255)',
-        padding: '2em',
+        backgroundColor: '#EEC13F',
+        padding: '40px',
         borderRadius: '20px',
         minHeight: '100%',
         fontFamily: 'Lato',
@@ -27,15 +29,52 @@ const style = {
     },
     content: {
         textAlign: 'left',
+        backgroundColor: '#ffffff',
+        padding: '40px',
+        borderRadius: '15px',
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
     },
     voters: {
-        backgroundColor: 'rgb(255, 255, 255)',
+        backgroundColor: '#EEC13F',
         borderRadius: '10px',
         marginBottom: '20px',
         color: '#bdbdbd',
-        fontFamily: 'Ubuntu',
-        marginTop: '5rem',
-        padding: 20
+        fontFamily: 'Roboto',
+        padding: '40px',
+        marginTop: 0
+    },
+    breadcrumb: {
+        textAlign: 'left',
+        fontWeight: 700,
+        fontSize: '24px',
+        color: '#ffffff',
+        fontFamily: 'Roboto',
+        paddingBottom: '0.5em'
+    },
+    buttonBox: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: '20 20 20 20',
+        marginTop: '1.5em',
+    },
+    detail: {
+        padding: '1em',
+        borderRadius: '10px',
+        fontWeight: 'bold',
+        width: '150px',
+        backgroundColor: '#C4C4C4',
+        color: '#ffffff',
+        border: 0
+    },
+    extraButton: {
+        padding: '1em',
+        borderRadius: '10px',
+        fontWeight: 'bold',
+        backgroundColor: '#1D5470',
+        color: '#ffffff',
+        width: '150px',
+        border: 0
     },
 }
 
@@ -70,19 +109,27 @@ const ProposalDetail = () => {
         setShow(val)
     }, [setShow])
 
+    const getTime = (string) => {
+        const date = new Date(string)
+        const hour = date.getHours()
+        const minute = date.getMinutes()
+        const second = date.getSeconds()
+        return `${hour}:${minute}:${second}`
+    }
+
     console.log(proposal[0])
 
     const getStatus = () => {
         if (proposal[0].status === 3) {
             return (
                 <span style={{
-                    color: '#28c76f',
-                    backgroundColor: 'rgba(40,199,111,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    color: '#31bdac',
+                    backgroundColor: '#2A9D8F',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
-                    marginLeft: '0.5em'
+                    marginLeft: '0.5em',
                 }}>
                     Passed
                 </span>)
@@ -90,11 +137,11 @@ const ProposalDetail = () => {
         else if (proposal[0].status === 4) {
             return (
                 <span style={{
-                    color: '#ea5455',
-                    backgroundColor: 'rgba(234,84,85,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    color: '#ff977d',
+                    backgroundColor: '#E76F51',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -107,9 +154,9 @@ const ProposalDetail = () => {
                 <span style={{
                     color: '#00cfe8',
                     backgroundColor: 'rgba(0,207,232,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -121,45 +168,69 @@ const ProposalDetail = () => {
             return (
                 <span style={{
                     color: '#7367f0',
-                    backgroundColor: 'rgba(115,103,240,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    backgroundColor: '#1D5470',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
-                    marginLeft: '0.5em'
+                    marginLeft: '0.5em',
                 }}>
                     Voting
                 </span>
             )
         }
     }
+
+    const handleClick = () => {
+        setShow(true)
+    }
+
     return (
         <div style={{
-            padding: 50,
+            padding: 140,
             paddingTop: 20
         }}>
-            <div style={{
-                fontSize: '3rem',
-                color: '#EFCF20',
-                fontFamily: 'Ubuntu',
-                fontWeight: 600,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'left',
-                marginBottom: '0.5em'
-            }}>
-                Proposal Details
+            <div style={style.breadcrumb}>
+                <span>
+                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Homepage
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    <Link to='/proposals' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Proposals
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ED9D26' }}>
+                    {id}
+                </span>
             </div>
-            <div style={style.card}>
-                <div style={style.title}>
-                    <p className='title' style={style.title}>
-                        #{proposal.length > 0 && proposal[0].id}
-                        {proposal.length > 0 && getStatus()}
-                        {proposal.length > 0 && proposal[0].content.value.title}
-                    </p>
+            <div style={{
+                    textAlign: 'left',
+                    fontSize: '48px',
+                    color: '#ffffff',
+                    fontFamily: 'Roboto',
+                    fontWeight: 700,
+                    marginBottom: '1.3em'
+                }}>
+                    DETAILS
                 </div>
+            <div style={style.card}>
                 <div style={style.content}>
-                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                    <div style={style.title}>
+                        <p className='title' style={style.title}>
+                            #{proposal.length > 0 && proposal[0].id}
+                            {proposal.length > 0 && getStatus()}
+                            {proposal.length > 0 && proposal[0].content.value.title}
+                        </p>
+                    </div>
+                    <div className="line" >
                         <p className="left">
                             Proposal ID
                         </p>
@@ -171,11 +242,13 @@ const ProposalDetail = () => {
                         <p className="left">
                             Proposer
                         </p>
-                        <p className="right">
-                            {proposer.proposer}
-                        </p>
+                        <Link className="right" to={`/accounts/${proposer.proposer}`} style={{textAlign: 'left'}}>
+                            <p style={{ color: '#ED9D26' }}>
+                                {proposer.proposer}
+                            </p>
+                        </Link>
                     </div>
-                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                    <div className="line" >
                         <p className="left">
                             Total Deposit
                         </p>
@@ -191,16 +264,16 @@ const ProposalDetail = () => {
                         </p>
                         <p className="right">
                             {proposal.length > 0 &&
-                                `${proposal[0].submit_time.split('T')[0]} ${proposal[0].submit_time.split('T')[1]}`}
+                                `${proposal[0].submit_time.split('T')[0]} ${getTime(proposal[0].submit_time)}`}
                         </p>
                     </div>
-                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                    <div className="line" >
                         <p className="left">
                             Voting Time
                         </p>
                         <p className="right">
                             {proposal.length > 0 &&
-                                `${proposal[0].voting_start_time.split('T')[0]} ${proposal[0].voting_start_time.split('T')[1]}-${proposal[0].voting_end_time.split('T')[0]} ${proposal[0].voting_end_time.split('T')[1]}`}
+                                `${proposal[0].voting_start_time.split('T')[0]} ${getTime(proposal[0].voting_start_time)}-${proposal[0].voting_end_time.split('T')[0]} ${getTime(proposal[0].voting_end_time)}`}
                         </p>
                     </div>
                     <div className="line">
@@ -211,7 +284,7 @@ const ProposalDetail = () => {
                             {proposal.length > 0 && proposal[0].content.type}
                         </p>
                     </div>
-                    <div className="line" style={{ backgroundColor: '#cccccc' }}>
+                    <div className="line" >
                         <p className="left">
                             Title
                         </p>
@@ -227,20 +300,42 @@ const ProposalDetail = () => {
                             {proposal.length > 0 && proposal[0].content.value.description}
                         </p>
                     </div>
+                    <div style={{ borderTop: 'solid 1.5px black' }} />
+                    <div style={style.buttonBox}>
+                        <Link to={`/proposals`}>
+                            <button style={style.detail}>
+                                Back to List
+                            </button>
+                        </Link>
+                        {
+                            proposal.length > 0 && proposal[0].status === 2 && (
+                                <button style={style.extraButton} onClick={handleClick}>
+                                    <RiBarChart2Fill style={{ fontSize: '1.5em' }} /> Vote
+                                </button>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
-            <div style={{ ...style.voters, marginTop: '0', paddingTop: '2em' }} >
+            <div style={{ ...style.voters, paddingTop: '30px'}} >
                 {proposal.length > 0 && <VoterList proposal={proposal[0]} />}
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'ubuntu', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                            backgroundColor: '#4D4D4D',
+                            color: '#EEC13F',
+                            fontFamily: 'Roboto',
+                            fontSize: '24px',
+                            fontWeight: 400,
+                            border: 0
+                        }}>
                         <div>
                             Vote
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
-                        {proposal.length > 0 && <VoteModal proposal={proposal[0]} wrapSetShow={wrapSetShow} />}
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
+                        {proposal.length > 0 && <VoteModal proposal={proposal[0]} id={proposal[0].id} wrapSetShow={wrapSetShow} />}
                     </Modal.Body>
                 </Modal>
             </>

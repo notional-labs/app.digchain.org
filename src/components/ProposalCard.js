@@ -5,62 +5,75 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getTally } from "../helpers/getProposal"
-
+import { RiBarChart2Fill } from "react-icons/ri";
+import { Skeleton } from 'antd';
 
 const style = {
     card: {
         backgroundColor: 'rgb(255, 255, 255)',
-        padding: '2em',
-        borderRadius: '20px',
-        minHeight: '100%',
+        borderRadius: '15px',
+        minHeight: 'auto',
         fontFamily: 'Lato',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        height: 'auto',
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
     },
     timeBox: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: '1.5em'
+        marginBottom: '1.5em',
+        color: '#000000'
     },
     timeBoxContainer: {
-        padding: '0 auto',
         marginTop: '1.5em',
+        paddingLeft: '2em',
+        paddingRight: '2em',
     },
     title: {
         textAlign: 'left',
-        fontWeight: 'bold',
-        fontSize: '1.3rem',
+        fontWeight: 400,
+        fontSize: '24px',
     },
     description: {
         textAlign: 'left',
-        color: '#6b6b6b',
-        fontWeight: 800,
-        fontSize: '1rem',
+        color: '#000000',
+        fontWeight: 300,
+        fontSize: '15px',
     },
     timeCard: {
-        backgroundColor: '#fabf5a',
+        backgroundColor: '#ED9D26',
         padding: '1em',
-        borderRadius: '20px'
+        borderRadius: '10px',
     },
     buttonBox: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        backgroundColor: '#F4F4F4',
+        padding: '1em 2em 1em 2em',
+        marginTop: '1.5em',
+        borderRadius: '0 0 20px 20px'
     },
     detail: {
         padding: '1em',
-        borderRadius: '50px',
+        borderRadius: '10px',
         fontWeight: 'bold',
-        width: '100%'
+        width: '100px',
+        backgroundColor: '#ED9D27',
+        color: '#ffffff',
+        border: 0
     },
     extraButton: {
         padding: '1em',
-        borderRadius: '50px',
+        borderRadius: '10px',
         fontWeight: 'bold',
-        width: '30%',
-        backgroundColor: '#ff9f40'
+        backgroundColor: '#1D5470',
+        color: '#ffffff',
+        width: '100px',
+        border: 0
     },
     time: {
         fontWeight: 'bold',
@@ -69,7 +82,9 @@ const style = {
     voteBarContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minHeight: '10%'
+        minHeight: '20px',
+        backgroundColor: '#CFCFC',
+        width: '100%'
     },
     voteBar: {
         display: 'flex',
@@ -77,7 +92,8 @@ const style = {
         justifyContent: 'start',
         width: '100%',
         borderRadius: '50px',
-        backgroundColor: '#cccccc',
+        backgroundColor: '#CFCFC',
+        color: '#ffffff',
     }
 }
 
@@ -118,13 +134,13 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
         if (proposal.status === 'PROPOSAL_STATUS_PASSED') {
             return (
                 <span style={{
-                    color: '#28c76f',
-                    backgroundColor: 'rgba(40,199,111,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    color: '#31bdac',
+                    backgroundColor: '#2A9D8F',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
-                    marginLeft: '0.5em'
+                    marginLeft: '0.5em',
                 }}>
                     Passed
                 </span>)
@@ -132,11 +148,11 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
         else if (proposal.status === 'PROPOSAL_STATUS_REJECTED') {
             return (
                 <span style={{
-                    color: '#ea5455',
-                    backgroundColor: 'rgba(234,84,85,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    color: '#ff977d',
+                    backgroundColor: '#E76F51',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -149,9 +165,9 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                 <span style={{
                     color: '#00cfe8',
                     backgroundColor: 'rgba(0,207,232,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -163,12 +179,12 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
             return (
                 <span style={{
                     color: '#7367f0',
-                    backgroundColor: 'rgba(115,103,240,.12)',
-                    fontWeight: 'bold',
-                    padding: '0.5em',
-                    borderRadius: '100px',
+                    backgroundColor: '#1D5470',
+                    fontWeight: '400',
+                    padding: '0.3em',
+                    borderRadius: '5px',
                     marginRight: '0.5em',
-                    marginLeft: '0.5em'
+                    marginLeft: '0.5em',
                 }}>
                     Voting
                 </span>
@@ -182,9 +198,9 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
     }
 
     return (
-        !loading && (
+        !loading ? (
             <div style={style.card}>
-                <div>
+                <div style={{ padding: '2em' }}>
                     <p className='title' style={style.title}>
                         #{proposal.proposal_id}
                         {getStatus()}
@@ -200,7 +216,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                             <div>
                                 Submit Date
                             </div>
-                            <div style={style.time}>
+                            <div >
                                 {proposal.submit_time.split('T')[0]}
                             </div>
                         </div>
@@ -208,7 +224,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                             <div>
                                 Start Date
                             </div>
-                            <div style={style.time}>
+                            <div >
                                 {proposal.voting_start_time.split('T')[0]}
                             </div>
                         </div>
@@ -216,7 +232,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                             <div>
                                 End Date
                             </div>
-                            <div style={style.time}>
+                            <div >
                                 {proposal.voting_end_time.split('T')[0]}
                             </div>
                         </div>
@@ -228,7 +244,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                                     ? getPercentage(proposal.tally.yes) :
                                     getPercentage(proposal.final_tally_result.yes)
                                     }%`,
-                                backgroundColor: '#28c76f',
+                                backgroundColor: '#2A9D8F',
                                 minHeight: '100%',
                             }}>
                                 {proposal.tally !== undefined ? getPercentage(proposal.tally.yes) != 0.0
@@ -241,7 +257,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                                     ? getPercentage(proposal.tally.no) :
                                     getPercentage(proposal.final_tally_result.no)
                                     }%`,
-                                backgroundColor: '#ea5455',
+                                backgroundColor: '#E9C46A',
                                 minHeight: '100%'
                             }}>
                                 {proposal.tally !== undefined ? getPercentage(proposal.tally.no) != 0.0
@@ -254,7 +270,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                                     ? getPercentage(proposal.tally.abstain) :
                                     getPercentage(proposal.final_tally_result.abstain)
                                     }%`,
-                                backgroundColor: '#cccccc',
+                                backgroundColor: '#9CB7D3',
                                 minHeight: '100%',
 
                             }}>
@@ -268,7 +284,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                                     ? getPercentage(proposal.tally.no_with_veto) :
                                     getPercentage(proposal.final_tally_result.no_with_veto)
                                     }%`,
-                                backgroundColor: '#ff9f43',
+                                backgroundColor: '#E76F51',
                                 minHeight: '100%',
                             }}>
                                 {proposal.tally !== undefined ? getPercentage(proposal.tally.no_with_veto) != 0.0
@@ -278,27 +294,27 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <hr />
-                        <div style={style.buttonBox}>
-                            <Link style={{ width: '30%' }} to={`${proposal.proposal_id}`}>
-                                <button style={style.detail}>
-                                    Detail
-                                </button>
-                            </Link>
-                            {
-                                proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD' && (
-                                    <button style={style.extraButton} onClick={handleClick}>
-                                        Vote
-                                    </button>
-                                )
-                            }
-                        </div>
-                    </div>
+                </div>
+                <div style={style.buttonBox}>
+                    <Link to={`${proposal.proposal_id}`}>
+                        <button style={style.detail}>
+                            Detail
+                        </button>
+                    </Link>
+                    {
+                        proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD' && (
+                            <button style={style.extraButton} onClick={handleClick}>
+                                <RiBarChart2Fill style={{ fontSize: '1.5em' }} /> Vote
+                            </button>
+                        )
+                    }
                 </div>
 
-
             </div >
+        ) : (
+            <div style={{ ...style.card, padding: '2em' }}>
+                <Skeleton active />
+            </div>
         )
     )
 }
