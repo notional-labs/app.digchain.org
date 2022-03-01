@@ -107,7 +107,7 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
         setIsDoingTx(true)
         if (voters[selectVoter].type === 'keplr') {
             const newStargate = await getClient()
-            if (stargate != null) {
+            if (newStargate != null) {
                 const gas = parseInt(gasAmount)
                 voteTest(newStargate, choice, `${id}`, voters[selectVoter].account.address, gas).then(() => {
                     setIsDoingTx(false)
