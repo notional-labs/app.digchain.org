@@ -82,7 +82,9 @@ const style = {
     voteBarContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minHeight: '14%',
+        minHeight: '20px',
+        backgroundColor: '#CFCFC',
+        width: '100%'
     },
     voteBar: {
         display: 'flex',
@@ -91,7 +93,7 @@ const style = {
         width: '100%',
         borderRadius: '50px',
         backgroundColor: '#CFCFC',
-        color: '#ffffff'
+        color: '#ffffff',
     }
 }
 

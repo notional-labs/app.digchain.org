@@ -11,7 +11,7 @@ export const getKeplr = async () => {
         alert("Keplr Wallet not detected, please install extension");
         return undefined
     } else {
-        await window.keplr.experimentalSuggestChain(digTest)
+        await window.keplr.experimentalSuggestChain(digChain)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
         const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
         const accounts = await offlineSigner.getAccounts();
@@ -53,7 +53,7 @@ export const getKeplr2 = async () => {
         alert("Keplr Wallet not detected, please install extension");
         return undefined
     } else {
-        await window.keplr.experimentalSuggestChain(digTest)
+        await window.keplr.experimentalSuggestChain(digChain)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
         const signer = window.getOfflineSignerOnlyAmino(process.env.REACT_APP_CHAIN_ID);
         return signer

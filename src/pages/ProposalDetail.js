@@ -322,12 +322,19 @@ const ProposalDetail = () => {
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'Roboto', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{
+                            backgroundColor: '#4D4D4D',
+                            color: '#EEC13F',
+                            fontFamily: 'Roboto',
+                            fontSize: '24px',
+                            fontWeight: 400,
+                            border: 0
+                        }}>
                         <div>
                             Vote
                         </div>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#1f1f1f', }}>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         {proposal.length > 0 && <VoteModal proposal={proposal[0]} id={proposal[0].id} wrapSetShow={wrapSetShow} />}
                     </Modal.Body>
                 </Modal>
