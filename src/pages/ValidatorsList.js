@@ -9,7 +9,7 @@ import { Modal, } from 'react-bootstrap';
 import DelegateModal from '../components/DelegateModal';
 import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import helmet from '../assets/img/Grouphelmet.png'
 
 const style = {
@@ -61,6 +61,7 @@ const ValidatorsList = () => {
     const [defaultVal, setDefaultVal] = useState(0)
     const [setLogo, setSetLogo] = useState(false)
     const [state, setState] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         (async () => {
@@ -88,6 +89,15 @@ const ValidatorsList = () => {
             })
             setValidators([...vals])
             setLoading(false)
+
+            const valAddress = searchParams.get('validator');
+            if (valAddress) {
+                let idx = -1;
+                vals.forEach((x, i) => {
+                    if (x.operator_address === valAddress) idx = i
+                })
+                if (idx >= 0) handleDelegate(idx)
+            }
         })()
     }, [])
 
@@ -95,7 +105,7 @@ const ValidatorsList = () => {
         setShow(val)
     }, [setShow])
 
-    const handleClick = async (index) => {
+    const handleDelegate = async (index) => {
         if (!localStorage.getItem('accounts')) {
             const { accounts } = await getKeplr('dig-1')
             localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
@@ -265,7 +275,7 @@ const ValidatorsList = () => {
                                                 fontSize: '15px',
                                                 fontWeight: 700,
                                                 boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
-                                            }} onClick={async () => await handleClick(index)}>
+                                            }} onClick={async () => await handleDelegate(index)}>
                                                 Delegate
                                             </button>
                                         </td>
