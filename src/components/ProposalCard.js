@@ -13,7 +13,7 @@ const style = {
         backgroundColor: 'rgb(255, 255, 255)',
         borderRadius: '15px',
         minHeight: 'auto',
-        fontFamily: 'Lato',
+        fontFamily: 'Roboto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -138,7 +138,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                     backgroundColor: '#2A9D8F',
                     fontWeight: '400',
                     padding: '0.3em',
-                    borderRadius: '5px',
+                    borderRadius: '20%',
                     marginRight: '0.5em',
                     marginLeft: '0.5em',
                 }}>
@@ -152,7 +152,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                     backgroundColor: '#E76F51',
                     fontWeight: '400',
                     padding: '0.3em',
-                    borderRadius: '5px',
+                    borderRadius: '20%',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -167,7 +167,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                     backgroundColor: 'rgba(0,207,232,.12)',
                     fontWeight: '400',
                     padding: '0.3em',
-                    borderRadius: '5px',
+                    borderRadius: '20%',
                     marginRight: '0.5em',
                     marginLeft: '0.5em'
                 }}>
@@ -182,7 +182,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                     backgroundColor: '#1D5470',
                     fontWeight: '400',
                     padding: '0.3em',
-                    borderRadius: '5px',
+                    borderRadius: '20%',
                     marginRight: '0.5em',
                     marginLeft: '0.5em',
                 }}>

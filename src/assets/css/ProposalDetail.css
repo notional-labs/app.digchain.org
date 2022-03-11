@@ -5,7 +5,7 @@
   }
 
 .left {
-  width: 10%;
+  width: 15%;
   text-align: left;
   display: inline-block;
   vertical-align: middle;
@@ -14,7 +14,7 @@
 }
 
 .right {
-  width: 90%;
+  width: 85%;
   text-align: left;
   display: inline-block;
   vertical-align: middle;
