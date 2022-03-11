@@ -260,7 +260,6 @@ const ValidatorsList = () => {
                                                 backgroundColor: '#ED9D27',
                                                 border: 'none',
                                                 borderRadius: '30px',
-                                                width: '60%',
                                                 padding: '1.5em',
                                                 fontSize: '15px',
                                                 fontWeight: 700,
