@@ -89,20 +89,22 @@ const App = () => {
   const connect = async (val) => {
     if (val === 'keplr') {
       const { accounts } = await getKeplr()
-      if (!localStorage.getItem('accounts')) {
-        localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
-        setAccounts([...{ account: accounts[0], type: 'keplr' }])
-      }
-      else if (localStorage.getItem('accounts')) {
-        let accountsList = JSON.parse(localStorage.getItem('accounts'))
-        if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
-          accountsList.push({ account: accounts[0], type: 'keplr' })
-          localStorage.setItem('accounts', JSON.stringify(accountsList))
-          setAccounts([...accountsList])
-          warning('Success')
+      if (accounts !== null) {
+        if (!localStorage.getItem('accounts')) {
+          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
+          setAccounts([...{ account: accounts[0], type: 'keplr' }])
         }
-        else {
-          warning('This wallet account already exist')
+        else if (localStorage.getItem('accounts')) {
+          let accountsList = JSON.parse(localStorage.getItem('accounts'))
+          if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
+            accountsList.push({ account: accounts[0], type: 'keplr' })
+            localStorage.setItem('accounts', JSON.stringify(accountsList))
+            setAccounts([...accountsList])
+            warning('Success')
+          }
+          else {
+            warning('This wallet account already exist')
+          }
         }
       }
     }
@@ -214,7 +216,7 @@ const App = () => {
         </div>
       </div>
       <Routes>
-        <Route exact path="/" element={<FrontPage/>} />
+        <Route exact path="/" element={<FrontPage />} />
         <Route exact path="/staking" element={<ValidatorsList />} />
         <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
         <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />

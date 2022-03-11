@@ -24,14 +24,13 @@ const style = {
     button: {
         border: 0,
         borderRadius: '10px',
-        width: '100%',
         marginBottom: 0,
         marginLeft: 0,
         fontFamily: 'Roboto',
         fontWeight: 300,
         backgroundColor: '#EEC13F',
         color: '#FFFFFF',
-        padding: '2em',
+        padding: '20px',
         paddingTop: '1em',
         paddingBottom: '1em'
     },
