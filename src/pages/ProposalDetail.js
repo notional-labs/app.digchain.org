@@ -16,7 +16,7 @@ const style = {
         padding: '40px',
         borderRadius: '20px',
         minHeight: '100%',
-        fontFamily: 'Lato',
+        fontFamily: 'Roboto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
