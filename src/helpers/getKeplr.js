@@ -9,7 +9,9 @@ import {
 export const getKeplr = async () => {
     if (!window.getOfflineSigner || !window.keplr) {
         alert("Keplr Wallet not detected, please install extension");
-        return undefined
+        return {
+            accounts: null
+        }
     } else {
         await window.keplr.experimentalSuggestChain(digChain)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
