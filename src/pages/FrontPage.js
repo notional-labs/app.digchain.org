@@ -115,7 +115,7 @@ const FrontPage = () => {
             </div>
             <div style={{
                 ...style.asset,
-                top: '750px',
+                top: '700px',
                 left: '600px',
             }}>
                 <Image
