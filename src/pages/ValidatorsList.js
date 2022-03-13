@@ -28,7 +28,7 @@ const style = {
         padding: '10px 10px',
         textAlign: 'left',
         fontWeight: 700,
-        fontSize: '24px',
+        fontSize: '20px',
         color: '#ffffff',
         textTransform: 'uppercase',
         fontFamily: 'Roboto',
@@ -40,14 +40,14 @@ const style = {
         textAlign: 'left',
         verticalAlign: 'middle',
         fontWeight: 700,
-        fontSize: '24px',
+        fontSize: '20px',
         color: '#000000',
         fontFamily: 'Roboto',
     },
     breadcrumb: {
         textAlign: 'left',
         fontWeight: 700,
-        fontSize: '24px',
+        fontSize: '20px',
         color: '#ffffff',
         fontFamily: 'Roboto',
         paddingBottom: '0.5em'
@@ -72,8 +72,8 @@ const ValidatorsList = () => {
             let bogo2 = vals.filter(x => x.operator_address === 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629')[0]
             let bogo3 = vals.filter(x => x.operator_address === 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')[0]
             vals = vals.filter(x => x.operator_address !== 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z' 
-                                    || x.operator_address !== 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629' 
-                                    || x.operator_address !== 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')
+                                    && x.operator_address !== 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629' 
+                                    && x.operator_address !== 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')
             vals.unshift(bogo2, bogo3, bogo1)
             vals.map((val) => {
                 val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
@@ -175,7 +175,7 @@ const ValidatorsList = () => {
                                         backgroundColor: 'transparent',
                                         border: 0,
                                         fontWeight: '700',
-                                        fontSize: '1.3rem',
+                                        fontSize: '20px',
                                         color: '#fff',
                                         textTransform: 'uppercase',
                                         fontFamily: 'Roboto',
@@ -204,7 +204,7 @@ const ValidatorsList = () => {
                                                     backgroundSize: 'cover',
                                                     backgroundRepeat: 'no-repeat',
                                                     backgroundPosition: 'center',
-                                                    width: '60px',
+                                                    width: '55px',
                                                 }}>
                                                     <Image
                                                         width={45}
@@ -245,7 +245,7 @@ const ValidatorsList = () => {
                                                 } */}
 
                                                 <div style={{ marginLeft: '1rem' }} >
-                                                    <div style={{ color: '#2C223E', fontSize: '24px', fontWeight: 700 }}>{val.description.moniker}</div>
+                                                    <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
                                                     <div style={{ fontSize: '15px', fontWeight: 400 }}>{val.description.website ? val.description.website : val.description.identity}</div>
                                                 </div>
                                             </div>
@@ -280,7 +280,7 @@ const ValidatorsList = () => {
                             backgroundColor: '#4D4D4D',
                             color: '#EEC13F',
                             fontFamily: 'Roboto',
-                            fontSize: '24px',
+                            fontSize: '20px',
                             fontWeight: 400,
                             border: 0
                         }}>

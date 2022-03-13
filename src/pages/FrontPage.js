@@ -115,7 +115,7 @@ const FrontPage = () => {
             </div>
             <div style={{
                 ...style.asset,
-                top: '750px',
+                top: '700px',
                 left: '600px',
             }}>
                 <Image
@@ -132,17 +132,6 @@ const FrontPage = () => {
                 <Image
                     width={300}
                     src={coin2}
-                    preview={false}
-                />
-            </div>
-            <div style={{
-                ...style.asset,
-                top: '620px',
-                left: '1600px',
-            }}>
-                <Image
-                    width={150}
-                    src={coin3}
                     preview={false}
                 />
             </div>
