@@ -135,17 +135,6 @@ const FrontPage = () => {
                     preview={false}
                 />
             </div>
-            <div style={{
-                ...style.asset,
-                top: '620px',
-                left: '1600px',
-            }}>
-                <Image
-                    width={150}
-                    src={coin3}
-                    preview={false}
-                />
-            </div>
 
         </div >
     )
