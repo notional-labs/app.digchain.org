@@ -92,7 +92,7 @@ const App = () => {
       if (accounts !== null) {
         if (!localStorage.getItem('accounts')) {
           localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
-          setAccounts([...{ account: accounts[0], type: 'keplr' }])
+          setAccounts([{ account: accounts[0], type: 'keplr' }])
         }
         else if (localStorage.getItem('accounts')) {
           let accountsList = JSON.parse(localStorage.getItem('accounts'))
