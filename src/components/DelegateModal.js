@@ -124,6 +124,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
+            console.log(stargate)
             if (stargate != null) {
                 const amount = value * 1000000
                 const recipient = validators[selectVal].operator_address

@@ -6,6 +6,7 @@ import { getProposals, } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
 import { Link } from "react-router-dom"
 import { Skeleton } from "antd"
+import CreateProposalModal from "../components/CreateProposalModal"
 
 const style = {
     container: {
@@ -40,11 +41,12 @@ const style = {
     },
 }
 
-const ProposalList = () => {
+const ProposalList = ({ accounts }) => {
     const [show, setShow] = useState(false)
     const [proposals, setProposals] = useState([])
     const [selectProposal, setSelectProposal] = useState(-1)
     const [loading, setLoading] = useState(false)
+    const [showCreateProposal, setShowCreateProposal] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -69,6 +71,27 @@ const ProposalList = () => {
         setShow(false)
     }
 
+    const handleCloseCreateProposal = () => {
+        setShowCreateProposal(false)
+    }
+
+    const handleClick = () => {
+        setShowCreateProposal(true)
+    }
+
+    const wrapSetShowCreateProposal = useCallback((val) => {
+        setShowCreateProposal(val)
+    }, [setShowCreateProposal])
+
+    const handleEnter = (e) => {
+        e.target.style.backgroundImage = 'Linear-Gradient(263.6deg, #4D4D4D 0%, #000000 100%)'
+        e.target.style.border = 'solid 2px #EEC13F'
+    }
+
+    const handleLeave = (e) => {
+        e.target.style.backgroundImage = 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)'
+    }
+
     return (
         <div style={style.container}>
             <div style={style.breadcrumb}>
@@ -85,47 +108,86 @@ const ProposalList = () => {
                 </span>
             </div>
             <div style={{
-                textAlign: 'left',
-                fontSize: '48px',
-                color: '#ffffff',
-                fontFamily: 'Roboto',
-                fontWeight: 700,
-                marginBottom: '1.3em'
+                display: 'flex',
+                justifyContent: 'space-between'
             }}>
-                PROPOSALS
+                <div style={{
+                    textAlign: 'left',
+                    fontSize: '48px',
+                    color: '#ffffff',
+                    fontFamily: 'Roboto',
+                    fontWeight: 700,
+                    marginBottom: '1.3em'
+                }}>
+                    PROPOSALS
+                </div>
+                <div>
+                    <bUtton 
+                        onClick={handleClick}
+                        style={{
+                            border: 0,
+                            backgroundColor: '#eec13f',
+                            color: '#ffffff',
+                            fontWeight: 700,
+                            fontSize: '24px',
+                            padding: '10px 20px 10px 20px',
+                            borderRadius: '10px'
+                        }} onMouseOver={handleEnter} onMouseLeave={handleLeave}>
+                        Create Proposal
+                    </bUtton>
+                </div>
             </div>
             {loading && proposals.length === 0 ? (
                 <div style={style.card}>
-                <Skeleton active style={{
-                    backgroundColor: '#ffffff',
-                    padding: '30px',
-                    borderRadius: '15px'
-                }} />
-            </div>
+                    <Skeleton active style={{
+                        backgroundColor: '#ffffff',
+                        padding: '30px',
+                        borderRadius: '15px'
+                    }} />
+                </div>
             ) : (
                 <div className="gridBox">
-                {(proposals.map((proposal, index) => (
-                    <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
-                )))}
-            </div>
+                    {(proposals.map((proposal, index) => (
+                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
+                    )))}
+                </div>
             )
             }
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
                     <Modal.Header style={{
-                            backgroundColor: '#4D4D4D',
-                            color: '#EEC13F',
-                            fontFamily: 'Roboto',
-                            fontSize: '24px',
-                            fontWeight: 400,
-                            border: 0
-                        }}>
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Vote
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         <VoteModal proposal={proposals[selectProposal]} id={proposals[selectProposal] && proposals[selectProposal].proposal_id} wrapSetShow={wrapSetShow} />
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
+                <Modal show={showCreateProposal} onHide={handleCloseCreateProposal} backdrop="static" >
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
+                        <div>
+                            Create Proposal
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
+                        <CreateProposalModal accounts={accounts} wrapSetShow={wrapSetShowCreateProposal} />
                     </Modal.Body>
                 </Modal>
             </>

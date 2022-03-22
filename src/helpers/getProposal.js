@@ -36,3 +36,10 @@ export const getVotes = async (id) => {
     if (res.status !== 200) return
     return res.data
 }
+
+export const getParams = async () => {
+    const URL = `${api}cosmos/gov/v1beta1/params/deposit`
+    const res = await axios.get(URL)
+    if (res.status !== 200) return
+    return res.data.deposit_params.min_deposit
+}

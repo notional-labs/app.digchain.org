@@ -114,6 +114,7 @@ const App = () => {
         const accounts = (await web3.eth.getAccounts());
         if (!localStorage.getItem('accounts')) {
           localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
+          setAccounts([{ account: accounts[0], type: 'metamask' }])
         }
         if (localStorage.getItem('accounts')) {
           let accountsList = JSON.parse(localStorage.getItem('accounts'))
@@ -220,7 +221,7 @@ const App = () => {
         <Route exact path="/staking" element={<ValidatorsList />} />
         <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
         <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
-        <Route exact path="/proposals" element={<ProposalList />} />
+        <Route exact path="/proposals" element={<ProposalList accounts={accounts}/>} />
         <Route exact path="/proposals/:id" element={<ProposalDetail />} />
       </Routes>
       <div style={style.contact}>

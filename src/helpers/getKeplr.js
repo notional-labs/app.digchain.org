@@ -1,8 +1,7 @@
-import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
+import { SigningCosmosClient } from "@cosmjs/launchpad";
 import { digChain, digTest } from '../chainObj';
 import {
     SigningStargateClient,
-    StargateClient,
 } from "@cosmjs/stargate";
 // import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 
@@ -13,7 +12,7 @@ export const getKeplr = async () => {
             accounts: null
         }
     } else {
-        await window.keplr.experimentalSuggestChain(digChain)
+        await window.keplr.experimentalSuggestChain(digTest)
         await window.keplr.enable(process.env.REACT_APP_CHAIN_ID)
         const offlineSigner = window.keplr.getOfflineSigner(process.env.REACT_APP_CHAIN_ID);
         const accounts = await offlineSigner.getAccounts();

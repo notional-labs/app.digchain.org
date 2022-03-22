@@ -45,7 +45,7 @@ export const digChain = {
 }
 
 export const digTest = {
-  chainId: "digtest-5",
+  chainId: "digtestnet-5",
   chainName: "DIG",
   rpc: "http://168.119.91.22:2231/",
   rest: "http://168.119.91.22:2269/",

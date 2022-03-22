@@ -2,8 +2,11 @@ import {
   coin,
   StdFee
 } from "@cosmjs/stargate";
-import { makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
-import { MsgVote } from 'cosmjs-types/cosmos/gov/v1beta1/tx'
+import { makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg, makeSubmitProposalMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { MsgVote, MsgSubmitProposal } from 'cosmjs-types/cosmos/gov/v1beta1/tx'
+import utils_1 from "@cosmjs/utils"
+import gov_1 from "cosmjs-types/cosmos/gov/v1beta1/gov"
+import any_1 from 'cosmjs-types/google/protobuf/any'
 
 
 export const transfer = async (client, address, amount, recipient, gas) => {
@@ -130,4 +133,32 @@ export const voteTest = async (client, option, proposal_id, voter, gas, accounts
 
   const signMsg = await client.signAndBroadcast(voter, [msg], fee, null, signerData)
 
-} 
+}
+
+export const submitProposal = async (client, title, description, deposit, proposer, gas) => {
+  let fee = {
+    amount: [],
+    gas: `${gas}`,
+  }
+
+  const denom = process.env.REACT_APP_DENOM
+
+  let msg = makeSubmitProposalMsg(title, description, deposit, proposer, denom)
+
+  console.log(msg)
+
+  const account = await client.getAccount(proposer)
+  const accountNumber = account.accountNumber
+  const sequence = account.sequence
+  const chainId = await client.getChainId()
+
+  const signerData = {
+    accountNumber,
+    sequence,
+    chainId,
+  }
+
+  const signMsg = await client.signAndBroadcast(proposer, [msg], fee, null, signerData)
+
+  return signMsg
+}
