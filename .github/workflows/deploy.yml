@@ -49,7 +49,7 @@ jobs:
       with:
         local: build
         remote: /root/app.digchain.org
-        host: ${{ secrets.HOST }}
+        host: ${{ secrets.WEB_SERVER }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.PRIV_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
