@@ -2,7 +2,7 @@ export const digChain = {
   chainId: "dig-1",
   chainName: "DIG",
   rpc: "https://rpc-1-dig.notional.ventures",
-  rest: "   ",
+  rest: "https://api-1-dig.notional.ventures",
   bip44: {
     coinType: 118,
   },
