@@ -10,19 +10,19 @@ const style = {
     voteBarContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minHeight: '14%',
+        minHeight: '20px',
         marginBottom: '1em',
         color: '#ffffff',
-        padding: 20,
-        paddingTop: 0
+        paddingTop: 0,
+        backgroundColor: '#CFCFCF',
     },
     voteBar: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'start',
-        width: '100%',
         borderRadius: '50px',
-        backgroundColor: '#cccccc',
+        width: '100%',
+        backgroundColor: '#CFCFCF',
     },
     container: {
         display: 'flex',
@@ -106,71 +106,75 @@ const VoterList = ({ proposal }) => {
     }
 
     return (
-        <div style={{ 
-            backgroundColor: '#ffffff', 
-            padding: '0.5em', 
+        <div style={{
+            backgroundColor: '#ffffff',
+            padding: '0.5em',
             borderRadius: '15px',
-            boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)' 
+            boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
         }}>
             <div style={style.container}>
                 <Title style={{ color: '#000000', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
                     Voters
                 </Title>
             </div>
-            <div style={style.voteBarContainer}>
-                <div style={style.voteBar}>
-                    <div style={{
-                        width: `${proposal.tally !== undefined
-                            ? getPercentage(proposal.tally.yes) :
-                            getPercentage(proposal.final_tally_result.yes)
-                            }%`,
-                        backgroundColor: '#2A9D8F',
-                        minHeight: '100%',
-                    }}>
-                        {proposal.tally !== undefined ? getPercentage(proposal.tally.yes) != 0.0
-                            && `${getPercentage(proposal.tally.yes)}%` :
-                            getPercentage(proposal.final_tally_result.yes) != 0.0
-                            && `${getPercentage(proposal.final_tally_result.yes)}%`}
-                    </div>
-                    <div style={{
-                        width: `${proposal.tally !== undefined
-                            ? getPercentage(proposal.tally.no) :
-                            getPercentage(proposal.final_tally_result.no)
-                            }%`,
-                        backgroundColor: '#E9C46A',
-                        minHeight: '100%'
-                    }}>
-                        {proposal.tally !== undefined ? getPercentage(proposal.tally.no) != 0.0
-                            && `${getPercentage(proposal.tally.no)}%` :
-                            getPercentage(proposal.final_tally_result.no) != 0.0
-                            && `${getPercentage(proposal.final_tally_result.no)}%`}
-                    </div>
-                    <div style={{
-                        width: `${proposal.tally !== undefined
-                            ? getPercentage(proposal.tally.abstain) :
-                            getPercentage(proposal.final_tally_result.abstain)
-                            }%`,
-                        backgroundColor: '#9CB7D3',
-                        minHeight: '100%',
+            <div style={{
+                padding: 20
+            }}>
+                <div style={style.voteBarContainer}>
+                    <div style={style.voteBar}>
+                        <div style={{
+                            width: `${proposal.tally !== undefined
+                                ? getPercentage(proposal.tally.yes) :
+                                getPercentage(proposal.final_tally_result.yes)
+                                }%`,
+                            backgroundColor: '#2A9D8F',
+                            minHeight: '100%',
+                        }}>
+                            {proposal.tally !== undefined ? getPercentage(proposal.tally.yes) != 0.0
+                                && `${getPercentage(proposal.tally.yes)}%` :
+                                getPercentage(proposal.final_tally_result.yes) != 0.0
+                                && `${getPercentage(proposal.final_tally_result.yes)}%`}
+                        </div>
+                        <div style={{
+                            width: `${proposal.tally !== undefined
+                                ? getPercentage(proposal.tally.no) :
+                                getPercentage(proposal.final_tally_result.no)
+                                }%`,
+                            backgroundColor: '#E9C46A',
+                            minHeight: '100%'
+                        }}>
+                            {proposal.tally !== undefined ? getPercentage(proposal.tally.no) != 0.0
+                                && `${getPercentage(proposal.tally.no)}%` :
+                                getPercentage(proposal.final_tally_result.no) != 0.0
+                                && `${getPercentage(proposal.final_tally_result.no)}%`}
+                        </div>
+                        <div style={{
+                            width: `${proposal.tally !== undefined
+                                ? getPercentage(proposal.tally.abstain) :
+                                getPercentage(proposal.final_tally_result.abstain)
+                                }%`,
+                            backgroundColor: '#9CB7D3',
+                            minHeight: '100%',
 
-                    }}>
-                        {proposal.tally !== undefined ? getPercentage(proposal.tally.abstain) != 0.0
-                            && `${getPercentage(proposal.tally.abstain)}%` :
-                            getPercentage(proposal.final_tally_result.abstain) != 0.0
-                            && `${getPercentage(proposal.final_tally_result.abstain)}%`}
-                    </div>
-                    <div style={{
-                        width: `${proposal.tally !== undefined
-                            ? getPercentage(proposal.tally.no_with_veto) :
-                            getPercentage(proposal.final_tally_result.no_with_veto)
-                            }%`,
-                        backgroundColor: '#E76F51',
-                        minHeight: '100%',
-                    }}>
-                        {proposal.tally !== undefined ? getPercentage(proposal.tally.no_with_veto) != 0.0
-                            && `${getPercentage(proposal.tally.no_with_veto)}%` :
-                            getPercentage(proposal.final_tally_result.no_with_veto) != 0.0
-                            && `${getPercentage(proposal.final_tally_result.no_with_veto)}%`}
+                        }}>
+                            {proposal.tally !== undefined ? getPercentage(proposal.tally.abstain) != 0.0
+                                && `${getPercentage(proposal.tally.abstain)}%` :
+                                getPercentage(proposal.final_tally_result.abstain) != 0.0
+                                && `${getPercentage(proposal.final_tally_result.abstain)}%`}
+                        </div>
+                        <div style={{
+                            width: `${proposal.tally !== undefined
+                                ? getPercentage(proposal.tally.no_with_veto) :
+                                getPercentage(proposal.final_tally_result.no_with_veto)
+                                }%`,
+                            backgroundColor: '#E76F51',
+                            minHeight: '100%',
+                        }}>
+                            {proposal.tally !== undefined ? getPercentage(proposal.tally.no_with_veto) != 0.0
+                                && `${getPercentage(proposal.tally.no_with_veto)}%` :
+                                getPercentage(proposal.final_tally_result.no_with_veto) != 0.0
+                                && `${getPercentage(proposal.final_tally_result.no_with_veto)}%`}
+                        </div>
                     </div>
                 </div>
             </div>

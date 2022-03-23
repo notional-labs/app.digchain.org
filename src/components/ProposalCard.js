@@ -6,6 +6,7 @@ import {
 import { useState, useEffect } from "react";
 import { getTally } from "../helpers/getProposal"
 import { RiBarChart2Fill } from "react-icons/ri";
+import { FaCoins} from "react-icons/fa";
 import { Skeleton } from 'antd';
 
 const style = {
@@ -83,7 +84,7 @@ const style = {
         display: 'flex',
         justifyContent: 'center',
         minHeight: '20px',
-        backgroundColor: '#CFCFC',
+        backgroundColor: '#CFCFCF',
         width: '100%'
     },
     voteBar: {
@@ -92,12 +93,12 @@ const style = {
         justifyContent: 'start',
         width: '100%',
         borderRadius: '50px',
-        backgroundColor: '#CFCFC',
+        backgroundColor: '#CFCFCF',
         color: '#ffffff',
     }
 }
 
-const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
+const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit, index }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -113,20 +114,20 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
 
     const getPercentage = (vote) => {
         if (proposal.tally !== undefined) {
-            const sum = parseInt(proposal.tally.yes)
-                + parseInt(proposal.tally.no_with_veto)
-                + parseInt(proposal.tally.no)
-                + parseInt(proposal.tally.abstain)
+            const sum = parseFloat(proposal.tally.yes)
+                + parseFloat(proposal.tally.no_with_veto)
+                + parseFloat(proposal.tally.no)
+                + parseFloat(proposal.tally.abstain)
 
-            return sum !== 0 && parseFloat(parseInt(vote) * 100 / sum).toFixed(1) || 0
+            return sum !== 0 && parseFloat(parseFloat(vote) * 100 / sum).toFixed(1) || 0
         }
         else {
-            const sum = parseInt(proposal.final_tally_result.yes)
-                + parseInt(proposal.final_tally_result.no_with_veto)
-                + parseInt(proposal.final_tally_result.no)
-                + parseInt(proposal.final_tally_result.abstain)
+            const sum = parseFloat(proposal.final_tally_result.yes)
+                + parseFloat(proposal.final_tally_result.no_with_veto)
+                + parseFloat(proposal.final_tally_result.no)
+                + parseFloat(proposal.final_tally_result.abstain)
 
-            return sum !== 0 && parseFloat(parseInt(vote) * 100 / sum).toFixed(1) || 0
+            return sum !== 0 && parseFloat(parseFloat(vote) * 100 / sum).toFixed(1) || 0
         }
     }
 
@@ -194,6 +195,11 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
 
     const handleClick = () => {
         wrapSetShow(true)
+        wrapSetSelect(index)
+    }
+
+    const handleClickDeposit = () => {
+        wrapSetShowDeposit(true)
         wrapSetSelect(index)
     }
 
@@ -305,6 +311,13 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                         proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD' && (
                             <button style={style.extraButton} onClick={handleClick}>
                                 <RiBarChart2Fill style={{ fontSize: '1.5em' }} /> Vote
+                            </button>
+                        )
+                    }
+                    {
+                        proposal.status === 'PROPOSAL_STATUS_DEPOSIT_PERIOD' && (
+                            <button style={style.extraButton} onClick={handleClickDeposit}>
+                                <FaCoins style={{ marginRight: '5px' }} />Deposit
                             </button>
                         )
                     }

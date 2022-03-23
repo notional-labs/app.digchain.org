@@ -1,8 +1,7 @@
-import { SigningCosmosClient, LcdClient, setupBankExtension } from "@cosmjs/launchpad";
+import { SigningCosmosClient } from "@cosmjs/launchpad";
 import { digChain, digTest } from '../chainObj';
 import {
     SigningStargateClient,
-    StargateClient,
 } from "@cosmjs/stargate";
 // import { MsgDelegate } from "@cosmjs/stargate/build/codec/cosmos/staking/v1beta1/tx";
 

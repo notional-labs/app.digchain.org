@@ -9,6 +9,9 @@ import VoterList from "../components/VoterList";
 import { Modal } from "react-bootstrap";
 import VoteModal from "../components/VoteModal";
 import { RiBarChart2Fill } from "react-icons/ri";
+import CreateProposalModal from "../components/CreateProposalModal";
+import DepositModal from "../components/DepositModal";
+import { FaCoins} from "react-icons/fa";
 
 const style = {
     card: {
@@ -78,7 +81,7 @@ const style = {
     },
 }
 
-const ProposalDetail = () => {
+const ProposalDetail = ({ accounts }) => {
     const [proposal, setProposal] = useState([])
     const [proposer, setProposer] = useState({
         proposal_id: -1,
@@ -86,6 +89,8 @@ const ProposalDetail = () => {
     })
     let { id } = useParams();
     const [show, setShow] = useState(false)
+    const [showCreateProposal, setShowCreateProposal] = useState(false)
+    const [showDeposit, setShowDeposit] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -108,6 +113,18 @@ const ProposalDetail = () => {
     const wrapSetShow = useCallback((val) => {
         setShow(val)
     }, [setShow])
+
+    const handleCloseCreateProposal = () => {
+        setShowCreateProposal(false)
+    }
+
+    const wrapSetShowCreateProposal = useCallback((val) => {
+        setShowCreateProposal(val)
+    }, [setShowCreateProposal])
+
+    const wrapSetShowDeposit = useCallback((val) => {
+        setShowDeposit(val)
+    }, [setShowDeposit])
 
     const getTime = (string) => {
         const date = new Date(string)
@@ -185,6 +202,23 @@ const ProposalDetail = () => {
         setShow(true)
     }
 
+    const handleClickCreateProposal = () => {
+        setShowCreateProposal(true)
+    }
+
+    const handleEnter = (e) => {
+        e.target.style.backgroundImage = 'Linear-Gradient(263.6deg, #4D4D4D 0%, #000000 100%)'
+        e.target.style.border = 'solid 2px #EEC13F'
+    }
+
+    const handleLeave = (e) => {
+        e.target.style.backgroundImage = 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)'
+    }
+
+    const handleClickDeposit = () => {
+        wrapSetShowDeposit(true)
+    }
+
     return (
         <div style={{
             padding: 140,
@@ -212,6 +246,10 @@ const ProposalDetail = () => {
                 </span>
             </div>
             <div style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <div style={{
                     textAlign: 'left',
                     fontSize: '48px',
                     color: '#ffffff',
@@ -221,6 +259,22 @@ const ProposalDetail = () => {
                 }}>
                     DETAILS
                 </div>
+                <div>
+                    <button
+                        onClick={handleClickCreateProposal}
+                        style={{
+                            border: 0,
+                            backgroundColor: '#eec13f',
+                            color: '#ffffff',
+                            fontWeight: 700,
+                            fontSize: '24px',
+                            padding: '10px 20px 10px 20px',
+                            borderRadius: '10px'
+                        }} onMouseOver={handleEnter} onMouseLeave={handleLeave}>
+                        Create Proposal
+                    </button>
+                </div>
+            </div>
             <div style={style.card}>
                 <div style={style.content}>
                     <div style={style.title}>
@@ -242,7 +296,7 @@ const ProposalDetail = () => {
                         <p className="left">
                             Proposer
                         </p>
-                        <Link className="right" to={`/accounts/${proposer.proposer}`} style={{textAlign: 'left'}}>
+                        <Link className="right" to={`/accounts/${proposer.proposer}`} style={{ textAlign: 'left' }}>
                             <p style={{ color: '#ED9D26' }}>
                                 {proposer.proposer}
                             </p>
@@ -314,28 +368,85 @@ const ProposalDetail = () => {
                                 </button>
                             )
                         }
+                        {
+                            proposal.length > 0 && proposal[0].status === 1 && (
+                                <button style={style.extraButton} onClick={handleClickDeposit}>
+                                    <FaCoins style={{ marginRight: '5px' }} />Deposit
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </div>
-            <div style={{ ...style.voters, paddingTop: '30px'}} >
+            <div style={{ ...style.voters, paddingTop: '30px' }} >
                 {proposal.length > 0 && <VoterList proposal={proposal[0]} />}
             </div>
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
                     <Modal.Header style={{
-                            backgroundColor: '#4D4D4D',
-                            color: '#EEC13F',
-                            fontFamily: 'Roboto',
-                            fontSize: '24px',
-                            fontWeight: 400,
-                            border: 0
-                        }}>
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Vote
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
                         {proposal.length > 0 && <VoteModal proposal={proposal[0]} id={proposal[0].id} wrapSetShow={wrapSetShow} />}
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
+                <Modal show={showCreateProposal} onHide={handleCloseCreateProposal} backdrop="static" >
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
+                        <div>
+                            Create Proposal
+                            <p style={{
+                                fontSize: '10px',
+                                color: 'red'
+                            }}>
+                                *0x accounts are not supported yet
+                            </p>
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
+                        <CreateProposalModal accounts={accounts} wrapSetShow={wrapSetShowCreateProposal} />
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
+                <Modal show={showDeposit} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
+                        <div>
+                            Deposit
+                            <p style={{
+                                fontSize: '10px',
+                                color: 'red'
+                            }}>
+                                *0x accounts are not supported yet
+                            </p>
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
+                        <DepositModal accounts={accounts} wrapSetShow={wrapSetShowDeposit} id={proposal.length > 0 && proposal[0].id || 0} />
                     </Modal.Body>
                 </Modal>
             </>
