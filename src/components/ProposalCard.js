@@ -98,7 +98,7 @@ const style = {
     }
 }
 
-const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit, index }) => {
+const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit, index, bond }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -114,20 +114,10 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
 
     const getPercentage = (vote) => {
         if (proposal.tally !== undefined) {
-            const sum = parseFloat(proposal.tally.yes)
-                + parseFloat(proposal.tally.no_with_veto)
-                + parseFloat(proposal.tally.no)
-                + parseFloat(proposal.tally.abstain)
-
-            return sum !== 0 && parseFloat(parseFloat(vote) * 100 / sum).toFixed(1) || 0
+            return bond !== 0 && parseFloat(parseFloat(vote) * 100 / bond).toFixed(1) || 0
         }
         else {
-            const sum = parseFloat(proposal.final_tally_result.yes)
-                + parseFloat(proposal.final_tally_result.no_with_veto)
-                + parseFloat(proposal.final_tally_result.no)
-                + parseFloat(proposal.final_tally_result.abstain)
-
-            return sum !== 0 && parseFloat(parseFloat(vote) * 100 / sum).toFixed(1) || 0
+            return bond !== 0 && parseFloat(parseFloat(vote) * 100 / bond).toFixed(1) || 0
         }
     }
 

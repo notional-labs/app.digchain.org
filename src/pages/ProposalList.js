@@ -2,7 +2,7 @@ import ProposalCard from "../components/ProposalCard"
 import { Modal, } from 'react-bootstrap'
 import VoteModal from "../components/VoteModal"
 import { useCallback, useEffect, useState } from "react"
-import { getProposals, } from "../helpers/getProposal"
+import { getProposals, getBond } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
 import { Link } from "react-router-dom"
 import { Skeleton } from "antd"
@@ -49,14 +49,18 @@ const ProposalList = ({ accounts }) => {
     const [loading, setLoading] = useState(false)
     const [showCreateProposal, setShowCreateProposal] = useState(false)
     const [showDeposit, setShowDeposit] = useState(false)
+    const [bond, setBond] = useState(0)
 
     useEffect(() => {
         (async () => {
             setLoading(true)
             const res = await getProposals()
             const proposals = res.proposals
+            const bondRes = await getBond()
+            const bondToken = bondRes.result.bonded_tokens || 0
             proposals.sort((x, y) => y.proposal_id - x.proposal_id)
             setProposals([...proposals])
+            setBond(parseInt(bondToken))
             setLoading(false)
         })()
     }, [])
@@ -154,7 +158,14 @@ const ProposalList = ({ accounts }) => {
             ) : (
                 <div className="gridBox">
                     {(proposals.map((proposal, index) => (
-                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} wrapSetShowDeposit={wrapSetShowDeposit} index={index} />
+                        <ProposalCard
+                            proposal={proposal}
+                            wrapSetShow={wrapSetShow}
+                            wrapSetSelect={wrapSetSelect}
+                            wrapSetShowDeposit={wrapSetShowDeposit}
+                            index={index}
+                            bond={bond}
+                        />
                     )))}
                 </div>
             )
