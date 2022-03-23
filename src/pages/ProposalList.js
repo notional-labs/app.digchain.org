@@ -7,6 +7,7 @@ import '../assets/css/ProposalList.css'
 import { Link } from "react-router-dom"
 import { Skeleton } from "antd"
 import CreateProposalModal from "../components/CreateProposalModal"
+import DepositModal from "../components/DepositModal"
 
 const style = {
     container: {
@@ -47,6 +48,7 @@ const ProposalList = ({ accounts }) => {
     const [selectProposal, setSelectProposal] = useState(-1)
     const [loading, setLoading] = useState(false)
     const [showCreateProposal, setShowCreateProposal] = useState(false)
+    const [showDeposit, setShowDeposit] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -82,6 +84,10 @@ const ProposalList = ({ accounts }) => {
     const wrapSetShowCreateProposal = useCallback((val) => {
         setShowCreateProposal(val)
     }, [setShowCreateProposal])
+
+    const wrapSetShowDeposit = useCallback((val) => {
+        setShowDeposit(val)
+    }, [setShowDeposit])
 
     const handleEnter = (e) => {
         e.target.style.backgroundImage = 'Linear-Gradient(263.6deg, #4D4D4D 0%, #000000 100%)'
@@ -122,7 +128,7 @@ const ProposalList = ({ accounts }) => {
                     PROPOSALS
                 </div>
                 <div>
-                    <bUtton 
+                    <button
                         onClick={handleClick}
                         style={{
                             border: 0,
@@ -134,7 +140,7 @@ const ProposalList = ({ accounts }) => {
                             borderRadius: '10px'
                         }} onMouseOver={handleEnter} onMouseLeave={handleLeave}>
                         Create Proposal
-                    </bUtton>
+                    </button>
                 </div>
             </div>
             {loading && proposals.length === 0 ? (
@@ -148,7 +154,7 @@ const ProposalList = ({ accounts }) => {
             ) : (
                 <div className="gridBox">
                     {(proposals.map((proposal, index) => (
-                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} index={index} />
+                        <ProposalCard proposal={proposal} wrapSetShow={wrapSetShow} wrapSetSelect={wrapSetSelect} wrapSetShowDeposit={wrapSetShowDeposit} index={index} />
                     )))}
                 </div>
             )
@@ -173,6 +179,31 @@ const ProposalList = ({ accounts }) => {
                 </Modal>
             </>
             <>
+                <Modal show={showDeposit} onHide={handleClose} backdrop="static" >
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'Roboto',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
+                        <div>
+                            Deposit
+                            <p style={{
+                                fontSize: '10px',
+                                color: 'red'
+                            }}>
+                                *0x accounts are not supported yet
+                            </p>
+                        </div>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
+                        <DepositModal accounts={accounts} wrapSetShow={wrapSetShowDeposit} id={proposals[selectProposal] && proposals[selectProposal].proposal_id} />
+                    </Modal.Body>
+                </Modal>
+            </>
+            <>
                 <Modal show={showCreateProposal} onHide={handleCloseCreateProposal} backdrop="static" >
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
@@ -184,6 +215,12 @@ const ProposalList = ({ accounts }) => {
                     }}>
                         <div>
                             Create Proposal
+                            <p style={{
+                                fontSize: '10px',
+                                color: 'red'
+                            }}>
+                                *0x accounts are not supported yet
+                            </p>
                         </div>
                     </Modal.Header>
                     <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>

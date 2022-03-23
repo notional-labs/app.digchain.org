@@ -1,15 +1,14 @@
-import { InputNumber, notification, Checkbox, Input } from "antd"
+import { InputNumber, notification, Checkbox } from "antd"
 import { useState, useEffect } from 'react'
 import { Form } from "react-bootstrap";
-import { getClient, getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeSubmitProposalMsg, makeSignDocSubmitProposalMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
-import { submitProposal } from "../helpers/transaction";
+import { getKeplr, getStargateClient, getClient } from "../helpers/getKeplr";
+import { makeSignDocDepositMsg, makeDepositMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers"
 import ClipLoader from "react-spinners/ClipLoader"
 import { getParams } from "../helpers/getProposal";
+import { deposit } from "../helpers/transaction";
 
-const { TextArea } = Input;
 
 //TODO: add logic to web, and right variale
 
@@ -52,14 +51,12 @@ const style = {
     }
 }
 
-const CreateProposalModal = ({ accounts, wrapSetShow }) => {
+const DepositModal = ({ accounts, wrapSetShow, id}) => {
     const [value, setValue] = useState('')
-    const [selectProposer, setSelectProposer] = useState(0)
+    const [selectDepositor, setSelectDepositor] = useState(0)
     const [showAdvance, setShowAdvance] = useState(false)
     const [gasAmount, setGasAmount] = useState('400000')
     const [isDoingTX, setIsDoingTx] = useState(false)
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
     const [minAmount, setMinAmount] = useState(0)
 
     useEffect(() => {
@@ -79,21 +76,13 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
 
     const error = (message) => {
         notification.error({
-            message: 'Submit failed',
+            message: 'Deposit failed',
             description: message
         })
     };
 
     const handleChange = (value) => {
         setValue(value)
-    }
-
-    const handleChangeTitle = (e) => {
-        setTitle(e.target.value)
-    }
-
-    const handleChangeDescription = (e) => {
-        setDescription(e.target.value)
     }
 
     const checkDisable = () => {
@@ -103,8 +92,8 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
         return false
     }
 
-    const handleChangeSelectProposer = (e) => {
-        setSelectProposer(e.target.value)
+    const handleChangeSelectDepositor = (e) => {
+        setSelectDepositor(e.target.value)
     }
 
     const check = (e) => {
@@ -118,12 +107,12 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
 
     const handleClick = async () => {
         setIsDoingTx(true)
-        if (accounts[selectProposer].type === 'keplr') {
+        if (accounts[selectDepositor].type === 'keplr') {
             const newStargate = await getClient()
             if (newStargate != null) {
+                const depositAmount = parseFloat(value) * 1000000
                 const gas = parseInt(gasAmount)
-                const deposit = parseFloat(value) * 1000000
-                submitProposal(newStargate, title, description, deposit, accounts[selectProposer].account.address, gas).then(() => {
+                deposit(newStargate, id, accounts[selectDepositor].account.address, depositAmount, gas).then(() => {
                     setIsDoingTx(false)
                     success()
                     wrapSetShow(false)
@@ -145,19 +134,17 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
             const memo = "Love From Dev Team"
 
             const gasLimit = parseInt(gasAmount)
+            const depositAmount = parseFloat(value) * 1000000
 
-            //TODO: add choice form to validator_dst_address
-            const deposit = parseInt(value)
-
-            const msgSubmitProposal = makeSubmitProposalMsg(title, description, deposit, accounts[selectProposer].account, denom)
-            const signDocSubmitProposal = makeSignDocSubmitProposalMsg(title, description, deposit, accounts[selectProposer].account, denom)
+            const msgDeposit = makeDepositMsg(depositAmount, accounts[selectDepositor].account, id, denom)
+            const signDocDeposit = makeSignDocDepositMsg(depositAmount, accounts[selectDepositor].account, id, denom)
 
             const UIProcessing = function () {
                 setIsDoingTx(false)
                 wrapSetShow(false)
             }
 
-            broadcastTransaction(accounts[selectProposer].account, msgSubmitProposal, signDocSubmitProposal, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
+            broadcastTransaction(accounts[selectDepositor].account, msgDeposit, signDocDeposit, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // wrapSetShow(false)
                 // setIsDoingTx(false)
                 // success()
@@ -166,16 +153,16 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                 wrapSetShow(false)
                 error(e.message)
             })
-        }
 
+        }
     }
 
     return (
         <div>
             <div style={style.transfer}>
-                <p style={style.formTitle}>Proposer</p>
+                <p style={style.formTitle}>Depositor</p>
                 <>
-                    <Form.Select onChange={handleChangeSelectProposer} defaultValue={selectProposer} style={style.formInput}>
+                    <Form.Select onChange={handleChangeSelectDepositor} style={style.formInput}>
                         {
                             accounts.filter(x => x.type === 'keplr').map((account, index) => (
                                 <option key={index} value={index}>{account.type === 'keplr' ? account.account.address : account.account}</option>
@@ -183,55 +170,26 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                         }
                     </Form.Select>
                 </>
-                <p style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto', marginTop: '1rem' }}>Content</p>
-                <p style={{ ...style.formTitle, marginTop: '20px' }}>Title</p>
+            </div>
+            <div style={style.transfer}>
+                <p style={style.formTitle}>Proposal Id</p>
                 <div style={{
                     marginBottom: '20px',
                     width: '100%',
                     height: '40px',
                     borderRadius: '10px',
-                    border: `1px solid #c4c4c4`,
+                    border: `2px solid #c4c4c4`,
                     fontSize: '1rem',
-                    backgroundColor: '#C4C4C4',
-                    color: '#9B9B9B',
-                    padding: 0,
+                    padding: '0.2rem',
+                    paddingLeft: '0.5rem',
+                    backgroundColor: '#4D4D4D',
+                    color: '#ffffff'
                 }}>
-                    <Input placeholder="title"
-                        style={{
-                            height: '100%',
-                            fontSize: '1rem',
-                            paddingTop: '0.2rem',
-                            backgroundColor: '#4D4D4D',
-                            color: '#F6F3FB',
-                            borderRadius: '10px',
-                            border: 'none'
-                        }} onChange={handleChangeTitle}/>
-                </div>
-                <p style={{ ...style.formTitle, marginTop: '20px' }}>Description</p>
-                <div style={{
-                    marginBottom: '20px',
-                    width: '100%',
-                    borderRadius: '10px',
-                    border: `1px solid #c4c4c4`,
-                    fontSize: '1rem',
-                    backgroundColor: '#C4C4C4',
-                    color: '#9B9B9B',
-                    padding: 0,
-                }}>
-                    <TextArea placeholder="description"
-                        style={{
-                            height: '100%',
-                            fontSize: '1rem',
-                            paddingTop: '0.2rem',
-                            backgroundColor: '#4D4D4D',
-                            color: '#F6F3FB',
-                            borderRadius: '10px',
-                            border: 'none'
-                        }} onChange={handleChangeDescription}/>
+                    {id}
                 </div>
             </div>
             <div style={style.transfer}>
-                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Initial Deposit</div>
+                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Deposit</div>
                 <div style={{
                     width: '100%',
                     height: '40px',
@@ -250,7 +208,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                         backgroundColor: '#4D4D4D',
                         color: '#F6F3FB',
                         borderRadius: '10px 0 0 10px'
-                    }} 
+                    }} min={0}
                         step={0.000001}
                         onChange={handleChange}
                         controls={false}
@@ -377,4 +335,4 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
     )
 }
 
-export default CreateProposalModal
+export default DepositModal

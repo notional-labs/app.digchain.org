@@ -6,6 +6,7 @@ import {
 import { useState, useEffect } from "react";
 import { getTally } from "../helpers/getProposal"
 import { RiBarChart2Fill } from "react-icons/ri";
+import { FaCoins} from "react-icons/fa";
 import { Skeleton } from 'antd';
 
 const style = {
@@ -97,7 +98,7 @@ const style = {
     }
 }
 
-const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
+const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit, index }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -194,6 +195,11 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
 
     const handleClick = () => {
         wrapSetShow(true)
+        wrapSetSelect(index)
+    }
+
+    const handleClickDeposit = () => {
+        wrapSetShowDeposit(true)
         wrapSetSelect(index)
     }
 
@@ -305,6 +311,13 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, index }) => {
                         proposal.status === 'PROPOSAL_STATUS_VOTING_PERIOD' && (
                             <button style={style.extraButton} onClick={handleClick}>
                                 <RiBarChart2Fill style={{ fontSize: '1.5em' }} /> Vote
+                            </button>
+                        )
+                    }
+                    {
+                        proposal.status === 'PROPOSAL_STATUS_DEPOSIT_PERIOD' && (
+                            <button style={style.extraButton} onClick={handleClickDeposit}>
+                                <FaCoins style={{ marginRight: '5px' }} />Deposit
                             </button>
                         )
                     }

@@ -87,12 +87,10 @@ export const makeVoteMsg = (option, proposal_id, voter) => {
 
 export const makeSubmitProposalMsg = (title, description, deposit, proposer, denom) => {
 
-    console.log(gov_1)
-
     const msgSubmitProposal = {
         content: {
             typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-            value:  gov_1.TextProposal.encode(gov_1.TextProposal.fromPartial({
+            value: gov_1.TextProposal.encode(gov_1.TextProposal.fromPartial({
                 title: title,
                 description: description,
             })).finish(),
@@ -105,6 +103,22 @@ export const makeSubmitProposalMsg = (title, description, deposit, proposer, den
         typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
         value: msgSubmitProposal,
     }
+    return msg
+}
+
+export const makeDepositMsg = (amount, depositor, proposal_id, denom) => {
+
+    const msgDeposit = {
+        amount: [coin(amount, denom)],
+        depositor: depositor,
+        proposalId: proposal_id
+    }
+
+    const msg = {
+        typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
+        value: msgDeposit
+    }
+
     return msg
 }
 
@@ -199,4 +213,15 @@ export const makeSignDocSubmitProposalMsg = (title, description, deposit, propos
         }
     }
     return signDocSubmitProposal
+}
+
+export const makeSignDocDepositMsg = (amount, depositor, proposal_id, denom) => {
+    const signDocDeposit = {
+        type: 'cosmos-sdk/MsgDeposit',
+        value: {
+            amount: [coin(amount, denom)],
+            depositor: depositor,
+            proposal_id: proposal_id
+        }
+    }
 }

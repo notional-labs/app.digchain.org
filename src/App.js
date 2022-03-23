@@ -222,7 +222,7 @@ const App = () => {
         <Route exact path="/accounts" element={<AccountList accounts={accounts} wrapSetAccounts={wrapSetAccounts} />} />
         <Route exact path="/accounts/:id" element={<AccountDetail accounts={accounts} />} />
         <Route exact path="/proposals" element={<ProposalList accounts={accounts}/>} />
-        <Route exact path="/proposals/:id" element={<ProposalDetail />} />
+        <Route exact path="/proposals/:id" element={<ProposalDetail accounts={accounts}/>} />
       </Routes>
       <div style={style.contact}>
         <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
