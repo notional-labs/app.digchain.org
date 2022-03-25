@@ -21,7 +21,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.5)'
     },
     div: {
         display: 'flex',
@@ -31,11 +31,11 @@ const style = {
     },
     button: {
         border: 0,
-        borderRadius: '20px',
+        borderRadius: '10px',
         width: '120px',
         marginTop: 10,
         marginBottom: 10,
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         fontWeight: 300,
         padding: '2em',
         paddingTop: '1em',
@@ -101,7 +101,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim() }}
                 style={{
                     color: '#2a3158',
-                    fontFamily: 'Roboto',
+                    fontFamily: 'montserrat',
                     textAlign: 'left',
                     backgroundColor: 'white',
                     padding: 25,
@@ -113,7 +113,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             </Paragraph>
             <Paragraph style={{
                 color: '#2a3158',
-                fontFamily: 'Roboto',
+                fontFamily: 'montserrat',
                 textAlign: 'left',
                 backgroundColor: 'white',
                 padding: 25,
@@ -123,11 +123,11 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', marginRight: '20px'}} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#ED9D26', color: '#FFFFFF', marginRight: '20px'}} onClick={handleClick}>
                     Transfer
                 </button>
                 <Link to={account.type === 'keplr' ? account.account.address : account.account}>
-                    <button style={{ ...style.button, backgroundColor: '#EEC13F', color: '#FFFFFF', }}>
+                    <button style={{ ...style.button, backgroundColor: '#ED9D26', color: '#FFFFFF', }}>
                         Detail
                     </button>
                 </Link>

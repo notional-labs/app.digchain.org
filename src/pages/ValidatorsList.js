@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Image, } from 'antd';
 import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
-import "@fontsource/roboto"
+import "@fontsource/montserrat"
 import PacmanLoader from "react-spinners/PacmanLoader";
 import notFound from '../assets/img/no-profile.png'
 import { Modal, } from 'react-bootstrap';
@@ -27,11 +27,11 @@ const style = {
     th: {
         padding: '10px 10px',
         textAlign: 'left',
-        fontWeight: 700,
-        fontSize: '20px',
-        color: '#ffffff',
+        fontWeight: 900,
+        fontSize: '24px',
+        color: '#EEC13F',
         textTransform: 'uppercase',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
     },
     td: {
         padding: '0.7em',
@@ -41,15 +41,15 @@ const style = {
         verticalAlign: 'middle',
         fontWeight: 700,
         fontSize: '20px',
-        color: '#000000',
-        fontFamily: 'Roboto',
+        color: '#ffffff',
+        fontFamily: 'montserrat',
     },
     breadcrumb: {
         textAlign: 'left',
         fontWeight: 700,
         fontSize: '20px',
         color: '#ffffff',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         paddingBottom: '0.5em'
     },
 }
@@ -144,38 +144,18 @@ const ValidatorsList = () => {
 
     return (
         !loading ? (
-            <div style={{ padding: 140, paddingTop: 0 }}>
-                <div style={style.breadcrumb}>
-                    <span>
-                        <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
-                            Homepage
-                        </Link>
-                    </span>
-                    <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                        {' / '}
-                    </span>
-                    <span style={{ color: '#ED9D26' }}>
-                        Staking
-                    </span>
-                </div>
+            <div style={{ padding: 70, paddingTop: '7em' }}>
                 <div style={{
                     textAlign: 'left',
-                    fontSize: '48px',
+                    fontSize: '36px',
                     color: '#ffffff',
-                    fontFamily: 'Roboto',
-                    fontWeight: 700,
-                    marginBottom: '1.3em'
+                    fontFamily: 'montserrat',
+                    fontWeight: 'bold',
+                    marginBottom: '20px'
                 }}>
                     VALIDATOR
                 </div>
-                <div style={{
-                    backgroundColor: '#EEC13F',
-                    borderRadius: '30px',
-                    padding: 10,
-                    paddingLeft: 25,
-                    paddingRight: 25,
-                    paddingBottom: 25
-                }}>
+                <div>
                     <table style={style.table}>
                         <thead style={style.tblHeader}>
                             <tr>
@@ -184,13 +164,11 @@ const ValidatorsList = () => {
                                     <button style={{
                                         backgroundColor: 'transparent',
                                         border: 0,
-                                        fontWeight: '700',
-                                        fontSize: '20px',
-                                        color: '#fff',
                                         textTransform: 'uppercase',
-                                        fontFamily: 'Roboto',
+                                        fontFamily: 'montserrat',
+                                        fontWeight: 'bold',
                                         padding: 10,
-                                        borderRadius: '20px'
+                                        borderRadius: '24px'
                                     }} onMouseEnter={handleOver}
                                         onMouseLeave={handleLeave}
                                         onClick={handleSort}>
@@ -205,8 +183,8 @@ const ValidatorsList = () => {
                         <tbody style={style.tblContent}>
                             {validators.map((val, index) => {
                                 return (
-                                    <tr key={index} style={{ backgroundColor: '#ffffff', marginBottom: 20 }}>
-                                        <td style={{ ...style.td, borderRadius: '30px 0 0 30px', }}>
+                                    <tr key={index} style={{ backgroundColor: 'transparent', marginBottom: 20, }}>
+                                        <td style={{ ...style.td, borderRadius: '10px 0 0 10px', border: 'solid 2px #ED9D26', borderRight: 'none' }}>
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                                 <div style={{
                                                     borderRadius: '50%',
@@ -255,22 +233,22 @@ const ValidatorsList = () => {
                                                 } */}
 
                                                 <div style={{ marginLeft: '1rem' }} >
-                                                    <div style={{ color: '#2C223E', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
-                                                    <div style={{ fontSize: '15px', fontWeight: 400 }}>{val.description.website ? val.description.website : val.description.identity}</div>
+                                                    <div style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
+                                                    <div style={{ fontSize: '15px', fontWeight: 400, opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td style={{ ...style.td, textAlign: 'center' }}>
+                                        <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>
                                             <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
-                                            <div style={{ fontSize: '15px' }}>{`${val.votingPowerPercentage} %`} </div>
+                                            <div style={{ fontSize: '15px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                         </td>
-                                        <td style={{ ...style.td, textAlign: 'center' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                        <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 30px 30px 0', color: '#ffffff' }}>
+                                        <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
+                                        <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0',border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
                                             <button style={{
                                                 backgroundColor: '#ED9D27',
                                                 border: 'none',
-                                                borderRadius: '30px',
-                                                padding: '1.5em',
+                                                borderRadius: '10px',
+                                                padding: '1em',
                                                 fontSize: '15px',
                                                 fontWeight: 700,
                                                 boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
@@ -289,7 +267,7 @@ const ValidatorsList = () => {
                         <Modal.Header style={{
                             backgroundColor: '#4D4D4D',
                             color: '#EEC13F',
-                            fontFamily: 'Roboto',
+                            fontFamily: 'montserrat',
                             fontSize: '20px',
                             fontWeight: 400,
                             border: 0

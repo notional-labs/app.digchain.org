@@ -44,7 +44,7 @@ const style = {
         marginBottom: 10
     },
     formTitle: {
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 400,
         fontSize: '15px'
@@ -257,7 +257,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
@@ -328,7 +328,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         fontSize: '15px',
                         backgroundColor: '#C4C4C4',
                         color: '#ffffff',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         marginRight: '20px'
                     }}>
                     Cancel
@@ -343,7 +343,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         fontSize: '15px',
                         backgroundColor: '#E4BA40',
                         color: '#ffffff',
-                        fontFamily: 'Roboto'
+                        fontFamily: 'montserrat'
                     }}>
                     Send
                 </button>

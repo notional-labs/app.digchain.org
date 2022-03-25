@@ -6,6 +6,14 @@
   min-width: 100vh;
   width: 100%;
   height: auto;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.glow {
+  background: radial-gradient(circle farthest-side, #EEC13F 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .App-logo {
@@ -32,8 +40,8 @@
 .gridBox {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
-  background-color: #EEC13F;
+  grid-row-gap: 30px;
+  grid-column-gap: 100px;
   border-radius: 20px;
 }
 
@@ -42,8 +50,6 @@
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 30px;
   grid-column-gap: 100px;
-  padding: 4em;
-  background-color: #EEC13F;
   border-radius: 30px;
 }
 
@@ -63,7 +69,6 @@
 
 .asset-block {
   margin: auto;
-  background-color: rgb(255, 255, 255, 1);
   border-radius: 20px;
   display: flex;
   flex-direction: row;
@@ -78,16 +83,23 @@
 }
 
 .nav-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center
+  align-items: left;
+  text-align: left;
 }
 
 .nav-button {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  vertical-align: center
+  vertical-align: center;
+  padding-left: 0;
+  padding-top: 50px;
+}
+
+.nav-link:hover {
+  animation-name: faded;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
 }
 
 @media screen and (max-width: 1300px) {
@@ -138,5 +150,11 @@
   border-color: #ffac38 ;
 }
 
-
-
+@keyframes faded {
+  from {
+    color: #ffffff;
+  }
+  to {
+    color: #EEC13F;
+  }
+}

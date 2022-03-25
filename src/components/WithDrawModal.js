@@ -41,7 +41,7 @@ const style = {
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 500
     }
@@ -154,7 +154,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
@@ -225,7 +225,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#C4C4C4',
                         color: '#ffffff',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         marginRight: '20px'
                     }}>
                     Cancel
@@ -240,7 +240,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#E4BA40',
                         color: '#ffffff',
-                        fontFamily: 'Roboto'
+                        fontFamily: 'montserrat'
                     }}>
                     Withdraw
                 </button>

@@ -268,7 +268,7 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#C4C4C4',
                         color: '#ffffff',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         marginRight: '20px'
                     }}>
                     Cancel
@@ -283,7 +283,7 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#E4BA40',
                         color: '#ffffff',
-                        fontFamily: 'Roboto'
+                        fontFamily: 'montserrat'
                     }}>
                     Send
                 </button>

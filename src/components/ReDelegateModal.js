@@ -43,7 +43,7 @@ const style = {
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 500
     }
@@ -280,7 +280,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
@@ -351,7 +351,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                         fontSize: '15px',
                         backgroundColor: '#C4C4C4',
                         color: '#ffffff',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         marginRight: '20px'
                     }}>
                     Cancel
@@ -366,7 +366,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                         fontSize: '15px',
                         backgroundColor: '#E4BA40',
                         color: '#ffffff',
-                        fontFamily: 'Roboto'
+                        fontFamily: 'montserrat'
                     }}>
                     Send
                 </button>

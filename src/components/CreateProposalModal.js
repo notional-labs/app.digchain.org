@@ -46,7 +46,7 @@ const style = {
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 500
     }
@@ -183,7 +183,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                         }
                     </Form.Select>
                 </>
-                <p style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto', marginTop: '1rem' }}>Content</p>
+                <p style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat', marginTop: '1rem' }}>Content</p>
                 <p style={{ ...style.formTitle, marginTop: '20px' }}>Title</p>
                 <div style={{
                     marginBottom: '20px',
@@ -282,7 +282,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                     {minAmount / 1000000 || 0} DIG
                 </p>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Roboto' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
             </div>
             {
                 showAdvance && (
@@ -353,7 +353,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#C4C4C4',
                         color: '#ffffff',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         marginRight: '20px'
                     }}>
                     Cancel
@@ -368,7 +368,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                         fontSize: '15px',
                         backgroundColor: '#E4BA40',
                         color: '#ffffff',
-                        fontFamily: 'Roboto'
+                        fontFamily: 'montserrat'
                     }}>
                     Send
                 </button>

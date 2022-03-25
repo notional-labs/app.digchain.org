@@ -18,29 +18,30 @@ const { Title, Paragraph } = Typography;
 
 const style = {
     container: {
-        padding: 140,
-        paddingTop: 0
+        padding: 70,
+        paddingTop: '7em',
+        color: '#ffffff'
     },
     assetBlock: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        paddingLeft: 40,
-        paddingRight: 40,
-        paddingBottom: 0
+        color: '#ED9D26',
+        backgroundColor: 'transparent',
     },
     assetChart: {
-        padding: '3em',
-        paddingTop: 0
+        borderRadius: '10px',
+        backgroundColor: 'transparent',
+        border: 'solid 2px #EEC13F',
+        padding: '1em'
     },
     asset: {
-        backgroundColor: '#EEC13F',
-        borderRadius: '30px',
+        borderRadius: '10px',
         marginBottom: '20px',
         color: '#696969',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         marginTop: '20px',
+        backgroundColor: 'transparent',
     },
     assetButtonBlock: {
         display: 'flex',
@@ -48,13 +49,11 @@ const style = {
         justifyContent: 'end',
     },
     delegation: {
-        backgroundColor: '#EEC13F',
         borderRadius: '30px',
         marginBottom: '20px',
         color: '#bdbdbd',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         marginTop: '5rem',
-        padding: 20
     },
     button: {
         border: 0,
@@ -62,7 +61,7 @@ const style = {
         width: '100%',
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
         color: '#F6F3FB',
@@ -89,11 +88,11 @@ const style = {
     },
     breadcrumb: {
         textAlign: 'left',
-        fontWeight: 700,
+        fontWeight: 'bold',
         fontSize: '24px',
         color: '#ffffff',
-        fontFamily: 'Roboto',
-        paddingBottom: '0.5em'
+        fontFamily: 'montserrat',
+        marginBottom: '50px'
     },
 }
 
@@ -179,15 +178,17 @@ const AccountDetail = ({ accounts }) => {
 
     return (
         <div style={style.container}>
+            <div style={{
+                textAlign: 'left',
+                fontSize: '36px',
+                color: '#ffffff',
+                fontFamily: 'montserrat',
+                fontWeight: 'bold',
+                marginBottom: '20px'
+            }}>
+                Detail
+            </div>
             <div style={style.breadcrumb}>
-                <span>
-                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
-                        Homepage
-                    </Link>
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    {' / '}
-                </span>
                 <span style={{ color: '#ffffff', fontWeight: 500 }}>
                     <Link to='/accounts' style={{ color: '#ffffff', fontWeight: 500 }}>
                         Accounts
@@ -197,22 +198,12 @@ const AccountDetail = ({ accounts }) => {
                     {' / '}
                 </span>
                 <span style={{ color: '#ED9D26' }}>
-                    {id}
+                    Details
                 </span>
             </div>
-            <div style={{
-                textAlign: 'left',
-                fontSize: '48px',
-                color: '#ffffff',
-                fontFamily: 'Roboto',
-                fontWeight: 700,
-                marginBottom: '1.3em'
-            }}>
-                Detail
-            </div>
-            <div style={style.asset}>
+            <div style={{...style.asset, backgroundColor: 'transparent'}}>
                 <div style={style.assetBlock}>
-                    <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
+                    <Title style={{ color: '#ED9D26', fontSize: '36px', fontWeight: 'bold', fontFamily: 'montserrat' }}>
                         Assets
                     </Title>
                     {/* <div style={{ ...style.assetButtonBlock, width: '20%', padding: 0 }}>
@@ -252,7 +243,7 @@ const AccountDetail = ({ accounts }) => {
                                 <PieChart
                                     radius={25}
                                     data={[
-                                        { title: 'asset', value: 1, color: 'rgb(255, 255, 255, 1)' },
+                                        { title: 'asset', value: 1, color: 'transparent' },
                                     ]}
                                     style={{ marginLeft: '50px', }}
                                 />
@@ -266,12 +257,11 @@ const AccountDetail = ({ accounts }) => {
                             textAlign: 'left',
                             fontSize: '1.25rem',
                             width: '100%',
-                            backgroundColor: 'rgb(255, 255, 255, 1)',
                             borderRadius: '20px'
                         }}>
                             <li style={style.li}>
                                 <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(61, 255, 148, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'rgb(61, 255, 148)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                         <BsWallet style={{ ...style.icon, color: '#93A98D' }} />
                                     </div>
                                     <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
@@ -280,7 +270,8 @@ const AccountDetail = ({ accounts }) => {
                                             verticalAlign: 'middle',
                                             lineheight: 'normal',
                                             marginTop: '0.5em',
-                                            color: '#000000'
+                                            fontWeight: 'bold',
+                                            color: '#ffffff'
                                         }}>
                                             Balance
                                         </span>
@@ -292,7 +283,7 @@ const AccountDetail = ({ accounts }) => {
                                         verticalAlign: 'middle',
                                         lineheight: 'normal',
                                         marginTop: '0.5em',
-                                        color: '#000000'
+                                        color: '#ffffff'
                                     }}>
                                         {parseInt(asset.balance) / 1000000 || 0} DIG
                                     </span>
@@ -300,7 +291,7 @@ const AccountDetail = ({ accounts }) => {
                             </li>
                             <li style={style.li}>
                                 <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(140, 129, 252, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'rgb(140, 129, 252)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                         <BsLock style={{ ...style.icon, color: '#0B1321' }} />
                                     </div>
                                     <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
@@ -309,7 +300,8 @@ const AccountDetail = ({ accounts }) => {
                                             verticalAlign: 'middle',
                                             lineheight: 'normal',
                                             marginTop: '0.5em',
-                                            color: '#000000'
+                                            color: '#ffffff',
+                                            fontWeight: 'bold',
                                         }}>
                                             Delegation
                                         </span>
@@ -321,7 +313,7 @@ const AccountDetail = ({ accounts }) => {
                                         verticalAlign: 'middle',
                                         lineheight: 'normal',
                                         marginTop: '0.5em',
-                                        color: '#000000'
+                                        color: '#ffffff',
                                     }}>
                                         {parseInt(asset.delegation) / 1000000 || 0} DIG
                                     </span>
@@ -329,7 +321,7 @@ const AccountDetail = ({ accounts }) => {
                             </li>
                             <li style={style.li}>
                                 <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(255, 174, 97, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'rgb(255, 174, 97)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                         <BsGraphUp style={{ ...style.icon, color: '#AE8D4F' }} />
                                     </div>
                                     <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
@@ -338,7 +330,8 @@ const AccountDetail = ({ accounts }) => {
                                             verticalAlign: 'middle',
                                             lineheight: 'normal',
                                             marginTop: '0.5em',
-                                            color: '#000000'
+                                            color: '#ffffff',
+                                            fontWeight: 'bold',
                                         }}>
                                             Reward
                                         </span>
@@ -350,7 +343,7 @@ const AccountDetail = ({ accounts }) => {
                                         verticalAlign: 'middle',
                                         lineheight: 'normal',
                                         marginTop: '0.5em',
-                                        color: '#000000'
+                                        color: '#ffffff'
                                     }}>
                                         {parseInt(asset.reward) / 1000000 || 0} DIG
                                     </span>
@@ -358,7 +351,7 @@ const AccountDetail = ({ accounts }) => {
                             </li>
                             <li style={style.li}>
                                 <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(255, 115, 116, 0.4)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'rgb(255, 115, 116)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
                                         <BsGraphDown style={{ ...style.icon, color: '#BD6B5A' }} />
                                     </div>
                                     <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
@@ -367,7 +360,8 @@ const AccountDetail = ({ accounts }) => {
                                             verticalAlign: 'middle',
                                             lineheight: 'normal',
                                             marginTop: '0.5em',
-                                            color: '#000000'
+                                            color: '#ffffff',
+                                            fontWeight: 'bold',
                                         }}>
                                             Unbonding
                                         </span>
@@ -379,14 +373,14 @@ const AccountDetail = ({ accounts }) => {
                                         verticalAlign: 'middle',
                                         lineheight: 'normal',
                                         marginTop: '0.5em',
-                                        color: '#000000'
+                                        color: '#ffffff'
                                     }}>
                                         {parseInt(asset.unbonding) / 1000000 || 0} DIG
                                     </span>
                                 </div>
                             </li>
                             <li>
-                                <hr style={{ color: 'black' }} />
+                                <hr style={{ color: '#ffffff', fontWeight: 'bold', }} />
                             </li>
                             <li style={{ ...style.li, justifyContent: 'end' }}>
                                 <div style={{ fontWeight: 600, fontSize: '1.5rem' }}>
@@ -394,7 +388,7 @@ const AccountDetail = ({ accounts }) => {
                                         display: 'inline-block',
                                         verticalAlign: 'middle',
                                         lineheight: 'normal',
-                                        color: '#000000'
+                                        color: '#ffffff'
                                     }}>
                                         Total {total}$
                                     </span>
@@ -415,7 +409,7 @@ const AccountDetail = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0
@@ -431,7 +425,7 @@ const AccountDetail = ({ accounts }) => {
             </>
             <>
                 <Modal show={showIbc} onHide={handleCloseIbc} backdrop="static" >
-                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'Roboto', fontSize: '1.2rem', fontWeight: 600 }}>
+                    <Modal.Header style={{ backgroundColor: '#d6d6d6', color: '#696969', fontFamily: 'montserrat', fontSize: '1.2rem', fontWeight: 600 }}>
                         <div>
                             IBC Transfer Token
                         </div>

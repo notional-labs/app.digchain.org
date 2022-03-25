@@ -14,12 +14,12 @@ const style = {
         backgroundColor: 'rgb(255, 255, 255)',
         borderRadius: '15px',
         minHeight: 'auto',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: 'auto',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.5)'
     },
     timeBox: {
         display: 'flex',
@@ -198,7 +198,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
             <div style={style.card}>
                 <div style={{ padding: '2em' }}>
                     <p className='title' style={style.title}>
-                        #{proposal.proposal_id}
+                        <span style={{fontWeight: 'bold'}}>#{proposal.proposal_id}</span>
                         {getStatus()}
                         {proposal.content.title}
                     </p>
