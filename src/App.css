@@ -77,9 +77,8 @@
 
 .chart {
   width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 2em;
+  margin: auto
 }
 
 .nav-bar {

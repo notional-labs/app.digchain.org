@@ -1,4 +1,4 @@
-import { Typography, Breadcrumb } from 'antd';
+import { Typography } from 'antd';
 import { PieChart } from 'react-minimal-pie-chart';
 import DelegationList from '../components/DelegationList';
 import {
@@ -6,13 +6,12 @@ import {
     Link
 } from "react-router-dom";
 import { useEffect, useState, useCallback } from 'react';
-import { Modal, } from 'react-bootstrap'
-import TransferModal from "../components/TransferModal"
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
 import { getAsset, getTotalDelegate, getTotalUnbonding, getPrice, convertAsset } from '../helpers/getBalances';
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import TxList from '../components/TxList';
-import IBCTransferModal from '../components/IBCTransfer';
+import { Doughnut } from 'react-chartjs-2';
+import {Chart, ArcElement} from 'chart.js'
+Chart.register(ArcElement);
 
 const { Title, Paragraph } = Typography;
 
@@ -111,7 +110,6 @@ const AccountDetail = ({ accounts }) => {
     const [total, setTotal] = useState(0)
     let { id } = useParams();
 
-
     const wrapSetShowTransferModal = useCallback((val) => {
         setShow(val)
     }, [setShow])
@@ -167,7 +165,7 @@ const AccountDetail = ({ accounts }) => {
 
             const res = await getPrice()
             const usd = res['dig-chain'].usd || 0
-            
+
             const totalAsset = convertAsset(balance, delegation, reward, unbonding, usd)
 
             setTotal(totalAsset)
@@ -201,23 +199,11 @@ const AccountDetail = ({ accounts }) => {
                     Details
                 </span>
             </div>
-            <div style={{...style.asset, backgroundColor: 'transparent'}}>
+            <div style={{ ...style.asset, backgroundColor: 'transparent' }}>
                 <div style={style.assetBlock}>
                     <Title style={{ color: '#ED9D26', fontSize: '36px', fontWeight: 'bold', fontFamily: 'montserrat' }}>
                         Assets
                     </Title>
-                    {/* <div style={{ ...style.assetButtonBlock, width: '20%', padding: 0 }}>
-                        <div style={{ width: '50%', marginRight: '10px' }}>
-                            <button style={style.button} onClick={handleClick}>
-                                Transfer
-                            </button>
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <button style={{ ...style.button, backgroundColor: '#ff5d54' }} onClick={handleClickIbc}>
-                                IBC Transfer
-                            </button>
-                        </div>
-                    </div> */}
                 </div>
                 <div style={style.assetChart}>
                     <div
@@ -226,28 +212,29 @@ const AccountDetail = ({ accounts }) => {
                         <div
                             className='chart'
                         >
-                            <PieChart
-                                animationDuration={20000}
-                                startAngle={-90}
-                                radius={35}
-                                data={[
-                                    { title: 'Balance', value: parseInt(asset.balance) / 1000000 || 0, color: '#D2DDCF' },
-                                    { title: 'Delegation', value: parseInt(asset.delegation) / 1000000 || 0, color: '#C0C9D8' },
-                                    { title: 'Reward', value: parseInt(asset.reward) / 1000000 || 0, color: '#F9D38C' },
-                                    { title: 'Undonding', value: parseInt(asset.unbonding) / 1000000 || 0, color: '#FCB3A4' }
-                                ]}
-                                style={{
-                                    height: '100%',
-                                }}
-                            >
-                                <PieChart
-                                    radius={25}
-                                    data={[
-                                        { title: 'asset', value: 1, color: 'transparent' },
-                                    ]}
-                                    style={{ marginLeft: '50px', }}
-                                />
-                            </PieChart>
+                            <Doughnut data={{
+                                labels: [
+                                    'Balance',
+                                    'Delegation',
+                                    'Reward',
+                                    'Unbonding'
+                                ],
+                                datasets: [{
+                                    data: [
+                                        parseInt(asset.balance) / 1000000 ,
+                                        parseInt(asset.delegation) / 1000000 ,
+                                        parseInt(asset.reward) / 1000000 ,
+                                        parseInt(asset.unbonding) / 1000000
+                                    ],
+                                    backgroundColor: [
+                                        '#D2DDCF',
+                                        '#C0C9D8',
+                                        '#F9D38C',
+                                        '#FCB3A4'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            }} />
                         </div>
                         <ul style={{
                             textAlign: 'left',
