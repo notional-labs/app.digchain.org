@@ -315,7 +315,7 @@ const ProposalDetail = ({ accounts }) => {
                         </p>
                         <p className="right">
                             {proposal.length > 0 &&
-                                `${proposal[0].voting_start_time.split('T')[0]} ${getTime(proposal[0].voting_start_time)}-${proposal[0].voting_end_time.split('T')[0]} ${getTime(proposal[0].voting_end_time)}`}
+                                `${proposal[0].voting_start_time.split('T')[0]} ${getTime(proposal[0].voting_start_time)}  -  ${proposal[0].voting_end_time.split('T')[0]} ${getTime(proposal[0].voting_end_time)}`}
                         </p>
                     </div>
                     <div className="line">
