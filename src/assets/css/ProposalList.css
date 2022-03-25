@@ -2,9 +2,8 @@
 .gridBox {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 30px;
-    padding: 4em;
-    background-color: #EEC13F;
+    grid-row-gap: 30px;
+    grid-column-gap: 100px;
     border-radius: 20px;
 }
 

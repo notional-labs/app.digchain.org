@@ -19,7 +19,7 @@ const style = {
         margin: 10,
         marginBottom: 0,
         marginLeft: 0,
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         fontWeight: 600,
         backgroundColor: '#2e2c27',
         color: '#F6F3FB'
@@ -29,7 +29,7 @@ const style = {
     },
     tdlHeader: {
         backgroundColor: 'transparent',
-        borderBottom: 'solid 1px black'
+        borderBottom: 'solid 1px #ffffff'
     },
     tdlContent: {
         marginTop: '0px',
@@ -39,11 +39,11 @@ const style = {
     th: {
         padding: '15px 15px',
         textAlign: 'left',
-        fontWeight: '700',
-        fontSize: '15px',
-        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: '24px',
+        color: '#ffffff',
         textTransform: 'uppercase',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
     },
     td: {
         padding: '15px',
@@ -51,8 +51,8 @@ const style = {
         verticalAlign: 'middle',
         fontWeight: '300',
         fontSize: '1rem',
-        color: '#000000',
-        fontFamily: 'Roboto',
+        color: '#ffffff',
+        fontFamily: 'montserrat',
     }
 }
 
@@ -93,13 +93,13 @@ const TxList = ({ address }) => {
         })
     }, [setParams])
     return (
-        <div style={{ padding: 20, paddingTop: 0, }}>
+        <div>
             <div style={style.container}>
-                <Title style={{ color: '#FFFFFF', fontSize: '24px', fontWeight: 700, fontFamily: 'Roboto' }}>
+                <Title style={{ color: '#ED9D26', fontSize: '36px', fontWeight: 'bold', fontFamily: 'montserrat' }}>
                     Transactions
                 </Title>
             </div>
-            <div style={{ backgroundColor: 'rgb(255, 255, 255, 1)', borderRadius: '20px', padding: '2em' }}>
+            <div style={{ borderRadius: '10px', border: 'solid 2px #EEC13F', padding: '1em' }}>
                 {
                     !isLoading ? (
                         <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
@@ -113,15 +113,15 @@ const TxList = ({ address }) => {
                             </thead>
                             <tbody style={style.tdlContent}>
                                 {txs.map((tx, index) => (
-                                    <tr key={index} style={{ backgroundColor: '#ffffff', }}>
+                                    <tr key={index}>
                                         <td style={{ ...style.td, }}>
-                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
+                                            <a style={{ color: '#EEC13F' }} href={`https://ping.pub/dig/blocks/${tx.height}`} target='_blank'>
                                                 {tx.height || ''}
                                             </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '50%' }}>
-                                            <a style={{ color: '#0043b8' }} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'>
-                                                {tx.txhash || ''}
+                                            <a style={{ color: '#EEC13F' }} href={`https://ping.pub/dig/tx/${tx.txhash}`} target='_blank'>
+                                                {`${tx.txhash.slice(0,50)}...` || ''}
                                             </a>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '10%' }}>

@@ -16,8 +16,8 @@ const style = {
         justifyContent: 'center',
         textAlign: 'center',
         paddingBottom: '20px',
-        padding: 140,
-        paddingTop: 0
+        padding: 70,
+        paddingTop: '7em'
     },
     button: {
         marginTop: '3rem',
@@ -28,17 +28,14 @@ const style = {
         fontWeight: 700,
         fontSize: '24px',
         color: '#ffffff',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         paddingBottom: '0.5em'
     },
     card: {
-        backgroundColor: '#EEC13F',
         borderRadius: '15px',
         minHeight: 'auto',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)',
-        padding: '40px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)'
+        gridTemplateColumns: 'repeat(2, 1fr)'
     },
 }
 
@@ -104,30 +101,17 @@ const ProposalList = ({ accounts }) => {
 
     return (
         <div style={style.container}>
-            <div style={style.breadcrumb}>
-                <span>
-                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
-                        Homepage
-                    </Link>
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    {' / '}
-                </span>
-                <span style={{ color: '#ED9D26' }}>
-                    Proposals
-                </span>
-            </div>
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between'
             }}>
                 <div style={{
                     textAlign: 'left',
-                    fontSize: '48px',
+                    fontSize: '36px',
                     color: '#ffffff',
-                    fontFamily: 'Roboto',
-                    fontWeight: 700,
-                    marginBottom: '1.3em'
+                    fontFamily: 'montserrat',
+                    fontWeight: 'bold',
+                    marginBottom: '50px'
                 }}>
                     PROPOSALS
                 </div>
@@ -175,7 +159,7 @@ const ProposalList = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0
@@ -194,7 +178,7 @@ const ProposalList = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0
@@ -219,7 +203,7 @@ const ProposalList = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0

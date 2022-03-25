@@ -14,8 +14,8 @@ const style = {
         justifyContent: 'center',
         textAlign: 'center',
         paddingBottom: '20px',
-        padding: 140,
-        paddingTop: 0
+        padding: 70,
+        paddingTop: '7em'
     },
     card: {
         display: 'flex',
@@ -32,7 +32,7 @@ const style = {
         fontWeight: 700,
         fontSize: '24px',
         color: '#ffffff',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         paddingBottom: '0.5em'
     },
 }
@@ -54,26 +54,13 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
     }
     return (
         <div style={style.container}>
-            <div style={style.breadcrumb}>
-                <span>
-                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
-                        Homepage
-                    </Link>
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    {' / '}
-                </span>
-                <span style={{ color: '#ED9D26' }}>
-                    Accounts
-                </span>
-            </div>
             <div style={{
                 textAlign: 'left',
-                fontSize: '48px',
+                fontSize: '36px',
                 color: '#ffffff',
-                fontFamily: 'Roboto',
-                fontWeight: 700,
-                marginBottom: '1.3em'
+                fontFamily: 'montserrat',
+                fontWeight: 'bold',
+                marginBottom: '50px'
             }}>
                 ACCOUNTS
             </div>
@@ -83,7 +70,7 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                         <ProfileCard account={account} index={index} wrapSetSelect={wrapSetSelect} wrapSetShow={wrapSetShowTransferModal} wrapSetAccounts={wrapSetAccounts} />
                     )))}
                 </div> : (
-                    <div style={{ color: '#ffc16b', height: '55vh', paddingTop: '15em', fontFamily: 'Ubuntu' }}>
+                    <div style={{ color: '#ffc16b', height: '55vh', paddingTop: '15em', fontFamily: 'montserrat' }}>
                         <ImFloppyDisk style={{ fontSize: '10rem', opacity: 0.2, }} />
                         <p style={{ fontSize: '2rem', opacity: 0.2, paddingTop: '1em', marginBottom: 0 }}>
                             No accounts yet
@@ -99,7 +86,7 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 <Modal.Header style={{
                             backgroundColor: '#4D4D4D',
                             color: '#EEC13F',
-                            fontFamily: 'Roboto',
+                            fontFamily: 'montserrat',
                             fontSize: '24px',
                             fontWeight: 400,
                             border: 0

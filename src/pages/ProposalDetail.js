@@ -15,35 +15,31 @@ import { FaCoins} from "react-icons/fa";
 
 const style = {
     card: {
-        backgroundColor: '#EEC13F',
-        padding: '40px',
-        borderRadius: '20px',
+        borderRadius: '10px',
         minHeight: '100%',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        marginBottom: '2em'
+        marginBottom: '2em',
+        color: '#ffffff',
     },
     title: {
         textAlign: 'left',
         fontWeight: 'bold',
         fontSize: '1.3rem',
+        color: '#EEC13F'
     },
     content: {
         textAlign: 'left',
-        backgroundColor: '#ffffff',
         padding: '40px',
-        borderRadius: '15px',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+        borderRadius: '10px',
+        border: 'solid 2px #EEC13F'
     },
     voters: {
-        backgroundColor: '#EEC13F',
         borderRadius: '10px',
-        marginBottom: '20px',
-        color: '#bdbdbd',
-        fontFamily: 'Roboto',
-        padding: '40px',
+        color: '#ffffff',
+        fontFamily: 'montserrat',
         marginTop: 0
     },
     breadcrumb: {
@@ -51,7 +47,7 @@ const style = {
         fontWeight: 700,
         fontSize: '24px',
         color: '#ffffff',
-        fontFamily: 'Roboto',
+        fontFamily: 'montserrat',
         paddingBottom: '0.5em'
     },
     buttonBox: {
@@ -67,7 +63,7 @@ const style = {
         fontWeight: 'bold',
         width: '150px',
         backgroundColor: '#C4C4C4',
-        color: '#ffffff',
+        color: '#000000',
         border: 0
     },
     extraButton: {
@@ -140,7 +136,7 @@ const ProposalDetail = ({ accounts }) => {
         if (proposal[0].status === 3) {
             return (
                 <span style={{
-                    color: '#31bdac',
+                    color: '#ffffff',
                     backgroundColor: '#2A9D8F',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -154,7 +150,7 @@ const ProposalDetail = ({ accounts }) => {
         else if (proposal[0].status === 4) {
             return (
                 <span style={{
-                    color: '#ff977d',
+                    color: '#ffffff',
                     backgroundColor: '#E76F51',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -169,7 +165,7 @@ const ProposalDetail = ({ accounts }) => {
         else if (proposal[0].status === 1) {
             return (
                 <span style={{
-                    color: '#00cfe8',
+                    color: '#ffffff',
                     backgroundColor: 'rgba(0,207,232,.12)',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -184,7 +180,7 @@ const ProposalDetail = ({ accounts }) => {
         else {
             return (
                 <span style={{
-                    color: '#7367f0',
+                    color: '#ffffff',
                     backgroundColor: '#1D5470',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -221,41 +217,20 @@ const ProposalDetail = ({ accounts }) => {
 
     return (
         <div style={{
-            padding: 140,
-            paddingTop: 20
+            padding: 70,
+            paddingTop: '7em'
         }}>
-            <div style={style.breadcrumb}>
-                <span>
-                    <Link to='/' style={{ color: '#ffffff', fontWeight: 500 }}>
-                        Homepage
-                    </Link>
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    {' / '}
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    <Link to='/proposals' style={{ color: '#ffffff', fontWeight: 500 }}>
-                        Proposals
-                    </Link>
-                </span>
-                <span style={{ color: '#ffffff', fontWeight: 500 }}>
-                    {' / '}
-                </span>
-                <span style={{ color: '#ED9D26' }}>
-                    {id}
-                </span>
-            </div>
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between'
             }}>
                 <div style={{
                     textAlign: 'left',
-                    fontSize: '48px',
+                    fontSize: '36px',
                     color: '#ffffff',
-                    fontFamily: 'Roboto',
-                    fontWeight: 700,
-                    marginBottom: '1.3em'
+                    fontFamily: 'montserrat',
+                    fontWeight: 'bold',
+                    marginBottom: '50px'
                 }}>
                     DETAILS
                 </div>
@@ -275,11 +250,24 @@ const ProposalDetail = ({ accounts }) => {
                     </button>
                 </div>
             </div>
+            <div style={style.breadcrumb}>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    <Link to='/proposals' style={{ color: '#ffffff', fontWeight: 500 }}>
+                        Proposals
+                    </Link>
+                </span>
+                <span style={{ color: '#ffffff', fontWeight: 500 }}>
+                    {' / '}
+                </span>
+                <span style={{ color: '#ED9D26' }}>
+                    Details
+                </span>
+            </div>
             <div style={style.card}>
                 <div style={style.content}>
                     <div style={style.title}>
                         <p className='title' style={style.title}>
-                            #{proposal.length > 0 && proposal[0].id}
+                            <span style={{fontWeight: 'bold'}}>#{proposal.length > 0 && proposal[0].id}</span>
                             {proposal.length > 0 && getStatus()}
                             {proposal.length > 0 && proposal[0].content.value.title}
                         </p>
@@ -354,7 +342,7 @@ const ProposalDetail = ({ accounts }) => {
                             {proposal.length > 0 && proposal[0].content.value.description}
                         </p>
                     </div>
-                    <div style={{ borderTop: 'solid 1.5px black' }} />
+                    <div style={{ borderTop: 'solid 1.5px #ffffff' }} />
                     <div style={style.buttonBox}>
                         <Link to={`/proposals`}>
                             <button style={style.detail}>
@@ -378,7 +366,7 @@ const ProposalDetail = ({ accounts }) => {
                     </div>
                 </div>
             </div>
-            <div style={{ ...style.voters, paddingTop: '30px' }} >
+            <div style={{ ...style.voters}} >
                 {proposal.length > 0 && <VoterList proposal={proposal[0]} />}
             </div>
             <>
@@ -386,7 +374,7 @@ const ProposalDetail = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0
@@ -405,7 +393,7 @@ const ProposalDetail = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0
@@ -430,7 +418,7 @@ const ProposalDetail = ({ accounts }) => {
                     <Modal.Header style={{
                         backgroundColor: '#4D4D4D',
                         color: '#EEC13F',
-                        fontFamily: 'Roboto',
+                        fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
                         border: 0

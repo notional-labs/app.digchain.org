@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
+import "aos/dist/aos.css"
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,10 +13,11 @@ import {
   Link,
   NavLink
 } from "react-router-dom";
+import Effect from './components/Effect';
 
 if (process.env.NODE_ENV !== "development")
-    console.log = () => {};
-    
+  console.log = () => { };
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

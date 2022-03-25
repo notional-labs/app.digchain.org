@@ -3,15 +3,15 @@ import digger from '../assets/img/digger.png'
 import coin1 from '../assets/img/coin1.png'
 import coin2 from '../assets/img/coin2.png'
 import coin3 from '../assets/img/coin3.png'
+import aos from "aos"
+import { useEffect } from "react"
 
 const style = {
     intro: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 140,
-        paddingTop: 20,
-        paddingBottom: 20,
+        padding: 20,
         height: 'auto',
         minHeight: '80vh'
     },
@@ -22,31 +22,36 @@ const style = {
 }
 
 const FrontPage = () => {
+
+    useEffect(() => {
+        aos.init({
+            duration: 3000
+        })
+    }, [])
+
     return (
-        <div style={{
-            paddingTop: 10
-        }}>
+        <div>
             <div style={style.intro}>
                 <div style={{
-                    textAlign: 'left',
-                    width: '40%'
+                    textAlign: 'center',
+                    margin: 'auto'
                 }}>
+                    <div data-aos="zoom-in">
+                        <Image
+                            width={500}
+                            src={digger}
+                            preview={false}
+                        />
+                    </div>
                     <p style={{
                         color: '#EEC13F',
                         fontSize: '100px',
                         fontWeight: 700,
                         margin: 0,
-                        height: '100px'
+                        height: '100px',
+                        marginBottom: '50px'
                     }}>
-                        DIG
-                    </p>
-                    <p style={{
-                        color: '#FFFFFF',
-                        fontSize: '100px',
-                        fontWeight: 700,
-                        margin: 0
-                    }}>
-                        your coin
+                        DIGCHAIN
                     </p>
                     <p style={{
                         color: '#FFFFFF',
@@ -64,7 +69,7 @@ const FrontPage = () => {
                     }}>
                         Have fun digging around the comunity and the validators.
                     </p>
-                    
+
                     <a href="https://digchain.org/" target={'_blank'}>
                         <button style={{
                             border: 0,
@@ -81,59 +86,6 @@ const FrontPage = () => {
                         </button>
                     </a>
                 </div>
-                <div>
-                    <Image
-                        width={500}
-                        src={digger}
-                        preview={false}
-                    />
-                </div>
-            </div>
-            <div style={{
-                ...style.asset,
-                top: '200px',
-                left: '800px',
-                transform: 'rotate(120deg)'
-            }}>
-                <Image
-                    width={150}
-                    src={coin1}
-                    preview={false}
-                />
-            </div>
-            <div style={{
-                ...style.asset,
-                top: '700px',
-                left: '500px',
-                transform: 'rotate(120deg)'
-            }}>
-                <Image
-                    width={80}
-                    src={coin1}
-                    preview={false}
-                />
-            </div>
-            <div style={{
-                ...style.asset,
-                top: '700px',
-                left: '600px',
-            }}>
-                <Image
-                    width={150}
-                    src={coin1}
-                    preview={false}
-                />
-            </div>
-            <div style={{
-                ...style.asset,
-                top: '600px',
-                left: '1000px',
-            }}>
-                <Image
-                    width={300}
-                    src={coin2}
-                    preview={false}
-                />
             </div>
 
         </div >
