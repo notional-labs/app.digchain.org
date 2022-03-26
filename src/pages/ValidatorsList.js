@@ -61,6 +61,7 @@ const ValidatorsList = () => {
     const [defaultVal, setDefaultVal] = useState(0)
     const [setLogo, setSetLogo] = useState(false)
     const [state, setState] = useState('')
+    const [logos, setLogos] = useState([])
 
     useEffect(() => {
         (async () => {
@@ -77,25 +78,33 @@ const ValidatorsList = () => {
             vals.unshift(bogo2, bogo3, bogo1)
             vals = vals.filter(x => x)
             if (vals.length > 0) {
-                vals.map((val) => {
+                vals.map( async (val) => {
                     val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
-                })
+                    const img = await getLogo(val.description.identity)
+                        if (img) {
+                            setLogos([...img])
+                            val.logo = img
+                        }
+                        else {
+                            val.logo = notFound
+                        }
+                    })
             }
-            let promises = []
-            vals.forEach(val => {
-                promises.push(getLogo(val.description.identity))
-            })
-            Promise.all(promises).then((logos) => {
-                vals.map((val, index) => {
-                    if(logos[index]) {
-                        val.logo = logos[index]
-                    }
-                    else {
-                        val.logo = notFound
-                    }
-                })
-                setSetLogo(true)
-            })
+            // let promises = []
+            // vals.forEach(val => {
+            //     promises.push(getLogo(val.description.identity))
+            // })
+            // Promise.all(promises).then((logos) => {
+            //     vals.map((val, index) => {
+            //         if (logos[index]) {
+            //             val.logo = logos[index]
+            //         }
+            //         else {
+            //             val.logo = notFound
+            //         }
+            //     })
+            //     setSetLogo(true)
+            // })
             setValidators([...vals])
             setLoading(false)
         })()
@@ -188,7 +197,7 @@ const ValidatorsList = () => {
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                                 <div style={{
                                                     borderRadius: '50%',
-                                                    backgroundImage: setLogo ? `url(${val.logo})` || `url(${notFound})` : `url(${notFound})`,
+                                                    backgroundImage: `url(${val.logo})` || `url(${notFound})`,
                                                     backgroundSize: 'cover',
                                                     backgroundRepeat: 'no-repeat',
                                                     backgroundPosition: 'center',
@@ -243,7 +252,7 @@ const ValidatorsList = () => {
                                             <div style={{ fontSize: '15px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                        <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0',border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
+                                        <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0', border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
                                             <button style={{
                                                 backgroundColor: '#ED9D27',
                                                 border: 'none',
