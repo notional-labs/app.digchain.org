@@ -35,7 +35,7 @@ const style = {
     },
     tdlHeader: {
         backgroundColor: 'transparent',
-        borderBottom: 'solid 1px black'
+        borderBottom: 'solid 1px #ffffff'
     },
     tdlContent: {
         marginTop: '0px',
@@ -45,9 +45,9 @@ const style = {
     th: {
         padding: '15px 15px',
         textAlign: 'left',
-        fontWeight: '700',
-        fontSize: '15px',
-        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: '24px',
+        color: '#ffffff',
         textTransform: 'uppercase',
         fontFamily: 'montserrat',
     },
@@ -57,7 +57,7 @@ const style = {
         verticalAlign: '500',
         fontWeight: 'lighter',
         fontSize: '17px',
-        color: '#000000',
+        color: '#ffffff',
         fontFamily: 'montserrat',
         width: '20%',
         lineHeight: '18px'
@@ -179,9 +179,8 @@ const VoterList = ({ proposal }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            {!loading ? proposal.status < 3 && (
-                <div style={{ borderRadius: '10px', padding: '2em' }}>
+                {!loading ? proposal.status < 3 && (
+                <div style={{ borderRadius: '10px', paddingTop: '30px'}}>
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
@@ -192,7 +191,7 @@ const VoterList = ({ proposal }) => {
                         <tbody style={style.tdlContent}>
                             {voters.map((vote, index) => {
                                 return (
-                                    <tr key={index} style={{ backgroundColor: '#ffffff' }}>
+                                    <tr key={index}>
                                         <td style={style.td}>
                                             <Link to={`../accounts/${vote.voter}`}>
                                                 {vote.voter}
@@ -208,10 +207,11 @@ const VoterList = ({ proposal }) => {
                     </table>
                 </div>
             ) : (
-                <div style={{ padding: '30px' }}>
+                <div style={{paddingTop: '30px'}}>
                     <Skeleton active />
                 </div>
             )}
+            </div>
         </div>
     )
 }
