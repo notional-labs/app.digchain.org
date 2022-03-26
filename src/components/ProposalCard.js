@@ -307,7 +307,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
                     {
                         proposal.status === 'PROPOSAL_STATUS_DEPOSIT_PERIOD' && (
                             <button style={style.extraButton} onClick={handleClickDeposit}>
-                                <FaCoins style={{ marginRight: '5px' }} />Deposit
+                                <FaCoins style={{ marginRight: '3px' }} />Deposit
                             </button>
                         )
                     }

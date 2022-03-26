@@ -48,7 +48,7 @@ const style = {
         fontSize: '24px',
         color: '#ffffff',
         fontFamily: 'montserrat',
-        paddingBottom: '0.5em'
+        paddingBottom: '50px'
     },
     buttonBox: {
         display: 'flex',
@@ -230,7 +230,7 @@ const ProposalDetail = ({ accounts }) => {
                     color: '#ffffff',
                     fontFamily: 'montserrat',
                     fontWeight: 'bold',
-                    marginBottom: '50px'
+                    marginBottom: '20px'
                 }}>
                     DETAILS
                 </div>
