@@ -7,13 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "antd/dist/antd.css";
 import "aos/dist/aos.css"
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
-import Effect from './components/Effect';
+  BrowserRouter as Router} from "react-router-dom";
 
 if (process.env.NODE_ENV !== "development")
   console.log = () => { };

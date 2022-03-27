@@ -1,7 +1,7 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry';
 
-axiosRetry(axios, { retries: 10 });
+axiosRetry(axios, { retries: 3 });
 
 export const getValidators = async (logoDisableFlag) => {
     const api = process.env.REACT_APP_API

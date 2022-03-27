@@ -11,6 +11,7 @@ import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom';
 import helmet from '../assets/img/Grouphelmet.png'
+import aos from 'aos';
 
 const style = {
     table: {
@@ -59,12 +60,15 @@ const ValidatorsList = () => {
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
     const [defaultVal, setDefaultVal] = useState(0)
-    const [setLogo, setSetLogo] = useState(false)
+    const [setLogo, setSetLogo] = useState([])
     const [state, setState] = useState('')
     const [logos, setLogos] = useState([])
 
     useEffect(() => {
         (async () => {
+            aos.init({
+                duration: 1000
+            })
             setLoading(true)
             setSetLogo(false)
             let vals = await getValidators(true)
@@ -78,33 +82,22 @@ const ValidatorsList = () => {
             vals.unshift(bogo2, bogo3, bogo1)
             vals = vals.filter(x => x)
             if (vals.length > 0) {
-                vals.map( async (val) => {
+                vals.map((val) => {
                     val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
-                    const img = await getLogo(val.description.identity)
-                        if (img) {
-                            setLogos([...img])
-                            val.logo = img
-                        }
-                        else {
-                            val.logo = notFound
-                        }
-                    })
+                })
             }
-            // let promises = []
-            // vals.forEach(val => {
-            //     promises.push(getLogo(val.description.identity))
+            let promises = []
+            vals.forEach(val => {
+                promises.push(getLogo(val.description.identity))
+            })
+            // promises.forEach(async (promise, index) => {
+            //     const logo = await promise
+            //     vals[index].logo = logo
             // })
-            // Promise.all(promises).then((logos) => {
-            //     vals.map((val, index) => {
-            //         if (logos[index]) {
-            //             val.logo = logos[index]
-            //         }
-            //         else {
-            //             val.logo = notFound
-            //         }
-            //     })
-            //     setSetLogo(true)
-            // })
+            Promise.all(promises).then((logos) => {
+                console.log(logos)
+                setSetLogo([...logos])
+            })
             setValidators([...vals])
             setLoading(false)
         })()
@@ -195,52 +188,19 @@ const ValidatorsList = () => {
                                     <tr key={index} style={{ backgroundColor: 'transparent', marginBottom: 20, }}>
                                         <td style={{ ...style.td, borderRadius: '10px 0 0 10px', border: 'solid 2px #ED9D26', borderRight: 'none' }}>
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <div style={{
-                                                    borderRadius: '50%',
-                                                    backgroundImage: `url(${val.logo})` || `url(${notFound})`,
-                                                    backgroundSize: 'cover',
-                                                    backgroundRepeat: 'no-repeat',
-                                                    backgroundPosition: 'center',
-                                                    width: '55px',
-                                                }}>
-                                                    <Image
-                                                        width={45}
-                                                        src={helmet}
-                                                        style={{
-                                                            borderRadius: '100%',
-                                                            textAlign: 'left',
-                                                            position: 'relative',
-                                                            marginTop: '-70%',
-                                                            marginLeft: '-30%'
-                                                        }}
-                                                        preview={false}
-                                                    />
+                                                <div
+                                                    data-aos="flip-up"
+                                                    data-aos-once={true}
+                                                    style={{
+                                                        borderRadius: '50%',
+                                                        backgroundImage: `url(${setLogo[index] || notFound})`,
+                                                        backgroundSize: 'cover',
+                                                        backgroundRepeat: 'no-repeat',
+                                                        backgroundPosition: 'center',
+                                                        width: '55px',
+                                                    }}>
+
                                                 </div>
-                                                {/* {
-                                                    setLogo ? (
-                                                        <Image
-                                                            width={70}
-                                                            src={val.logo || notFound}
-                                                            style={{
-                                                                borderRadius: '100%', marginTop: '3px', position: 'relative',
-                                                                zIndex: '2'
-                                                            }}
-                                                            preview={true}
-                                                        />
-
-                                                    ) : (
-                                                        <Image
-                                                            width={70}
-                                                            src={notFound}
-                                                            style={{
-                                                                borderRadius: '100%', marginTop: '3px', position: 'relative',
-                                                                zIndex: '2'
-                                                            }}
-                                                            preview={true}
-                                                        />
-                                                    )
-                                                } */}
-
                                                 <div style={{ marginLeft: '1rem' }} >
                                                     <div style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
                                                     <div style={{ fontSize: '15px', fontWeight: 400, opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>

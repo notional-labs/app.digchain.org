@@ -83,14 +83,14 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
             }
             <>
                 <Modal show={show} onHide={handleClose} backdrop="static" >
-                <Modal.Header style={{
-                            backgroundColor: '#4D4D4D',
-                            color: '#EEC13F',
-                            fontFamily: 'montserrat',
-                            fontSize: '24px',
-                            fontWeight: 400,
-                            border: 0
-                        }}>
+                    <Modal.Header style={{
+                        backgroundColor: '#4D4D4D',
+                        color: '#EEC13F',
+                        fontFamily: 'montserrat',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                        border: 0
+                    }}>
                         <div>
                             Transfer Token
                         </div>
