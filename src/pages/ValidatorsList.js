@@ -70,7 +70,6 @@ const ValidatorsList = () => {
                 duration: 1000
             })
             setLoading(true)
-            setSetLogo(false)
             let vals = await getValidators(true)
             const totalSupply = getTotal(vals)
             let bogo1 = vals.filter(x => x.operator_address === 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z')[0]
@@ -82,26 +81,34 @@ const ValidatorsList = () => {
             vals.unshift(bogo2, bogo3, bogo1)
             vals = vals.filter(x => x)
             if (vals.length > 0) {
+                let logoList = []
+                let urls = []
                 vals.map((val) => {
                     val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+                    urls.push(val.description.identity)
+                })
+
+                // Load avt from key
+                let promise = Promise.resolve()
+                urls.forEach(url => {
+                    promise = promise.then(() => new Promise(resolve => {
+                        getLogo(url).then(img => {
+                            img ? logoList.push(img) : logoList.push(notFound)
+                            resolve()
+                        }).catch(() => {
+                            logoList.push(notFound)
+                            resolve()
+                        })
+                        setSetLogo([...logoList])
+                    }))
                 })
             }
-            let promises = []
-            vals.forEach(val => {
-                promises.push(getLogo(val.description.identity))
-            })
-            // promises.forEach(async (promise, index) => {
-            //     const logo = await promise
-            //     vals[index].logo = logo
-            // })
-            Promise.all(promises).then((logos) => {
-                console.log(logos)
-                setSetLogo([...logos])
-            })
             setValidators([...vals])
             setLoading(false)
         })()
     }, [])
+
+    console.log(setLogo)
 
     const wrapSetShow = useCallback((val) => {
         setShow(val)
