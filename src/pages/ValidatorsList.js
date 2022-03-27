@@ -60,9 +60,8 @@ const ValidatorsList = () => {
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
     const [defaultVal, setDefaultVal] = useState(0)
-    const [setLogo, setSetLogo] = useState([])
     const [state, setState] = useState('')
-    const [logos, setLogos] = useState([])
+    const [dummy, setDummy] = useState([])
 
     useEffect(() => {
         (async () => {
@@ -90,16 +89,16 @@ const ValidatorsList = () => {
 
                 // Load avt from key
                 let promise = Promise.resolve()
-                urls.forEach(url => {
+                urls.forEach( (url, index) => {
                     promise = promise.then(() => new Promise(resolve => {
                         getLogo(url).then(img => {
-                            img ? logoList.push(img) : logoList.push(notFound)
+                            img ? vals[index].logo = img : vals[index].logo = notFound
                             resolve()
                         }).catch(() => {
-                            logoList.push(notFound)
+                            vals[index].logo = notFound
                             resolve()
                         })
-                        setSetLogo([...logoList])
+                        setDummy([...logoList])
                     }))
                 })
             }
@@ -107,8 +106,6 @@ const ValidatorsList = () => {
             setLoading(false)
         })()
     }, [])
-
-    console.log(setLogo)
 
     const wrapSetShow = useCallback((val) => {
         setShow(val)
@@ -200,7 +197,7 @@ const ValidatorsList = () => {
                                                     data-aos-once={true}
                                                     style={{
                                                         borderRadius: '50%',
-                                                        backgroundImage: `url(${setLogo[index] || notFound})`,
+                                                        backgroundImage: `url(${val.logo || notFound})`,
                                                         backgroundSize: 'cover',
                                                         backgroundRepeat: 'no-repeat',
                                                         backgroundPosition: 'center',
