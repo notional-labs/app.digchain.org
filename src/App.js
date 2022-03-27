@@ -177,7 +177,7 @@ const App = () => {
             <li style={style.li}>
               <NavLink to='/accounts'>
                 <button style={{
-                  fontSize: '24px',
+                  fontSize: '20px',
                   backgroundColor: 'transparent',
                   color: location.pathname.includes('/accounts') ? '#EEC13F' : '#ffffff',
                   padding: 0,
@@ -196,7 +196,7 @@ const App = () => {
             <li style={style.li}>
               <NavLink to='/staking'>
                 <button style={{
-                  fontSize: '24px',
+                  fontSize: '20px',
                   backgroundColor: 'transparent',
                   color: location.pathname.includes('/staking') ? '#EEC13F' : '#ffffff',
                   padding: 0,
@@ -215,7 +215,7 @@ const App = () => {
             <li style={style.li}>
               <NavLink to='/proposals'>
                 <button style={{
-                  fontSize: '24px',
+                  fontSize: '20px',
                   backgroundColor: 'transparent',
                   color: location.pathname.includes('/proposals') ? '#EEC13F' : '#ffffff',
                   padding: 0,
