@@ -89,7 +89,7 @@ const ValidatorsList = () => {
 
                 // Load avt from key
                 let promise = Promise.resolve()
-                urls.forEach( (url, index) => {
+                urls.forEach((url, index) => {
                     promise = promise.then(() => new Promise(resolve => {
                         getLogo(url).then(img => {
                             img ? vals[index].logo = img : vals[index].logo = notFound
@@ -197,13 +197,14 @@ const ValidatorsList = () => {
                                                     data-aos-once={true}
                                                     style={{
                                                         borderRadius: '50%',
-                                                        backgroundImage: `url(${val.logo || notFound})`,
-                                                        backgroundSize: 'cover',
-                                                        backgroundRepeat: 'no-repeat',
-                                                        backgroundPosition: 'center',
-                                                        width: '55px',
+                                                        
                                                     }}>
-
+                                                    <Image
+                                                        width={50}
+                                                        src={val.logo || notFound}
+                                                        style={{ borderRadius: '50%', marginTop: '3px' }}
+                                                        preview={false}
+                                                    />
                                                 </div>
                                                 <div style={{ marginLeft: '1rem' }} >
                                                     <div style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
