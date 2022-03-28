@@ -238,8 +238,8 @@ const ProposalDetail = ({ accounts }) => {
                     <button
                         onClick={handleClickCreateProposal}
                         style={{
-                            border: 0,
-                            backgroundColor: '#eec13f',
+                            backgroundImage: 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)',
+                            border: 'solid 2px #EEC13F',
                             color: '#ffffff',
                             fontWeight: 700,
                             fontSize: '24px',
