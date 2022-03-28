@@ -4,8 +4,8 @@ import { IoWalletOutline } from "react-icons/io5";
 
 const style = {
     button: {
-        backgroundColor: '#EEC13F',
-        border: 'none',
+        backgroundImage: 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)',
+        border: 'solid 2px #EEC13F',
         padding: '1em 1em 1em 1em',
         borderRadius: '10px',
         width: '100%'
