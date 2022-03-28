@@ -227,10 +227,10 @@ const AccountDetail = ({ accounts }) => {
                                         parseInt(asset.unbonding) / 1000000
                                     ],
                                     backgroundColor: [
-                                        '#D2DDCF',
-                                        '#C0C9D8',
-                                        '#F9D38C',
-                                        '#FCB3A4'
+                                        'rgb(61, 255, 148)',
+                                        'rgb(140, 129, 252)',
+                                        'rgb(255, 174, 97)',
+                                        'rgb(255, 174, 97)'
                                     ],
                                     hoverOffset: 4
                                 }]
