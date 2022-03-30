@@ -7,7 +7,7 @@ const api = process.env.REACT_APP_API
 // const api = "https://api-1-dig.notional.ventures"
 
 export const getBalance = async (address) => {
-    const URL = `${api}/bank/balances/${address}`
+    const URL = `${api}bank/balances/${address}`
     let balances = []
     const res= await axios.get(URL)
     if(res.data.result && res.data.result.length > 0){
@@ -17,21 +17,21 @@ export const getBalance = async (address) => {
 }
 
 export const getDelegation = async (address) => {
-    const URL = `${api}/cosmos/staking/v1beta1/delegations/${address}`
+    const URL = `${api}cosmos/staking/v1beta1/delegations/${address}`
     const res = await axios.get(URL)
     if (res.status !== 200) return 
     return res.data
 }
 
 export const getReward = async (address) => {
-    const URL = `${api}/cosmos/distribution/v1beta1/delegators/${address}/rewards`
+    const URL = `${api}cosmos/distribution/v1beta1/delegators/${address}/rewards`
     const res = await axios.get(URL)
     if (res.status !== 200) return 
     return res.data
 }
 
 export const getUnbond = async (address) => {
-    const URL = `${api}/cosmos/staking/v1beta1/delegators/${address}/unbonding_delegations`
+    const URL = `${api}cosmos/staking/v1beta1/delegators/${address}/unbonding_delegations`
     const res = await axios.get(URL)
     if (res.status !== 200) return 
     return res.data
