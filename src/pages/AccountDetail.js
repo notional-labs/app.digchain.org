@@ -151,10 +151,10 @@ const AccountDetail = ({ accounts }) => {
             })
             const asset = await getAsset(id)
 
-            const balance = asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : 0
-            const delegation = asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : 0
-            const reward = asset[2].total.length > 0 ? asset[2].total[0].amount : 0
-            const unbonding = asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : 0
+            const balance = asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : '0'
+            const delegation = asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : '0'
+            const reward = asset[2].total.length > 0 ? asset[2].total[0].amount : '0'
+            const unbonding = asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : '0'
 
             setAsset({
                 balance,

@@ -1,17 +1,15 @@
-import assert from 'assert'
 import axios from 'axios'
-import { delegate, unbonding } from './transaction'
 
 const api = process.env.REACT_APP_API
 // const api = "http://0.0.0.0:1317"
 // const api = "https://api-1-dig.notional.ventures"
 
 export const getBalance = async (address) => {
-    const URL = `${api}bank/balances/${address}`
+    const URL = `${api}cosmos/bank/v1beta1/balances/${address}`
     let balances = []
     const res= await axios.get(URL)
-    if(res.data.result && res.data.result.length > 0){
-        balances.push([...res.data.result])   
+    if(res.data.balances && res.data.balances.length > 0){
+        balances.push([...res.data.balances])   
     }
     return balances
 }

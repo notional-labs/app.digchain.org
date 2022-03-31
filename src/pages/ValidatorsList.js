@@ -3,15 +3,13 @@ import { Image, } from 'antd';
 import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/montserrat"
-import PacmanLoader from "react-spinners/PacmanLoader";
 import notFound from '../assets/img/no-profile.png'
 import { Modal, } from 'react-bootstrap';
 import DelegateModal from '../components/DelegateModal';
 import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom';
-import helmet from '../assets/img/Grouphelmet.png'
 import aos from 'aos';
+import loadingGif from '../assets/img/loading.gif'
 
 const style = {
     table: {
@@ -257,8 +255,8 @@ const ValidatorsList = () => {
                 </>
             </div >
         ) : (
-            <div style={{ marginRight: '10rem', paddingTop: '10rem', height: '77vh' }}>
-                <PacmanLoader color={'#f0a848'} loading={loading} size={100} />
+            <div style={{ margin: 'auto', marginTop: '10%'}}>
+                <Image src={loadingGif} width={500} preview={false}/>
             </div>
         )
     )

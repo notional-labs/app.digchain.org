@@ -7,7 +7,7 @@ import {
 import { BiX } from "react-icons/bi";
 
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const style = {
     container: {
@@ -53,13 +53,14 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
         (async () => {
             if (account.type === 'keplr') {
                 const balance = await getBalance(account.account.address)
-                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+                const balanceAmount = balance.length > 0 ? balance[0][0].amount : '0'
 
                 setAmount(balanceAmount)
             }
             else {
                 const balance = await getBalance(account.account)
-                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+                console.log(balance)
+                const balanceAmount = balance.length > 0 ? balance[0][0].amount : '0'
 
                 setAmount(balanceAmount)
             }
