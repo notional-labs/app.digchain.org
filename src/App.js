@@ -46,7 +46,8 @@ const style = {
     top: 0,
     left: 0,
     overflowX: 'hidden',
-    width: '300px'
+    width: '300px',
+    height: '100%'
   },
   tabButton: {
     display: 'flex',
