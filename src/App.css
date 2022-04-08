@@ -16,9 +16,16 @@
   background: radial-gradient(circle farthest-side, #EEC13F 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hover-button {
+  background-image: Linear-Gradient(#EEC13F 0%, #FFAC38 100%);
+  border: solid 2px #EEC13F;
+  padding: 1em 1em 1em 1em;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.hover-button:hover {
+  background-image: Linear-Gradient(263.6deg, #4D4D4D 0%, #000000 100%);
 }
 
 .description {

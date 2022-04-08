@@ -39,14 +39,17 @@ const style = {
   navbar: {
     padding: 50,
     paddingTop: 0,
-    paddingBottom: 50,
+    paddingBottom: 0,
     backgroundColor: '#4D4D4D',
     position: 'fixed',
     zIndex: 1,
     top: 0,
     left: 0,
-    overflowX: 'hidden',
-    width: '300px'
+    width: '300px',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   tabButton: {
     display: 'flex',
@@ -98,16 +101,6 @@ const App = () => {
 
   const warning = (val) => {
     message.warning(val, 1)
-  }
-
-  const handleEnter = (e) => {
-    e.target.style.color = '#EEC13F'
-  }
-
-  const handleLeave = (e, tabName) => {
-    if (!location.pathname.includes(tabName)) {
-      e.target.style.color = '#ffffff'
-    }
   }
 
   const connect = async (val) => {
@@ -242,9 +235,7 @@ const App = () => {
             </li>
           </ul>
         </div>
-        <div style={{
-          marginTop: '120px'
-        }}>
+        <div>
           <p style={{
             color: '#ffffff',
             fontSize: '24px',
