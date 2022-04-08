@@ -92,7 +92,6 @@ const ProposalList = ({ accounts }) => {
 
     const handleEnter = (e) => {
         e.target.style.backgroundImage = 'Linear-Gradient(263.6deg, #4D4D4D 0%, #000000 100%)'
-        e.target.style.border = 'solid 2px #EEC13F'
     }
 
     const handleLeave = (e) => {
@@ -119,7 +118,7 @@ const ProposalList = ({ accounts }) => {
                     <button
                         onClick={handleClick}
                         style={{
-                            border: 0,
+                            border: 'solid 2px #EEC13F',
                             backgroundImage: 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)',
                             color: '#ffffff',
                             fontWeight: 700,
