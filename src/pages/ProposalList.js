@@ -120,7 +120,7 @@ const ProposalList = ({ accounts }) => {
                         onClick={handleClick}
                         style={{
                             border: 0,
-                            backgroundColor: '#eec13f',
+                            backgroundImage: 'Linear-Gradient(#EEC13F 0%, #FFAC38 100%)',
                             color: '#ffffff',
                             fontWeight: 700,
                             fontSize: '24px',

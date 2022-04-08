@@ -155,85 +155,87 @@ const App = () => {
   return (
     <div className="App">
       <div style={style.navbar}>
-        <div style={{
-          textAlign: 'left',
-          borderBottom: 'solid 2px #EEC13F',
-          padding: 50,
-          paddingLeft: 0,
-          paddingRight: 100
-        }}>
-          <Link to='/'>
-            <Image width={90}
-              src={logo}
-              preview={false}
-            />
-          </Link>
-        </div>
-        <div className='nav-bar'>
-          <ul
-            className='nav-button'
-            style={{ listStyleType: 'none', alignItems: 'left' }}>
-            <li style={style.li}>
-              <NavLink to='/accounts'>
-                <button style={{
-                  fontSize: '20px',
-                  backgroundColor: 'transparent',
-                  color: location.pathname.includes('/accounts') ? '#EEC13F' : '#ffffff',
-                  padding: 0,
-                  paddingTop: 5,
-                  paddingBottom: 30,
-                  border: 0,
-                  fontFamily: 'montserrat',
-                  lineHeight: '100%',
-                  fontStyle: 'regular',
-                  fontWeight: 'bold'
-                }} className='nav-link'>
-                  Accounts
-                </button>
-              </NavLink>
-            </li>
-            <li style={style.li}>
-              <NavLink to='/staking'>
-                <button style={{
-                  fontSize: '20px',
-                  backgroundColor: 'transparent',
-                  color: location.pathname.includes('/staking') ? '#EEC13F' : '#ffffff',
-                  padding: 0,
-                  paddingTop: 5,
-                  paddingBottom: 30,
-                  border: 0,
-                  fontFamily: 'montserrat',
-                  lineHeight: '100%',
-                  fontStyle: 'regular',
-                  fontWeight: 'bold'
-                }} className='nav-link'>
-                  Staking
-                </button>
-              </NavLink>
-            </li>
-            <li style={style.li}>
-              <NavLink to='/proposals'>
-                <button style={{
-                  fontSize: '20px',
-                  backgroundColor: 'transparent',
-                  color: location.pathname.includes('/proposals') ? '#EEC13F' : '#ffffff',
-                  padding: 0,
-                  paddingTop: 5,
-                  paddingBottom: 30,
-                  border: 0,
-                  fontFamily: 'montserrat',
-                  lineHeight: '100%',
-                  fontStyle: 'regular',
-                  fontWeight: 'bold'
-                }} className='nav-link'>
-                  Proposals
-                </button>
-              </NavLink>
-            </li>
-            <li style={style.li}>
-              <ConnectButton wrapSetShow={wrapSetShow} />
-            </li>
-          </ul>
+        <div>
+          <div style={{
+            textAlign: 'left',
+            borderBottom: 'solid 2px #EEC13F',
+            padding: 50,
+            paddingLeft: 0,
+            paddingRight: 100
+          }}>
+            <Link to='/'>
+              <Image width={90}
+                src={logo}
+                preview={false}
+              />
+            </Link>
+          </div>
+          <div className='nav-bar'>
+            <ul
+              className='nav-button'
+              style={{ listStyleType: 'none', alignItems: 'left' }}>
+              <li style={style.li}>
+                <NavLink to='/accounts'>
+                  <button style={{
+                    fontSize: '20px',
+                    backgroundColor: 'transparent',
+                    color: location.pathname.includes('/accounts') ? '#EEC13F' : '#ffffff',
+                    padding: 0,
+                    paddingTop: 5,
+                    paddingBottom: 30,
+                    border: 0,
+                    fontFamily: 'montserrat',
+                    lineHeight: '100%',
+                    fontStyle: 'regular',
+                    fontWeight: 'bold'
+                  }} className='nav-link'>
+                    Accounts
+                  </button>
+                </NavLink>
+              </li>
+              <li style={style.li}>
+                <NavLink to='/staking'>
+                  <button style={{
+                    fontSize: '20px',
+                    backgroundColor: 'transparent',
+                    color: location.pathname.includes('/staking') ? '#EEC13F' : '#ffffff',
+                    padding: 0,
+                    paddingTop: 5,
+                    paddingBottom: 30,
+                    border: 0,
+                    fontFamily: 'montserrat',
+                    lineHeight: '100%',
+                    fontStyle: 'regular',
+                    fontWeight: 'bold'
+                  }} className='nav-link'>
+                    Staking
+                  </button>
+                </NavLink>
+              </li>
+              <li style={style.li}>
+                <NavLink to='/proposals'>
+                  <button style={{
+                    fontSize: '20px',
+                    backgroundColor: 'transparent',
+                    color: location.pathname.includes('/proposals') ? '#EEC13F' : '#ffffff',
+                    padding: 0,
+                    paddingTop: 5,
+                    paddingBottom: 30,
+                    border: 0,
+                    fontFamily: 'montserrat',
+                    lineHeight: '100%',
+                    fontStyle: 'regular',
+                    fontWeight: 'bold'
+                  }} className='nav-link'>
+                    Proposals
+                  </button>
+                </NavLink>
+              </li>
+              <li style={style.li}>
+                <ConnectButton wrapSetShow={wrapSetShow} />
+              </li>
+            </ul>
+          </div>
         </div>
         <div>
           <p style={{
@@ -286,7 +288,7 @@ const App = () => {
         <Effect x={70} y={30} radius={300} opacity={0.3} />
         <Effect x={-20} y={50} radius={500} opacity={0.4} />
         <Effect x={80} y={70} radius={500} opacity={0.4} />
-        <div style={{position: 'relative', zIndex: 1}}>
+        <div style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route exact path="/" element={<FrontPage />} />
             <Route exact path="/staking" element={<ValidatorsList />} />
