@@ -1,11 +1,10 @@
 import ProposalCard from "../components/ProposalCard"
-import { Modal, } from 'react-bootstrap'
 import VoteModal from "../components/VoteModal"
 import { useCallback, useEffect, useState } from "react"
 import { getProposals, getBond } from "../helpers/getProposal"
 import '../assets/css/ProposalList.css'
 import { Link } from "react-router-dom"
-import { Skeleton } from "antd"
+import { Skeleton, Modal } from "antd"
 import CreateProposalModal from "../components/CreateProposalModal"
 import DepositModal from "../components/DepositModal"
 
@@ -74,6 +73,10 @@ const ProposalList = ({ accounts }) => {
         setShow(false)
     }
 
+    const handleCloseDeposit = () => {
+        setShowDeposit(false)
+    }
+
     const handleCloseCreateProposal = () => {
         setShowCreateProposal(false)
     }
@@ -130,12 +133,13 @@ const ProposalList = ({ accounts }) => {
                     </button>
                 </div>
             </div>
-            {loading && proposals.length === 0 ? (
+            {loading || proposals.length === 0 ? (
                 <div style={style.card}>
                     <Skeleton active style={{
-                        backgroundColor: '#ffffff',
+                        backgroundColor: 'transparent',
                         padding: '30px',
-                        borderRadius: '15px'
+                        borderRadius: '15px',
+                        border: 'solid 1px #EEC13F'
                     }} />
                 </div>
             ) : (
@@ -153,34 +157,39 @@ const ProposalList = ({ accounts }) => {
                 </div>
             )
             }
-            <>
-                <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
+            <Modal
+                visible={show}
+                footer={null}
+                closable={false}
+                onCancel={handleClose}
+            >
+                <div style={{
                         color: '#EEC13F',
                         fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
-                        border: 0
                     }}>
-                        <div>
+                        <p>
                             Vote
-                        </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <VoteModal proposal={proposals[selectProposal]} id={proposals[selectProposal] && proposals[selectProposal].proposal_id} wrapSetShow={wrapSetShow} />
-                    </Modal.Body>
-                </Modal>
-            </>
-            <>
-                <Modal show={showDeposit} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
+                        </p>
+                        <VoteModal 
+                            proposal={proposals[selectProposal]} 
+                            id={proposals[selectProposal] && proposals[selectProposal].proposal_id} 
+                            wrapSetShow={wrapSetShow} 
+                        />
+                    </div>
+            </Modal>
+            <Modal
+                visible={showDeposit}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseDeposit}
+            >
+                <div style={{
                         color: '#EEC13F',
                         fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
-                        border: 0
                     }}>
                         <div>
                             Deposit
@@ -191,21 +200,24 @@ const ProposalList = ({ accounts }) => {
                                 *0x accounts are not supported yet
                             </p>
                         </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <DepositModal accounts={accounts} wrapSetShow={wrapSetShowDeposit} id={proposals[selectProposal] && proposals[selectProposal].proposal_id} />
-                    </Modal.Body>
-                </Modal>
-            </>
-            <>
-                <Modal show={showCreateProposal} onHide={handleCloseCreateProposal} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
+                        <DepositModal 
+                            accounts={accounts} 
+                            wrapSetShow={wrapSetShowDeposit} 
+                            id={proposals[selectProposal] && proposals[selectProposal].proposal_id} 
+                        />
+                    </div>
+            </Modal>
+            <Modal
+                visible={showCreateProposal}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseCreateProposal}
+            >
+                <div style={{
                         color: '#EEC13F',
                         fontFamily: 'montserrat',
                         fontSize: '24px',
                         fontWeight: 400,
-                        border: 0
                     }}>
                         <div>
                             Create Proposal
@@ -216,12 +228,12 @@ const ProposalList = ({ accounts }) => {
                                 *0x accounts are not supported yet
                             </p>
                         </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <CreateProposalModal accounts={accounts} wrapSetShow={wrapSetShowCreateProposal} />
-                    </Modal.Body>
-                </Modal>
-            </>
+                        <CreateProposalModal 
+                            accounts={accounts} 
+                            wrapSetShow={wrapSetShowCreateProposal} 
+                        />
+                    </div>
+            </Modal>
         </div>
     )
 }

@@ -12,7 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader"
 
 const style = {
     transfer: {
-        marginBottom: '2rem',
+        marginBottom: '20px',
         width: '100%',
     },
     transferInfo: {
@@ -41,11 +41,14 @@ const style = {
         backgroundColor: '#4D4D4D',
         color: '#ffffff',
         borderRadius: '10px',
+        fontSize: '16px'
     },
     formTitle: {
         fontFamily: 'montserrat',
         color: '#ffffff',
-        fontWeight: 500
+        fontWeight: 500,
+        fontSize: '16px',
+        margin: 0
     }
 }
 
@@ -214,7 +217,8 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
                     backgroundColor: '#C4C4C4',
-                    color: '#9B9B9B'
+                    color: '#9B9B9B',
+                    overflow: 'hidden'
                 }}>
                     {delegation.delegation.validator_address}
                 </div>
@@ -222,7 +226,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             <div style={style.transfer}>
                 <p style={style.formTitle}>To</p>
                 <>
-                    <Form.Select onChange={handleChangeSelectVal} style={style.formInput}>
+                    <Form.Select onChange={handleChangeSelectVal} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
                         {
                             validators.map((val, index) => (
                                 <option key={index} value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
@@ -280,7 +284,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advanced</Checkbox>
             </div>
             {
                 showAdvance && (

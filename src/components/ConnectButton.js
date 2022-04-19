@@ -22,7 +22,7 @@ const ConnectButton = ({ wrapSetShow }) => {
                     <IoWalletOutline style={{
                         marginRight: '10px'
                     }} />
-                Connect Wallet
+                Import Account
             </button>
         </div>
     )

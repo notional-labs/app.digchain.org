@@ -11,7 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader"
 
 const style = {
     transfer: {
-        marginBottom: '2rem',
+        marginBottom: '20px',
         width: '100%',
         backgroundColor: '#4D4D4D',
     },
@@ -41,13 +41,15 @@ const style = {
         backgroundColor: '#4D4D4D',
         color: '#bdbdbd',
         borderRadius: '10px',
-        marginBottom: 10
+        marginBottom: 10,
+        fontSize: '16px'
     },
     formTitle: {
         fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 400,
-        fontSize: '15px'
+        fontSize: '16px',
+        marginBottom: 0
     }
 }
 
@@ -212,7 +214,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 <p style={{ ...style.formInput, border: 'solid 1px #bdbdbd', padding: 10 }}>
                     {parseInt(amount) / 1000000 || 0} DIG
                 </p>
-                <div style={{ marginBottom: '1rem', ...style.formTitle }}>Amount To Send</div>
+                <div style={{ marginBottom: '1rem', marginTop: '20px', ...style.formTitle }}>Amount To Send</div>
                 <div style={{
                     width: '100%',
                     height: '40px',
@@ -260,7 +262,7 @@ const TransferModal = ({ account, wrapSetShow }) => {
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advanced</Checkbox>
             </div>
             {
                 showAdvance && (

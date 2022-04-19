@@ -11,7 +11,7 @@ import { getBalance } from "../helpers/getBalances";
 
 const style = {
     transfer: {
-        marginBottom: '2rem',
+        marginBottom: '20px',
         width: '100%',
         backgroundColor: '#4D4D4D',
     },
@@ -35,19 +35,22 @@ const style = {
         flexDirection: 'row',
         justifyContent: 'end',
         marginTop: '2rem',
-        marginBottom: '1rem'
+        marginBottom: '1rem',
     },
     formInput: {
         backgroundColor: '#4D4D4D',
         color: '#bdbdbd',
         borderRadius: '10px',
-        marginBottom: 10
+        marginBottom: 10,
+        fontSize: '16px'
     },
     formTitle: {
         fontFamily: 'montserrat',
         color: '#ffffff',
         fontWeight: 400,
-        fontSize: '15px'
+        fontSize: '16px',
+        marginBottom: 0,
+        marginTop: '20px'
     }
 }
 
@@ -187,7 +190,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             <div style={style.transfer}>
                 <p style={style.formTitle}>Delegator</p>
                 <>
-                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={style.formInput}>
+                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
                         {
                             delegators.map((delegator, index) => (
                                 <option key={index} value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
@@ -257,7 +260,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advanced</Checkbox>
             </div>
             {
                 showAdvance && (

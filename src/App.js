@@ -1,5 +1,5 @@
 import './App.css';
-import { Modal, } from 'react-bootstrap';
+import { Modal, } from 'antd';
 import { useCallback, useState } from 'react';
 import ConnectButton from './components/ConnectButton';
 import AccountDetail from './pages/AccountDetail';
@@ -237,11 +237,15 @@ const App = () => {
             </ul>
           </div>
         </div>
-        <div>
+        <div
+          style={{
+            marginBottom: '2em'
+          }}
+        >
           <p style={{
             color: '#ffffff',
             fontSize: '24px',
-            textAlign: 'left'
+            textAlign: 'left',
           }}>Contact</p>
           <ul style={{ ...style.tabButton, listStyleType: 'none', }}>
             <li style={{
@@ -299,22 +303,24 @@ const App = () => {
           </Routes>
         </div>
       </div>
-      <>
-        <Modal className="border-radius-20" show={show} onHide={handleClose} centered={true}>
-          <Modal.Header style={{
-            backgroundColor: '#4D4D4D',
-            color: '#EEC13F',
-            fontFamily: 'montserrat',
-            fontSize: '24px',
-            border: 0,
-            padding: '20px',
-            paddingTop: '10px',
-            paddingBottom: '10px'
-          }}
-          >
-            <Modal.Title>Connect Wallet</Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#4D4D4D', padding: '20px', paddingTop: 0 }}>
+      <Modal
+        visible={show}
+        footer={null}
+        closable={false}
+        onCancel={handleClose}
+      >
+        <div style={{
+          backgroundColor: '#4D4D4D',
+          color: '#EEC13F',
+          fontFamily: 'montserrat',
+          fontSize: '24px',
+          border: 0,
+          padding: '0 .5rem 0 .5rem',
+        }}>
+          <p>
+            Import Account
+          </p>
+          <div>
             <div style={style.divButton}>
               <button style={{
                 backgroundColor: 'transparent',
@@ -365,9 +371,9 @@ const App = () => {
                 </div>
               </button>
             </div>
-          </Modal.Body>
-        </Modal>
-      </>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
