@@ -85,6 +85,7 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 visible={show}
                 footer={null}
                 closable={false}
+                onCancel={handleClose}
             >
                 <div style={{
                     color: '#EEC13F',
