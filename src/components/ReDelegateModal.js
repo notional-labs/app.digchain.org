@@ -218,7 +218,10 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     paddingLeft: '0.5rem',
                     backgroundColor: '#C4C4C4',
                     color: '#9B9B9B',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    '-webkit-line-clamp': 1
                 }}>
                     {delegation.delegation.validator_address}
                 </div>
