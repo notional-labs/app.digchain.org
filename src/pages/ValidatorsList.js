@@ -4,7 +4,7 @@ import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/montserrat"
 import notFound from '../assets/img/no-profile.png'
-import { Modal, } from 'react-bootstrap';
+import { Modal, } from 'antd';
 import DelegateModal from '../components/DelegateModal';
 import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
@@ -195,7 +195,7 @@ const ValidatorsList = () => {
                                                     data-aos-once={true}
                                                     style={{
                                                         borderRadius: '50%',
-                                                        
+
                                                     }}>
                                                     <Image
                                                         width={50}
@@ -234,29 +234,32 @@ const ValidatorsList = () => {
                         </tbody>
                     </table>
                 </div>
-                <>
-                    <Modal show={show} onHide={handleClose} backdrop="static" >
-                        <Modal.Header style={{
-                            backgroundColor: '#4D4D4D',
-                            color: '#EEC13F',
-                            fontFamily: 'montserrat',
-                            fontSize: '20px',
-                            fontWeight: 400,
-                            border: 0
-                        }}>
-                            <div>
-                                Delegate Token
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                            <DelegateModal validators={validators} wrapSetter={wrapSetShow} defaultVal={defaultVal} />
-                        </Modal.Body>
-                    </Modal>
-                </>
+                <Modal
+                    visible={show}
+                    footer={null}
+                    closable={false}
+                    onCancel={handleClose}
+                >
+                    <div style={{
+                        color: '#EEC13F',
+                        fontFamily: 'montserrat',
+                        fontSize: '24px',
+                        fontWeight: 400,
+                    }}>
+                        <p>
+                            Delegate Token
+                        </p>
+                        <DelegateModal 
+                            validators={validators} 
+                            wrapSetter={wrapSetShow} 
+                            defaultVal={defaultVal} 
+                        />
+                    </div>
+                </Modal>
             </div >
         ) : (
-            <div style={{ margin: 'auto', marginTop: '10%'}}>
-                <Image src={loadingGif} width={500} preview={false}/>
+            <div style={{ margin: 'auto', marginTop: '10%' }}>
+                <Image src={loadingGif} width={500} preview={false} />
             </div>
         )
     )

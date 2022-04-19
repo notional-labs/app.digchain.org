@@ -163,3 +163,8 @@
     color: #EEC13F;
   }
 }
+
+.ant-modal-content {
+  border-radius: 20px !important;
+  background: #4D4D4D !important;
+}

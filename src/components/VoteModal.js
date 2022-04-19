@@ -1,16 +1,17 @@
-import { InputNumber, notification, Checkbox, Radio } from "antd"
+import { InputNumber, notification, Checkbox, Radio, } from "antd"
 import { voteTest } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getClient, getKeplr, getStargateClient } from "../helpers/getKeplr";
-import { makeVoteMsg ,makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeVoteMsg, makeSignDocVoteMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
+import { DownCircleTwoTone } from '@ant-design/icons'
 
 const style = {
     transfer: {
-        marginBottom: '2rem',
+        marginBottom: '20px',
         width: '100%',
         backgroundColor: '#4D4D4D'
     },
@@ -42,11 +43,21 @@ const style = {
         borderRadius: '10px',
     },
     formTitle: {
-        fontFamily: 'ubuntu',
-        color: '#ffac38',
-        fontWeight: 500
+        fontFamily: 'montserrat',
+        color: '#ffffff',
+        fontWeight: 500,
+        fontSize: '16px',
+        marginBottom: 0
     }
 }
+
+const selectStyle = {
+    dropdownIndicator: base => ({
+        ...base,
+        color: '#ffac38'
+    }),
+}
+
 
 const VoteModal = ({ proposal, id, wrapSetShow }) => {
     const [fee, setFee] = useState('5000')
@@ -159,7 +170,11 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
             <div style={style.transfer}>
                 <p style={style.formTitle}>Voter</p>
                 <>
-                    <Form.Select onChange={handleChangeSelect} defaultValue={selectVoter} style={style.formInput}>
+                    <Form.Select
+                        onChange={handleChangeSelect}
+                        defaultValue={selectVoter}
+                        style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}
+                    >
                         {
                             voters.map((voter, index) => (
                                 <option key={index} value={index}>{voter.type === 'keplr' ? voter.account.address : voter.account}</option>
@@ -175,10 +190,10 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
                     value={choice}
                     style={style.formInput}
                 >
-                    <Radio value={1} style={{color: '#ffffff', backgroundColor: '#4D4D4D'}}>Yes</Radio>
-                    <Radio value={3} style={{color: '#ffffff',}}>No</Radio>
-                    <Radio value={4} style={{color: '#ffffff',}}>No With Veto</Radio>
-                    <Radio value={2} style={{color: '#ffffff',}}>Abstain</Radio>
+                    <Radio value={1} style={{ color: '#ffffff', backgroundColor: '#4D4D4D' }}>Yes</Radio>
+                    <Radio value={3} style={{ color: '#ffffff', }}>No</Radio>
+                    <Radio value={4} style={{ color: '#ffffff', }}>No With Veto</Radio>
+                    <Radio value={2} style={{ color: '#ffffff', }}>Abstain</Radio>
                 </Radio.Group>
             </div >
             {/* <div style={style.transfer}>
@@ -197,7 +212,7 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
                 </>
             </div> */}
             <div>
-                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'Ubuntu' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{ color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advanced</Checkbox>
             </div>
             {
                 showAdvance && (

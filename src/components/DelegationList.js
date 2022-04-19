@@ -1,6 +1,5 @@
 
-import { Typography, Tooltip, Skeleton } from 'antd';
-import { Modal } from 'react-bootstrap';
+import { Typography, Tooltip, Skeleton, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getValidators } from '../helpers/getValidators';
@@ -138,7 +137,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     }
 
     const handleCloseRedelegate = () => {
-        setShowWithdraw(false)
+        setShowRedelegate(false)
     }
 
     const handleCloseUnbond = () => {
@@ -215,76 +214,79 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                         </tbody>
                     </table>
                 ) : (
-                    <Skeleton active/>
+                    <Skeleton active />
                 )}
             </div>
-            <>
-                <Modal show={showWithdraw} onHide={handleCloseWithdraw} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
-                        color: '#EEC13F',
-                        fontFamily: 'montserrat',
-                        fontSize: '24px',
-                        fontWeight: 400,
-                        border: 0
-                    }}>
-                        <div>
-                            Withdraw Rewards
-                        </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <WithDrawModal address={address}
-                            type={type}
-                            validator={rewards[selectVal] && rewards[selectVal].validator_address}
-                            wrapSetShow={wrapSetShowWithdrawModal} />
-                    </Modal.Body>
-                </Modal>
-            </>
-            <>
-                <Modal show={showRedelegate} onHide={handleCloseRedelegate} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
-                        color: '#EEC13F',
-                        fontFamily: 'montserrat',
-                        fontSize: '24px',
-                        fontWeight: 400,
-                        border: 0
-                    }}>
-                        <div>
-                            Redelegate Token
-                        </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <ReDelegateModal address={address}
-                            type={type}
-                            delegation={delegations[selectVal]}
-                            wrapSetShow={wrapSetShowRedelegate}
-                            validators={validators} />
-                    </Modal.Body>
-                </Modal>
-            </>
-            <>
-                <Modal show={showUnbonding} onHide={handleCloseUnbond} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
-                        color: '#EEC13F',
-                        fontFamily: 'montserrat',
-                        fontSize: '24px',
-                        fontWeight: 400,
-                        border: 0
-                    }}>
-                        <div>
-                            Unbond Token
-                        </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <UndelegateModal address={address}
-                            type={type}
-                            delegation={delegations[selectVal]}
-                            wrapSetShow={wrapSetShowUnbondModal} />
-                    </Modal.Body>
-                </Modal>
-            </>
+            <Modal
+                visible={showWithdraw}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseWithdraw}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Withdraw Rewards
+                    </p>
+                    <WithDrawModal
+                        address={address}
+                        type={type}
+                        validator={rewards[selectVal] && rewards[selectVal].validator_address}
+                        wrapSetShow={wrapSetShowWithdrawModal}
+                    />
+                </div>
+            </Modal>
+            <Modal
+                visible={showRedelegate}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseRedelegate}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Redelegate Token
+                    </p>
+                    <ReDelegateModal
+                        address={address}
+                        type={type}
+                        delegation={delegations[selectVal]}
+                        wrapSetShow={wrapSetShowRedelegate}
+                        validators={validators}
+                    />
+                </div>
+            </Modal>
+            <Modal
+                visible={showUnbonding}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseUnbond}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Unbond Token
+                    </p>
+                    <UndelegateModal 
+                        address={address}
+                        type={type}
+                        delegation={delegations[selectVal]}
+                        wrapSetShow={wrapSetShowUnbondModal} 
+                    />
+                </div>
+            </Modal>
         </div>
     )
 }

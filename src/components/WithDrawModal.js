@@ -39,11 +39,14 @@ const style = {
         backgroundColor: '#4D4D4D',
         color: '#ffffff',
         borderRadius: '10px',
+        fontSize: '16px'
     },
     formTitle: {
         fontFamily: 'montserrat',
         color: '#ffffff',
-        fontWeight: 500
+        fontWeight: 500,
+        fontSize: '16px',
+        marginBottom: 0
     }
 }
 

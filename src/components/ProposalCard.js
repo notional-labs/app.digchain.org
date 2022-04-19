@@ -11,7 +11,7 @@ import { Skeleton } from 'antd';
 
 const style = {
     card: {
-        backgroundColor: 'rgb(255, 255, 255)',
+        backgroundColor: 'transparent',
         borderRadius: '15px',
         minHeight: 'auto',
         fontFamily: 'montserrat',
@@ -19,7 +19,8 @@ const style = {
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: 'auto',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.5)'
+        border: 'solid 1px #EEC13F',
+        color: '#ffffff'
     },
     timeBox: {
         display: 'flex',
@@ -40,23 +41,23 @@ const style = {
     },
     description: {
         textAlign: 'left',
-        color: '#000000',
         fontWeight: 300,
         fontSize: '15px',
     },
     timeCard: {
-        backgroundColor: '#ED9D26',
+        backgroundColor: 'transparent',
         padding: '1em',
         borderRadius: '10px',
+        color: '#ffffff',
+        border: 'solid 1px #EEC13F',
     },
     buttonBox: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#F4F4F4',
+        backgroundColor: 'transparent',
         padding: '1em 2em 1em 2em',
         marginTop: '1.5em',
-        borderRadius: '0 0 20px 20px'
     },
     detail: {
         padding: '1em',
@@ -125,7 +126,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
         if (proposal.status === 'PROPOSAL_STATUS_PASSED') {
             return (
                 <span style={{
-                    color: '#31bdac',
+                    color: '#ffffff',
                     backgroundColor: '#2A9D8F',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -139,7 +140,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
         else if (proposal.status === 'PROPOSAL_STATUS_REJECTED') {
             return (
                 <span style={{
-                    color: '#ff977d',
+                    color: '#ffffff',
                     backgroundColor: '#E76F51',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -154,7 +155,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
         else if (proposal.status === 'PROPOSAL_STATUS_DEPOSIT_PERIOD') {
             return (
                 <span style={{
-                    color: '#00cfe8',
+                    color: '#ffffff',
                     backgroundColor: 'rgba(0,207,232,.12)',
                     fontWeight: '400',
                     padding: '0.3em',
@@ -169,7 +170,7 @@ const ProposalCard = ({ proposal, wrapSetShow, wrapSetSelect, wrapSetShowDeposit
         else {
             return (
                 <span style={{
-                    color: '#7367f0',
+                    color: '#ffffff',
                     backgroundColor: '#1D5470',
                     fontWeight: '400',
                     padding: '0.3em',

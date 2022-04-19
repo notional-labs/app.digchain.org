@@ -1,10 +1,10 @@
 import ProfileCard from "../components/ProfileCard"
-import { Modal, } from 'react-bootstrap'
 import TransferModal from "../components/TransferModal"
 import { useCallback, useState } from "react"
 import { ImFloppyDisk } from "react-icons/im";
 import { Breadcrumb } from "antd"
 import { Link } from "react-router-dom";
+import { Modal } from "antd";
 
 
 const style = {
@@ -81,27 +81,26 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                     </div>
                 )
             }
-            <>
-                <Modal show={show} onHide={handleClose} backdrop="static" >
-                    <Modal.Header style={{
-                        backgroundColor: '#4D4D4D',
-                        color: '#EEC13F',
-                        fontFamily: 'montserrat',
-                        fontSize: '24px',
-                        fontWeight: 400,
-                        border: 0
-                    }}>
-                        <div>
-                            Transfer Token
-                        </div>
-                    </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#4D4D4D', }}>
-                        <TransferModal account={accounts[selectAcc]}
-                            wrapSetShow={wrapSetShowTransferModal}
-                        />
-                    </Modal.Body>
-                </Modal>
-            </>
+            <Modal
+                visible={show}
+                footer={null}
+                closable={false}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Transfer Token
+                    </p>
+                    <TransferModal 
+                        account={accounts[selectAcc]}
+                        wrapSetShow={wrapSetShowTransferModal}
+                    />
+                </div>
+            </Modal>
         </div>
     )
 }

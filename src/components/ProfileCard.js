@@ -11,7 +11,7 @@ const { Paragraph } = Typography;
 
 const style = {
     container: {
-        backgroundColor: '#F4F4F4',
+        backgroundColor: 'transparent',
         padding: 50,
         paddingTop: 5,
         paddingBottom: 5,
@@ -19,7 +19,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.5)'
+        border: 'solid 1px #EEC13F'
     },
     div: {
         display: 'flex',
@@ -86,7 +86,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                     <button style={{
                         fontWeight: 800,
                         fontSize: '2rem',
-                        color: '#000000',
+                        color: '#ED9D26',
                         backgroundColor: 'transparent',
                         border: 0,
                         position: 'relative',
@@ -99,25 +99,25 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             </div>
             <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim() }}
                 style={{
-                    color: '#2a3158',
+                    color: '#FFFFFF',
                     fontFamily: 'montserrat',
                     textAlign: 'left',
-                    backgroundColor: 'white',
+                    backgroundColor: 'transparent',
                     padding: 25,
                     marginBottom: '1.5em',
                     borderRadius: '20px',
-                    boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+                    border: 'solid 1px #EEC13F'
                 }}>
                 {account.type === 'keplr' ? (account.account.address.length > 100 ? `${account.account.address.substring(0, 100)}... ` : `${account.account.address} `) : (account.account.length > 100 ? `${account.account.substring(0, 100)}... ` : `${account.account} `)}
             </Paragraph>
             <Paragraph style={{
-                color: '#2a3158',
+                color: '#FFFFFF',
                 fontFamily: 'montserrat',
                 textAlign: 'left',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 padding: 25,
                 borderRadius: '20px',
-                boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+                border: 'solid 1px #EEC13F'
             }}>
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
