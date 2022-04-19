@@ -189,7 +189,11 @@ const TransferModal = ({ account, wrapSetShow }) => {
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
                     backgroundColor: '#4D4D4D',
-                    color: '#FFFFFF'
+                    color: '#FFFFFF',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    '-webkit-line-clamp': 1
                 }}>
                     {account.type === 'keplr' ? account.account.address : account.account}
                 </div>

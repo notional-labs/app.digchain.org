@@ -2,8 +2,6 @@ import ProfileCard from "../components/ProfileCard"
 import TransferModal from "../components/TransferModal"
 import { useCallback, useState } from "react"
 import { ImFloppyDisk } from "react-icons/im";
-import { Breadcrumb } from "antd"
-import { Link } from "react-router-dom";
 import { Modal } from "antd";
 
 
@@ -85,6 +83,7 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                 visible={show}
                 footer={null}
                 closable={false}
+                onCancel={handleClose}
             >
                 <div style={{
                     color: '#EEC13F',
