@@ -157,7 +157,7 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                 </div>
             </div>
             <div>
-                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advance</Checkbox>
+                <Checkbox onChange={check} style={{color: '#F6F3FB', fontSize: '1.2rem', fontFamily: 'montserrat' }}>Advanced</Checkbox>
             </div>
             {
                 showAdvance && (
