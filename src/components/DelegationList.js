@@ -152,7 +152,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                 </Title>
             </div>
             <div style={{ borderRadius: '10px', border: 'solid 2px #EEC13F', padding: '1em' }}>
-                <div style={{ width: '8%', float: 'right', marginBottom: '1em' }}>
+                <div style={{ float: 'right', marginBottom: '1em' }}>
                     <Link to='/staking'>
                         <button style={style.button}>
                             Delegate
