@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { unbonding } from './transaction'
 
 const api = process.env.REACT_APP_API
 // const api = "http://0.0.0.0:1317"
@@ -65,8 +66,11 @@ export const getTotalDelegate = (delegations) => {
 
 export const getTotalUnbonding = (unbondings) => {
     let sum = 0
+    console.log(unbondings)
     for (let i of unbondings){
-        sum += parseFloat(i.entries[0].balance)
+        for(let j of i.entries) {
+            sum += parseFloat(j.balance)
+        }
     }
     return sum
 }
