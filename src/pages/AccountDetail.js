@@ -7,13 +7,15 @@ import {
 } from "react-router-dom";
 import { useEffect, useState, useCallback } from 'react';
 import { BsGraphUp, BsGraphDown, BsWallet, BsLock } from "react-icons/bs";
-import { getAsset, getTotalDelegate, getTotalUnbonding, getPrice, convertAsset } from '../helpers/getBalances';
+import { getAsset, getTotalDelegate, getTotalUnbonding, getPrice, convertAsset, getDelegation, getReward } from '../helpers/getBalances';
 import TxList from '../components/TxList';
 import { Doughnut } from 'react-chartjs-2';
-import {Chart, ArcElement} from 'chart.js'
+import { Chart, ArcElement } from 'chart.js'
+import AssetCard from '../components/AssetCard'
+
 Chart.register(ArcElement);
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const style = {
     container: {
@@ -99,41 +101,33 @@ const AccountDetail = ({ accounts }) => {
     const [show, setShow] = useState(false)
     const [showIbc, setShowIbc] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
-    const [asset, setAsset] = useState({
-        balance: '',
-        delegation: '',
-        reward: '',
-        unbonding: ''
-    })
-    const [reward, setReward] = useState([])
-    const [delegation, setDelegation] = useState([])
+    const [balance, setBalance] = useState('')
+    const [reward, setReward] = useState('')
+    const [delegation, setDelegation] = useState('')
+    const [unbond, setUnbond] = useState('')
+    const [delegations, setDelegations] = useState([])
+    const [rewards, setRewards] = useState([])
     const [total, setTotal] = useState(0)
     let { id } = useParams();
 
-    const wrapSetShowTransferModal = useCallback((val) => {
-        setShow(val)
-    }, [setShow])
-
-    const wrapSetShowIBCTransferModal = useCallback((val) => {
-        setShowIbc(val)
-    }, [setShowIbc])
-
-    const handleClose = () => {
-        setShow(false)
-    }
-
-    const handleClick = () => {
-        setShow(true)
-    }
-
-    const handleClickIbc = () => {
-        setShowIbc(true)
-    }
-
-    const handleCloseIbc = () => {
-        setShowIbc(false)
-    }
-
+    const wrapSetAsset = useCallback((value, type) => {
+        switch (type) {
+            case 1:
+                setBalance(value)
+                break;
+            case 2:
+                setDelegation(value)
+                break;
+            case 3:
+                setReward(value)
+                break;
+            case 4:
+                setUnbond(value)
+                break;
+            default:
+                break;
+        }
+    }, [])
 
     useEffect(() => {
         (async () => {
@@ -149,30 +143,25 @@ const AccountDetail = ({ accounts }) => {
                     }
                 }
             })
-            const asset = await getAsset(id)
+            const delegationList = await getDelegation(id)
+            const rewardList = await getReward(id)
 
-            const balance = asset[0].length > 0 && asset[0][0].length > 0 ? asset[0][0][0].amount : '0'
-            const delegation = asset[1].delegation_responses.length > 0 ? getTotalDelegate(asset[1].delegation_responses) : '0'
-            const reward = asset[2].total.length > 0 ? asset[2].total[0].amount : '0'
-            const unbonding = asset[3].unbonding_responses.length > 0 ? getTotalUnbonding(asset[3].unbonding_responses) : '0'
+            setDelegations([...delegationList.delegation_responses])
+            setRewards([...rewardList.rewards])
+        })()
+    }, [id])
 
-            setAsset({
-                balance,
-                delegation,
-                reward,
-                unbonding
-            })
+    useEffect(() => {
+        (async () => {
 
             const res = await getPrice()
             const usd = res['dig-chain'].usd || 0
 
-            const totalAsset = convertAsset(balance, delegation, reward, unbonding, usd)
-
+            const totalAsset = convertAsset(balance, delegation, reward, unbond, usd)
+            console.log(totalAsset)
             setTotal(totalAsset)
-            setDelegation([...asset[1].delegation_responses])
-            setReward([...asset[2].rewards])
         })()
-    }, [id])
+    }, [balance, delegation, reward, unbond])
 
     return (
         <div style={style.container}>
@@ -221,10 +210,10 @@ const AccountDetail = ({ accounts }) => {
                                 ],
                                 datasets: [{
                                     data: [
-                                        parseInt(asset.balance) / 1000000 ,
-                                        parseInt(asset.delegation) / 1000000 ,
-                                        parseInt(asset.reward) / 1000000 ,
-                                        parseInt(asset.unbonding) / 1000000
+                                        parseInt(balance) / 1000000,
+                                        parseInt(delegation) / 1000000,
+                                        parseInt(reward) / 1000000,
+                                        parseInt(unbond) / 1000000
                                     ],
                                     backgroundColor: [
                                         'rgb(61, 255, 148)',
@@ -247,124 +236,44 @@ const AccountDetail = ({ accounts }) => {
                             borderRadius: '20px'
                         }}>
                             <li style={style.li}>
-                                <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(61, 255, 148)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                        <BsWallet style={{ ...style.icon, color: '#93A98D' }} />
-                                    </div>
-                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                        <span style={{
-                                            display: 'inline-block',
-                                            verticalAlign: 'middle',
-                                            lineheight: 'normal',
-                                            marginTop: '0.5em',
-                                            fontWeight: 'bold',
-                                            color: '#ffffff'
-                                        }}>
-                                            Balance
-                                        </span>
-                                    </p>
-                                </div>
-                                <div style={{ fontWeight: 500 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em',
-                                        color: '#ffffff'
-                                    }}>
-                                        {parseInt(asset.balance) / 1000000 || 0} DIG
-                                    </span>
-                                </div>
+                                <AssetCard
+                                    wrapSetAsset={wrapSetAsset}
+                                    type={1}
+                                    Icon={<BsWallet style={{ ...style.icon, color: '#93A98D' }} />}
+                                    backgroundColor={'rgb(61, 255, 148)'}
+                                    addr={id}
+                                    asset={balance}
+                                />
                             </li>
                             <li style={style.li}>
-                                <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(140, 129, 252)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                        <BsLock style={{ ...style.icon, color: '#0B1321' }} />
-                                    </div>
-                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                        <span style={{
-                                            display: 'inline-block',
-                                            verticalAlign: 'middle',
-                                            lineheight: 'normal',
-                                            marginTop: '0.5em',
-                                            color: '#ffffff',
-                                            fontWeight: 'bold',
-                                        }}>
-                                            Delegation
-                                        </span>
-                                    </p>
-                                </div>
-                                <div style={{ fontWeight: 500 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em',
-                                        color: '#ffffff',
-                                    }}>
-                                        {parseInt(asset.delegation) / 1000000 || 0} DIG
-                                    </span>
-                                </div>
+                                <AssetCard
+                                    wrapSetAsset={wrapSetAsset}
+                                    type={2}
+                                    Icon={<BsLock style={{ ...style.icon, color: '#0B1321' }} />}
+                                    backgroundColor={'rgb(140, 129, 252)'}
+                                    addr={id}
+                                    asset={delegation}
+                                />
                             </li>
                             <li style={style.li}>
-                                <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(255, 174, 97)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                        <BsGraphUp style={{ ...style.icon, color: '#AE8D4F' }} />
-                                    </div>
-                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                        <span style={{
-                                            display: 'inline-block',
-                                            verticalAlign: 'middle',
-                                            lineheight: 'normal',
-                                            marginTop: '0.5em',
-                                            color: '#ffffff',
-                                            fontWeight: 'bold',
-                                        }}>
-                                            Reward
-                                        </span>
-                                    </p>
-                                </div>
-                                <div style={{ fontWeight: 500 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em',
-                                        color: '#ffffff'
-                                    }}>
-                                        {parseInt(asset.reward) / 1000000 || 0} DIG
-                                    </span>
-                                </div>
+                                <AssetCard
+                                    wrapSetAsset={wrapSetAsset}
+                                    type={3}
+                                    Icon={<BsGraphUp style={{ ...style.icon, color: '#AE8D4F' }} />}
+                                    backgroundColor={'rgb(255, 174, 97)'}
+                                    addr={id}
+                                    asset={reward}
+                                />
                             </li>
                             <li style={style.li}>
-                                <div style={style.iconDiv}>
-                                    <div style={{ backgroundColor: 'rgb(255, 115, 116)', height: '100%', padding: '0.5em', borderRadius: '10px' }}>
-                                        <BsGraphDown style={{ ...style.icon, color: '#BD6B5A' }} />
-                                    </div>
-                                    <p style={{ marginLeft: '10px', fontWeight: 500, marginBottom: 0 }}>
-                                        <span style={{
-                                            display: 'inline-block',
-                                            verticalAlign: 'middle',
-                                            lineheight: 'normal',
-                                            marginTop: '0.5em',
-                                            color: '#ffffff',
-                                            fontWeight: 'bold',
-                                        }}>
-                                            Unbonding
-                                        </span>
-                                    </p>
-                                </div>
-                                <div style={{ fontWeight: 500 }}>
-                                    <span style={{
-                                        display: 'inline-block',
-                                        verticalAlign: 'middle',
-                                        lineheight: 'normal',
-                                        marginTop: '0.5em',
-                                        color: '#ffffff'
-                                    }}>
-                                        {parseInt(asset.unbonding) / 1000000 || 0} DIG
-                                    </span>
-                                </div>
+                                <AssetCard
+                                    wrapSetAsset={wrapSetAsset}
+                                    type={4}
+                                    Icon={<BsGraphDown style={{ ...style.icon, color: '#BD6B5A' }} />}
+                                    backgroundColor={'rgb(255, 115, 116)'}
+                                    addr={id}
+                                    asset={unbond}
+                                />
                             </li>
                             <li>
                                 <hr style={{ color: '#ffffff', fontWeight: 'bold', }} />
@@ -386,7 +295,7 @@ const AccountDetail = ({ accounts }) => {
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 0 }}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegation} rewards={reward} />
+                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegations} rewards={rewards} />
             </div>
             <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 20 }}>
                 <TxList address={id} />
