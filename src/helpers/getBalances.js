@@ -66,7 +66,6 @@ export const getTotalDelegate = (delegations) => {
 
 export const getTotalUnbonding = (unbondings) => {
     let sum = 0
-    console.log(unbondings)
     for (let i of unbondings){
         for(let j of i.entries) {
             sum += parseFloat(j.balance)
@@ -83,6 +82,7 @@ export const getPrice = async () => {
 }
 
 export const convertAsset = (balance, delegation, reward, unbond, usd) => {
+    console.log(delegation)
     const sum = parseInt(balance) / 1000000
                 + parseInt(delegation) / 1000000
                 + parseInt(reward) / 1000000
