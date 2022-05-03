@@ -149,7 +149,7 @@ const AccountDetail = ({ accounts }) => {
             setDelegations([...delegationList.delegation_responses])
             setRewards([...rewardList.rewards])
         })()
-    }, [id])
+    }, [])
 
     useEffect(() => {
         (async () => {
