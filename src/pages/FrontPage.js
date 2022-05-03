@@ -70,7 +70,7 @@ const FrontPage = () => {
                         Have fun digging around the comunity and the validators.
                     </p>
 
-                    <a href="https://digchain.org/" target={'_blank'}>
+                    <a href="https://drive.google.com/file/d/1NeaNBXFFCSLl9Q6ckCNqT2WhZEi8_lRN/view" target={'_blank'}>
                         <button style={{
                             border: 0,
                             borderRadius: '10px',
