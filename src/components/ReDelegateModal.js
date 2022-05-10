@@ -1,11 +1,12 @@
-import { InputNumber, notification, Checkbox } from "antd"
-import { useState } from 'react'
+import { InputNumber, notification, Checkbox, Input, Empty } from "antd"
+import { useEffect, useState } from 'react'
 import { Form } from "react-bootstrap";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 import { makeSignDocBeginRedelegateMsg, makeBeginRedelegateMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers"
 import ClipLoader from "react-spinners/ClipLoader"
+import { IoSearch } from "react-icons/io5";
 
 
 //TODO: add logic to web, and right variale
@@ -54,10 +55,11 @@ const style = {
 
 const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators }) => {
     const [value, setValue] = useState('')
-    const [selectVal, setSelectVal] = useState(0)
+    const [selectVal, setSelectVal] = useState('')
     const [showAdvance, setShowAdvance] = useState(false)
     const [gasAmount, setGasAmount] = useState('400000')
     const [isDoingTX, setIsDoingTx] = useState(false)
+    const [filterValidators, setFilterValidators] = useState([...validators])
 
     const success = () => {
         notification.success({
@@ -78,14 +80,14 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
     }
 
     const checkDisable = () => {
-        if (value === 0) {
+        if (value === 0 || selectVal === '') {
             return true
         }
         return false
     }
 
-    const handleChangeSelectVal = (e) => {
-        setSelectVal(e.target.value)
+    const handleChangeSelectVal = (val) => {
+        setSelectVal(val)
     }
 
     const check = (e) => {
@@ -96,6 +98,10 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
         setGasAmount(value)
     }
 
+    const handleChangeSearch = (e) => {
+        const list = validators.filter(val => val.description.moniker.includes(e.target.value))
+        setFilterValidators([...list])
+    }
 
     const handleClick = async () => {
         setIsDoingTx(true)
@@ -108,7 +114,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                 const val = delegation.delegation.validator_address
                 const validator_src_address = delegation.delegation.validator_address
                 //TODO: add choice form to validator_dst_address - done
-                const validator_dst_address = validators[selectVal].operator_address
+                const validator_dst_address = selectVal
                 const gasLimit = parseInt(gasAmount)
                 let stdFee = {
                     amount: [],
@@ -157,7 +163,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
 
             const validator_src_address = delegation.delegation.validator_address
             //TODO: add choice form to validator_dst_address
-            const validator_dst_address = validators[selectVal].operator_address
+            const validator_dst_address = selectVal
             const amount = value * 1000000
 
             console.log("address")
@@ -229,13 +235,82 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
             <div style={style.transfer}>
                 <p style={style.formTitle}>To</p>
                 <>
-                    <Form.Select onChange={handleChangeSelectVal} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
+                    <Input
+                        onChange={handleChangeSearch}
+                        style={{
+                            borderRadius: '10px',
+                            marginBottom: '20px',
+                            width: '30%',
+                            backgroundColor: 'transparent',
+                            color: '#ffffff',
+                        }}
+                        placeholder='Search'
+                        prefix={<IoSearch />}
+                    />
+                    <div
+                        style={{
+                            backgroundColor: 'white',
+                            borderRadius: '10px',
+                            padding: '0 .5em',
+                            fontSize: '20px',
+                            fontWeight: 'bold'
+                        }}
+                    >
                         {
-                            validators.map((val, index) => (
-                                <option key={index} value={index}>{val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})</option>
-                            ))
+                            validators.filter(val => val.operator_address === selectVal).length > 0 ?
+                                validators.filter(val => val.operator_address === selectVal)[0].description.moniker
+                                : <p
+                                    style={{
+                                        fontWeight: 400,
+                                        color: '#bfbfbf'
+                                    }}
+                                >
+                                    Select a validator'
+                                </p>
                         }
-                    </Form.Select>
+                    </div>
+                    <div
+                        style={{
+                            height: '250px',
+                            overflow: 'auto',
+                            border: 'solid 1px rgb(189, 189, 189)',
+                            marginTop: '20px',
+                            borderRadius: '10px',
+                        }}
+                    >
+                        {
+                            filterValidators.length > 0 ? (
+                                filterValidators.map((val, index) => (
+                                    <button
+                                        className="val-select-button"
+                                        key={index}
+                                        onClick={() => handleChangeSelectVal(val.operator_address)}
+                                        style={{
+                                            border: 0,
+                                            backgroundColor: 'transparent',
+                                            width: '100%',
+                                            textAlign: 'left',
+                                            fontSize: '16px',
+                                            color: '#ffffff',
+                                            padding: '10px'
+                                        }}
+                                    >
+                                        {val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})
+                                    </button>
+                                ))
+                            ) : (
+                                <div
+                                    style={{
+                                        position: 'relative',
+                                        top: '50px',
+                                        color: '#ffffff'
+                                    }}
+                                >
+                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                </div>
+                            )
+                        }
+                    </div>
                 </>
             </div>
             <div style={style.transfer}>
