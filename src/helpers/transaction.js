@@ -2,7 +2,7 @@ import {
   coin,
   StdFee
 } from "@cosmjs/stargate";
-import { makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg, makeSubmitProposalMsg, makeDepositMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
+import { makeDelegateMsg, makeSendMsg, makeVoteMsg, makeUndelegateMsg, makeWithDrawMsg, makeSubmitProposalMsg, makeDepositMsg, makeWithDrawAllMsg } from "../helpers/ethereum/lib/eth-transaction/Msg"
 import { MsgVote, MsgSubmitProposal } from 'cosmjs-types/cosmos/gov/v1beta1/tx'
 import utils_1 from "@cosmjs/utils"
 import gov_1 from "cosmjs-types/cosmos/gov/v1beta1/gov"
@@ -53,7 +53,7 @@ export const unbonding = async (client, address, amount, recipient, gas) => {
 
   const result = await client.signAndBroadcast(
     address,
-    [msg],
+    [...msg],
     fee,
   );
   return result
@@ -69,6 +69,21 @@ export const withDraw = async (client, address, validatorAddress, gas) => {
   const result = await client.signAndBroadcast(
     address,
     [msg],
+    fee,
+  );
+  return result
+}
+
+export const withDrawAll = async (client, address, validatorAddresses, gas) => {
+  let fee = {
+    amount: [],
+    gas: `${gas}`,
+  };
+  const msg = makeWithDrawAllMsg(address, validatorAddresses)
+
+  const result = await client.signAndBroadcast(
+    address,
+    [...msg],
     fee,
   );
   return result

@@ -97,7 +97,7 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
     }).catch(e =>  {
       notification.error({
         message: "Transaction Rejected " ,
-        description: "Check your walllet"
+        description: e.message
     })
     return "Transaction Rejected"
     })
