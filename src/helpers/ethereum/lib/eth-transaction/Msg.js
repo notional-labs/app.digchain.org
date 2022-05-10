@@ -43,6 +43,22 @@ export function makeWithDrawMsg(delegator_address, validator_address) {
     return msg
 }
 
+export function makeWithDrawAllMsg(delegator_address, validator_addresses) {
+    let msgs = []
+    validator_addresses.map(validator_address => {
+        const msgWithDraw = {
+            delegatorAddress: delegator_address,
+            validatorAddress: validator_address,
+        }
+        const msg = {
+            typeUrl: "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+            value: msgWithDraw,
+        };
+        msgs.push(msg)
+    })
+    return msgs
+}
+
 export function makeUndelegateMsg(delegatorAddress, validatorAddress, amount, denom) {
 
     const msgUndelegate = {
@@ -155,6 +171,21 @@ export function makeSignDocWithDrawMsg(delegator_address, validator_address, amo
         }
     }
     return signDocDelegate
+}
+
+export function makeSignDocWithDrawAllMsg(delegator_address, validator_addresses, amount, denom) {
+    let msgs = []
+    validator_addresses.map(validator_address => {
+        const signDocDelegate = {
+            type: "cosmos-sdk/MsgWithdrawDelegationReward",
+            value: {
+                delegator_address: delegator_address,
+                validator_address: validator_address,
+            }
+        }
+        msgs.push(signDocDelegate)
+    })
+    return msgs
 }
 
 export function makeSignDocBeginRedelegateMsg(delegator_address, validator_src_address, validator_dst_address, amount, denom) {

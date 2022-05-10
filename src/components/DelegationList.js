@@ -10,6 +10,7 @@ import ReDelegateModal from './ReDelegateModal';
 import { RiLogoutBoxRLine, } from "react-icons/ri";
 import { TiArrowRepeat } from "react-icons/ti";
 import { AiOutlineGift } from "react-icons/ai";
+import WithDrawAllRewardModal from './WithDrawAllRewardModal';
 
 
 const { Title, Paragraph } = Typography;
@@ -32,7 +33,8 @@ const style = {
         color: '#FFFFFF',
         padding: '20px',
         paddingTop: '1em',
-        paddingBottom: '1em'
+        paddingBottom: '1em',
+        width: '150px'
     },
     actionButton: {
         border: 'solid 2px #ffffff',
@@ -82,6 +84,9 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     const [showWithdraw, setShowWithdraw] = useState(false)
     const [showUnbonding, setShowUnbonding] = useState(false)
     const [showRedelegate, setShowRedelegate] = useState(false)
+    const [showClaimAll, setShowClaimAll] = useState(false)
+
+    console.log(rewards.length)
 
     const wrapSetShowWithdrawModal = useCallback((val) => {
         setShowWithdraw(val)
@@ -94,6 +99,10 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     const wrapSetShowRedelegate = useCallback((val) => {
         setShowRedelegate(val)
     }, [setShowRedelegate])
+
+    const wrapSetShowClaimAll = useCallback((val) => {
+        setShowClaimAll(val)
+    }, [setShowClaimAll])
 
     useEffect(() => {
         (async () => {
@@ -144,6 +153,14 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
         setShowUnbonding(false)
     }
 
+    const handleClickClaimAll = () => {
+        setShowClaimAll(true)
+    }
+
+    const handleCloseClaimAll = () => {
+        setShowUnbonding(false)
+    }
+
     return (
         <div>
             <div style={style.container}>
@@ -152,7 +169,17 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                 </Title>
             </div>
             <div style={{ borderRadius: '10px', border: 'solid 2px #EEC13F', padding: '1em' }}>
-                <div style={{ float: 'right', marginBottom: '1em' }}>
+                <div style={{ float: 'right', marginBottom: '1em', display: 'flex', justifyContent: 'space-between' }}>
+                    {
+                        !address.slice(0, 2).includes('0x') && rewards.length > 0 && (
+                            <button 
+                                style={{ ...style.button, marginRight: '20px',}} 
+                                onClick={handleClickClaimAll}
+                            >
+                                Claim All
+                            </button>
+                        )
+                    }
                     <Link to='/staking'>
                         <button style={style.button}>
                             Delegate
@@ -279,11 +306,34 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                     <p>
                         Unbond Token
                     </p>
-                    <UndelegateModal 
+                    <UndelegateModal
                         address={address}
                         type={type}
                         delegation={delegations[selectVal]}
-                        wrapSetShow={wrapSetShowUnbondModal} 
+                        wrapSetShow={wrapSetShowUnbondModal}
+                    />
+                </div>
+            </Modal>
+            <Modal
+                visible={showClaimAll}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseClaimAll}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Claim all rewards
+                    </p>
+                    <WithDrawAllRewardModal
+                        address={address}
+                        type={type}
+                        rewards={rewards}
+                        wrapSetShow={wrapSetShowClaimAll}
                     />
                 </div>
             </Modal>
