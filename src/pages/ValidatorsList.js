@@ -57,7 +57,7 @@ const ValidatorsList = () => {
     const [validators, setValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
-    const [defaultVal, setDefaultVal] = useState(0)
+    const [defaultVal, setDefaultVal] = useState('')
     const [state, setState] = useState('')
     const [dummy, setDummy] = useState([])
 
@@ -224,7 +224,7 @@ const ValidatorsList = () => {
                                                 fontSize: '15px',
                                                 fontWeight: 700,
                                                 boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
-                                            }} onClick={async () => await handleClick(index)}>
+                                            }} onClick={async () => await handleClick(val.operator_address)}>
                                                 Delegate
                                             </button>
                                         </td>
