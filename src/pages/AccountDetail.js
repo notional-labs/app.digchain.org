@@ -158,7 +158,6 @@ const AccountDetail = ({ accounts }) => {
             const usd = res['dig-chain'].usd || 0
 
             const totalAsset = convertAsset(balance, delegation, reward, unbond, usd)
-            console.log(totalAsset)
             setTotal(totalAsset)
         })()
     }, [balance, delegation, reward, unbond])
@@ -219,7 +218,7 @@ const AccountDetail = ({ accounts }) => {
                                         'rgb(61, 255, 148)',
                                         'rgb(140, 129, 252)',
                                         'rgb(255, 174, 97)',
-                                        'rgb(255, 174, 97)'
+                                        'rgb(255, 115, 116)'
                                     ],
                                     hoverOffset: 4
                                 }]

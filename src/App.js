@@ -105,16 +105,16 @@ const App = () => {
 
   const connect = async (val) => {
     if (val === 'keplr') {
-      const { accounts } = await getKeplr()
+      const { accounts, key } = await getKeplr()
       if (accounts !== null) {
         if (!localStorage.getItem('accounts')) {
-          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr' }]))
+          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'keplr', key }]))
           setAccounts([{ account: accounts[0], type: 'keplr' }])
         }
         else if (localStorage.getItem('accounts')) {
           let accountsList = JSON.parse(localStorage.getItem('accounts'))
           if (accountsList.filter(acc => acc.account.address === accounts[0].address).length === 0) {
-            accountsList.push({ account: accounts[0], type: 'keplr' })
+            accountsList.push({ account: accounts[0], type: 'keplr', key })
             localStorage.setItem('accounts', JSON.stringify(accountsList))
             setAccounts([...accountsList])
             warning('Success')
@@ -129,6 +129,7 @@ const App = () => {
       let web3 = await getWeb3Instance();
       try {
         const accounts = (await web3.eth.getAccounts());
+        console.log(accounts)
         if (!localStorage.getItem('accounts')) {
           localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
           setAccounts([{ account: accounts[0], type: 'metamask' }])
