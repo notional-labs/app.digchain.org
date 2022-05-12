@@ -158,7 +158,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     }
 
     const handleCloseClaimAll = () => {
-        setShowUnbonding(false)
+        setShowClaimAll(false)
     }
 
     return (
