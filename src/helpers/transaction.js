@@ -53,7 +53,7 @@ export const unbonding = async (client, address, amount, recipient, gas) => {
 
   const result = await client.signAndBroadcast(
     address,
-    [...msg],
+    [msg],
     fee,
   );
   return result

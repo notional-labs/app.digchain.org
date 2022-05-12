@@ -81,7 +81,19 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
 
     return (
         <div style={style.container}>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div
+                    style={{
+                        fontSize: '20px',
+                        color: 'white',
+                        position: 'relative',
+                        top: '10px'
+                    }}
+                >
+                    {
+                        account.key && account.key.name
+                    }
+                </div>
                 <Tooltip placement="top" title='Remove'>
                     <button style={{
                         fontWeight: 800,

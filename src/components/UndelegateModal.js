@@ -53,7 +53,7 @@ const style = {
 const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
     const [value, setValue] = useState('')
     const [showAdvance, setShowAdvance] = useState(false)
-    const [gasAmount, setGasAmount] = useState('200000')
+    const [gasAmount, setGasAmount] = useState('400000')
     const [isDoingTX, setIsDoingTx] = useState(false)
 
     const success = () => {

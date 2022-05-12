@@ -52,7 +52,7 @@ const style = {
 
 const WithDrawAllRewardModal = ({ address, type, rewards, wrapSetShow }) => {
     const [showAdvance, setShowAdvance] = useState(false)
-    const [gasAmount, setGasAmount] = useState('400000')
+    const [gasAmount, setGasAmount] = useState('200000')
     const [isDoingTX, setIsDoingTx] = useState(false)
 
     const success = () => {
@@ -84,7 +84,7 @@ const WithDrawAllRewardModal = ({ address, type, rewards, wrapSetShow }) => {
 
             const stargate = await getStargateClient(offlineSigner)
             if (stargate != null) {
-                const gas = parseInt(gasAmount)
+                const gas = parseInt(gasAmount) * rewards.length
                 const validator_addresses = rewards.map(reward => reward.validator_address)
                 withDrawAll(stargate, address, validator_addresses, gas).then((result) => {
                     console.log(result)
@@ -184,7 +184,7 @@ const WithDrawAllRewardModal = ({ address, type, rewards, wrapSetShow }) => {
                             }} min={0}
                                 step={1}
                                 onChange={handleChangeGas}
-                                defaultValue={parseInt(gasAmount)}
+                                defaultValue={parseInt(gasAmount) * rewards.length}
                                 controls={false}
                                 bordered={false}
                             />
