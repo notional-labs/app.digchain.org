@@ -99,7 +99,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
     }
 
     const handleChangeSearch = (e) => {
-        const list = validators.filter(val => val.description.moniker.includes(e.target.value))
+        const list = validators.filter(val => val.description.moniker.toLowerCase().includes(e.target.value.toLowerCase()))
         setFilterValidators([...list])
     }
 
@@ -208,7 +208,10 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
                     backgroundColor: '#C4C4C4',
-                    color: '#9B9B9B'
+                    color: '#9B9B9B',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
                 }}>
                     {address}
                 </div>

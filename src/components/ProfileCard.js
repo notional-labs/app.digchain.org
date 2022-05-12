@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import {
     Link,
 } from "react-router-dom";
-import { BiX } from "react-icons/bi";
+import { BiX, BiWrench } from "react-icons/bi";
 
 
 const { Paragraph } = Typography;
@@ -46,7 +46,7 @@ const style = {
     }
 }
 
-const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccounts }) => {
+const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccounts, wrapSetSelectSetName, wrapSetShowSetNameModal }) => {
     const [amount, setAmount] = useState('')
 
     useEffect(() => {
@@ -79,6 +79,11 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
         wrapSetAccounts(filterAccouts)
     }
 
+    const handleClickSetName = () => {
+        wrapSetSelectSetName(index)
+        wrapSetShowSetNameModal(true)
+    }
+
     return (
         <div style={style.container}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -91,23 +96,40 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                     }}
                 >
                     {
-                        account.key && account.key.name
+                        account.key ? account.key.name : 'unname'
                     }
                 </div>
-                <Tooltip placement="top" title='Remove'>
-                    <button style={{
-                        fontWeight: 800,
-                        fontSize: '2rem',
-                        color: '#ED9D26',
-                        backgroundColor: 'transparent',
-                        border: 0,
-                        position: 'relative',
-                        marginRight: '-40px'
-                    }} onClick={handleRemove}
-                    >
-                        <BiX/>
-                    </button>
-                </Tooltip>
+                <div>
+                    <Tooltip placement="top" title='Set name'>
+                        <button style={{
+                            fontWeight: 400,
+                            fontSize: '1.5rem',
+                            color: '#ED9D26',
+                            backgroundColor: 'transparent',
+                            border: 0,
+                            position: 'relative',
+                            top: '-5px'
+                        }} onClick={handleClickSetName}
+                        >
+                            <BiWrench />
+                        </button>
+                    </Tooltip>
+                    <Tooltip placement="top" title='Remove'>
+                        <button style={{
+                            fontWeight: 800,
+                            fontSize: '2rem',
+                            color: '#ED9D26',
+                            backgroundColor: 'transparent',
+                            border: 0,
+                            position: 'relative',
+                            marginRight: '-40px',
+                            top: '-3px'
+                        }} onClick={handleRemove}
+                        >
+                            <BiX />
+                        </button>
+                    </Tooltip>
+                </div>
             </div>
             <Paragraph copyable={{ text: account.type === 'keplr' ? account.account.address && account.account.address.trim() : account.account && account.account.trim() }}
                 style={{
@@ -134,7 +156,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                 {parseFloat(amount) / 1000000 || 0} DIG
             </Paragraph>
             <div style={style.buttonDiv}>
-                <button style={{ ...style.button, backgroundColor: '#ED9D26', color: '#FFFFFF', marginRight: '20px'}} onClick={handleClick}>
+                <button style={{ ...style.button, backgroundColor: '#ED9D26', color: '#FFFFFF', marginRight: '20px' }} onClick={handleClick}>
                     Transfer
                 </button>
                 <Link to={account.type === 'keplr' ? account.account.address : account.account}>

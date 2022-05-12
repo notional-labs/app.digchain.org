@@ -129,7 +129,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }
 
     const handleChangeSearch = (e) => {
-        const list = validators.filter(val => val.description.moniker.includes(e.target.value))
+        const list = validators.filter(val => val.description.moniker.toLowerCase().includes(e.target.value.toLowerCase()))
         setFilterValidators([...list])
     }
 
@@ -205,7 +205,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                     <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
                         {
                             delegators.map((delegator, index) => (
-                                <option key={index} value={index}>{delegator.type === 'keplr' ? delegator.account.address : delegator.account}</option>
+                                <option key={index} value={index}>
+                                    {delegator.key ? delegator.key.name : delegator.type === 'keplr' ? delegator.account.address : delegator.account}
+                                </option>
                             ))
                         }
                     </Form.Select>

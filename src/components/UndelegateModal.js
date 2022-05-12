@@ -168,7 +168,10 @@ const UndelegateModal = ({ address, type, delegation, wrapSetShow }) => {
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
                     backgroundColor: '#C4C4C4',
-                    color: '#9B9B9B'
+                    color: '#9B9B9B',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
                 }}>
                     {address}
                 </div>

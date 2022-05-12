@@ -168,7 +168,9 @@ const DepositModal = ({ accounts, wrapSetShow, id}) => {
                     <Form.Select onChange={handleChangeSelectDepositor} style={style.formInput}>
                         {
                             accounts.filter(x => x.type === 'keplr').map((account, index) => (
-                                <option key={index} value={index}>{account.type === 'keplr' ? account.account.address : account.account}</option>
+                                <option key={index} value={index}>
+                                    {account.key ? account.key.name : account.type === 'keplr' ? account.account.address : account.account}
+                                </option>
                             ))
                         }
                     </Form.Select>
