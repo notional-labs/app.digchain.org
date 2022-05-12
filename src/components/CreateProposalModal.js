@@ -195,7 +195,6 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                     borderRadius: '10px',
                     border: `1px solid #c4c4c4`,
                     fontSize: '1rem',
-                    backgroundColor: '#C4C4C4',
                     color: '#9B9B9B',
                     padding: 0,
                 }}>
@@ -204,7 +203,7 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                             height: '100%',
                             fontSize: '1rem',
                             paddingTop: '0.2rem',
-                            backgroundColor: '#4D4D4D',
+                            backgroundColor: 'transparent',
                             color: '#F6F3FB',
                             borderRadius: '10px',
                             border: 'none'
@@ -217,7 +216,6 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                     borderRadius: '10px',
                     border: `1px solid #c4c4c4`,
                     fontSize: '1rem',
-                    backgroundColor: '#C4C4C4',
                     color: '#9B9B9B',
                     padding: 0,
                 }}>
@@ -226,7 +224,6 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                             height: '100%',
                             fontSize: '1rem',
                             paddingTop: '0.2rem',
-                            backgroundColor: '#4D4D4D',
                             color: '#F6F3FB',
                             borderRadius: '10px',
                             border: 'none'
