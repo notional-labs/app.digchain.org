@@ -181,7 +181,9 @@ const CreateProposalModal = ({ accounts, wrapSetShow }) => {
                     <Form.Select onChange={handleChangeSelectProposer} defaultValue={selectProposer} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
                         {
                             accounts.filter(x => x.type === 'keplr').map((account, index) => (
-                                <option key={index} value={index}>{account.type === 'keplr' ? account.account.address : account.account}</option>
+                                <option key={index} value={index}>
+                                    {account.key ? account.key.name : account.type === 'keplr' ? account.account.address : account.account}
+                                </option>
                             ))
                         }
                     </Form.Select>

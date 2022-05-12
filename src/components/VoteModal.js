@@ -177,7 +177,9 @@ const VoteModal = ({ proposal, id, wrapSetShow }) => {
                     >
                         {
                             voters.map((voter, index) => (
-                                <option key={index} value={index}>{voter.type === 'keplr' ? voter.account.address : voter.account}</option>
+                                <option key={index} value={index}>
+                                    {voter.key ? voter.key.name : voter.type === 'keplr' ? voter.account.address : voter.account}
+                                </option>
                             ))
                         }
                     </Form.Select>

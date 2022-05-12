@@ -151,7 +151,10 @@ const WithDrawModal = ({ address, type, validator, wrapSetShow }) => {
                     padding: '0.2rem',
                     paddingLeft: '0.5rem',
                     backgroundColor: '#4D4D4D',
-                    color: '#ffffff'
+                    color: '#ffffff',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
                 }}>
                     {address}
                 </div>

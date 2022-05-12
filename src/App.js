@@ -131,13 +131,17 @@ const App = () => {
         const accounts = (await web3.eth.getAccounts());
         console.log(accounts)
         if (!localStorage.getItem('accounts')) {
-          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask' }]))
+          localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask', key: {
+            name: 'unname'
+          } }]))
           setAccounts([{ account: accounts[0], type: 'metamask' }])
         }
         if (localStorage.getItem('accounts')) {
           let accountsList = JSON.parse(localStorage.getItem('accounts'))
           if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
-            accountsList.push({ account: accounts[0], type: 'metamask' })
+            accountsList.push({ account: accounts[0], type: 'metamask', key: {
+              name: 'unname'
+            } })
             localStorage.setItem('accounts', JSON.stringify(accountsList))
             setAccounts([...accountsList])
             warning('Success')
