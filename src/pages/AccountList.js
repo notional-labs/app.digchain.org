@@ -38,33 +38,20 @@ const style = {
 
 const AccountList = ({ accounts, wrapSetAccounts }) => {
     const [show, setShow] = useState(false)
-    const [showSetName, setShowSetName] = useState(false)
     const [selectAcc, setSelectAcc] = useState(0)
-    const [selectSetName, setSelectSetName] = useState(0)
 
     const wrapSetShowTransferModal = useCallback((val) => {
         setShow(val)
     }, [setShow])
 
-    const wrapSetShowSetNameModal = useCallback((val) => {
-        setShowSetName(val)
-    }, [])
-
     const wrapSetSelect = useCallback((val) => {
         setSelectAcc(val)
-    }, [setShow])
-
-    const wrapSetSelectSetName = useCallback((val) => {
-        setSelectSetName(val)
     }, [setShow])
 
     const handleClose = () => {
         setShow(false)
     }
 
-    const handleCloseSetName = () => {
-        setShowSetName(false)
-    }
     return (
         <div style={style.container}>
             <div style={{
@@ -86,8 +73,6 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                             wrapSetSelect={wrapSetSelect} 
                             wrapSetShow={wrapSetShowTransferModal} 
                             wrapSetAccounts={wrapSetAccounts}
-                            wrapSetSelectSetName={wrapSetSelectSetName}  
-                            wrapSetShowSetNameModal={wrapSetShowSetNameModal}  
                         />
                     )))}
                 </div> : (
@@ -117,29 +102,6 @@ const AccountList = ({ accounts, wrapSetAccounts }) => {
                     <TransferModal 
                         account={accounts[selectAcc]}
                         wrapSetShow={wrapSetShowTransferModal}
-                    />
-                </div>
-            </Modal>
-            <Modal
-                visible={showSetName}
-                footer={null}
-                closable={false}
-                onCancel={handleCloseSetName}
-            >
-                <div style={{
-                    color: '#EEC13F',
-                    fontFamily: 'montserrat',
-                    fontSize: '24px',
-                    fontWeight: 400,
-                }}>
-                    <p>
-                        Set Wallet Name
-                    </p>
-                    <SetNameModal 
-                        account={accounts[selectSetName]}
-                        wrapSetShow={wrapSetShowSetNameModal}
-                        wrapSetAccounts={wrapSetAccounts}
-                        index={selectSetName}
                     />
                 </div>
             </Modal>

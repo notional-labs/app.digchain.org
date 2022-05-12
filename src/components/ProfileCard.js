@@ -1,10 +1,11 @@
-import { Typography, Tooltip, } from 'antd';
+import { Typography, Tooltip, Modal} from 'antd';
 import { getBalance } from '../helpers/getBalances';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
     Link,
 } from "react-router-dom";
 import { BiX, BiWrench } from "react-icons/bi";
+import SetNameModal from './SetNameModal'
 
 
 const { Paragraph } = Typography;
@@ -46,8 +47,9 @@ const style = {
     }
 }
 
-const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccounts, wrapSetSelectSetName, wrapSetShowSetNameModal }) => {
+const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccounts, }) => {
     const [amount, setAmount] = useState('')
+    const [showSetName, setShowSetName] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -59,7 +61,6 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
             }
             else {
                 const balance = await getBalance(account.account)
-                console.log(balance)
                 const balanceAmount = balance.length > 0 ? balance[0][0].amount : '0'
 
                 setAmount(balanceAmount)
@@ -80,9 +81,16 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
     }
 
     const handleClickSetName = () => {
-        wrapSetSelectSetName(index)
-        wrapSetShowSetNameModal(true)
+        setShowSetName(true)
     }
+
+    const handleCloseSetName = () => {
+        setShowSetName(false)
+    }
+
+    const wrapSetShowSetNameModal = useCallback((val) => {
+        setShowSetName(val)
+    }, [])
 
     return (
         <div style={style.container}>
@@ -165,6 +173,29 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                     </button>
                 </Link>
             </div>
+            <Modal
+                visible={showSetName}
+                footer={null}
+                closable={false}
+                onCancel={handleCloseSetName}
+            >
+                <div style={{
+                    color: '#EEC13F',
+                    fontFamily: 'montserrat',
+                    fontSize: '24px',
+                    fontWeight: 400,
+                }}>
+                    <p>
+                        Set Wallet Name
+                    </p>
+                    <SetNameModal 
+                        account={account}
+                        wrapSetShow={wrapSetShowSetNameModal}
+                        wrapSetAccounts={wrapSetAccounts}
+                        index={index}
+                    />
+                </div>
+            </Modal>
         </div>
     )
 }

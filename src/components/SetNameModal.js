@@ -54,7 +54,10 @@ const SetNameModal = ({ account, wrapSetShow, wrapSetAccounts, index }) => {
                 }}
             />
             <div style={style.button}>
-                <button onClick={() => wrapSetShow(false)}
+                <button onClick={() => {
+                    wrapSetShow(false)
+                    setInput('')
+                }}
                     style={{
                         border: 0,
                         borderRadius: '10px',
