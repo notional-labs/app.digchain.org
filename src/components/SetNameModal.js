@@ -33,7 +33,9 @@ const SetNameModal = ({ account, wrapSetShow, wrapSetAccounts, index }) => {
     const handleClick = () => {
         let accounts = JSON.parse(localStorage.getItem('accounts'))
 
-        accounts[index].key.name = input
+        accounts[index].key = {
+            name: input
+        }
 
         localStorage.setItem('accounts', JSON.stringify([...accounts]))
         wrapSetAccounts(accounts)
@@ -52,7 +54,10 @@ const SetNameModal = ({ account, wrapSetShow, wrapSetAccounts, index }) => {
                 }}
             />
             <div style={style.button}>
-                <button onClick={() => wrapSetShow(false)}
+                <button onClick={() => {
+                    wrapSetShow(false)
+                    setInput('')
+                }}
                     style={{
                         border: 0,
                         borderRadius: '10px',
