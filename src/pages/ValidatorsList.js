@@ -12,6 +12,8 @@ import aos from 'aos';
 import loadingGif from '../assets/img/loading.gif'
 import { ImFloppyDisk } from "react-icons/im";
 
+const { Search } = Input;
+
 const style = {
     table: {
         width: '100%',
@@ -63,7 +65,6 @@ const ValidatorsList = () => {
     const [state, setState] = useState('')
     const [stateCommision, setStateCommission] = useState('')
     const [stateVal, setStateVal] = useState('')
-    const [search, setSearch] = useState('')
     const [dummy, setDummy] = useState([])
 
     useEffect(() => {
@@ -179,9 +180,9 @@ const ValidatorsList = () => {
         }
     }
 
-    const searchVal = () => {
-        if (search !== '') {
-            const filter = validators.filter(x => x.description.moniker.toLowerCase().includes(search.toLowerCase()))
+    const searchVal = (value) => {
+        if (value !== '') {
+            const filter = validators.filter(x => x.description.moniker.toLowerCase().includes(value.toLowerCase()))
             setFilterValidators([...filter])
         }
         else {
@@ -232,29 +233,18 @@ const ValidatorsList = () => {
                         >
                             Reset
                         </button>
-                        <button
-                            style={{
-                                border: 0,
-                                backgroundColor: '#ED9D26',
-                                color: '#ffffff',
-                                borderRadius: '10px',
-                                marginRight: '20px',
-                                padding: '.5em 3em'
-                            }}
-                            onClick={searchVal}
-                        >
-                            Search
-                        </button>
-                        <Input
+                        <Search
                             placeholder='Search'
                             style={{
-                                padding: '1em',
                                 borderRadius: '10px',
-                                width: '50%'
+                                width: '50%',
+                                backgroundColor: 'transparent',
+                                height: '100%'
                             }}
-                            onChange={(e) => {
-                                setSearch(e.target.value)
-                            }}
+                            size="large"
+                            allowClear={true}
+                            onSearch={searchVal}
+                            enterButton 
                         />
                     </div>
                 </div>
