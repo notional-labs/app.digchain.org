@@ -184,7 +184,7 @@ const AccountDetail = ({ accounts }) => {
                     {' / '}
                 </span>
                 <span style={{ color: '#ED9D26' }}>
-                    Details
+                    {accounts[selectAcc].key.name}
                 </span>
             </div>
             <div style={{ ...style.asset, backgroundColor: 'transparent' }}>
@@ -294,7 +294,12 @@ const AccountDetail = ({ accounts }) => {
                 </div>
             </div>
             <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 0 }}>
-                <DelegationList address={id} type={accounts[selectAcc] && accounts[selectAcc].type} delegations={delegations} rewards={rewards} />
+                <DelegationList 
+                    address={id} 
+                    type={accounts[selectAcc] && accounts[selectAcc].type} 
+                    delegations={delegations} 
+                    rewards={rewards} 
+                />
             </div>
             <div style={{ ...style.delegation, marginTop: '4em', paddingTop: 20 }}>
                 <TxList address={id} />

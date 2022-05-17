@@ -56,12 +56,8 @@ const style = {
     }
 }
 
-const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
+const DirectDelegateModal = ({ validator, delegatorAddress, wrapSetShow  }) => {
     const [value, setValue] = useState('')
-    const [delegators, setDelegators] = useState([])
-    const [filterValidators, setFilterValidators] = useState([...validators])
-    const [selectVal, setSelectVal] = useState(defaultVal)
-    const [selectDel, setSelectDel] = useState(0)
     const [showAdvance, setShowAdvance] = useState(false)
     const [gasAmount, setGasAmount] = useState('250000')
     const [isDoingTX, setIsDoingTx] = useState(false)
@@ -69,17 +65,9 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
     useEffect(() => {
         (async () => {
-            setDelegators([...JSON.parse(localStorage.getItem('accounts'))])
-            const delegatorsList = JSON.parse(localStorage.getItem('accounts'))
-            if (delegatorsList.length > 0) {
-                await getAvailableAmount(delegatorsList)
-            }
+            await getAvailableAmount(delegatorAddress)
         })()
-    }, [selectDel])
-
-    useEffect(() => {
-        setSelectVal(defaultVal)
-    }, [defaultVal])
+    }, [validator, delegatorAddress])
 
     const success = () => {
         notification.success({
@@ -100,19 +88,12 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     }
 
     const checkDisable = () => {
-        if (value === 0 || value === '' || delegators.length === 0) {
+        if (value === 0 || value === '') {
             return true
         }
         return false
     }
-    const handleChangeSelect = (e) => {
-        setSelectDel(e.target.value)
-    }
-
-    const handleChangeSelectVal = (val) => {
-        setSelectVal(val)
-    }
-
+    
     const check = (e) => {
         setShowAdvance(e.target.checked)
     }
@@ -121,37 +102,31 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
         setGasAmount(value)
     }
 
-    const getAvailableAmount = async (delegators) => {
-        const address = delegators[selectDel].type === 'keplr' ? delegators[selectDel].account.address : delegators[selectDel].account
+    const getAvailableAmount = async (address) => {
         const balance = await getBalance(address)
         const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
         setAvailableAmount(balanceAmount)
     }
 
-    const handleChangeSearch = (e) => {
-        const list = validators.filter(val => val.description.moniker.toLowerCase().includes(e.target.value.toLowerCase()))
-        setFilterValidators([...list])
-    }
-
     const handleClick = async () => {
         setIsDoingTx(true)
-        if (delegators[selectDel].type === 'keplr') {
+        if (delegatorAddress.slice(0,2) !== '0x') {
             const { offlineSigner } = await getKeplr();
 
             const stargate = await getStargateClient(offlineSigner)
             console.log(stargate)
             if (stargate != null) {
                 const amount = value * 1000000
-                const recipient = selectVal
+                const recipient = validator.delegation.validator_address
                 const gas = parseInt(gasAmount)
-                delegate(stargate, delegators[selectDel].account.address, amount, recipient, gas).then(() => {
+                delegate(stargate, delegatorAddress, amount, recipient, gas).then(() => {
                     setIsDoingTx(false)
                     success()
-                    wrapSetter(false)
+                    wrapSetShow(false)
                 }).catch((e) => {
                     setIsDoingTx(false)
                     error(e.message)
-                    wrapSetter(false)
+                    wrapSetShow(false)
                     console.log(e)
                 })
             }
@@ -165,11 +140,11 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Dev Team"
 
-            const address = delegators[selectDel].account
+            const address = delegatorAddress
             const gasLimit = parseInt(gasAmount)
 
 
-            const recipient = selectVal
+            const recipient = validator.delegation.validator_address
             const amount = value * 1000000
 
             if (amount == 0) {
@@ -183,14 +158,14 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
             const UIProcessing = function () {
                 setIsDoingTx(false)
-                wrapSetter(false)
+                wrapSetShow(false)
             }
             broadcastTransaction(address, msgDelegate, signDocDelegate, chainId, memo, gasLimit, web3, UIProcessing).then(() => {
                 // wrapSetter(false)
                 // setIsDoingTx(false)
                 // success()
             }).catch((e) => {
-                wrapSetter(false)
+                wrapSetShow(false)
                 setIsDoingTx(false)
                 error(e.message)
             })
@@ -201,87 +176,42 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
         <div>
             <div style={style.transfer}>
                 <p style={style.formTitle}>Delegator</p>
-                <>
-                    <Form.Select onChange={handleChangeSelect} defaultValue={selectDel} style={{ ...style.formInput, backgroundColor: '#C4C4C4', color: '#000000' }}>
-                        {
-                            delegators.map((delegator, index) => (
-                                <option key={index} value={index}>
-                                    {delegator.key ? delegator.key.name : delegator.type === 'keplr' ? delegator.account.address : delegator.account}
-                                </option>
-                            ))
-                        }
-                    </Form.Select>
-                </>
+                <div style={{
+                    marginBottom: '20px',
+                    width: '100%',
+                    height: '40px',
+                    borderRadius: '10px',
+                    border: `2px solid #c4c4c4`,
+                    fontSize: '1rem',
+                    padding: '0.2rem',
+                    paddingLeft: '0.5rem',
+                    backgroundColor: '#C4C4C4',
+                    color: '#9B9B9B',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                }}>
+                    {delegatorAddress}
+                </div>
                 <p style={style.formTitle}>Validator</p>
-                <>
-                    <Input
-                        onChange={handleChangeSearch}
-                        style={{
-                            borderRadius: '10px',
-                            marginBottom: '20px',
-                            width: '30%',
-                            backgroundColor: 'transparent',
-                            color: '#ffffff',
-                        }}
-                        placeholder='Search'
-                        prefix={<IoSearch />}
-                    />
-                    <div
-                        style={{
-                            backgroundColor: 'white',
-                            borderRadius: '10px',
-                            padding: '0 .5em',
-                            fontSize: '20px',
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        {
-                            validators.filter(val => val.operator_address === selectVal)[0].description.moniker
-                        }
-                    </div>
-                    <div
-                        style={{
-                            height: '250px',
-                            overflow: 'auto',
-                            border: 'solid 1px rgb(189, 189, 189)',
-                            marginTop: '20px',
-                            borderRadius: '10px',
-                        }}
-                    >
-                        {
-                            filterValidators.length > 0 ? (
-                                filterValidators.map((val, index) => (
-                                    <button
-                                        className="val-select-button"
-                                        key={index}
-                                        onClick={() => handleChangeSelectVal(val.operator_address)}
-                                        style={{
-                                            border: 0,
-                                            backgroundColor: 'transparent',
-                                            width: '100%',
-                                            textAlign: 'left',
-                                            fontSize: '16px',
-                                            color: '#ffffff',
-                                            padding: '10px'
-                                        }}
-                                    >
-                                        {val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})
-                                    </button>
-                                ))
-                            ) : (
-                                <div
-                                    style={{
-                                        position: 'relative',
-                                        top: '50px',
-                                        color: '#ffffff'
-                                    }}
-                                >
-                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                                </div>
-                            )
-                        }
-                    </div>
-                </>
+                <div style={{
+                    marginBottom: '20px',
+                    width: '100%',
+                    height: '40px',
+                    borderRadius: '10px',
+                    border: `2px solid #c4c4c4`,
+                    fontSize: '1rem',
+                    padding: '0.2rem',
+                    paddingLeft: '0.5rem',
+                    backgroundColor: '#C4C4C4',
+                    color: '#9B9B9B',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    '-webkit-line-clamp': 1
+                }}>
+                    {validator.delegation.validator_address}
+                </div>
                 <p style={style.formTitle}>Amount Availabe</p>
                 <p style={{ ...style.formInput, border: 'solid 1px #bdbdbd', padding: 10 }}>
                     {parseInt(availabeAmount) / 1000000 || 0} DIG
@@ -396,7 +326,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                 )
             }
             <div style={style.button}>
-                <button onClick={() => wrapSetter(false)}
+                <button onClick={() => wrapSetShow(false)}
                     style={{
                         border: 0,
                         borderRadius: '10px',
@@ -429,4 +359,4 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
     )
 }
 
-export default DelegateModal
+export default DirectDelegateModal

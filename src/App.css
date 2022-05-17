@@ -186,6 +186,10 @@ button.val-select-button:hover {
   color: white !important;
 }
 
+.hover-sort-button:hover {
+  background-color: rgb(242, 242, 242, 0.7) !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

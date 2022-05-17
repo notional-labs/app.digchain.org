@@ -132,7 +132,7 @@ const App = () => {
         console.log(accounts)
         if (!localStorage.getItem('accounts')) {
           localStorage.setItem('accounts', JSON.stringify([{ account: accounts[0], type: 'metamask', key: {
-            name: 'unname'
+            name: 'unnamed'
           } }]))
           setAccounts([{ account: accounts[0], type: 'metamask' }])
         }
@@ -140,7 +140,7 @@ const App = () => {
           let accountsList = JSON.parse(localStorage.getItem('accounts'))
           if (accountsList.filter(acc => acc.type === "metamask" && acc.account === accounts[0]).length === 0) {
             accountsList.push({ account: accounts[0], type: 'metamask', key: {
-              name: 'unname'
+              name: 'unnamed'
             } })
             localStorage.setItem('accounts', JSON.stringify(accountsList))
             setAccounts([...accountsList])
