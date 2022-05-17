@@ -224,6 +224,9 @@ const ValidatorsList = () => {
                                 padding: '.5em 3em'
                             }}
                             onClick={() => {
+                                setState('')
+                                setStateCommission('')
+                                setStateVal('')
                                 setFilterValidators([...validators])
                             }}
                         >
