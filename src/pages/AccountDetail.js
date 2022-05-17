@@ -184,7 +184,7 @@ const AccountDetail = ({ accounts }) => {
                     {' / '}
                 </span>
                 <span style={{ color: '#ED9D26' }}>
-                    {accounts[selectAcc].key.name}
+                    Details
                 </span>
             </div>
             <div style={{ ...style.asset, backgroundColor: 'transparent' }}>
