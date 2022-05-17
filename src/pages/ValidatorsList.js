@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Image, } from 'antd';
+import { Image, Input, Empty } from 'antd';
 import { getValidators, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/montserrat"
@@ -10,6 +10,7 @@ import { getKeplr, } from '../helpers/getKeplr';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
 import aos from 'aos';
 import loadingGif from '../assets/img/loading.gif'
+import { ImFloppyDisk } from "react-icons/im";
 
 const style = {
     table: {
@@ -55,10 +56,14 @@ const style = {
 
 const ValidatorsList = () => {
     const [validators, setValidators] = useState([])
+    const [filterValidators, setFilterValidators] = useState([])
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false)
     const [defaultVal, setDefaultVal] = useState('')
     const [state, setState] = useState('')
+    const [stateCommision, setStateCommission] = useState('')
+    const [stateVal, setStateVal] = useState('')
+    const [search, setSearch] = useState('')
     const [dummy, setDummy] = useState([])
 
     useEffect(() => {
@@ -101,6 +106,7 @@ const ValidatorsList = () => {
                 })
             }
             setValidators([...vals])
+            setFilterValidators([...vals])
             setLoading(false)
         })()
     }, [])
@@ -122,27 +128,64 @@ const ValidatorsList = () => {
         setShow(false)
     }
 
-    const handleOver = (e) => {
-        e.target.style.backgroundColor = 'rgb(242, 242, 242, 0.7)'
-    }
-
-    const handleLeave = (e) => {
-        e.target.style.backgroundColor = 'transparent'
-    }
-
-
     const handleSort = () => {
+        setStateCommission('')
+        setStateVal('')
         if (state === 'desc') {
             setState('asc')
-            setValidators([...validators.sort((x, y) => x.delegator_shares - y.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => x.delegator_shares - y.delegator_shares)])
         }
         else if (state === 'asc') {
             setState('desc')
-            setValidators([...validators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
         }
         else {
             setState('desc')
-            setValidators([...validators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
+        }
+    }
+
+    const handleSortCommission = () => {
+        setState('')
+        setStateVal('')
+        if (stateCommision === 'desc') {
+            setStateCommission('asc')
+            setFilterValidators([...filterValidators.sort((x, y) => x.commission.commission_rates.rate - y.commission.commission_rates.rate)])
+        }
+        else if (stateCommision === 'asc') {
+            setStateCommission('desc')
+            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commission_rates.rate - x.commission.commission_rates.rate)])
+        }
+        else {
+            setStateCommission('desc')
+            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commission_rates.rate - x.commission.commission_rates.rate)])
+        }
+    }
+
+    const handleSortVal = () => {
+        setState('')
+        setStateCommission('')
+        if (stateVal === 'desc') {
+            setStateVal('asc')
+            setFilterValidators([...filterValidators.sort((x, y) => x.description.moniker.localeCompare(y.description.moniker))])
+        }
+        else if (stateVal === 'asc') {
+            setStateVal('desc')
+            setFilterValidators([...filterValidators.sort((x, y) => y.description.moniker.localeCompare(x.description.moniker))])
+        }
+        else {
+            setStateVal('desc')
+            setFilterValidators([...filterValidators.sort((x, y) => y.description.moniker.localeCompare(x.description.moniker))])
+        }
+    }
+
+    const searchVal = () => {
+        if (search !== '') {
+            const filter = validators.filter(x => x.description.moniker.toLowerCase().includes(search.toLowerCase()))
+            setFilterValidators([...filter])
+        }
+        else {
+            setFilterValidators([...validators])
         }
     }
 
@@ -150,20 +193,87 @@ const ValidatorsList = () => {
         !loading ? (
             <div style={{ padding: 70, paddingTop: '7em' }}>
                 <div style={{
-                    textAlign: 'left',
-                    fontSize: '36px',
-                    color: '#ffffff',
-                    fontFamily: 'montserrat',
-                    fontWeight: 'bold',
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     marginBottom: '20px'
                 }}>
-                    VALIDATOR
+                    <div style={{
+                        textAlign: 'left',
+                        fontSize: '36px',
+                        color: '#ffffff',
+                        fontFamily: 'montserrat',
+                        fontWeight: 'bold',
+                        marginBottom: '0'
+                    }}>
+                        VALIDATOR
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'end',
+                            width: '50%'
+                        }}
+                    >
+                        <button
+                            style={{
+                                border: 0,
+                                backgroundColor: '#ED9D26',
+                                color: '#ffffff',
+                                borderRadius: '10px',
+                                marginRight: '20px',
+                                padding: '.5em 3em'
+                            }}
+                            onClick={() => {
+                                setFilterValidators([...validators])
+                            }}
+                        >
+                            Reset
+                        </button>
+                        <button
+                            style={{
+                                border: 0,
+                                backgroundColor: '#ED9D26',
+                                color: '#ffffff',
+                                borderRadius: '10px',
+                                marginRight: '20px',
+                                padding: '.5em 3em'
+                            }}
+                            onClick={searchVal}
+                        >
+                            Search
+                        </button>
+                        <Input
+                            placeholder='Search'
+                            style={{
+                                padding: '1em',
+                                borderRadius: '10px',
+                                width: '50%'
+                            }}
+                            onChange={(e) => {
+                                setSearch(e.target.value)
+                            }}
+                        />
+                    </div>
                 </div>
                 <div>
                     <table style={style.table}>
                         <thead style={style.tblHeader}>
                             <tr>
-                                <th style={{ ...style.th, width: '40%' }}>Validator</th>
+                                <th style={{ ...style.th, width: '40%' }}>
+                                    <button style={{
+                                        backgroundColor: 'transparent',
+                                        border: 0,
+                                        textTransform: 'uppercase',
+                                        fontFamily: 'montserrat',
+                                        fontWeight: 'bold',
+                                        padding: 10,
+                                        borderRadius: '24px'
+                                    }} className='hover-sort-button'
+                                        onClick={handleSortVal}>
+                                        Validator
+                                        {stateVal === 'desc' ? <CaretDownOutlined /> : stateVal === 'asc' && <CaretUpOutlined />}
+                                    </button>
+                                </th>
                                 <th style={{ ...style.th, width: '20%', textAlign: 'center' }}>
                                     <button style={{
                                         backgroundColor: 'transparent',
@@ -173,65 +283,91 @@ const ValidatorsList = () => {
                                         fontWeight: 'bold',
                                         padding: 10,
                                         borderRadius: '24px'
-                                    }} onMouseEnter={handleOver}
-                                        onMouseLeave={handleLeave}
+                                    }} className='hover-sort-button'
                                         onClick={handleSort}>
                                         Voting power
                                         {state === 'desc' ? <CaretDownOutlined /> : state === 'asc' && <CaretUpOutlined />}
                                     </button>
                                 </th>
-                                <th style={{ ...style.th, width: '20%', textAlign: 'center' }}>Commision</th>
+                                <th style={{ ...style.th, width: '20%', textAlign: 'center' }}>
+                                    <button style={{
+                                        backgroundColor: 'transparent',
+                                        border: 0,
+                                        textTransform: 'uppercase',
+                                        fontFamily: 'montserrat',
+                                        fontWeight: 'bold',
+                                        padding: 10,
+                                        borderRadius: '24px'
+                                    }} className='hover-sort-button'
+                                        onClick={handleSortCommission}>
+                                        Commission
+                                        {stateCommision === 'desc' ? <CaretDownOutlined /> : stateCommision === 'asc' && <CaretUpOutlined />}
+                                    </button>
+                                </th>
                                 <th style={{ ...style.th, width: '20%', borderRight: 0, textAlign: 'center' }}>Action</th>
                             </tr>
                         </thead>
-                        <tbody style={style.tblContent}>
-                            {validators.map((val, index) => {
-                                return (
-                                    <tr key={index} style={{ backgroundColor: 'transparent', marginBottom: 20, }}>
-                                        <td style={{ ...style.td, borderRadius: '10px 0 0 10px', border: 'solid 2px #ED9D26', borderRight: 'none' }}>
-                                            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <div
-                                                    data-aos="flip-up"
-                                                    data-aos-once={true}
-                                                    style={{
-                                                        borderRadius: '50%',
+                        {
+                            filterValidators.length > 0 ? (
+                                <tbody style={style.tblContent}>
+                                    {
+                                        filterValidators.map((val, index) => {
+                                            return (
+                                                <tr key={index} style={{ backgroundColor: 'transparent', marginBottom: 20, }}>
+                                                    <td style={{ ...style.td, borderRadius: '10px 0 0 10px', border: 'solid 2px #ED9D26', borderRight: 'none' }}>
+                                                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                            <div
+                                                                data-aos="flip-up"
+                                                                data-aos-once={true}
+                                                                style={{
+                                                                    borderRadius: '50%',
 
-                                                    }}>
-                                                    <Image
-                                                        width={50}
-                                                        src={val.logo || notFound}
-                                                        style={{ borderRadius: '50%', marginTop: '3px' }}
-                                                        preview={false}
-                                                    />
-                                                </div>
-                                                <div style={{ marginLeft: '1rem' }} >
-                                                    <div style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
-                                                    <div style={{ fontSize: '15px', fontWeight: 400, opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>
-                                            <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
-                                            <div style={{ fontSize: '15px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
-                                        </td>
-                                        <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
-                                        <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0', border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
-                                            <button style={{
-                                                backgroundColor: '#ED9D27',
-                                                border: 'none',
-                                                borderRadius: '10px',
-                                                padding: '1em',
-                                                fontSize: '15px',
-                                                fontWeight: 700,
-                                                boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
-                                            }} onClick={async () => await handleClick(val.operator_address)}>
-                                                Delegate
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
+                                                                }}>
+                                                                <Image
+                                                                    width={50}
+                                                                    src={val.logo || notFound}
+                                                                    style={{ borderRadius: '50%', marginTop: '3px' }}
+                                                                    preview={false}
+                                                                />
+                                                            </div>
+                                                            <div style={{ marginLeft: '1rem' }} >
+                                                                <div style={{ color: '#ffffff', fontSize: '20px', fontWeight: 700 }}>{val.description.moniker}</div>
+                                                                <div style={{ fontSize: '15px', fontWeight: 400, opacity: 0.6 }}>{val.description.website ? val.description.website : val.description.identity}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>
+                                                        <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
+                                                        <div style={{ fontSize: '15px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
+                                                    </td>
+                                                    <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
+                                                    <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0', border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
+                                                        <button style={{
+                                                            backgroundColor: '#ED9D27',
+                                                            border: 'none',
+                                                            borderRadius: '10px',
+                                                            padding: '1em',
+                                                            fontSize: '15px',
+                                                            fontWeight: 700,
+                                                            boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
+                                                        }} onClick={async () => await handleClick(val.operator_address)}>
+                                                            Delegate
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            ) : (
+                                <div style={{ color: '#ffc16b', height: '55vh', paddingTop: '15em', fontFamily: 'montserrat', position: 'relative', left: '70%' }}>
+                                    <ImFloppyDisk style={{ fontSize: '10rem', opacity: 0.2, }} />
+                                    <p style={{ fontSize: '2rem', opacity: 0.2, paddingTop: '1em', marginBottom: 0 }}>
+                                        No Data
+                                    </p>
+                                </div>
+                            )
+                        }
                     </table>
                 </div>
                 <Modal
@@ -249,10 +385,10 @@ const ValidatorsList = () => {
                         <p>
                             Delegate Token
                         </p>
-                        <DelegateModal 
-                            validators={validators} 
-                            wrapSetter={wrapSetShow} 
-                            defaultVal={defaultVal} 
+                        <DelegateModal
+                            validators={validators}
+                            wrapSetter={wrapSetShow}
+                            defaultVal={defaultVal}
                         />
                     </div>
                 </Modal>

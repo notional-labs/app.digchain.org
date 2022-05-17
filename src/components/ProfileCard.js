@@ -104,7 +104,7 @@ const ProfileCard = ({ account, index, wrapSetSelect, wrapSetShow, wrapSetAccoun
                     }}
                 >
                     {
-                        account.key ? account.key.name : 'unname'
+                        account.key ? account.key.name : 'unnamed'
                     }
                 </div>
                 <div>
