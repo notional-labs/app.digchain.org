@@ -12,6 +12,7 @@ import { TiArrowRepeat } from "react-icons/ti";
 import { AiOutlineGift } from "react-icons/ai";
 import WithDrawAllRewardModal from './WithDrawAllRewardModal';
 import DirectDelegateModal from './DirecDelegationModal';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons'
 
 
 const { Title, Paragraph } = Typography;
@@ -87,8 +88,9 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     const [showRedelegate, setShowRedelegate] = useState(false)
     const [showClaimAll, setShowClaimAll] = useState(false)
     const [showDirectDelegate, setShowDirectDelegate] = useState(false)
-
-    console.log(rewards.length)
+    const [stateVal, setStateVal] = useState('')
+    const [stateDelegation, setStateDelegation] = useState('')
+    const [delegationList, setDelegationList] = useState([])
 
     const wrapSetShowWithdrawModal = useCallback((val) => {
         setShowWithdraw(val)
@@ -123,6 +125,19 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             setLoading(false)
         })()
     }, [])
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true)
+            let list = [...rewards]
+            list.map(i => {
+                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker
+                i.delegation = parseInt(delegations.filter(x => x.delegation.validator_address === i.validator_address)[0].delegation.shares) / 1000000 || 0
+            })
+            setDelegationList([...list])
+            setLoading(false)
+        })()
+    }, [rewards])
 
     const handleOver = (e) => {
         e.target.style.backgroundColor = 'rgb(255, 255, 255, 0.3)'
@@ -176,6 +191,38 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
         setShowDirectDelegate(false)
     }
 
+    const handleSortVal = () => {
+        setStateDelegation('')
+        if (stateVal === 'desc') {
+            setStateVal('asc')
+            setDelegationList([...delegationList.sort((x, y) => x.validatorMoniker.localeCompare(y.validatorMoniker))])
+        }
+        else if (stateVal === 'asc') {
+            setStateVal('desc')
+            setDelegationList([...delegationList.sort((x, y) => y.validatorMoniker.localeCompare(x.validatorMoniker))])
+        }
+        else {
+            setStateVal('desc')
+            setDelegationList([...delegationList.sort((x, y) => y.validatorMoniker.localeCompare(x.validatorMoniker))])
+        }
+    }
+
+    const handleSortDel = () => {
+        setStateVal('')
+        if (stateDelegation === 'desc') {
+            setStateDelegation('asc')
+            setDelegationList([...delegationList.sort((x, y) => x.delegation - y.delegation)])
+        }
+        else if (stateDelegation === 'asc') {
+            setStateDelegation('desc')
+            setDelegationList([...delegationList.sort((x, y) => y.delegation - x.delegation)])
+        }
+        else {
+            setStateDelegation('desc')
+            setDelegationList([...delegationList.sort((x, y) => y.delegation - x.delegation)])
+        }
+    }
+
     return (
         <div>
             <div style={style.container}>
@@ -205,24 +252,52 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                     <table cellPadding="0" cellSpacing="0" border="0" style={style.table}>
                         <thead style={style.tdlHeader}>
                             <tr>
-                                <th style={{ ...style.th, width: '20%' }}>Validator</th>
-                                <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Token</th>
+                                <th style={{ ...style.th, width: '20%' }}>
+                                    <button style={{
+                                        backgroundColor: 'transparent',
+                                        border: 0,
+                                        textTransform: 'uppercase',
+                                        fontFamily: 'montserrat',
+                                        fontWeight: 'bold',
+                                        padding: 10,
+                                        borderRadius: '24px'
+                                    }} className='hover-sort-button'
+                                        onClick={handleSortVal}>
+                                        Validator
+                                        {stateVal === 'desc' ? <CaretDownOutlined /> : stateVal === 'asc' && <CaretUpOutlined />}
+                                    </button>
+                                </th>
+                                <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>
+                                    <button style={{
+                                        backgroundColor: 'transparent',
+                                        border: 0,
+                                        textTransform: 'uppercase',
+                                        fontFamily: 'montserrat',
+                                        fontWeight: 'bold',
+                                        padding: 10,
+                                        borderRadius: '24px'
+                                    }} className='hover-sort-button'
+                                        onClick={handleSortDel}>
+                                        Delegation
+                                        {stateDelegation === 'desc' ? <CaretDownOutlined /> : stateDelegation === 'asc' && <CaretUpOutlined />}
+                                    </button>
+                                </th>
                                 <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Reward</th>
                                 <th style={{ ...style.th, width: '10rem', textAlign: 'left' }}>Action</th>
                             </tr>
                         </thead>
                         <tbody style={style.tdlContent}>
-                            {rewards.map((reward, index) => {
+                            {delegationList.map((delegation, index) => {
                                 return (
                                     <tr key={index}>
                                         <td style={style.td}>
-                                            {validators.filter(x => x.operator_address === reward.validator_address).length > 0 && validators.filter(x => x.operator_address === reward.validator_address)[0].description.moniker}
+                                            {delegation.validatorMoniker}
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left' }}>
-                                            {parseInt(delegations.filter(x => x.delegation.validator_address === reward.validator_address)[0].delegation.shares) / 1000000 || 0} DIG
+                                            {delegation.delegation.toFixed(3)} DIG
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', }}>
-                                            {reward.reward.length > 0 && parseInt(reward.reward[0].amount) / 1000000 || 0} DIG
+                                            {(delegation.reward.length > 0 && parseInt(delegation.reward[0].amount) / 1000000).toFixed(3) || 0} DIG
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '20%' }}>
                                             <Tooltip placement="top" title='Delegate'>
