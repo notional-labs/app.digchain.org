@@ -82,7 +82,6 @@ export const getPrice = async () => {
 }
 
 export const convertAsset = (balance, delegation, reward, unbond, usd) => {
-    console.log(delegation)
     const sum = parseInt(balance) / 1000000
                 + parseInt(delegation) / 1000000
                 + parseInt(reward) / 1000000
