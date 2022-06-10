@@ -67,7 +67,7 @@ const FrontPage = () => {
                         fontWeight: 10,
                         margin: 0
                     }}>
-                        Have fun digging around the comunity and the validators.
+                        Have fun digging around the community and the validators.
                     </p>
 
                     <a href="https://drive.google.com/file/d/1NeaNBXFFCSLl9Q6ckCNqT2WhZEi8_lRN/view" target={'_blank'}>
