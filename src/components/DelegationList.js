@@ -131,7 +131,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             setLoading(true)
             let list = [...rewards]
             list.map(i => {
-                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker
+                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker || 'In active'
                 i.delegation = parseInt(delegations.filter(x => x.delegation.validator_address === i.validator_address)[0].delegation.shares) / 1000000 || 0
             })
             setDelegationList([...list])
