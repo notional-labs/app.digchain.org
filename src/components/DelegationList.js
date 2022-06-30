@@ -131,7 +131,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             setLoading(true)
             let list = [...rewards]
             list.map(i => {
-                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker
+                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker || 'In active'
                 i.delegation = parseInt(delegations.filter(x => x.delegation.validator_address === i.validator_address)[0].delegation.shares) / 1000000 || 0
             })
             setDelegationList([...list])
@@ -287,7 +287,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                             </tr>
                         </thead>
                         <tbody style={style.tdlContent}>
-                            {delegationList.map((delegation, index) => {
+                            { delegationList.length > 0 && delegationList.map((delegation, index) => {
                                 return (
                                     <tr key={index}>
                                         <td style={style.td}>
@@ -297,7 +297,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
                                             {delegation.delegation.toFixed(3)} DIG
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', }}>
-                                            {(delegation.reward.length > 0 && parseInt(delegation.reward[0].amount) / 1000000).toFixed(3) || 0} DIG
+                                            {(delegation.reward.length > 0 && parseInt(delegation.reward[0].amount) / 1000000 || 0).toFixed(3)} DIG
                                         </td>
                                         <td style={{ ...style.td, textAlign: 'left', width: '20%' }}>
                                             <Tooltip placement="top" title='Delegate'>

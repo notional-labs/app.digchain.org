@@ -45,10 +45,10 @@ export const digChain = {
 }
 
 export const digTest = {
-  chainId: "digtestnet-5",
-  chainName: "DIG",
-  rpc: "http://168.119.91.22:2231/",
-  rest: "http://168.119.91.22:2269/",
+  chainId: "dig-testnet-1",
+  chainName: "DIX",
+  rpc: "http://49.12.213.105:2011",
+  rest: "http://49.12.213.105:2013",
   bip44: {
     coinType: 118,
   },
