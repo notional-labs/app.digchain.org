@@ -285,7 +285,7 @@ const AccountDetail = ({ accounts }) => {
                                         lineheight: 'normal',
                                         color: '#ffffff'
                                     }}>
-                                        Total {total}$
+                                        Total {total} USD
                                     </span>
                                 </div>
                             </li>
