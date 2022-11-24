@@ -12,12 +12,12 @@ export declare enum BondStatus {
     Bonded = 2
 }
 interface Validator {
-    readonly operator_address: string;
+    readonly operatorAddress: string;
     readonly consensus_pubkey: string;
     readonly jailed: boolean;
     readonly status: BondStatus;
     readonly tokens: string;
-    readonly delegator_shares: string;
+    readonly delegatorShares: string;
     readonly description: {
         readonly moniker: string;
         readonly identity: string;
@@ -28,7 +28,7 @@ interface Validator {
     readonly unbonding_height: string;
     readonly unbonding_time: string;
     readonly commission: {
-        readonly commission_rates: {
+        readonly commissionRates: {
             readonly rate: string;
             readonly max_rate: string;
             readonly max_change_rate: string;

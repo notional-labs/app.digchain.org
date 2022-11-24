@@ -117,12 +117,12 @@ describe("StakingExtension", () => {
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: [
                     {
-                        operator_address: testutils_spec_1.launchpad.validator.address,
+                        operatorAddress: testutils_spec_1.launchpad.validator.address,
                         consensus_pubkey: testutils_spec_1.launchpad.validator.pubkey,
                         jailed: false,
                         status: staking_1.BondStatus.Bonded,
                         tokens: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
-                        delegator_shares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
+                        delegatorShares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
                         description: {
                             moniker: testutils_spec_1.launchpad.moniker,
                             identity: "",
@@ -133,7 +133,7 @@ describe("StakingExtension", () => {
                         unbonding_height: "0",
                         unbonding_time: "1970-01-01T00:00:00Z",
                         commission: {
-                            commission_rates: {
+                            commissionRates: {
                                 rate: "0.100000000000000000",
                                 max_rate: "0.200000000000000000",
                                 max_change_rate: "0.010000000000000000",
@@ -154,12 +154,12 @@ describe("StakingExtension", () => {
             expect(response).toEqual({
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: {
-                    operator_address: testutils_spec_1.launchpad.validator.address,
+                    operatorAddress: testutils_spec_1.launchpad.validator.address,
                     consensus_pubkey: testutils_spec_1.launchpad.validator.pubkey,
                     jailed: false,
                     status: staking_1.BondStatus.Bonded,
                     tokens: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
-                    delegator_shares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
+                    delegatorShares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
                     description: {
                         moniker: testutils_spec_1.launchpad.moniker,
                         identity: "",
@@ -170,7 +170,7 @@ describe("StakingExtension", () => {
                     unbonding_height: "0",
                     unbonding_time: "1970-01-01T00:00:00Z",
                     commission: {
-                        commission_rates: {
+                        commissionRates: {
                             rate: "0.100000000000000000",
                             max_rate: "0.200000000000000000",
                             max_change_rate: "0.010000000000000000",
@@ -240,12 +240,12 @@ describe("StakingExtension", () => {
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: [
                     {
-                        operator_address: testutils_spec_1.launchpad.validator.address,
+                        operatorAddress: testutils_spec_1.launchpad.validator.address,
                         consensus_pubkey: testutils_spec_1.launchpad.validator.pubkey,
                         jailed: false,
                         status: staking_1.BondStatus.Bonded,
                         tokens: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
-                        delegator_shares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
+                        delegatorShares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
                         description: {
                             moniker: testutils_spec_1.launchpad.moniker,
                             identity: "",
@@ -256,7 +256,7 @@ describe("StakingExtension", () => {
                         unbonding_height: "0",
                         unbonding_time: "1970-01-01T00:00:00Z",
                         commission: {
-                            commission_rates: {
+                            commissionRates: {
                                 rate: "0.100000000000000000",
                                 max_rate: "0.200000000000000000",
                                 max_change_rate: "0.010000000000000000",
@@ -285,12 +285,12 @@ describe("StakingExtension", () => {
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: [
                     {
-                        operator_address: testutils_spec_1.launchpad.validator.address,
+                        operatorAddress: testutils_spec_1.launchpad.validator.address,
                         consensus_pubkey: testutils_spec_1.launchpad.validator.pubkey,
                         jailed: false,
                         status: staking_1.BondStatus.Bonded,
                         tokens: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
-                        delegator_shares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
+                        delegatorShares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
                         description: {
                             moniker: testutils_spec_1.launchpad.moniker,
                             identity: "",
@@ -301,7 +301,7 @@ describe("StakingExtension", () => {
                         unbonding_height: "0",
                         unbonding_time: "1970-01-01T00:00:00Z",
                         commission: {
-                            commission_rates: {
+                            commissionRates: {
                                 rate: "0.100000000000000000",
                                 max_rate: "0.200000000000000000",
                                 max_change_rate: "0.010000000000000000",
@@ -322,12 +322,12 @@ describe("StakingExtension", () => {
             expect(response).toEqual({
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: {
-                    operator_address: testutils_spec_1.launchpad.validator.address,
+                    operatorAddress: testutils_spec_1.launchpad.validator.address,
                     consensus_pubkey: testutils_spec_1.launchpad.validator.pubkey,
                     jailed: false,
                     status: staking_1.BondStatus.Bonded,
                     tokens: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
-                    delegator_shares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
+                    delegatorShares: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher),
                     description: {
                         moniker: testutils_spec_1.launchpad.moniker,
                         identity: "",
@@ -338,7 +338,7 @@ describe("StakingExtension", () => {
                     unbonding_height: "0",
                     unbonding_time: "1970-01-01T00:00:00Z",
                     commission: {
-                        commission_rates: {
+                        commissionRates: {
                             rate: "0.100000000000000000",
                             max_rate: "0.200000000000000000",
                             max_change_rate: "0.010000000000000000",

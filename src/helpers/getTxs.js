@@ -1,10 +1,13 @@
 import axios from "axios";
+import { setupTxExtension, QueryClient } from '@cosmjs/stargate'
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
-const api = process.env.REACT_APP_API
+const rpc = process.env.REACT_APP_RPC
 
 export const getTxs = async (address, params) => {
-    const URL = `${api}txs?message.sender=${address}&page=${params.page}&limit=${params.limit}`
-    const res = await axios.get(URL)
-    if(res.status !== 200) return 
-    return res.data
+    const tendermint = await Tendermint34Client.connect(rpc)
+    const baseQuery = new QueryClient(tendermint)
+    const extension = setupTxExtension(baseQuery)
+    const res = await extension.tx.getTxs()
+    return res
 }

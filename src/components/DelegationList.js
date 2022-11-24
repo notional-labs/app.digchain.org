@@ -2,7 +2,7 @@
 import { Typography, Tooltip, Skeleton, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import { getValidators } from '../helpers/getValidators';
+import { getValidatorsRpc } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import WithDrawModal from './WithDrawModal';
 import UndelegateModal from './UndelegateModal';
@@ -115,11 +115,11 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
     useEffect(() => {
         (async () => {
             setLoading(true)
-            let vals = await getValidators(true)
+            let vals = await getValidatorsRpc(true)
             const totalSupply = getTotal(vals)
-            vals = vals.sort((x, y) => y.delegator_shares - x.delegator_shares)
+            vals = vals.sort((x, y) => y.delegatorShares - x.delegatorShares)
             vals.map((val) => {
-                val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+                val.votingPowerPercentage = parseFloat(val.delegatorShares * 100 / totalSupply).toFixed(2)
             })
             setValidators([...vals])
             setLoading(false)
@@ -131,7 +131,7 @@ const DelegationList = ({ address, type, delegations, rewards, }) => {
             setLoading(true)
             let list = [...rewards]
             list.map(i => {
-                i.validatorMoniker = validators.filter(x => x.operator_address === i.validator_address).length > 0 && validators.filter(x => x.operator_address === i.validator_address)[0].description.moniker || 'Inactive'
+                i.validatorMoniker = validators.filter(x => x.operatorAddress === i.validator_address).length > 0 && validators.filter(x => x.operatorAddress === i.validator_address)[0].description.moniker || 'Inactive'
                 i.delegation = parseInt(delegations.filter(x => x.delegation.validator_address === i.validator_address)[0].delegation.shares) / 1000000 || 0
             })
             setDelegationList([...list])

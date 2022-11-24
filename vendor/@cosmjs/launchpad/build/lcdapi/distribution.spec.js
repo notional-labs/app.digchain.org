@@ -91,7 +91,7 @@ describe("DistributionExtension", () => {
                 height: jasmine.stringMatching(testutils_spec_1.nonNegativeIntegerMatcher),
                 result: {
                     // TODO: This smells like a bug in the backend to me
-                    operator_address: encoding_1.Bech32.encode("cosmos", encoding_1.Bech32.decode(testutils_spec_1.launchpad.validator.address).data),
+                    operatorAddress: encoding_1.Bech32.encode("cosmos", encoding_1.Bech32.decode(testutils_spec_1.launchpad.validator.address).data),
                     self_bond_rewards: [
                         { denom: "ucosm", amount: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher) },
                         { denom: "ustake", amount: jasmine.stringMatching(testutils_spec_1.bigDecimalMatcher) },

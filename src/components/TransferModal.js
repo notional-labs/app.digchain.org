@@ -1,7 +1,7 @@
 import { Input, InputNumber, message, notification, Checkbox } from "antd"
 import { transfer } from "../helpers/transaction"
 import { useEffect, useState } from 'react'
-import { getBalance } from "../helpers/getBalances";
+import { getBalanceRpc } from "../helpers/getBalances";
 import { getKeplr, getStargateClient } from "../helpers/getKeplr";
 
 import { makeSendMsg, makeSignDocSendMsg, } from "../helpers/ethereum/lib/eth-transaction/Msg"
@@ -64,14 +64,14 @@ const TransferModal = ({ account, wrapSetShow }) => {
     useEffect(() => {
         (async () => {
             if (account.type === 'keplr') {
-                const balance = await getBalance(account.account.address)
-                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+                const balance = await getBalanceRpc(account.account.address)
+                const balanceAmount = balance.length > 0 ? balance[0].amount : 0
 
                 setAmount(balanceAmount)
             }
             else {
-                const balance = await getBalance(account.account)
-                const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+                const balance = await getBalanceRpc(account.account)
+                const balanceAmount = balance.length > 0 ? balance[0].amount : 0
 
                 setAmount(balanceAmount)
             }

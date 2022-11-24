@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { unbonding } from './transaction'
+import { setupBankExtension, QueryClient } from '@cosmjs/stargate'
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 const api = process.env.REACT_APP_API
+const rpc = process.env.REACT_APP_RPC
 // const api = "http://0.0.0.0:1317"
 // const api = "https://api-1-dig.notional.ventures"
 
@@ -13,6 +15,14 @@ export const getBalance = async (address) => {
         balances.push([...res.data.balances])   
     }
     return balances
+}
+
+export const getBalanceRpc = async (address) => {
+    const tendermint = await Tendermint34Client.connect(rpc)
+    const baseQuery = new QueryClient(tendermint)
+    const extension = setupBankExtension(baseQuery)
+    const res = await extension.bank.allBalances(address)
+    return res
 }
 
 export const getDelegation = async (address) => {
@@ -39,7 +49,7 @@ export const getUnbond = async (address) => {
 export const getTotal = (balances) => {
     let sum = 0
     for (let i of balances){
-        sum += parseFloat(i.delegator_shares)
+        sum += parseFloat(i.tokens)
     }
     return sum
 }

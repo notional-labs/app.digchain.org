@@ -260,8 +260,8 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                         }}
                     >
                         {
-                            validators.filter(val => val.operator_address === selectVal).length > 0 ?
-                                validators.filter(val => val.operator_address === selectVal)[0].description.moniker
+                            validators.filter(val => val.operatorAddress === selectVal).length > 0 ?
+                                validators.filter(val => val.operatorAddress === selectVal)[0].description.moniker
                                 : <p
                                     style={{
                                         fontWeight: 400,
@@ -287,7 +287,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                                     <button
                                         className="val-select-button"
                                         key={index}
-                                        onClick={() => handleChangeSelectVal(val.operator_address)}
+                                        onClick={() => handleChangeSelectVal(val.operatorAddress)}
                                         style={{
                                             border: 0,
                                             backgroundColor: 'transparent',
@@ -298,7 +298,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                                             padding: '10px'
                                         }}
                                     >
-                                        {val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})
+                                        {val.description.moniker} ({`${val.commission.commissionRates.rate * 100}%`})
                                     </button>
                                 ))
                             ) : (

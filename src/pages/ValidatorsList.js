@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Image, Input, Empty } from 'antd';
-import { getValidators, getLogo } from '../helpers/getValidators';
+import { getValidatorsRpc, getLogo } from '../helpers/getValidators';
 import { getTotal } from '../helpers/getBalances';
 import "@fontsource/montserrat"
 import notFound from '../assets/img/no-profile.png'
@@ -73,21 +73,21 @@ const ValidatorsList = () => {
                 duration: 1000
             })
             setLoading(true)
-            let vals = await getValidators(true)
+            let vals = await getValidatorsRpc(true)
             const totalSupply = getTotal(vals)
-            let bogo1 = vals.filter(x => x.operator_address === 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z')[0]
-            let bogo2 = vals.filter(x => x.operator_address === 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629')[0]
-            let bogo3 = vals.filter(x => x.operator_address === 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')[0]
-            vals = vals.filter(x => x.operator_address !== 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z'
-                && x.operator_address !== 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629'
-                && x.operator_address !== 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')
+            let bogo1 = vals.filter(x => x.operatorAddress === 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z')[0]
+            let bogo2 = vals.filter(x => x.operatorAddress === 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629')[0]
+            let bogo3 = vals.filter(x => x.operatorAddress === 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')[0]
+            vals = vals.filter(x => x.operatorAddress !== 'digvaloper12hjc5e9z3c4x8hl8yyxlqfx67wr89meaas6k7z'
+                && x.operatorAddress !== 'digvaloper1cxu3telmqz2we6s8xy4xckr8sl2n7judqdq629'
+                && x.operatorAddress !== 'digvaloper1lu3at7mda24anr9eecdhyt9wsq8dwhrn664y4z')
             vals.unshift(bogo2, bogo3, bogo1)
             vals = vals.filter(x => x)
             if (vals.length > 0) {
                 let logoList = []
                 let urls = []
                 vals.map((val) => {
-                    val.votingPowerPercentage = parseFloat(val.delegator_shares * 100 / totalSupply).toFixed(2)
+                    val.votingPowerPercentage = parseFloat(val.tokens * 100 / totalSupply).toFixed(2)
                     urls.push(val.description.identity)
                 })
 
@@ -134,15 +134,15 @@ const ValidatorsList = () => {
         setStateVal('')
         if (state === 'desc') {
             setState('asc')
-            setFilterValidators([...filterValidators.sort((x, y) => x.delegator_shares - y.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => x.delegatorShares - y.delegatorShares)])
         }
         else if (state === 'asc') {
             setState('desc')
-            setFilterValidators([...filterValidators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.delegatorShares - x.delegatorShares)])
         }
         else {
             setState('desc')
-            setFilterValidators([...filterValidators.sort((x, y) => y.delegator_shares - x.delegator_shares)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.delegatorShares - x.delegatorShares)])
         }
     }
 
@@ -151,15 +151,15 @@ const ValidatorsList = () => {
         setStateVal('')
         if (stateCommision === 'desc') {
             setStateCommission('asc')
-            setFilterValidators([...filterValidators.sort((x, y) => x.commission.commission_rates.rate - y.commission.commission_rates.rate)])
+            setFilterValidators([...filterValidators.sort((x, y) => x.commission.commissionRates.rate - y.commission.commissionRates.rate)])
         }
         else if (stateCommision === 'asc') {
             setStateCommission('desc')
-            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commission_rates.rate - x.commission.commission_rates.rate)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commissionRates.rate - x.commission.commissionRates.rate)])
         }
         else {
             setStateCommission('desc')
-            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commission_rates.rate - x.commission.commission_rates.rate)])
+            setFilterValidators([...filterValidators.sort((x, y) => y.commission.commissionRates.rate - x.commission.commissionRates.rate)])
         }
     }
 
@@ -330,10 +330,10 @@ const ValidatorsList = () => {
                                                         </div>
                                                     </td>
                                                     <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>
-                                                        <div>{`${parseInt(val.delegator_shares / 1000000)} DIG`}</div>
+                                                        <div>{`${parseInt(val.tokens / 1000000)} DIG`}</div>
                                                         <div style={{ fontSize: '15px', opacity: 0.6 }}>{`${val.votingPowerPercentage} %`} </div>
                                                     </td>
-                                                    <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commission_rates.rate * 100} %`}</td>
+                                                    <td style={{ ...style.td, textAlign: 'center', border: 'solid 2px #ED9D26', borderRight: 'none', borderLeft: 'none' }}>{`${val.commission.commissionRates.rate / Math.pow(10, 16)} %`}</td>
                                                     <td style={{ ...style.td, textAlign: 'center', borderRadius: '0 10px 10px 0', border: 'solid 2px #ED9D26', borderLeft: 'none', color: '#ffffff' }}>
                                                         <button style={{
                                                             backgroundColor: '#ED9D27',
@@ -343,7 +343,7 @@ const ValidatorsList = () => {
                                                             fontSize: '15px',
                                                             fontWeight: 700,
                                                             boxShadow: '0px 0px 10px 2px rgba(0, 0, 0, 0.25)'
-                                                        }} onClick={async () => await handleClick(val.operator_address)}>
+                                                        }} onClick={async () => await handleClick(val.operatorAddress)}>
                                                             Delegate
                                                         </button>
                                                     </td>

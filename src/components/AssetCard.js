@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getBalance } from "../helpers/getBalances"
+import { getBalanceRpc } from "../helpers/getBalances"
 import { getTotalDelegate, getDelegation, getReward, getTotalUnbonding, getUnbond } from "../helpers/getBalances"
 
 const style = {
@@ -19,8 +19,8 @@ const AssetCard = ({ wrapSetAsset, type, Icon, backgroundColor, addr, asset }) =
     useEffect(() => {
         (async () => {
             if (type === 1) {
-                const res = await getBalance(addr)
-                const balance = res[0].length > 0 ? res[0][0].amount : '0'
+                const res = await getBalanceRpc(addr)
+                const balance = res.length > 0 ? res[0].amount : '0'
                 wrapSetAsset(balance, 1)
             }
             else if (type === 2) {

@@ -7,7 +7,7 @@ import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSe
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
-import { getBalance } from "../helpers/getBalances";
+import { getBalanceRpc } from "../helpers/getBalances";
 import { IoSearch } from "react-icons/io5";
 
 
@@ -123,8 +123,8 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
 
     const getAvailableAmount = async (delegators) => {
         const address = delegators[selectDel].type === 'keplr' ? delegators[selectDel].account.address : delegators[selectDel].account
-        const balance = await getBalance(address)
-        const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+        const balance = await getBalanceRpc(address)
+        const balanceAmount = balance.length > 0 ? balance[0].amount : 0
         setAvailableAmount(balanceAmount)
     }
 
@@ -236,7 +236,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                         }}
                     >
                         {
-                            validators.filter(val => val.operator_address === selectVal)[0].description.moniker
+                            validators.filter(val => val.operatorAddress === selectVal)[0].description.moniker
                         }
                     </div>
                     <div
@@ -254,7 +254,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                                     <button
                                         className="val-select-button"
                                         key={index}
-                                        onClick={() => handleChangeSelectVal(val.operator_address)}
+                                        onClick={() => handleChangeSelectVal(val.operatorAddress)}
                                         style={{
                                             border: 0,
                                             backgroundColor: 'transparent',
@@ -265,7 +265,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
                                             padding: '10px'
                                         }}
                                     >
-                                        {val.description.moniker} ({`${val.commission.commission_rates.rate * 100}%`})
+                                        {val.description.moniker} ({`${val.commission.commissionRates.rate  / Math.pow(10, 16)}%`})
                                     </button>
                                 ))
                             ) : (

@@ -22,7 +22,7 @@ export interface DistributionWithdrawAddressResponse {
 export interface DistributionValidatorResponse {
     readonly height: string;
     readonly result: {
-        readonly operator_address: string;
+        readonly operatorAddress: string;
         readonly self_bond_rewards: readonly Coin[];
         readonly val_commission: readonly Coin[];
     };

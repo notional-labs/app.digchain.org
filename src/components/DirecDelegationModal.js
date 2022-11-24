@@ -7,7 +7,7 @@ import { makeMsgBeginRedelegate, makeSignDocDelegateMsg, makeDelegateMsg, makeSe
 import { broadcastTransaction } from "../helpers/ethereum/lib/eth-broadcast/broadcastTX"
 import { getWeb3Instance } from "../helpers/ethereum/lib/metamaskHelpers";
 import ClipLoader from "react-spinners/ClipLoader"
-import { getBalance } from "../helpers/getBalances";
+import { getBalanceRpc } from "../helpers/getBalances";
 import { IoSearch } from "react-icons/io5";
 
 
@@ -103,8 +103,8 @@ const DirectDelegateModal = ({ validator, delegatorAddress, wrapSetShow  }) => {
     }
 
     const getAvailableAmount = async (address) => {
-        const balance = await getBalance(address)
-        const balanceAmount = balance.length > 0 ? balance[0][0].amount : 0
+        const balance = await getBalanceRpc(address)
+        const balanceAmount = balance.length > 0 ? balance[0].amount : 0
         setAvailableAmount(balanceAmount)
     }
 
