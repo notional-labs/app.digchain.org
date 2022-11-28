@@ -160,7 +160,7 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             //makeSignDocDelegateMsg, makeDelegateMsg
             // please set enviroment variable: DENOM, etc
             //import web3
-            let web3 = await getWeb3Instance();
+            let web3 = getWeb3Instance();
             const denom = process.env.REACT_APP_DENOM
             const chainId = process.env.REACT_APP_CHAIN_ID
             const memo = "Love From Dev Team"
@@ -178,8 +178,6 @@ const DelegateModal = ({ validators, wrapSetter, defaultVal }) => {
             }
             const msgDelegate = makeDelegateMsg(address, recipient, amount, denom)
             const signDocDelegate = makeSignDocDelegateMsg(address, recipient, amount, denom)
-
-            console.log("address", address)
 
             const UIProcessing = function () {
                 setIsDoingTx(false)

@@ -1,45 +1,49 @@
 import axios from "axios";
+import { setupAuthExtension, QueryClient } from "@cosmjs/stargate";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import { QueryAccountResponse } from "cosmjs-types/cosmos/auth/v1beta1/query";
+import { BaseAccount } from "cosmjs-types/cosmos/auth/v1beta1/auth";
+
+const rpc = process.env.REACT_APP_RPC
+const vesting = '/cosmos.auth.v1beta1.BaseAccount'
 
 const fetch_address = async (address) => {
-  const api = process.env.REACT_APP_API
-  const options = {
-    url: `${api}/auth/accounts/${address}`,
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  };
-  
-  return axios(options)
-  };
-  
-  
+  const tendermint = await Tendermint34Client.connect(rpc)
+  const baseQuery = new QueryClient(tendermint)
+  const extension = setupAuthExtension(baseQuery)
+  const res = await extension.auth.account(address)
+  let account = BaseAccount.decode(res.value)
+  account.accountNumber = parseInt(account.accountNumber)
+  account.sequence = parseInt(account.sequence)
+  account.type = res.typeUrl
+  return account
+};
+
+
 export const fetchAccount = async (address) => {
-    // get account
-    try {
-      let accountOnChain = await fetch_address(address);
-      console.log("account on chain", accountOnChain.data.result.value.base_vesting_account)
+  // get account
+  try {
+    let accountOnChain = await fetch_address(address);
 
-      if (accountOnChain.data.result.value.base_vesting_account != null){
-        const accountNumber = accountOnChain.data.result.value.base_vesting_account.base_account.account_number ? accountOnChain.data.result.value.base_vesting_account.base_account.account_number : 0
-        const sequence = accountOnChain.data.result.value.base_vesting_account.base_account.sequence ? accountOnChain.data.result.value.base_vesting_account.base_account.sequence : 0
-        return {
-          accountNumber : accountNumber,
-          sequence : sequence
-        }
-
-      }else{
-        const accountNumber = accountOnChain.data.result.value.account_number ? accountOnChain.data.result.value.account_number : 0
-        const sequence = accountOnChain.data.result.value.sequence ? accountOnChain.data.result.value.sequence : 0
-        
-        return {
-          accountNumber : accountNumber,
-          sequence : sequence
-        }
+    if (accountOnChain.type.base_vesting_account != null) {
+      const accountNumber = accountOnChain.accountNumber ? accountOnChain.accountNumber : 0
+      const sequence = accountOnChain.sequence ? accountOnChain.sequence : 0
+      return {
+        accountNumber: accountNumber,
+        sequence: sequence
       }
-    } catch (err) {
-      console.log(err)
-      return err
+
+    } else {
+      const accountNumber = accountOnChain.accountNumber ? accountOnChain.accountNumber : 0
+      const sequence = accountOnChain.sequence ? accountOnChain.sequence : 0
+
+      return {
+        accountNumber: accountNumber,
+        sequence: sequence
+      }
     }
+  } catch (err) {
+    console.log(err)
+    return err
   }
+}
