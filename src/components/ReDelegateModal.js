@@ -298,7 +298,7 @@ const ReDelegateModal = ({ address, type, delegation, wrapSetShow, validators })
                                             padding: '10px'
                                         }}
                                     >
-                                        {val.description.moniker} ({`${val.commission.commissionRates.rate * 100}%`})
+                                        {val.description.moniker} ({`${val.commission.commissionRates.rate / Math.pow(10, 16)}%`})
                                     </button>
                                 ))
                             ) : (
