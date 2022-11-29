@@ -17,7 +17,8 @@ async function getWeb3Instance(){
     let web3 = new Web3(window.ethereum);
     try {
         // Request account access
-        await window.ethereum.enable();
+        const acc = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        console.log('hello' + acc)
     } catch (e) {
         // Handle user denied access
         return null;

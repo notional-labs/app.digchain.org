@@ -18,6 +18,8 @@ function fromHexString (hexString){
 export const broadcastTransaction = async (address, msg, signDocMsg, chainId, memo, gasLimit, web3, UIProcessing = null) => {
   const denom = process.env.REACT_APP_DENOM
 
+  console.log(web3.currentProvider)
+
   let stdFeeToPutIntoSignDoc = {
     amount: coins(15000, `${denom}`),
     gas: gasLimit.toString(),
@@ -27,13 +29,10 @@ export const broadcastTransaction = async (address, msg, signDocMsg, chainId, me
       amount : coins(15000, `${denom}`),
       gasLimit: gasLimit.toString(),
     }
-  console.log(address)
   const accountOnChain = await fetchAccount(address)
-  console.log(accountOnChain)
-  
 
   const signDocJsonString = makeSignDocJsonString(signDocMsg, stdFeeToPutIntoSignDoc, chainId, memo, accountOnChain.accountNumber, accountOnChain.sequence) 
-  console.log(signDocJsonString)
+
   const params = [address, signDocJsonString];
   const method = 'personal_sign';
 
