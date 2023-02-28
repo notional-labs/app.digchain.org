@@ -52,4 +52,3 @@ jobs:
         host: ${{ secrets.WEB_SERVER }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.PRIV_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
